@@ -50,4 +50,16 @@ public class TestReportes {
 //		registro.getKey().toString(),registro.getValue().toString());
 		Assert.assertTrue(resultado.size() == 4);
 	}
+	
+	@Test
+	public void testReporteCantidadResultadosPorUsuario() {
+		Map<Long, Long> resultado = DB_HistorialBusquedas.reporteBusquedaPorUsuario();
+		
+//		System.out.printf("\nIdUsuario  cantidadResultados \n");
+//		for (Map.Entry<Long, Long> registro : resultado.entrySet())
+//			System.out.printf("%s \t\t  %s \n", 
+//		registro.getKey().toString(),registro.getValue().toString());
+		
+		Assert.assertTrue(resultado.size() == 2);
+	}
 }

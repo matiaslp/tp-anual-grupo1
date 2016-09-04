@@ -1,5 +1,7 @@
 package db;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,6 +66,37 @@ public class DB_HistorialBusquedas {
 				resumen.put(registro.getValue().getId(), registro.getValue().getCantResultados());
 		}
 		return resumen;
+	}
+	
+	public static Map<Long, Long> reporteBusquedaPorUsuario(){
+		
+		Map<Long, Long> resumen = new HashMap<Long, Long>();
+		List<Long> usuarios = new ArrayList<Long>();
+		
+		Long sumaParcial = 0L;
+		Long userId = 0L;
+		
+		//Obetengo la lista de usuarios que hicieron las busquedas
+		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()){
+			if (!usuarios.contains(registro.getValue().getUserID()))
+				usuarios.add(registro.getValue().getUserID());
+		}
+		
+		while (usuarios.size()>0){
+			//Obtengo el ultimo usuario
+			userId = usuarios.get(usuarios.size()-1);
+			//Saco la cantidad de busquedas del usuario
+			for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
+	//			sumaParcial = 0L;
+				if (Long.compare(userId, registro.getValue().getUserID()) == 0)
+					sumaParcial += registro.getValue().getCantResultados();
+			}
+			resumen.put(userId, sumaParcial);
+			usuarios.remove(usuarios.size()-1);
+			sumaParcial = 0L;
+		}
+		return resumen;
+		
 	}
 
 }
