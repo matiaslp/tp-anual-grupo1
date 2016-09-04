@@ -18,14 +18,18 @@ public class DB_HistorialBusquedas {
 		listadoRegistros = new HashMap<Long, RegistroHistorico>();
 	}
 
-//	public Map<Long, RegistroHistorico> getListado() {
-//		return instance.listadoRegistros;
-//	}
-
 	public static DB_HistorialBusquedas getInstance() {
 		if (instance == null)
 			instance = new DB_HistorialBusquedas();
 		return instance;
+	}
+	
+	public int cantidadRegistros() {
+		return listadoRegistros.size();
+	}
+	
+	public RegistroHistorico registroHistoricoPorId(long id) {	
+		return listadoRegistros.get(id - 1);	
 	}
 
 	public void agregarHistorialBusqueda(RegistroHistorico registro) {
