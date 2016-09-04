@@ -16,7 +16,7 @@ public class TestReportes {
 
 	private DB_HistorialBusquedas historial;
 	private DateTimeFormatter fmt = DateTimeFormat.shortDate();
-	
+
 	@Before
 	public void init() {
 
@@ -56,26 +56,26 @@ public class TestReportes {
 		// registro.getKey().toString(),registro.getValue().toString());
 		Assert.assertTrue(resultado.size() == 4);
 	}
-	
+
 	@Test
-	public void testReporteBusquedaPorFecha(){
+	public void testReporteBusquedaPorFecha() {
 		Map<String, Long> resultado = historial.reporteBusquedasPorFecha();
 		Assert.assertTrue(resultado.get("04/04/16") == 440);
 		Assert.assertTrue(resultado.get("03/03/16") == 30);
 		Assert.assertTrue(resultado.get("02/02/16") == 20);
 		Assert.assertTrue(resultado.get("01/01/16") == 10);
-		
+
 	}
 
 	@Test
 	public void testReporteCantidadResultadosPorUsuario() {
-		Map<Long, Long> resultado = DB_HistorialBusquedas.reporteBusquedaPorUsuario();
-		
-//		System.out.printf("\nIdUsuario  cantidadResultados \n");
-//		for (Map.Entry<Long, Long> registro : resultado.entrySet())
-//			System.out.printf("%s \t\t  %s \n", 
-//		registro.getKey().toString(),registro.getValue().toString());
-		
+		Map<Long, Long> resultado = historial.reporteBusquedaPorUsuario();
+
+		// System.out.printf("\nIdUsuario cantidadResultados \n");
+		// for (Map.Entry<Long, Long> registro : resultado.entrySet())
+		// System.out.printf("%s \t\t %s \n",
+		// registro.getKey().toString(),registro.getValue().toString());
+
 		Assert.assertTrue(resultado.size() == 2);
 	}
 }
