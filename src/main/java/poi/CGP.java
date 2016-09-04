@@ -29,10 +29,9 @@ public class CGP extends POI {
 	}
 
 	public void setServicios(ArrayList<NodoServicio> servicios) {
-		Servicios = servicios;
+		servicios = servicios;
 	}
 	
-	public ArrayList<NodoServicio> Servicios = new ArrayList<NodoServicio>();// 6
 
 	public void agregarServicio(String nombre, ArrayList<Integer> dias, int horaInicio, int horaFin) {
 		NodoServicio nuevoNodo = new NodoServicio();
@@ -40,12 +39,12 @@ public class CGP extends POI {
 		nuevoNodo.listaDias = dias;
 		nuevoNodo.horaInicio = horaInicio;
 		nuevoNodo.horaFin = horaFin;
-		Servicios.add(nuevoNodo);
+		servicios.add(nuevoNodo);
 	}
 
 	public boolean disponible(String servicio) {
 		Calendar calendario = Calendar.getInstance();
-		Iterator<NodoServicio> iterador = Servicios.iterator();
+		Iterator<NodoServicio> iterador = servicios.iterator();
 		while (iterador.hasNext()) {
 			// Agarro el proximo nodo, busco un nodo especifico o recorro todo
 			// con ""
@@ -135,11 +134,11 @@ public class CGP extends POI {
 	}
 
 	public ArrayList<NodoServicio> getServicios() {
-		return Servicios;
+		return servicios;
 	}
 
 	public void setServicio(NodoServicio servicio) {
-		Servicios.add(servicio);
+		servicios.add(servicio);
 	}
 
 }

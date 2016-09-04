@@ -10,7 +10,6 @@ public class Banco extends POI {
 
 	String sucursal;
 	String gerente;
-	public ArrayList<NodoServicio> servicios = new ArrayList<NodoServicio>();
 	
 	public String getSucursal() {
 		return sucursal;

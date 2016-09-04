@@ -29,7 +29,7 @@ public abstract class POI {
 	// este atributo hay que ver si nos sirve porque
 	// las subclases tienen el nombre del tipo, de por si.
 	TiposPOI tipo;
-	public ArrayList<NodoServicio> Servicios = new ArrayList<NodoServicio>();
+	public ArrayList<NodoServicio> servicios = new ArrayList<NodoServicio>();
 	// pueden ser varias y se crean a travez de
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
 	Etiqueta[] etiquetas;
@@ -341,7 +341,7 @@ public abstract class POI {
 	}
 
 	public boolean compararServicios(String filtro) {
-		for (NodoServicio servicio : Servicios) {
+		for (NodoServicio servicio : servicios) {
 			if (LevDist.calcularDistancia(filtro, servicio.nombre)) {
 				return true;
 			} else if (MetodosComunes.isNumeric(filtro)) {
