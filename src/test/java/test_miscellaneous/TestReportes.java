@@ -22,10 +22,7 @@ public class TestReportes {
 
 		historial = DB_HistorialBusquedas.getInstance();
 		
-		new DB_HistorialBusquedas();
 		DateTime time = new DateTime(2016,1,1,1,1);
-		
-		time = new DateTime(2016, 1, 1, 1, 1);
 		RegistroHistorico registro = new RegistroHistorico(1, time, 10, "busqueda1", 10, 5);
 		historial.agregarHistorialBusqueda(registro);
 
@@ -60,10 +57,18 @@ public class TestReportes {
 	@Test
 	public void testReporteBusquedaPorFecha() {
 		Map<String, Long> resultado = historial.reporteBusquedasPorFecha();
+		
+		// Computadoras en ingles
 		Assert.assertTrue(resultado.get("4/4/16") == 440);
 		Assert.assertTrue(resultado.get("3/3/16") == 30);
 		Assert.assertTrue(resultado.get("2/2/16") == 20);
 		Assert.assertTrue(resultado.get("1/1/16") == 10);
+		
+		// Computadoras en español
+		//Assert.assertTrue(resultado.get("04/04/16") == 440);
+		//Assert.assertTrue(resultado.get("03/03/16") == 30);
+		//Assert.assertTrue(resultado.get("02/02/16") == 20);
+		//Assert.assertTrue(resultado.get("01/01/16") == 10);
 
 	}
 
