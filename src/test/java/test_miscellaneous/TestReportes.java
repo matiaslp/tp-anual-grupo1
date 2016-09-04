@@ -3,8 +3,6 @@ package test_miscellaneous;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +61,7 @@ public class TestReportes {
 		Assert.assertTrue(resultado.get("2/2/16") == 20);
 		Assert.assertTrue(resultado.get("1/1/16") == 10);
 		
-		// Computadoras en español
+		// Computadoras en espaï¿½ol
 		//Assert.assertTrue(resultado.get("04/04/16") == 440);
 		//Assert.assertTrue(resultado.get("03/03/16") == 30);
 		//Assert.assertTrue(resultado.get("02/02/16") == 20);

@@ -182,8 +182,8 @@ public class POI_DTO {
 		return ubicacion;
 	}
 
-	public void setUbicacion(GeoLocation ubicacion) {
-		ubicacion = ubicacion;
+	public void setUbicacion(GeoLocation ubic) {
+		ubicacion = ubic;
 	}
 
 	public int getComuna() {
@@ -286,8 +286,8 @@ public class POI_DTO {
 		return servicios;
 	}
 
-	public void setServicios(ArrayList<NodoServicio> servicios) {
-		servicios = servicios;
+	public void setServicios(ArrayList<NodoServicio> serv) {
+		servicios = serv;
 	}
 
 	public ArrayList<Integer> getDias() {
