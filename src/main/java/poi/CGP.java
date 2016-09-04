@@ -29,7 +29,7 @@ public class CGP extends POI {
 	}
 
 	public void setServicios(ArrayList<NodoServicio> servicios) {
-		servicios = servicios;
+		this.servicios = servicios;
 	}
 	
 
