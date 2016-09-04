@@ -15,8 +15,7 @@ import db.RegistroHistorico;
 public class TestReportes {
 
 	private DB_HistorialBusquedas historial;
-	private DateTimeFormatter fmt = DateTimeFormat.shortDate();
-
+	
 	@Before
 	public void init() {
 
