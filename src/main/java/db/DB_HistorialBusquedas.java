@@ -16,9 +16,9 @@ public class DB_HistorialBusquedas {
 		listadoRegistros = new HashMap<Long, RegistroHistorico>();
 	}
 
-	public Map<Long, RegistroHistorico> getListado() {
-		return instance.listadoRegistros;
-	}
+//	public Map<Long, RegistroHistorico> getListado() {
+//		return instance.listadoRegistros;
+//	}
 
 	public static DB_HistorialBusquedas getInstance() {
 		if (instance == null)
@@ -26,7 +26,10 @@ public class DB_HistorialBusquedas {
 		return instance;
 	}
 
-	public static void agregarHistorialBusqueda(RegistroHistorico registro) {
+	public void agregarHistorialBusqueda(RegistroHistorico registro) {
+		// se genera el id (se debe modificar con hibernate)
+		if (registro.getId() == 0)
+			registro.setId(listadoRegistros.size() + 1);
 		String registroStr = Integer.toString(listadoRegistros.size());
 		listadoRegistros.put(Long.parseLong(registroStr), registro);
 	}

@@ -47,7 +47,7 @@ public class TestABMC_Consulta {
 		DB_Server.agregarPOI(local);
 		DB_Server.agregarPOI(banco);
 		
-		lista = abmc.buscar(ServicioAPI, "");
+		lista = abmc.buscar(ServicioAPI, "",1);
 		Assert.assertTrue(lista.isEmpty());
 			
 	}
@@ -60,7 +60,7 @@ public class TestABMC_Consulta {
 		DB_Server.agregarPOI(local);
 		DB_Server.agregarPOI(banco);
 		
-		lista = abmc.buscar("", "Alberdi");
+		lista = abmc.buscar("", "Alberdi",1);
 		Assert.assertTrue(lista.size() == 1);
 			
 	}
@@ -73,7 +73,7 @@ public class TestABMC_Consulta {
 		DB_Server.agregarPOI(local);
 		DB_Server.agregarPOI(banco);
 		
-		lista = abmc.buscar("", "Mataderos");
+		lista = abmc.buscar("", "Mataderos",1);
 		Assert.assertTrue(lista.size() == 2);
 			
 	}
@@ -82,7 +82,7 @@ public class TestABMC_Consulta {
 	public void testConsultaRemota() throws JSONException, MalformedURLException, IOException{
 		ArrayList<POI> lista=null;
 		
-		lista = abmc.buscar(ServicioAPI, "Mataderos");
+		lista = abmc.buscar(ServicioAPI, "Mataderos",1);
 		Assert.assertTrue(lista.size() == 15);
 			
 	}
@@ -92,7 +92,7 @@ public class TestABMC_Consulta {
 	public void testConsultaRemota2() throws JSONException, MalformedURLException, IOException{
 		ArrayList<POI> lista=null;
 		
-		lista = abmc.buscar(ServicioAPI, "Galicia");
+		lista = abmc.buscar(ServicioAPI, "Galicia",1);
 		Assert.assertTrue(lista.size() == 16);
 			
 	}
@@ -102,7 +102,7 @@ public class TestABMC_Consulta {
 	public void testConsultaRemotaVariasPalabras() throws JSONException, MalformedURLException, IOException{
 		ArrayList<POI> lista=null;
 		
-		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos");
+		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos",1);
 		Assert.assertTrue(lista.size() == 16);
 			
 	}
@@ -117,7 +117,7 @@ public class TestABMC_Consulta {
 		DB_Server.agregarPOI(local);
 		DB_Server.agregarPOI(banco);
 		
-		lista = abmc.buscar(ServicioAPI, "Galicia");
+		lista = abmc.buscar(ServicioAPI, "Galicia",1);
 		Assert.assertTrue(!(lista.isEmpty()));
 			
 	}
@@ -132,7 +132,7 @@ public class TestABMC_Consulta {
 		DB_Server.agregarPOI(local);
 		DB_Server.agregarPOI(banco);
 		
-		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos");
+		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos",1);
 		Assert.assertTrue(lista.size() == 18);
 			
 	}

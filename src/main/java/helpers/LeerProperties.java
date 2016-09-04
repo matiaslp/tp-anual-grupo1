@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class LeerProperties {
 
-	public static Properties prop;
+	public Properties prop;
 	private static LeerProperties instance = null;
 
 	public LeerProperties() {
@@ -26,9 +26,6 @@ public class LeerProperties {
 		}
 	}
 
-	public static Properties getProperties() {
-		return LeerProperties.prop;
-	}
 
 	public static LeerProperties getInstance() {
 		if (instance == null)

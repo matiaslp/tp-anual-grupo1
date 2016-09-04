@@ -1,12 +1,6 @@
 package email;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -31,9 +25,9 @@ public class EnviarEmail {
 	public boolean mandarCorreoXSegundos(String nombreDeBusqueda,double segundos) throws MessagingException {
 		
 		
-		String correoEnvia = LeerProperties.prop.getProperty("email");
-		String claveCorreo = LeerProperties.prop.getProperty("emailPassword");
-		String correoRecibe=LeerProperties.prop.getProperty("emailAdmin");
+		String correoEnvia = LeerProperties.getInstance().prop.getProperty("email");
+		String claveCorreo = LeerProperties.getInstance().prop.getProperty("emailPassword");
+		String correoRecibe=LeerProperties.getInstance().prop.getProperty("emailAdmin");
 		
 		String texto="Busqueda "+nombreDeBusqueda+" demoro mas de "+segundos+" segundos.";
 		String titulo="Demora de busqueda";
@@ -54,8 +48,8 @@ public class EnviarEmail {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", LeerProperties.prop.getProperty("emailServer"));
-        properties.put("mail.smtp.port", LeerProperties.prop.getProperty("SMTP_Port"));
+        properties.put("mail.smtp.host", LeerProperties.getInstance().prop.getProperty("emailServer"));
+        properties.put("mail.smtp.port", LeerProperties.getInstance().prop.getProperty("SMTP_Port"));
 
         // Contenido del mensaje
         String content = texto;

@@ -20,23 +20,23 @@ public class TestReportes {
 		new DB_HistorialBusquedas();
 		DateTime time = new DateTime(2016,1,1,1,1);
 		RegistroHistorico registro = new RegistroHistorico(1,time,10,"busqueda1",10,5);
-		DB_HistorialBusquedas.agregarHistorialBusqueda(registro);
+		DB_HistorialBusquedas.getInstance().agregarHistorialBusqueda(registro);
 		
 		time = new DateTime(2016,2,2,2,2);
 		registro = new RegistroHistorico(2,time,10,"busqueda2",20,10);
-		DB_HistorialBusquedas.agregarHistorialBusqueda(registro);
+		DB_HistorialBusquedas.getInstance().agregarHistorialBusqueda(registro);
 		
 		time = new DateTime(2016,3,3,3,3);
 		registro = new RegistroHistorico(3,time,10,"busqueda3",30,15);
-		DB_HistorialBusquedas.agregarHistorialBusqueda(registro);
+		DB_HistorialBusquedas.getInstance().agregarHistorialBusqueda(registro);
 		
 		time = new DateTime(2016,4,4,4,4);
 		registro = new RegistroHistorico(4,time,10,"busqueda4",40,20);
-		DB_HistorialBusquedas.agregarHistorialBusqueda(registro);
+		DB_HistorialBusquedas.getInstance().agregarHistorialBusqueda(registro);
 		
 		time = new DateTime(2016,4,4,4,4);
 		registro = new RegistroHistorico(5,time,1,"busqueda5",400,20);
-		DB_HistorialBusquedas.agregarHistorialBusqueda(registro);
+		DB_HistorialBusquedas.getInstance().agregarHistorialBusqueda(registro);
 		
 	}
 	

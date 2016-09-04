@@ -12,9 +12,17 @@ import db.DB_Server;
 import poi.BusquedaDePOIsExternos;
 import poi.POI;
 
-public class POI_ABMC {
+public class POI_ABMC implements Busqueda {
 
 	private ArrayList<POI> resultado;
+	private static POI_ABMC instance = null;
+	
+	public static POI_ABMC getInstance() {
+		if(instance == null)
+			instance = new POI_ABMC();
+		return instance;
+	}
+	
 
 	public boolean alta(POI_DTO dto) {
 
@@ -56,7 +64,7 @@ public class POI_ABMC {
 	
 	
 // Busqueda por texto libre ABIERTA (busca todos los pois que contengan al menos UNA palabra contenida en la busqueda)
-	public ArrayList<POI> buscar(String url,String texto) throws JSONException, MalformedURLException, IOException{
+	public ArrayList<POI> buscar(String url,String texto,long userID) throws JSONException, MalformedURLException, IOException{
 		String filtros[] = texto.split("\\s+");
 		resultado = new ArrayList<POI>();
 		ArrayList<POI> listaLocal = DB_Server.getListado();
