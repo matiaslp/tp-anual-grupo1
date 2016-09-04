@@ -12,8 +12,7 @@ public class LeerProperties {
 
 	public LeerProperties() {
 		prop = new Properties();
-		// InputStream input = null;
-
+		
 		try (InputStream input = new FileInputStream("config.properties")) {
 
 			// load a properties file
@@ -21,8 +20,6 @@ public class LeerProperties {
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
-		} finally {
-
 		}
 	}
 
@@ -32,5 +29,4 @@ public class LeerProperties {
 			instance = new LeerProperties();
 		return instance;
 	}
-
 }

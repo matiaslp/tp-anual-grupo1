@@ -1,4 +1,5 @@
 package email;
+
 import java.util.Properties;
 
 
@@ -16,13 +17,9 @@ import javax.mail.internet.MimeMultipart;
 
 import helpers.LeerProperties;
 
-
 public class EnviarEmail {
-	  
 
-
-	
-	public boolean mandarCorreoXSegundos(String nombreDeBusqueda,double segundos) throws MessagingException {
+	public boolean mandarCorreoXSegundos(String nombreDeBusqueda, double segundos) throws MessagingException {
 		
 		
 		String correoEnvia = LeerProperties.getInstance().prop.getProperty("email");
@@ -85,10 +82,5 @@ public class EnviarEmail {
         	return false;
         }
     }
-
-    
-
-      
-    
 
 }

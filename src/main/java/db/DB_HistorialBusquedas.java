@@ -1,5 +1,7 @@
 package db;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +10,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class DB_HistorialBusquedas {
 
-	private static Map<Long, RegistroHistorico> listadoRegistros = new HashMap<Long, RegistroHistorico>();
+	private Map<Long, RegistroHistorico> listadoRegistros = new HashMap<Long, RegistroHistorico>();
 
 	private static DB_HistorialBusquedas instance = null;
 
@@ -35,14 +37,15 @@ public class DB_HistorialBusquedas {
 	}
 
 	// Reporte de busquedas por fecha y cantidad de todo el sistema
-	public static Map<String, Long> reporteBusquedasPorFecha(String criterioConsulta) {
+	public Map<String, Long> reporteBusquedasPorFecha() {
 		Map<String, Long> resumen = new HashMap<String, Long>();
 		String fechaPrevia = "";
 		Long cantParcial = 0L;
-
+		DateTimeFormatter fmt = DateTimeFormat.shortDate();
+		String fechaActual = "";
+		
 		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-			DateTimeFormatter fmt = DateTimeFormat.shortDate();
-			String fechaActual = fmt.print(registro.getValue().getTime());
+			fechaActual = fmt.print(registro.getValue().getTime());
 
 			if (fechaPrevia.equals(fechaActual)) {
 				cantParcial += registro.getValue().getCantResultados();
@@ -56,17 +59,48 @@ public class DB_HistorialBusquedas {
 
 		return resumen;
 	}
-	
+
 	// Reporte de busquedas parciales por terminal
-	public static Map<Long, Long> reporteCantidadResultadosPorTerminal(long terminal){
-		
-		Map<Long,Long> resumen = new HashMap<Long,Long>();
-		
+	public Map<Long, Long> reporteCantidadResultadosPorTerminal(long terminal) {
+
+		Map<Long, Long> resumen = new HashMap<Long, Long>();
+
 		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-			if (Long.compare(terminal,registro.getValue().getUserID()) == 0)
+			if (Long.compare(terminal, registro.getValue().getUserID()) == 0)
 				resumen.put(registro.getValue().getId(), registro.getValue().getCantResultados());
 		}
 		return resumen;
+	}
+	
+	public static Map<Long, Long> reporteBusquedaPorUsuario(){
+		
+		Map<Long, Long> resumen = new HashMap<Long, Long>();
+		List<Long> usuarios = new ArrayList<Long>();
+		
+		Long sumaParcial = 0L;
+		Long userId = 0L;
+		
+		//Obetengo la lista de usuarios que hicieron las busquedas
+		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()){
+			if (!usuarios.contains(registro.getValue().getUserID()))
+				usuarios.add(registro.getValue().getUserID());
+		}
+		
+		while (usuarios.size()>0){
+			//Obtengo el ultimo usuario
+			userId = usuarios.get(usuarios.size()-1);
+			//Saco la cantidad de busquedas del usuario
+			for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
+	//			sumaParcial = 0L;
+				if (Long.compare(userId, registro.getValue().getUserID()) == 0)
+					sumaParcial += registro.getValue().getCantResultados();
+			}
+			resumen.put(userId, sumaParcial);
+			usuarios.remove(usuarios.size()-1);
+			sumaParcial = 0L;
+		}
+		return resumen;
+		
 	}
 
 }
