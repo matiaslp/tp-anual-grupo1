@@ -42,7 +42,7 @@ public class Banco extends POI {
 		 * que devuelva si el banco tiene algun servicio disponible. Como el
 		 * cajero siempre está disponible entonces es true.
 		 */
-		if (servicio == "cajero" || servicio == "") {
+		if (servicio.equals("cajero") || servicio.equals("")) {
 			return true;
 		} else {
 			// obtengo el nro del dia de la semana
@@ -116,8 +116,8 @@ public class Banco extends POI {
 			}
 		Banco banco = (Banco)poi;
 
-		if (banco.sucursal == this.sucursal &&
-		banco.gerente == this.gerente)
+		if (banco.sucursal.equals(this.sucursal) &&
+		banco.gerente.equals(this.gerente))
 // TODO
 //		this.compararServicios(filtro);
 			return true;

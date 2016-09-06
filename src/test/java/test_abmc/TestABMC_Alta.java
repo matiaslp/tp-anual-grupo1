@@ -59,7 +59,7 @@ public class TestABMC_Alta {
 	public void altaBanco(){
 		boolean respuesta = DB_Server.agregarPOI(poiDTOBanco.converttoPOI());
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOBanco.getNombre() == DB_Server.getListado().get(DB_Server.getListado().size()-1).getNombre());
+		Assert.assertTrue(poiDTOBanco.getNombre().equals(DB_Server.getListado().get(DB_Server.getListado().size()-1).getNombre()));
 		
 	}
 	
@@ -67,20 +67,20 @@ public class TestABMC_Alta {
 	public void altaCGP(){
 		boolean respuesta = DB_Server.agregarPOI(poiDTOCGP.converttoPOI());
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOCGP.getNombre() == DB_Server.getListado().get(DB_Server.getListado().size()-1).getNombre());
+		Assert.assertTrue(poiDTOCGP.getNombre().equals(DB_Server.getListado().get(DB_Server.getListado().size()-1).getNombre()));
 	}
 	
 	@Test
 	public void altaLocalComercial(){
 		boolean respuesta = DB_Server.agregarPOI(poiDTOComercial.converttoPOI());
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOComercial.getNombre() == DB_Server.getListado().get(DB_Server.getListado().size()-1).getNombre());
+		Assert.assertTrue(poiDTOComercial.getNombre().equals(DB_Server.getListado().get(DB_Server.getListado().size()-1).getNombre()));
 	}
 	
 	@Test
 	public void altaParadaColectivo(){
 		boolean respuesta = DB_Server.agregarPOI(poiDTOColectivo.converttoPOI());
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOColectivo.getNombre() == DB_Server.getListado().get(DB_Server.getListado().size()-1).getNombre());
+		Assert.assertTrue(poiDTOColectivo.getNombre().equals(DB_Server.getListado().get(DB_Server.getListado().size()-1).getNombre()));
 	}
 }

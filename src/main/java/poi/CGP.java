@@ -49,7 +49,7 @@ public class CGP extends POI {
 			// Agarro el proximo nodo, busco un nodo especifico o recorro todo
 			// con ""
 			NodoServicio nodo = iterador.next();
-			if (nodo.getName() == servicio || "" == servicio) {
+			if (nodo.getName().equals(servicio) || "".equals(servicio)) {
 
 				if (nodo.listaDias.contains(calendario.get(Calendar.DAY_OF_WEEK))) {
 					// chequear si el dia esta en la lista de dias disponibles
@@ -116,8 +116,8 @@ public class CGP extends POI {
 			}
 		CGP cgp = (CGP)poi;
 
-			if (cgp.director == this.director &&
-				cgp.telefono == this.telefono)
+			if (cgp.director.equals(this.director) &&
+				cgp.telefono.equals(this.telefono))
 //			this.compararServicios(filtro);
 				return true;
 			else

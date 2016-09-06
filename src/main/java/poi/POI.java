@@ -363,16 +363,16 @@ public abstract class POI {
 			piso == poi.piso &&
 			codigoPostal == poi.codigoPostal &&
 			comuna == poi.comuna &&
-			poi.nombre == this.nombre &&
-			poi.callePrincipal == this.callePrincipal &&
-			poi.calleLateral == this.calleLateral &&
-			poi.departamento == this.departamento &&
-			poi.unidad == this.unidad &&
-			poi.localidad == this.localidad &&
-			poi.barrio == this.barrio &&
-			poi.provincia == this.provincia &&
-			poi.pais == this.pais &&
-			poi.tipo.name() == tipo.name() )
+			poi.nombre.equals(this.nombre) &&
+			poi.callePrincipal.equals(this.callePrincipal) &&
+			poi.calleLateral.equals(this.calleLateral) &&
+			poi.departamento.equals(this.departamento) &&
+			poi.unidad.equals(this.unidad) &&
+			poi.localidad.equals(this.localidad) &&
+			poi.barrio.equals(this.barrio) &&
+			poi.provincia.equals(this.provincia) &&
+			poi.pais.equals(this.pais) &&
+			poi.tipo.name().equals(tipo.name()))
 		
 				return true;
 //		else if (buscarEtiqueta(filtro))
