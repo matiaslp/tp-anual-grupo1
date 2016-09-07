@@ -32,6 +32,7 @@ public class EnviarEmail {
 		boolean enviado=mandarCorreo(texto,titulo,correoRecibe,correoEnvia,claveCorreo);
 		return enviado;
 	}
+	
 	public boolean mandarCorreo(String texto,String titulo,String correoRecibe,String correoEnvia,String claveCorreo) throws MessagingException{
 		
         

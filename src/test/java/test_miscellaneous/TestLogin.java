@@ -13,7 +13,7 @@ import org.junit.Assert;
 public class TestLogin {
 	
 	Usuario prueba;
-	AuthAPI Autenticador;
+	static AuthAPI Autenticador;
 	
 	@Before
 	public void init(){
@@ -23,7 +23,7 @@ public class TestLogin {
 		prueba.setUsername("usuario");
 		
 		Autenticador = new AuthAPI();
-		Autenticador.listaUsuarios.add(prueba);
+		Autenticador.getListaUsuarios().add(prueba);
 		
 	}
 	

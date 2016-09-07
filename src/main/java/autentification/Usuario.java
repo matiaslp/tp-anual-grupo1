@@ -1,11 +1,14 @@
 package autentification;
 
+import java.util.Map;
+
 public class Usuario {
 
 	Rol rol;
 	String username;
 	String password;
 	long id;
+	public Map<String,Accion> funcionalidades;
 	
 	public Rol getRol() {
 		return rol;
