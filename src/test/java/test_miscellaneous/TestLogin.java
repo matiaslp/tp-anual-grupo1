@@ -7,23 +7,40 @@ import org.junit.Test;
 
 import autentification.AuthAPI;
 import autentification.Usuario;
+import autentification.Rol;
+import autentification.funcEnviarMail;
+import autentification.funcCantidadResultadosPorTerminal;
+import autentification.funcBusquedasPorFecha;
+import autentification.funcBusquedaPorUsuario;
+import autentification.funcBusquedaPorId;
 
 import org.junit.Assert;
 
 public class TestLogin {
-	
+	Usuario terminal;
 	Usuario prueba;
 	static AuthAPI Autenticador;
 	
 	@Before
 	public void init(){
+		Autenticador = new AuthAPI();
+
 		prueba = new Usuario();
 		prueba.setID(1);
 		prueba.setPassword("password");
 		prueba.setUsername("usuario");
-		
-		Autenticador = new AuthAPI();
+		prueba.setRol(Rol.ADMIN);
+		prueba.funcionalidades.put("enviarMail",Autenticador.Acciones.get("enviarMail")); //No puedo hacerlo andar D:
 		Autenticador.getListaUsuarios().add(prueba);
+		
+		terminal = new Usuario();
+		terminal.setID(2);
+		terminal.setPassword("pass");
+		terminal.setUsername("terminal");
+		terminal.setRol(Rol.TERMINAL);
+		
+		
+
 		
 	}
 	
@@ -82,6 +99,26 @@ public class TestLogin {
 		Assert.assertFalse(Autenticador.validarToken(token));
 	}
 	
+	@Test
+	public void testCrearUsuario(){
+		Usuario test = Autenticador.crearUsuario("username", "password", Rol.TERMINAL);
+		Assert.assertTrue(test.getUsername().equals("username")&& test.getPassword().equals("password") && test.getRol().equals(Rol.TERMINAL));
+	}
+	
+	@Test
+	public void testAgregarUsuarioFalso(){
+		Assert.assertFalse(Autenticador.agregarUsuarioALista(prueba));
+	}
+	
+	@Test
+	public void testAgregarUsuarioTrue(){
+		Assert.assertTrue(Autenticador.agregarUsuarioALista(Autenticador.crearUsuario("nuevo", "password", Rol.ADMIN)));
+	}
+	
+	@Test 
+	public void agregarFuncionalidadTerminal(){
+		Assert.assertFalse(Autenticador.agregarFuncionalidad("enviarMail", terminal));
+	}
 	
 
 }

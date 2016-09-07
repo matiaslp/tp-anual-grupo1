@@ -25,8 +25,8 @@ public class AuthAPI {
 		Acciones.put("busquedaPorId", new funcBusquedaPorId());
 		Acciones.put("busquedaPorUsuario", new funcBusquedaPorUsuario());
 		Acciones.put("busquedasPorFecha", new funcBusquedasPorFecha());
-		Acciones.put("CantidadResultadosPorTerminal", new funcCantidadResultadosPorTerminal());
-		Acciones.put("EnviarMail", new funcEnviarMail());
+		Acciones.put("cantidadResultadosPorTerminal", new funcCantidadResultadosPorTerminal());
+		Acciones.put("enviarMail", new funcEnviarMail());
 	}
 
 	public ArrayList<Usuario> getListaUsuarios(){
@@ -44,9 +44,18 @@ public class AuthAPI {
 		}
 		return user;
 	}
+	
+	public boolean agregarUsuarioALista(Usuario user){
+		for(Usuario usuario : listaUsuarios){
+			if(user.username.equals(usuario.username) || user.id == usuario.id){
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user){
-		if(user.rol.getNombre().equals("admin")){
+		if(user.rol.equals(Rol.ADMIN)){
 			if(user.funcionalidades.get(funcionalidad)!=null){
 				return false; //ya existe
 			}else{
