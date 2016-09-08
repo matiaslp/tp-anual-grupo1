@@ -1,124 +1,120 @@
 package test_miscellaneous;
+
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import autentification.Accion;
 import autentification.AuthAPI;
-import autentification.Usuario;
 import autentification.Rol;
-import autentification.funcEnviarMail;
-import autentification.funcCantidadResultadosPorTerminal;
-import autentification.funcBusquedasPorFecha;
-import autentification.funcBusquedaPorUsuario;
-import autentification.funcBusquedaPorId;
-
-import org.junit.Assert;
+import autentification.Usuario;
 
 public class TestLogin {
-	Usuario terminal;
-	Usuario prueba;
-	static AuthAPI Autenticador;
-	
+	private Usuario terminal;
+	private Usuario prueba;
+	private AuthAPI Autenticador;
+
 	@Before
-	public void init(){
+	public void init() {
 		Autenticador = AuthAPI.getInstance();
-		
+
 		prueba = new Usuario();
 		prueba.setID(1);
 		prueba.setPassword("password");
 		prueba.setUsername("usuario");
 		prueba.setRol(Rol.ADMIN);
-		prueba.funcionalidades.put("enviarMail",AuthAPI.Acciones.get("enviarMail")); //No puedo hacerlo andar D:
+		prueba.setFuncionalidades(new HashMap<String, Accion>());
+		prueba.getFuncionalidades().put("enviarMail", AuthAPI.Acciones.get("enviarMail")); // No
+	
 		Autenticador.getListaUsuarios().add(prueba);
-		
+
 		terminal = new Usuario();
 		terminal.setID(2);
 		terminal.setPassword("pass");
 		terminal.setUsername("terminal");
 		terminal.setRol(Rol.TERMINAL);
-		
-		
 
-		
 	}
-	
-	
+
 	@Test
-	public void probarHasherLongitud() throws NoSuchAlgorithmException{
+	public void probarHasherLongitud() throws NoSuchAlgorithmException {
 		String hash = Autenticador.hashear(prueba.getPassword());
 		Assert.assertEquals(64, hash.length());
 	}
-	
+
 	@Test
-	public void probarHasherIgualdad() throws NoSuchAlgorithmException{
+	public void probarHasherIgualdad() throws NoSuchAlgorithmException {
 		String hash = Autenticador.hashear(prueba.getPassword());
-		
-		Assert.assertTrue(hash.equals("5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8".toUpperCase()));
+
+		Assert.assertTrue(
+				hash.equals("5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8".toUpperCase()));
 	}
-	
+
 	@Test
-	public void probarTokenLongitud() throws NoSuchAlgorithmException{
-		String token = Autenticador.generarToken(prueba.getUsername(),prueba.getPassword());
-		
+	public void probarTokenLongitud() throws NoSuchAlgorithmException {
+		String token = Autenticador.generarToken(prueba.getUsername(), prueba.getPassword());
+
 		Assert.assertEquals(64, token.length());
 	}
-	
+
 	@Test
-	public void probarRandomToken() throws NoSuchAlgorithmException, InterruptedException{
+	public void probarRandomToken() throws NoSuchAlgorithmException, InterruptedException {
 		String token1 = Autenticador.generarToken(prueba.getUsername(), prueba.getPassword());
 		TimeUnit.SECONDS.sleep(3); // espero a que cambie la hora
 		String token2 = Autenticador.generarToken(prueba.getUsername(), prueba.getPassword());
-		
+
 		Assert.assertFalse(token1.equals(token2));
 	}
-	
+
 	@Test
-	public void testInicioDeSesionCorrecto() throws NoSuchAlgorithmException{
+	public void testInicioDeSesionCorrecto() throws NoSuchAlgorithmException {
 		String token = Autenticador.iniciarSesion(prueba.getUsername(), prueba.getPassword());
-		Assert.assertFalse(token == null);//esto con equals rompe
+		Assert.assertFalse(token == null);// esto con equals rompe
 	}
-	
+
 	@Test
-	public void testInicioDeSesionIncorrecto() throws NoSuchAlgorithmException{
+	public void testInicioDeSesionIncorrecto() throws NoSuchAlgorithmException {
 		String token = Autenticador.iniciarSesion("unUsuario", "unaPass");
 		Assert.assertTrue(token == null); // idem
 	}
-	
+
 	@Test
-	public void testvalidarTokenCorrecto() throws NoSuchAlgorithmException{
-		
+	public void testvalidarTokenCorrecto() throws NoSuchAlgorithmException {
+
 		String token = Autenticador.iniciarSesion(prueba.getUsername(), prueba.getPassword());
 		Assert.assertTrue(Autenticador.validarToken(token));
 	}
-	
+
 	@Test
-	public void testvalidarTokenIncorrecto() throws NoSuchAlgorithmException{
+	public void testvalidarTokenIncorrecto() throws NoSuchAlgorithmException {
 		String token = Autenticador.iniciarSesion("random", "contrasenia");
 		Assert.assertFalse(Autenticador.validarToken(token));
 	}
-	
+
 	@Test
-	public void testCrearUsuario(){
+	public void testCrearUsuario() {
 		Usuario test = Autenticador.crearUsuario("username", "password", Rol.TERMINAL);
-		Assert.assertTrue(test.getUsername().equals("username")&& test.getPassword().equals("password") && test.getRol().equals(Rol.TERMINAL));
+		Assert.assertTrue(test.getUsername().equals("username") && test.getPassword().equals("password")
+				&& test.getRol().equals(Rol.TERMINAL));
 	}
-	
+
 	@Test
-	public void testAgregarUsuarioFalso(){
+	public void testAgregarUsuarioFalso() {
 		Assert.assertFalse(Autenticador.agregarUsuarioALista(prueba));
 	}
-	
+
 	@Test
-	public void testAgregarUsuarioTrue(){
+	public void testAgregarUsuarioTrue() {
 		Assert.assertTrue(Autenticador.agregarUsuarioALista(Autenticador.crearUsuario("nuevo", "password", Rol.ADMIN)));
 	}
-	
-	@Test 
-	public void agregarFuncionalidadTerminal(){
+
+	@Test
+	public void agregarFuncionalidadTerminal() {
 		Assert.assertFalse(Autenticador.agregarFuncionalidad("enviarMail", terminal));
 	}
-	
 
 }

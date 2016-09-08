@@ -9,8 +9,6 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
-import db.DB_Server;
-
 public class AuthAPI {
 	
 	private static AuthAPI instance = null;
@@ -50,14 +48,14 @@ public class AuthAPI {
 		user.setUsername(username);
 		user.setRol(rol);
 		if (rol.getNombre().equals("admin")){
-			user.funcionalidades = new HashMap<String,Accion>();
+			user.setFuncionalidades(new HashMap<String,Accion>());
 		}
 		return user;
 	}
 	
 	public boolean agregarUsuarioALista(Usuario user){
 		for(Usuario usuario : listaUsuarios){
-			if(user.username.equals(usuario.username) || user.id == usuario.id){
+			if(user.getUsername().equals(usuario.getUsername()) || user.getID() == usuario.getID()){
 				return false;
 			}
 		}
@@ -65,11 +63,11 @@ public class AuthAPI {
 	}
 
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user){
-		if(user.rol.equals(Rol.ADMIN)){
-			if(user.funcionalidades.get(funcionalidad)!=null){
+		if(user.getRol().equals(Rol.ADMIN)){
+			if(user.getFuncionalidades().get(funcionalidad)!=null){
 				return false; //ya existe
 			}else{
-				if(user.funcionalidades.put(funcionalidad, Acciones.get(funcionalidad)) != null){
+				if(user.getFuncionalidades().put(funcionalidad, Acciones.get(funcionalidad)) != null){
 					return true;
 				}else{
 					return false; //la funcionalidad no existe.
@@ -81,8 +79,8 @@ public class AuthAPI {
 	}
 
 	public boolean sacarFuncionalidad(String funcionalidad, Usuario user){
-		if(user.rol.getNombre().equals("admin")){
-			if(user.funcionalidades.remove(funcionalidad)!=null){
+		if(user.getRol().getNombre().equals("admin")){
+			if(user.getFuncionalidades().remove(funcionalidad)!=null){
 				return true;
 			}else{
 				return false; //No existe la funcionalidad
@@ -93,7 +91,7 @@ public class AuthAPI {
 	}
 	
 	public boolean chequearFuncionalidad(String funcionalidad, Usuario user){
-		if(user.funcionalidades.get(funcionalidad)!=null){
+		if(user.getFuncionalidades().get(funcionalidad)!=null){
 			return true;
 		}else{
 			return false;
