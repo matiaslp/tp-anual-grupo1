@@ -19,7 +19,6 @@ public class AuthAPI {
 		return instance;
 	}
 
-
 	Map<String, String> diccionarioTokenUser = new HashMap<String, String>();
 	public static Map<String,Accion> Acciones;
 	// ESTA LISTA DE USUARIOS DEBERIA SER LA BASE DE DATOS

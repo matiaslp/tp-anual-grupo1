@@ -10,7 +10,8 @@ public class Usuario {
 	private String password;
 	private long id;
 	private Map<String, Accion> funcionalidades = new HashMap<String, Accion>();
-
+	private String correo;
+	
 	public Rol getRol() {
 		return rol;
 	}
@@ -49,6 +50,14 @@ public class Usuario {
 
 	public void setFuncionalidades(Map<String, Accion> funcionalidades) {
 		this.funcionalidades = funcionalidades;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 
 }
