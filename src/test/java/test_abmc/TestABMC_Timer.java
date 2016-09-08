@@ -52,6 +52,6 @@ public class TestABMC_Timer {
 		Timer timer = new Timer();
 		
 		lista = timer.buscar(ServicioAPI, "Mataderos a b r t",1);
-		Assert.assertTrue(timer.getSeconds() > 1);		
+		Assert.assertTrue(timer.getSeconds() > 1);
 	}
 }

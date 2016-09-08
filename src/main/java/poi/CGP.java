@@ -9,9 +9,10 @@ import geolocation.GeoLocation;
 import helpers.LevDist;
 
 public class CGP extends POI {
+
 	String director;// 3
 	String telefono;// 5
-	
+
 	public String getDirector() {
 		return director;
 	}
@@ -31,7 +32,6 @@ public class CGP extends POI {
 	public void setServicios(ArrayList<NodoServicio> servicios) {
 		this.servicios = servicios;
 	}
-	
 
 	public void agregarServicio(String nombre, ArrayList<Integer> dias, int horaInicio, int horaFin) {
 		NodoServicio nuevoNodo = new NodoServicio();
@@ -108,20 +108,26 @@ public class CGP extends POI {
 
 		return false;
 	}
-	
+
 	@Override
 	public boolean compararPOI(POI poi) {
-		if (!super.compararPOI(poi)){
+		if (!super.compararPOI(poi)) {
 			return false;
-			}
-		CGP cgp = (CGP)poi;
+		}
 
-			if (cgp.director.equals(this.director) &&
-				cgp.telefono.equals(this.telefono))
-//			this.compararServicios(filtro);
-				return true;
-			else
+		CGP other = (CGP) poi;
+
+		if (director == null) {
+			if (other.director != null)
 				return false;
+		} else if (!director.equals(other.director))
+			return false;
+		if (telefono == null) {
+			if (other.telefono != null)
+				return false;
+		} else if (!telefono.equals(other.telefono))
+			return false;
+		return true;
 	}
 
 	@Override

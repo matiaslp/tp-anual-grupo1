@@ -10,7 +10,7 @@ public class Banco extends POI {
 
 	String sucursal;
 	String gerente;
-	
+
 	public String getSucursal() {
 		return sucursal;
 	}
@@ -18,7 +18,7 @@ public class Banco extends POI {
 	public void setSucursal(String sucursal) {
 		this.sucursal = sucursal;
 	}
-	
+
 	public String getGerente() {
 		return gerente;
 	}
@@ -91,9 +91,9 @@ public class Banco extends POI {
 	@Override
 	public boolean busquedaEstandar(String filtros[]) {
 
-		if (super.busquedaEstandar(filtros)){
+		if (super.busquedaEstandar(filtros)) {
 			return true;
-			}
+		}
 
 		for (String filtro : filtros) {
 			if (LevDist.calcularDistancia(filtro, this.sucursal)) {
@@ -108,21 +108,24 @@ public class Banco extends POI {
 		return false;
 
 	}
-	
+
 	@Override
 	public boolean compararPOI(POI poi) {
-		if (!super.compararPOI(poi)){
+		if (!super.compararPOI(poi)) {
 			return false;
-			}
-		Banco banco = (Banco)poi;
-
-		if (banco.sucursal.equals(this.sucursal) &&
-		banco.gerente.equals(this.gerente))
-// TODO
-//		this.compararServicios(filtro);
-			return true;
-		else
+		}
+		Banco other = (Banco) poi;
+		if (gerente == null) {
+			if (other.gerente != null)
+				return false;
+		} else if (!gerente.equals(other.gerente))
 			return false;
+		if (sucursal == null) {
+			if (other.sucursal != null)
+				return false;
+		} else if (!sucursal.equals(other.sucursal))
+			return false;
+		return true;
 	}
 
 }

@@ -8,7 +8,7 @@ import helpers.LevDist;
 import helpers.MetodosComunes;
 
 public abstract class POI {
-
+	
 	long id;
 	String nombre;
 	String callePrincipal;
@@ -359,26 +359,63 @@ public abstract class POI {
 	}
 	
 	public boolean compararPOI(POI poi){
-		if ( numeracion == poi.numeracion &&
-			piso == poi.piso &&
-			codigoPostal == poi.codigoPostal &&
-			comuna == poi.comuna &&
-			poi.nombre.equals(this.nombre) &&
-			poi.callePrincipal.equals(this.callePrincipal) &&
-			poi.calleLateral.equals(this.calleLateral) &&
-			poi.departamento.equals(this.departamento) &&
-			poi.unidad.equals(this.unidad) &&
-			poi.localidad.equals(this.localidad) &&
-			poi.barrio.equals(this.barrio) &&
-			poi.provincia.equals(this.provincia) &&
-			poi.pais.equals(this.pais) &&
-			poi.tipo.name().equals(tipo.name()))
-		
-				return true;
-//		else if (buscarEtiqueta(filtro))
-//			return true;
-		else 
+		POI other = (POI) poi;
+		if (calleLateral == null) {
+			if (other.calleLateral != null)
+				return false;
+		} else if (!calleLateral.equals(other.calleLateral))
 			return false;
-		
+		if (callePrincipal == null) {
+			if (other.callePrincipal != null)
+				return false;
+		} else if (!callePrincipal.equals(other.callePrincipal))
+			return false;
+		if (codigoPostal != other.codigoPostal)
+			return false;
+		if (comuna != other.comuna)
+			return false;
+		if (departamento == null) {
+			if (other.departamento != null)
+				return false;
+		} else if (!departamento.equals(other.departamento))
+			return false;
+		if (localidad == null) {
+			if (other.localidad != null)
+				return false;
+		} else if (!localidad.equals(other.localidad))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (numeracion != other.numeracion)
+			return false;
+		if (pais == null) {
+			if (other.pais != null)
+				return false;
+		} else if (!pais.equals(other.pais))
+			return false;
+		if (piso != other.piso)
+			return false;
+		if (provincia == null) {
+			if (other.provincia != null)
+				return false;
+		} else if (!provincia.equals(other.provincia))
+			return false;
+		if (tipo != other.tipo)
+			return false;
+		if (barrio == null) {
+			if (other.barrio != null)
+				return false;
+		} else if (!barrio.equals(other.barrio))
+			return false;
+		if (unidad == null) {
+			if (other.unidad != null)
+				return false;
+		} else if (!unidad.equals(other.unidad))
+			return false;
+		return true;
 	}
+
 }
