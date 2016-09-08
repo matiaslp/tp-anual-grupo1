@@ -142,4 +142,10 @@ public class AuthAPI {
 		return false;
 	}
 
+	public Map<String, Accion> getAcciones() {
+		return Acciones;
+	}
+	
+	
+
 }

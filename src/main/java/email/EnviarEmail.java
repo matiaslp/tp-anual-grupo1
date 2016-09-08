@@ -18,11 +18,10 @@ import helpers.LeerProperties;
 
 public abstract class EnviarEmail {
 
-	public static boolean mandarCorreoXSegundos(String nombreDeBusqueda, double segundos) throws MessagingException {
+	public static boolean mandarCorreoXSegundos(String nombreDeBusqueda, double segundos, String correoRecibe) throws MessagingException {
 
 		String correoEnvia = LeerProperties.getInstance().prop.getProperty("email");
 		String claveCorreo = LeerProperties.getInstance().prop.getProperty("emailPassword");
-		String correoRecibe = LeerProperties.getInstance().prop.getProperty("emailAdmin");
 
 		String texto = "Busqueda " + nombreDeBusqueda + " demoro mas de " + segundos + " segundos.";
 		String titulo = "Demora de busqueda";

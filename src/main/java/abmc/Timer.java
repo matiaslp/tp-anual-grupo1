@@ -14,7 +14,7 @@ public class Timer implements Busqueda {
 
 	long seconds;
 	@Override
-	public ArrayList<POI> buscar(String url, String texto,long userID) throws JSONException, MalformedURLException, IOException {
+	public ArrayList<POI> buscar(String url, String texto,long userID) {
 		
 		//start timer
 		DateTime start = new DateTime();

@@ -8,7 +8,7 @@ import db.RegistroHistorico;
 
 public abstract class Accion {
 	
-	public boolean enviarMail(String nombreDeBusqueda, Long Segundos) throws MessagingException {
+	public boolean enviarMail(String nombreDeBusqueda, String correo) throws MessagingException {
 		return false;
 	}
 	
