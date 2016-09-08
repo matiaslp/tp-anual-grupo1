@@ -9,7 +9,17 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
+import db.DB_Server;
+
 public class AuthAPI {
+	
+	private static AuthAPI instance = null;
+	
+	public static AuthAPI getInstance() {
+		if(instance == null)
+			instance = new AuthAPI();
+		return instance;
+	}
 
 
 	Map<String, String> diccionarioTokenUser = new HashMap<String, String>();
