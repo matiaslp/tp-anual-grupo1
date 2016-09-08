@@ -58,6 +58,7 @@ public class AuthAPI {
 				return false;
 			}
 		}
+		listaUsuarios.add(user);
 		return true;
 	}
 

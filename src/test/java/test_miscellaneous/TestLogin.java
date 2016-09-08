@@ -109,7 +109,8 @@ public class TestLogin {
 
 	@Test
 	public void testAgregarUsuarioTrue() {
-		Assert.assertTrue(Autenticador.agregarUsuarioALista(Autenticador.crearUsuario("nuevo", "password", Rol.ADMIN)));
+		Autenticador.agregarUsuarioALista(Autenticador.crearUsuario("nuevo", "password", Rol.ADMIN));
+		Assert.assertTrue(Autenticador.getListaUsuarios().size() > 2);
 	}
 
 	@Test
