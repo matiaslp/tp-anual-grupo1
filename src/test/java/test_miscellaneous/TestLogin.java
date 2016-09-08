@@ -28,8 +28,8 @@ public class TestLogin {
 		prueba.setUsername("usuario");
 		prueba.setRol(Rol.ADMIN);
 		prueba.setFuncionalidades(new HashMap<String, Accion>());
-		prueba.getFuncionalidades().put("enviarMail", AuthAPI.Acciones.get("enviarMail")); // No
-	
+		prueba.getFuncionalidades().put("enviarMail", AuthAPI.Acciones.get("enviarMail"));
+		
 		Autenticador.getListaUsuarios().add(prueba);
 
 		terminal = new Usuario();
