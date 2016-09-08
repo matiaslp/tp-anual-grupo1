@@ -26,7 +26,7 @@ public class TestEMailDeDistancia {
 	public void mandarCorreoDemoraXSegundosBusqueda() throws MessagingException {
 
 		// PONER LA BUSQUEDA QUE SE REALIZO Y SU TIEMPO
-		envio = EnviarEmail.mandarCorreoXSegundos("busquedaRubro", 3333.2);
+		envio = EnviarEmail.mandarCorreoXSegundos("busquedaRubro", 3333.2, LeerProperties.getInstance().prop.getProperty("emailAdmin"));
 		Assert.assertTrue(envio);
 	}
 }

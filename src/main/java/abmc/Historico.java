@@ -20,7 +20,7 @@ import autentification.funcEnviarMail;
 public class Historico implements Busqueda {
 
 	@Override
-	public ArrayList<POI> buscar(String url, String texto, long userID) {
+	public ArrayList<POI> buscar(String url, String texto, long userID) throws JSONException, MalformedURLException, IOException {
 		
 		DateTime now = new DateTime();		
 		// new timer
