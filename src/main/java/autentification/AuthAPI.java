@@ -10,10 +10,10 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
-import autentification.funciones.funcBusquedaPorUsuario;
-import autentification.funciones.funcBusquedasPorFecha;
-import autentification.funciones.funcCantidadResultadosPorTerminal;
-import autentification.funciones.funcEnviarMail;
+import autentification.funciones.FuncBusquedaPorUsuario;
+import autentification.funciones.FuncBusquedasPorFecha;
+import autentification.funciones.FuncCantidadResultadosPorTerminal;
+import autentification.funciones.FuncEnviarMail;
 
 public class AuthAPI {
 
@@ -35,10 +35,10 @@ public class AuthAPI {
 		Acciones = new HashMap<String, Accion>();
 		// ESTA LISTA DE USUARIOS DEBERIA SER LA BASE DE DATOS
 		listaUsuarios = new ArrayList<Usuario>();
-		Acciones.put("busquedaPorUsuario", new funcBusquedaPorUsuario());
-		Acciones.put("busquedasPorFecha", new funcBusquedasPorFecha());
-		Acciones.put("cantidadResultadosPorTerminal", new funcCantidadResultadosPorTerminal());
-		Acciones.put("enviarMail", new funcEnviarMail());
+		Acciones.put("busquedaPorUsuario", new FuncBusquedaPorUsuario());
+		Acciones.put("busquedasPorFecha", new FuncBusquedasPorFecha());
+		Acciones.put("cantidadResultadosPorTerminal", new FuncCantidadResultadosPorTerminal());
+		Acciones.put("enviarMail", new FuncEnviarMail());
 	}
 
 	public ArrayList<Usuario> getListaUsuarios() {

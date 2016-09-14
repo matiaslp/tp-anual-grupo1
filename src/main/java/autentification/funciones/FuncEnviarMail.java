@@ -6,7 +6,7 @@ import autentification.Accion;
 import email.EnviarEmail;
 import helpers.LeerProperties;
 
-public class funcEnviarMail extends Accion {
+public class FuncEnviarMail extends Accion {
 
 	@Override
 	public boolean enviarMail(String nombreDeBusqueda, String correo) throws MessagingException {

@@ -13,7 +13,7 @@ import autentification.AuthAPI;
 import autentification.Usuario;
 import db.DB_HistorialBusquedas;
 import db.RegistroHistorico;
-import autentification.funciones.funcEnviarMail;
+import autentification.funciones.FuncEnviarMail;
 import helpers.LeerProperties;
 import poi.POI;
 
@@ -28,7 +28,7 @@ public class Historico implements Busqueda {
 		Timer timer = new Timer();
 		ArrayList<POI> resultado = timer.buscar(url, texto, userID);
 
-		funcEnviarMail funcMail = ((funcEnviarMail) AuthAPI.getInstance().getAcciones().get("enviarMail"));
+		FuncEnviarMail funcMail = ((FuncEnviarMail) AuthAPI.getInstance().getAcciones().get("enviarMail"));
 		if (timer.getSeconds() > Integer
 				.valueOf(LeerProperties.getInstance().prop.getProperty("segundosDeDemoraParaEmail"))) {
 			for (Usuario usuario : AuthAPI.getInstance().getListaUsuarios()) {

@@ -5,7 +5,7 @@ import java.util.Map;
 import autentification.Accion;
 import db.DB_HistorialBusquedas;
 
-public class funcBusquedasPorFecha extends Accion {
+public class FuncBusquedasPorFecha extends Accion {
 
 	@Override
 	public Map<String, Long> obtenerBusquedasPorFecha() {

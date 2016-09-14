@@ -5,7 +5,7 @@ import java.util.Map;
 import autentification.Accion;
 import db.DB_HistorialBusquedas;
 
-public class funcCantidadResultadosPorTerminal extends Accion {
+public class FuncCantidadResultadosPorTerminal extends Accion {
 
 	@Override
 	public Map<Long, Long> obtenerCantidadResultadosPorTerminal(long terminal) {
