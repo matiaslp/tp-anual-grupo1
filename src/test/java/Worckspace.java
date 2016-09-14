@@ -1,6 +1,4 @@
 
-
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -14,11 +12,9 @@ import abmc.POI_ABMC;
 import email.EnviarEmail;
 import poi.POI;
 
-
 public class Worckspace {
 	public static void main(String[] args) throws Exception {
-		
+
 	}
-	
 
 }

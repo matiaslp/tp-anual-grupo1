@@ -4,14 +4,14 @@ public class Rubro {
 	private String nombre;
 	private int cercania;
 
-	public Rubro(String nombre){
+	public Rubro(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	public String getNombre(){
+
+	public String getNombre() {
 		return this.nombre;
 	}
-	
+
 	public int getCercania() {
 		return cercania;
 	}
@@ -19,6 +19,5 @@ public class Rubro {
 	public void setCercania(int distancia) {
 		this.cercania = distancia;
 	}
-	
 
 }

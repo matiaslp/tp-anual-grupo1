@@ -12,7 +12,7 @@ public class LeerProperties {
 
 	public LeerProperties() {
 		prop = new Properties();
-		
+
 		try (InputStream input = new FileInputStream("config.properties")) {
 
 			// load a properties file
@@ -22,7 +22,6 @@ public class LeerProperties {
 			ex.printStackTrace();
 		}
 	}
-
 
 	public static LeerProperties getInstance() {
 		if (instance == null)

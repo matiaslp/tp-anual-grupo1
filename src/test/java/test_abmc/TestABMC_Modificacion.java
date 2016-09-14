@@ -1,4 +1,5 @@
 package test_abmc;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,99 +13,101 @@ import poi.TiposPOI;
 public class TestABMC_Modificacion {
 	POI_ABMC abmc = new POI_ABMC();
 	POI_ABMC poi_abmc;
-	POI_DTO poiDTOBanco; 
+	POI_DTO poiDTOBanco;
 	POI_DTO poiDTOCGP;
 	POI_DTO poiDTOComercial;
 	POI_DTO poiDTOColectivo;
 	Rubro rubro;
 	DB_Server unServer;
 	DB_Server instancia;
-	
+
 	@Before
-	public void init(){
-		
-		poi_abmc =new POI_ABMC();
+	public void init() {
+
+		poi_abmc = new POI_ABMC();
 		unServer = new DB_Server();
 		instancia = unServer.getInstance();
-		
-		poiDTOBanco = new POI_DTO();		
+
+		poiDTOBanco = new POI_DTO();
 		poiDTOBanco.setTipo(TiposPOI.BANCO);
 		poiDTOBanco.setNombre("unBancoJorge!");
 		poiDTOBanco.setLatitud(-34.5664823);
 		poiDTOBanco.setLongitud(-34.5664823);
-		
+
 		poiDTOCGP = new POI_DTO();
-		poiDTOCGP.setTipo( TiposPOI.CGP);
+		poiDTOCGP.setTipo(TiposPOI.CGP);
 		poiDTOCGP.setNombre("unCGP");
 		poiDTOCGP.setLatitud(-34.5664823);
 		poiDTOCGP.setLongitud(-34.5664823);
-		poiDTOCGP.setRubro(rubro= new Rubro("unRubro"));
-		
+		poiDTOCGP.setRubro(rubro = new Rubro("unRubro"));
+
 		poiDTOComercial = new POI_DTO();
-		poiDTOComercial.setTipo( TiposPOI.LOCAL_COMERCIAL);
+		poiDTOComercial.setTipo(TiposPOI.LOCAL_COMERCIAL);
 		poiDTOComercial.setNombre("unLocalComercial");
 		poiDTOComercial.setLatitud(-34.5664823);
 		poiDTOComercial.setLongitud(-34.5664823);
-		
+
 		poiDTOColectivo = new POI_DTO();
-		poiDTOColectivo.setTipo( TiposPOI.PARADA_COLECTIVO);
+		poiDTOColectivo.setTipo(TiposPOI.PARADA_COLECTIVO);
 		poiDTOColectivo.setNombre("unaParadaDeColectivo");
 		poiDTOColectivo.setLatitud(-34.5664823);
 		poiDTOColectivo.setLongitud(-34.5664823);
 
-// Se crean 4 POIs (uno por cada tipo)
+		// Se crean 4 POIs (uno por cada tipo)
 		DB_Server.agregarPOI(poiDTOBanco.converttoPOI());
 		DB_Server.agregarPOI(poiDTOCGP.converttoPOI());
 		DB_Server.agregarPOI(poiDTOComercial.converttoPOI());
 		DB_Server.agregarPOI(poiDTOColectivo.converttoPOI());
-}
-	
+	}
+
 	@Test
-	public void modificacionBanco(){
-		
+	public void modificacionBanco() {
+
 		poiDTOBanco.setNombre("unBancoModificado");
 		poiDTOBanco.setId(1);
-		boolean respuesta=poi_abmc.modificar(poiDTOBanco);
+		boolean respuesta = poi_abmc.modificar(poiDTOBanco);
 		Assert.assertTrue(respuesta);
 	}
-	
+
 	@Test
-	public void modificacionCGP(){
+	public void modificacionCGP() {
 		poiDTOCGP.setNombre("unCGPModificado");
 		poiDTOCGP.setId(2);
-		boolean respuesta=poi_abmc.modificar(poiDTOCGP);
+		boolean respuesta = poi_abmc.modificar(poiDTOCGP);
 		Assert.assertTrue(respuesta);
 	}
-	
+
 	@Test
-	public void modificacionLocalComercial(){
+	public void modificacionLocalComercial() {
 		poiDTOComercial.setNombre("unLocalComercialModificado");
 		poiDTOComercial.setId(3);
-		boolean respuesta=poi_abmc.modificar(poiDTOComercial);
+		boolean respuesta = poi_abmc.modificar(poiDTOComercial);
 		Assert.assertTrue(respuesta);
 	}
-	
+
 	@Test
-	public void modificacionParadaColectivo(){
+	public void modificacionParadaColectivo() {
 		poiDTOColectivo.setNombre("unaParadaColectivoModificado");
 		poiDTOColectivo.setId(4);
-		boolean respuesta=poi_abmc.modificar(poiDTOColectivo);
+		boolean respuesta = poi_abmc.modificar(poiDTOColectivo);
 		Assert.assertTrue(respuesta);
 	}
+
 	// Test modificacion POI inexistente
 	@Test
-	public void modificacionPOIInexistente(){
+	public void modificacionPOIInexistente() {
 		poiDTOColectivo.setNombre("unaParadaColectivoModificado");
 		poiDTOColectivo.setId(5);
-		boolean respuesta=poi_abmc.modificar(poiDTOColectivo);
+		boolean respuesta = poi_abmc.modificar(poiDTOColectivo);
 		Assert.assertFalse(respuesta);
 	}
+
 	// Test modificacion de todos los atributos de un POI (de Banco a Colectivo)
 	@Test
-	public void modificacionPOITodosLosAtributos(){
+	public void modificacionPOITodosLosAtributos() {
 		poiDTOColectivo.setNombre("unaParadaColectivoModificado");
 		poiDTOColectivo.setId(1);
-		boolean respuesta=poi_abmc.modificar(poiDTOColectivo);
+		boolean respuesta = poi_abmc.modificar(poiDTOColectivo);
 		Assert.assertTrue(respuesta);
 	}
 }

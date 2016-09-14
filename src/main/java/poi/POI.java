@@ -8,7 +8,7 @@ import helpers.LevDist;
 import helpers.MetodosComunes;
 
 public abstract class POI {
-	
+
 	long id;
 	String nombre;
 	String callePrincipal;
@@ -289,14 +289,12 @@ public abstract class POI {
 	}
 
 	public boolean busquedaEstandar(String filtros[]) {
-		
-		
 
-//		List<String> filtros = new ArrayList<String>();
-//		if (texto1 != null )
-//			filtros.add(texto1);
-//		if (texto2 != null )
-//			filtros.add(texto2);
+		// List<String> filtros = new ArrayList<String>();
+		// if (texto1 != null )
+		// filtros.add(texto1);
+		// if (texto2 != null )
+		// filtros.add(texto2);
 		for (String filtro : filtros) {
 			if (MetodosComunes.isNumeric(filtro)) {
 				long valor = Long.parseLong(filtro);
@@ -355,10 +353,10 @@ public abstract class POI {
 		}
 
 		return false;
-		
+
 	}
-	
-	public boolean compararPOI(POI poi){
+
+	public boolean compararPOI(POI poi) {
 		POI other = (POI) poi;
 		if (calleLateral == null) {
 			if (other.calleLateral != null)

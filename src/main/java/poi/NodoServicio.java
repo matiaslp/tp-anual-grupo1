@@ -3,38 +3,38 @@ package poi;
 import java.util.ArrayList;
 
 public class NodoServicio {
-	
+
 	String nombre;
 	ArrayList<Integer> listaDias = new ArrayList<Integer>();
 	int horaInicio;
 	int horaFin;
-	
-	public void setName(String nombre){
+
+	public void setName(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return this.nombre;
 	}
 
-	public void agregarDia(Integer numero){
+	public void agregarDia(Integer numero) {
 		listaDias.add(numero);
 	}
-	
-	public ArrayList<Integer> getListaDias(){
+
+	public ArrayList<Integer> getListaDias() {
 		return this.listaDias;
 	}
-	
-	public void setHoras(int inicio, int fin){
-		this.horaInicio=inicio;
+
+	public void setHoras(int inicio, int fin) {
+		this.horaInicio = inicio;
 		this.horaFin = fin;
 	}
-	
-	public int getHoraInicio(){
+
+	public int getHoraInicio() {
 		return this.horaInicio;
 	}
 
-	public int getHoraFin(){
+	public int getHoraFin() {
 		return this.horaFin;
 	}
 }

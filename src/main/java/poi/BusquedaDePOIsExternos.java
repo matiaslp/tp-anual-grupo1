@@ -23,7 +23,7 @@ public class BusquedaDePOIsExternos {
 		// http://trimatek.org/Consultas/banco?banco=Santander&servicio=Pagos
 		if (textoLibre1 != "" || textoLibre2 != "") {
 			urlCreada = url + "banco?banco=" + textoLibre1 + "&servicio=" + textoLibre2;
-			
+
 			listaResultado = Banco_Converter.getBancos(urlCreada);
 
 			for (POI_DTO poi_dto : listaResultado) {
@@ -33,17 +33,18 @@ public class BusquedaDePOIsExternos {
 				poi = poi_dto.converttoPOI();
 				listaResultadoEnPOI.add(poi);
 			}
-//			urlCreada = url + "banco?banco=" + textoLibre2 + "&servicio=" + textoLibre1;
-//
-//			listaResultado = Banco_Converter.getBancos(urlCreada);
-//
-//			for (POI_DTO poi_dto : listaResultado) {
-//				// Setiando tipo de POI
-//				poi_dto.setTipo(TiposPOI.BANCO);
-//				// Convirtiendo
-//				poi = poi_dto.converttoPOI();
-//				listaResultadoEnPOI.add(poi);
-//			}
+			// urlCreada = url + "banco?banco=" + textoLibre2 + "&servicio=" +
+			// textoLibre1;
+			//
+			// listaResultado = Banco_Converter.getBancos(urlCreada);
+			//
+			// for (POI_DTO poi_dto : listaResultado) {
+			// // Setiando tipo de POI
+			// poi_dto.setTipo(TiposPOI.BANCO);
+			// // Convirtiendo
+			// poi = poi_dto.converttoPOI();
+			// listaResultadoEnPOI.add(poi);
+			// }
 		}
 
 		return listaResultadoEnPOI;
@@ -77,16 +78,16 @@ public class BusquedaDePOIsExternos {
 				poi_dto.setTipo(TiposPOI.CGP);
 				// Convirtiendo
 				poi = poi_dto.converttoPOI();
-//				if (!listaResultadoEnPOI.contains(poi))
-						   listaResultadoEnPOI.add(poi);
+				// if (!listaResultadoEnPOI.contains(poi))
+				listaResultadoEnPOI.add(poi);
 			}
 			// agrego listaResultado2 y convierto
 			for (POI_DTO poi_dto : listaResultado2) {
 				poi_dto.setTipo(TiposPOI.CGP);
 				// Convirtiendo
 				poi = poi_dto.converttoPOI();
-//				if (!listaResultadoEnPOI.contains(poi))
-					   listaResultadoEnPOI.add(poi);
+				// if (!listaResultadoEnPOI.contains(poi))
+				listaResultadoEnPOI.add(poi);
 			}
 		}
 

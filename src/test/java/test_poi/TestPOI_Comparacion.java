@@ -1,4 +1,5 @@
 package test_poi;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,20 +19,18 @@ public class TestPOI_Comparacion {
 
 	CGP unCGP = new CGP("unCGP", 100, 20);
 	CGP otroCGP = new CGP("otroCGP", 100, 20);
-	
+
 	Rubro unRubro = new Rubro("Ferreteria");
 	LocalComercial unLocal = new LocalComercial("unLocal", 50, 100, unRubro);
 	Rubro otroRubro = new Rubro("Farmacia");
 	LocalComercial otroLocal = new LocalComercial("otroLocal", 50, 100, otroRubro);
-	
+
 	ParadaColectivo unaParada = new ParadaColectivo("La del 7", 10, 10);
 	ParadaColectivo otraParada = new ParadaColectivo("La del 114", 10, 10);
-	
-	
+
 	@Before
-	public void init()
-	{
-		
+	public void init() {
+
 		unBanco.setTipo(TiposPOI.BANCO);
 		unBanco.setSucursal("Martinez");
 		unBanco.setGerente("Carlo");
@@ -61,7 +60,7 @@ public class TestPOI_Comparacion {
 		otroBanco.setBarrio("Boedo");
 		otroBanco.setProvincia("Buenos Aires");
 		otroBanco.setPais("Argentina");
-		
+
 		bancoNull.setTipo(TiposPOI.BANCO);
 		bancoNull.setSucursal("Martinez");
 		bancoNull.setGerente("Carlo");
@@ -72,7 +71,7 @@ public class TestPOI_Comparacion {
 		bancoNull.setBarrio("Boedo");
 		bancoNull.setProvincia("Buenos Aires");
 		bancoNull.setPais("Argentina");
-		
+
 		unCGP.setTipo(TiposPOI.CGP);
 		unCGP.setDirector("Cacho");
 		unCGP.setTelefono("42");
@@ -87,7 +86,7 @@ public class TestPOI_Comparacion {
 		unCGP.setBarrio("Boedo");
 		unCGP.setProvincia("Buenos Aires");
 		unCGP.setPais("Argentina");
-		
+
 		otroCGP.setTipo(TiposPOI.CGP);
 		otroCGP.setDirector("Marta");
 		otroCGP.setTelefono("42221");
@@ -102,7 +101,7 @@ public class TestPOI_Comparacion {
 		otroCGP.setBarrio("Boedo");
 		otroCGP.setProvincia("Buenos Aires");
 		otroCGP.setPais("Argentina");
-		
+
 		unLocal.setTipo(TiposPOI.LOCAL_COMERCIAL);
 		unLocal.setPiso(1);
 		unLocal.setCodigoPostal(1640);
@@ -115,7 +114,7 @@ public class TestPOI_Comparacion {
 		unLocal.setBarrio("Boedo");
 		unLocal.setProvincia("Buenos Aires");
 		unLocal.setPais("Argentina");
-		
+
 		otroLocal.setTipo(TiposPOI.LOCAL_COMERCIAL);
 		otroLocal.setPiso(1);
 		otroLocal.setCodigoPostal(1640);
@@ -128,7 +127,7 @@ public class TestPOI_Comparacion {
 		otroLocal.setBarrio("Boedo");
 		otroLocal.setProvincia("Buenos Aires");
 		otroLocal.setPais("Argentina");
-		
+
 		unaParada.setTipo(TiposPOI.PARADA_COLECTIVO);
 		unaParada.setDistancia(60);
 		unaParada.setPiso(1);
@@ -142,7 +141,7 @@ public class TestPOI_Comparacion {
 		unaParada.setBarrio("Boedo");
 		unaParada.setProvincia("Buenos Aires");
 		unaParada.setPais("Argentina");
-		
+
 		otraParada.setTipo(TiposPOI.PARADA_COLECTIVO);
 		otraParada.setDistancia(30);
 		otraParada.setPiso(1);
@@ -156,64 +155,62 @@ public class TestPOI_Comparacion {
 		otraParada.setBarrio("Boedo");
 		otraParada.setProvincia("Buenos Aires");
 		otraParada.setPais("Argentina");
-		
+
 	}
-	
-	/* Servicios
-	 * Etiquetas
+
+	/*
+	 * Servicios Etiquetas
 	 */
-	
+
 	@Test
-	public void testBancosIguales(){
+	public void testBancosIguales() {
 		Assert.assertTrue(unBanco.compararPOI(unBanco));
 	}
-	
+
 	@Test
-	public void testBancosDistinos(){
+	public void testBancosDistinos() {
 		Assert.assertFalse(unBanco.compararPOI(otroBanco));
 	}
-		
+
 	@Test
-	public void testCGPIguales(){
+	public void testCGPIguales() {
 		Assert.assertTrue(unCGP.compararPOI(unCGP));
 	}
-	
+
 	@Test
-	public void testCGPDistintos(){
+	public void testCGPDistintos() {
 		Assert.assertFalse(unCGP.compararPOI(otroCGP));
 	}
-	
+
 	@Test
-	public void testLocalComercialIguales(){
+	public void testLocalComercialIguales() {
 		Assert.assertTrue(unLocal.compararPOI(unLocal));
 	}
-	
+
 	@Test
-	public void testLocalComeralDistinto(){
+	public void testLocalComeralDistinto() {
 		Assert.assertFalse(unLocal.compararPOI(otroLocal));
 	}
-	
+
 	@Test
-	public void testParadaColectivoIgual(){
+	public void testParadaColectivoIgual() {
 		Assert.assertTrue(unaParada.compararPOI(unaParada));
 	}
-	
+
 	@Test
-	public void testParadaColectivoDistinta(){
+	public void testParadaColectivoDistinta() {
 		Assert.assertFalse(unaParada.compararPOI(otraParada));
 	}
-	
+
 	@Test
-	public void testTiposPOI(){
+	public void testTiposPOI() {
 		boolean respuesta = unBanco.compararPOI(unCGP);
 		Assert.assertFalse(respuesta);
 	}
-	
+
 	@Test
-	public void testBancoConNull(){
+	public void testBancoConNull() {
 		Assert.assertFalse(unBanco.compararPOI(bancoNull));
 	}
-	
-	
-	
+
 }

@@ -1,4 +1,5 @@
 package test_abmc;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -20,36 +21,37 @@ import poi.ParadaColectivo;
 public class TestABMC_Historico {
 	POI_ABMC abmc;
 	String ServicioAPI;
-	
+
 	Banco banco = new Banco("Santander", 0, 0);
-	LocalComercial local = new LocalComercial("Localcito", 0, 0,null);
+	LocalComercial local = new LocalComercial("Localcito", 0, 0, null);
 	ParadaColectivo parada = new ParadaColectivo("47", 0, 0);
 	CGP cgp = new CGP("Mataderos", 0, 0);
 	Historico historico;
+
 	@Before
-	public void inicializar(){
+	public void inicializar() {
 		abmc = new POI_ABMC();
 
 		new DB_Server();
-		
-		
+
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");
 		banco.setCallePrincipal("Alberdi");
 		banco.setCalleLateral("Escalada");
 		ServicioAPI = "http://trimatek.org/Consultas/";
 		historico = new Historico();
-				
+
 	}
+
 	// La cantidad de registros aumenta como consecuencua de otros tests
 	@Test
-	public void testHistorico() throws JSONException, MalformedURLException, IOException{
+	public void testHistorico() throws JSONException, MalformedURLException, IOException {
 		DB_Server.agregarPOI(cgp);
 		DB_Server.agregarPOI(parada);
 		DB_Server.agregarPOI(local);
 		DB_Server.agregarPOI(banco);
-		
-		historico.buscar(ServicioAPI, "Mataderos",1);
+
+		historico.buscar(ServicioAPI, "Mataderos", 1);
 		Assert.assertTrue(DB_HistorialBusquedas.getInstance().cantidadRegistros() == 1);
 		RegistroHistorico reg = DB_HistorialBusquedas.getInstance().registroHistoricoPorId(1);
 		Assert.assertTrue(reg.getTiempoDeConsulta() == 1);

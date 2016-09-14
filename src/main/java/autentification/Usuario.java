@@ -11,7 +11,7 @@ public class Usuario {
 	private long id;
 	private Map<String, Accion> funcionalidades = new HashMap<String, Accion>();
 	private String correo;
-	
+
 	public Rol getRol() {
 		return rol;
 	}

@@ -10,8 +10,7 @@ import poi.POI;
 
 public interface Busqueda {
 
-	public ArrayList<POI> buscar(String url,String texto, long userID) throws JSONException, MalformedURLException, IOException;
-	
-	
-	
+	public ArrayList<POI> buscar(String url, String texto, long userID)
+			throws JSONException, MalformedURLException, IOException;
+
 }

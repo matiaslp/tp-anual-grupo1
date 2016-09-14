@@ -17,26 +17,28 @@ package geolocation;
 import helpers.LeerProperties;
 
 public class GeoLocation {
-	
+
 	public static double RADIUS = 6371010;
 
-	private double radLat;  // latitude in radians
-	private double radLon;  // longitude in radians
+	private double radLat; // latitude in radians
+	private double radLon; // longitude in radians
 
-	private double degLat;  // latitude in degrees
-	private double degLon;  // longitude in degrees
+	private double degLat; // latitude in degrees
+	private double degLon; // longitude in degrees
 
-	private static final double MIN_LAT = Math.toRadians(-90d);  // -PI/2
-	private static final double MAX_LAT = Math.toRadians(90d);   //  PI/2
+	private static final double MIN_LAT = Math.toRadians(-90d); // -PI/2
+	private static final double MAX_LAT = Math.toRadians(90d); // PI/2
 	private static final double MIN_LON = Math.toRadians(-180d); // -PI
-	private static final double MAX_LON = Math.toRadians(180d);  //  PI
+	private static final double MAX_LON = Math.toRadians(180d); // PI
 
-	private GeoLocation () {
+	private GeoLocation() {
 	}
 
 	/**
-	 * @param latitude the latitude, in degrees.
-	 * @param longitude the longitude, in degrees.
+	 * @param latitude
+	 *            the latitude, in degrees.
+	 * @param longitude
+	 *            the longitude, in degrees.
 	 */
 	public static GeoLocation fromDegrees(double latitude, double longitude) {
 		GeoLocation result = new GeoLocation();
@@ -49,8 +51,10 @@ public class GeoLocation {
 	}
 
 	/**
-	 * @param latitude the latitude, in radians.
-	 * @param longitude the longitude, in radians.
+	 * @param latitude
+	 *            the latitude, in radians.
+	 * @param longitude
+	 *            the longitude, in radians.
 	 */
 	public static GeoLocation fromRadians(double latitude, double longitude) {
 		GeoLocation result = new GeoLocation();
@@ -63,12 +67,12 @@ public class GeoLocation {
 	}
 
 	private void checkBounds() {
-//	TODO Comentado ya que  serviciosAPI devuelve valores de LAT y LON no validos y es necesario
-//	manejar la Exception de abajo.
-	if (Boolean.getBoolean(LeerProperties.getInstance().prop.getProperty("ValidarCoordenadas")))
-		if (radLat < MIN_LAT || radLat > MAX_LAT ||
-				radLon < MIN_LON || radLon > MAX_LON)
-			throw new IllegalArgumentException();
+		// TODO Comentado ya que serviciosAPI devuelve valores de LAT y LON no
+		// validos y es necesario
+		// manejar la Exception de abajo.
+		if (Boolean.getBoolean(LeerProperties.getInstance().prop.getProperty("ValidarCoordenadas")))
+			if (radLat < MIN_LAT || radLat > MAX_LAT || radLon < MIN_LON || radLon > MAX_LON)
+				throw new IllegalArgumentException();
 	}
 
 	/**
@@ -101,56 +105,62 @@ public class GeoLocation {
 
 	@Override
 	public String toString() {
-		return "(" + degLat + "\u00B0, " + degLon + "\u00B0) = (" +
-				 radLat + " rad, " + radLon + " rad)";
+		return "(" + degLat + "\u00B0, " + degLon + "\u00B0) = (" + radLat + " rad, " + radLon + " rad)";
 	}
 
 	/**
-	 * Computes the great circle distance between this GeoLocation instance
-	 * and the location argument.
-	 * @param radius the radius of the sphere, e.g. the average radius for a
-	 * spherical approximation of the figure of the Earth is approximately
-	 * 6371.01 kilometers.
-	 * @return the distance, measured in the same unit as the radius
-	 * argument.
+	 * Computes the great circle distance between this GeoLocation instance and
+	 * the location argument.
+	 * 
+	 * @param radius
+	 *            the radius of the sphere, e.g. the average radius for a
+	 *            spherical approximation of the figure of the Earth is
+	 *            approximately 6371.01 kilometers.
+	 * @return the distance, measured in the same unit as the radius argument.
 	 */
 	public double distanceTo(GeoLocation location) {
-		return Math.acos(Math.sin(radLat) * Math.sin(location.radLat) +
-				Math.cos(radLat) * Math.cos(location.radLat) *
-				Math.cos(radLon - location.radLon)) * RADIUS;
+		return Math.acos(Math.sin(radLat) * Math.sin(location.radLat)
+				+ Math.cos(radLat) * Math.cos(location.radLat) * Math.cos(radLon - location.radLon)) * RADIUS;
 	}
 
 	/**
-	 * <p>Computes the bounding coordinates of all points on the surface
-	 * of a sphere that have a great circle distance to the point represented
-	 * by this GeoLocation instance that is less or equal to the distance
-	 * argument.</p>
-	 * <p>For more information about the formulae used in this method visit
+	 * <p>
+	 * Computes the bounding coordinates of all points on the surface of a
+	 * sphere that have a great circle distance to the point represented by this
+	 * GeoLocation instance that is less or equal to the distance argument.
+	 * </p>
+	 * <p>
+	 * For more information about the formulae used in this method visit
 	 * <a href="http://JanMatuschek.de/LatitudeLongitudeBoundingCoordinates">
-	 * http://JanMatuschek.de/LatitudeLongitudeBoundingCoordinates</a>.</p>
-	 * @param distance the distance from the point represented by this
-	 * GeoLocation instance. Must me measured in the same unit as the radius
-	 * argument.
-	 * @param radius the radius of the sphere, e.g. the average radius for a
-	 * spherical approximation of the figure of the Earth is approximately
-	 * 6371.01 kilometers.
-	 * @return an array of two GeoLocation objects such that:<ul>
-	 * <li>The latitude of any point within the specified distance is greater
-	 * or equal to the latitude of the first array element and smaller or
-	 * equal to the latitude of the second array element.</li>
-	 * <li>If the longitude of the first array element is smaller or equal to
-	 * the longitude of the second element, then
-	 * the longitude of any point within the specified distance is greater
-	 * or equal to the longitude of the first array element and smaller or
-	 * equal to the longitude of the second array element.</li>
-	 * <li>If the longitude of the first array element is greater than the
-	 * longitude of the second element (this is the case if the 180th
-	 * meridian is within the distance), then
-	 * the longitude of any point within the specified distance is greater
-	 * or equal to the longitude of the first array element
-	 * <strong>or</strong> smaller or equal to the longitude of the second
-	 * array element.</li>
-	 * </ul>
+	 * http://JanMatuschek.de/LatitudeLongitudeBoundingCoordinates</a>.
+	 * </p>
+	 * 
+	 * @param distance
+	 *            the distance from the point represented by this GeoLocation
+	 *            instance. Must me measured in the same unit as the radius
+	 *            argument.
+	 * @param radius
+	 *            the radius of the sphere, e.g. the average radius for a
+	 *            spherical approximation of the figure of the Earth is
+	 *            approximately 6371.01 kilometers.
+	 * @return an array of two GeoLocation objects such that:
+	 *         <ul>
+	 *         <li>The latitude of any point within the specified distance is
+	 *         greater or equal to the latitude of the first array element and
+	 *         smaller or equal to the latitude of the second array element.
+	 *         </li>
+	 *         <li>If the longitude of the first array element is smaller or
+	 *         equal to the longitude of the second element, then the longitude
+	 *         of any point within the specified distance is greater or equal to
+	 *         the longitude of the first array element and smaller or equal to
+	 *         the longitude of the second array element.</li>
+	 *         <li>If the longitude of the first array element is greater than
+	 *         the longitude of the second element (this is the case if the
+	 *         180th meridian is within the distance), then the longitude of any
+	 *         point within the specified distance is greater or equal to the
+	 *         longitude of the first array element <strong>or</strong> smaller
+	 *         or equal to the longitude of the second array element.</li>
+	 *         </ul>
 	 */
 	public GeoLocation[] boundingCoordinates(double distance) {
 
@@ -165,12 +175,13 @@ public class GeoLocation {
 
 		double minLon, maxLon;
 		if (minLat > MIN_LAT && maxLat < MAX_LAT) {
-			double deltaLon = Math.asin(Math.sin(radDist) /
-				Math.cos(radLat));
+			double deltaLon = Math.asin(Math.sin(radDist) / Math.cos(radLat));
 			minLon = radLon - deltaLon;
-			if (minLon < MIN_LON) minLon += 2d * Math.PI;
+			if (minLon < MIN_LON)
+				minLon += 2d * Math.PI;
 			maxLon = radLon + deltaLon;
-			if (maxLon > MAX_LON) maxLon -= 2d * Math.PI;
+			if (maxLon > MAX_LON)
+				maxLon -= 2d * Math.PI;
 		} else {
 			// a pole is within the distance
 			minLat = Math.max(minLat, MIN_LAT);
@@ -179,27 +190,23 @@ public class GeoLocation {
 			maxLon = MAX_LON;
 		}
 
-		return new GeoLocation[]{fromRadians(minLat, minLon),
-				fromRadians(maxLat, maxLon)};
+		return new GeoLocation[] { fromRadians(minLat, minLon), fromRadians(maxLat, maxLon) };
 	}
-	
-	// A partir de este punto editado por Grupo1 Diseño de sistemas
-	
-	
-	
-	
-	boolean estaCerca(GeoLocation[] boundingCoordinates){
-		
-//		boundingCoordinates[1].getLatitudeInDegrees() //min latitud
-//		boundingCoordinates[1].getLongitudeInDegrees() // min longitud
-//		boundingCoordinates[2].getLatitudeInDegrees() //max latitud
-//		boundingCoordinates[2].getLongitudeInDegrees() // max longitud
 
-		if ( this.degLat > boundingCoordinates[1].getLatitudeInDegrees() &&
-			this.degLat < boundingCoordinates[2].getLatitudeInDegrees() &&
-			this.degLon > boundingCoordinates[1].getLongitudeInDegrees() &&
-			this.degLon < boundingCoordinates[2].getLongitudeInDegrees())
-			
+	// A partir de este punto editado por Grupo1 Diseño de sistemas
+
+	boolean estaCerca(GeoLocation[] boundingCoordinates) {
+
+		// boundingCoordinates[1].getLatitudeInDegrees() //min latitud
+		// boundingCoordinates[1].getLongitudeInDegrees() // min longitud
+		// boundingCoordinates[2].getLatitudeInDegrees() //max latitud
+		// boundingCoordinates[2].getLongitudeInDegrees() // max longitud
+
+		if (this.degLat > boundingCoordinates[1].getLatitudeInDegrees()
+				&& this.degLat < boundingCoordinates[2].getLatitudeInDegrees()
+				&& this.degLon > boundingCoordinates[1].getLongitudeInDegrees()
+				&& this.degLon < boundingCoordinates[2].getLongitudeInDegrees())
+
 			return true;
 		else
 			return false;

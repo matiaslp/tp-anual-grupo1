@@ -16,23 +16,23 @@ import autentification.funciones.funcCantidadResultadosPorTerminal;
 import autentification.funciones.funcEnviarMail;
 
 public class AuthAPI {
-	
+
 	private static AuthAPI instance = null;
-	
+
 	public static AuthAPI getInstance() {
-		if(instance == null)
+		if (instance == null)
 			instance = new AuthAPI();
 		return instance;
 	}
 
 	Map<String, String> diccionarioTokenUser = new HashMap<String, String>();
-	public static Map<String,Accion> Acciones;
+	public static Map<String, Accion> Acciones;
 	// ESTA LISTA DE USUARIOS DEBERIA SER LA BASE DE DATOS
 	private ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 
-	public AuthAPI(){
+	public AuthAPI() {
 		diccionarioTokenUser = new HashMap<String, String>();
-		Acciones = new HashMap<String,Accion>();
+		Acciones = new HashMap<String, Accion>();
 		// ESTA LISTA DE USUARIOS DEBERIA SER LA BASE DE DATOS
 		listaUsuarios = new ArrayList<Usuario>();
 		Acciones.put("busquedaPorUsuario", new funcBusquedaPorUsuario());
@@ -41,25 +41,25 @@ public class AuthAPI {
 		Acciones.put("enviarMail", new funcEnviarMail());
 	}
 
-	public ArrayList<Usuario> getListaUsuarios(){
+	public ArrayList<Usuario> getListaUsuarios() {
 		return listaUsuarios;
 	}
 
-	public Usuario crearUsuario(String username, String password, Rol rol){
+	public Usuario crearUsuario(String username, String password, Rol rol) {
 		Usuario user = new Usuario();
-		user.setID(listaUsuarios.size()+1);
+		user.setID(listaUsuarios.size() + 1);
 		user.setPassword(password);
 		user.setUsername(username);
 		user.setRol(rol);
-		if (rol.getNombre().equals("admin")){
-			user.setFuncionalidades(new HashMap<String,Accion>());
+		if (rol.getNombre().equals("admin")) {
+			user.setFuncionalidades(new HashMap<String, Accion>());
 		}
 		return user;
 	}
-	
-	public boolean agregarUsuarioALista(Usuario user){
-		for(Usuario usuario : listaUsuarios){
-			if(user.getUsername().equals(usuario.getUsername()) || user.getID() == usuario.getID()){
+
+	public boolean agregarUsuarioALista(Usuario user) {
+		for (Usuario usuario : listaUsuarios) {
+			if (user.getUsername().equals(usuario.getUsername()) || user.getID() == usuario.getID()) {
 				return false;
 			}
 		}
@@ -67,42 +67,41 @@ public class AuthAPI {
 		return true;
 	}
 
-	public boolean agregarFuncionalidad(String funcionalidad, Usuario user){
-		if(user.getRol().equals(Rol.ADMIN)){
-			if(user.getFuncionalidades().get(funcionalidad)!=null){
-				return false; //ya existe
-			}else{
-				if(user.getFuncionalidades().put(funcionalidad, Acciones.get(funcionalidad)) != null){
+	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
+		if (user.getRol().equals(Rol.ADMIN)) {
+			if (user.getFuncionalidades().get(funcionalidad) != null) {
+				return false; // ya existe
+			} else {
+				if (user.getFuncionalidades().put(funcionalidad, Acciones.get(funcionalidad)) != null) {
 					return true;
-				}else{
-					return false; //la funcionalidad no existe.
+				} else {
+					return false; // la funcionalidad no existe.
 				}
 			}
-		}else{
-			return false; //El usuario no es admin
+		} else {
+			return false; // El usuario no es admin
 		}
 	}
 
-	public boolean sacarFuncionalidad(String funcionalidad, Usuario user){
-		if(user.getRol().getNombre().equals("admin")){
-			if(user.getFuncionalidades().remove(funcionalidad)!=null){
+	public boolean sacarFuncionalidad(String funcionalidad, Usuario user) {
+		if (user.getRol().getNombre().equals("admin")) {
+			if (user.getFuncionalidades().remove(funcionalidad) != null) {
 				return true;
-			}else{
-				return false; //No existe la funcionalidad
+			} else {
+				return false; // No existe la funcionalidad
 			}
-		}else{
-			return false; //El usuario no es admin
+		} else {
+			return false; // El usuario no es admin
 		}
 	}
-	
-	public boolean chequearFuncionalidad(String funcionalidad, Usuario user){
-		if(user.getFuncionalidades().get(funcionalidad)!=null){
+
+	public boolean chequearFuncionalidad(String funcionalidad, Usuario user) {
+		if (user.getFuncionalidades().get(funcionalidad) != null) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-
 
 	public String iniciarSesion(String user, String pass) throws NoSuchAlgorithmException {
 
@@ -150,7 +149,5 @@ public class AuthAPI {
 	public Map<String, Accion> getAcciones() {
 		return Acciones;
 	}
-	
-	
 
 }

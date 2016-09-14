@@ -7,7 +7,7 @@ import org.junit.Test;
 import helpers.LeerProperties;
 
 public class TestPropiedades {
-	
+
 	LeerProperties instance;
 
 	@Before
@@ -17,10 +17,10 @@ public class TestPropiedades {
 
 	}
 
-		@Test
-		public void testLeer() {
-//			System.out.printf("%d\n",Integer.valueOf(LeerProperties.getInstance().prop.getProperty("distanciaLeveinstein")));
-			Assert.assertEquals(LeerProperties.getInstance().prop.getProperty("distanciaLeveinstein"),"2");
-		}
+	@Test
+	public void testLeer() {
+		// System.out.printf("%d\n",Integer.valueOf(LeerProperties.getInstance().prop.getProperty("distanciaLeveinstein")));
+		Assert.assertEquals(LeerProperties.getInstance().prop.getProperty("distanciaLeveinstein"), "2");
+	}
 
 }

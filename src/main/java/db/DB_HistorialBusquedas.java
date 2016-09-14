@@ -23,13 +23,13 @@ public class DB_HistorialBusquedas {
 			instance = new DB_HistorialBusquedas();
 		return instance;
 	}
-	
+
 	public int cantidadRegistros() {
 		return listadoRegistros.size();
 	}
-	
-	public RegistroHistorico registroHistoricoPorId(long id) {	
-		return listadoRegistros.get(id - 1);	
+
+	public RegistroHistorico registroHistoricoPorId(long id) {
+		return listadoRegistros.get(id - 1);
 	}
 
 	public void agregarHistorialBusqueda(RegistroHistorico registro) {
@@ -95,7 +95,7 @@ public class DB_HistorialBusquedas {
 			userId = usuarios.get(usuarios.size() - 1);
 			// Saco la cantidad de busquedas del usuario
 			for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-				
+
 				if (Long.compare(userId, registro.getValue().getUserID()) == 0)
 					sumaParcial += registro.getValue().getCantResultados();
 			}

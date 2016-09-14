@@ -13,21 +13,23 @@ import poi.POI;
 public class Timer implements Busqueda {
 
 	long seconds;
+
 	@Override
-	public ArrayList<POI> buscar(String url, String texto,long userID) throws JSONException, MalformedURLException, IOException {
-		
-		//start timer
+	public ArrayList<POI> buscar(String url, String texto, long userID)
+			throws JSONException, MalformedURLException, IOException {
+
+		// start timer
 		DateTime start = new DateTime();
 		ArrayList<POI> resultado = POI_ABMC.getInstance().buscar(url, texto, userID);
-		//stop timer
+		// stop timer
 		DateTime now = new DateTime();
-		Period period = new Period(start,now);
+		Period period = new Period(start, now);
 		seconds = period.getSeconds();
 		return resultado;
 	}
+
 	public long getSeconds() {
 		return seconds;
 	}
-	
 
 }

@@ -20,32 +20,33 @@ import poi.NodoServicio;
 
 public class Banco_Converter {
 
-	public static List<POI_DTO> getBancos(String url) throws JSONException, MalformedURLException, IOException{	
+	public static List<POI_DTO> getBancos(String url) throws JSONException, MalformedURLException, IOException {
 		// Obtengo el array que me devuelve el JSON
 		JSONArray jsonArray = new JSONArray(IOUtils.toString(new URL(url), Charset.forName("UTF-8")));
-		Type listType = new TypeToken<ArrayList<Banco_DTO>>(){}.getType();
+		Type listType = new TypeToken<ArrayList<Banco_DTO>>() {
+		}.getType();
 		Gson gson = new Gson();
 		List<Banco_DTO> listadoBanco_DTO = gson.fromJson(jsonArray.toString(), listType);
 		List<POI_DTO> listadoPOI_DTO = new ArrayList<POI_DTO>();
-		
-		for(Banco_DTO dto : listadoBanco_DTO){
+
+		for (Banco_DTO dto : listadoBanco_DTO) {
 			POI_DTO dtoGenerico = new POI_DTO();
 			dtoGenerico.setNombre(dto.getBanco());
 			dtoGenerico.setLongitud(dto.getX());
 			dtoGenerico.setLatitud(dto.getY());
 			dtoGenerico.setSucursal(dto.getSucursal());
 			dtoGenerico.setGerente(dto.getGerente());
-			
-			for(String servicioDTO : dto.getServicios()){
+
+			for (String servicioDTO : dto.getServicios()) {
 				NodoServicio servicio = new NodoServicio();
 				servicio.setName(servicioDTO);
 				dtoGenerico.addServicio(servicio);
 			}
-			
+
 			listadoPOI_DTO.add(dtoGenerico);
 		}
-		
+
 		return listadoPOI_DTO;
-		
+
 	}
 }
