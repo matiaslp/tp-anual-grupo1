@@ -13,9 +13,9 @@ import autentification.AuthAPI;
 import autentification.Usuario;
 import db.DB_HistorialBusquedas;
 import db.RegistroHistorico;
+import autentification.funciones.funcEnviarMail;
 import helpers.LeerProperties;
 import poi.POI;
-import autentification.funcEnviarMail;
 
 public class Historico implements Busqueda {
 

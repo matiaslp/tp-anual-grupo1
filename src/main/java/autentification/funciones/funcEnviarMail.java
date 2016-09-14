@@ -1,7 +1,8 @@
-package autentification;
+package autentification.funciones;
 
 import javax.mail.MessagingException;
 
+import autentification.Accion;
 import email.EnviarEmail;
 import helpers.LeerProperties;
 

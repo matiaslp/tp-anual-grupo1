@@ -1,6 +1,7 @@
 package autentification;
 
 import java.security.MessageDigest;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
+
+import autentification.funciones.funcBusquedaPorUsuario;
+import autentification.funciones.funcBusquedasPorFecha;
+import autentification.funciones.funcCantidadResultadosPorTerminal;
+import autentification.funciones.funcEnviarMail;
 
 public class AuthAPI {
 	
@@ -29,7 +35,6 @@ public class AuthAPI {
 		Acciones = new HashMap<String,Accion>();
 		// ESTA LISTA DE USUARIOS DEBERIA SER LA BASE DE DATOS
 		listaUsuarios = new ArrayList<Usuario>();
-		Acciones.put("busquedaPorId", new funcBusquedaPorId());
 		Acciones.put("busquedaPorUsuario", new funcBusquedaPorUsuario());
 		Acciones.put("busquedasPorFecha", new funcBusquedasPorFecha());
 		Acciones.put("cantidadResultadosPorTerminal", new funcCantidadResultadosPorTerminal());
