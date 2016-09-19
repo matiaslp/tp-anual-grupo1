@@ -46,7 +46,11 @@ public abstract class Accion {
 	public void agregarAcciones(){
 		
 	}
-
+	
+	public POI ObtenerInfoPOI(){
+		return null;
+		
+	}
 
 
 }
