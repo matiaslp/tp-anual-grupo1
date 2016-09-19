@@ -59,5 +59,13 @@ public class Usuario {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
+	
+	public boolean chequearFuncionalidad(String funcionalidad) {
+		if (this.getFuncionalidades().get(funcionalidad) != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

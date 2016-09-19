@@ -5,6 +5,7 @@ import java.util.Map;
 
 import autentification.Accion;
 import autentification.Rol;
+import autentification.Usuario;
 import db.DB_HistorialBusquedas;
 
 public class FuncCantidadResultadosPorTerminal extends Accion {
@@ -16,8 +17,11 @@ public class FuncCantidadResultadosPorTerminal extends Accion {
 	}
 	
 	@Override
-	public Map<Long, Long> obtenerCantidadResultadosPorTerminal(long terminal) {
-		return DB_HistorialBusquedas.getInstance().reporteCantidadResultadosPorTerminal(terminal);
+	public Map<Long, Long> obtenerCantidadResultadosPorTerminal(Usuario user, String Token, long terminal) {
+		if (validarsesion(user, Token))
+			return DB_HistorialBusquedas.getInstance().reporteCantidadResultadosPorTerminal(terminal);
+		else
+			return null;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import autentification.Accion;
 import autentification.Rol;
+import autentification.Usuario;
 import db.DB_HistorialBusquedas;
 
 public class FuncBusquedaPorUsuario extends Accion {
@@ -17,8 +18,11 @@ public class FuncBusquedaPorUsuario extends Accion {
 	
 	
 	@Override
-	public Map<Long, Long> obtenerBusquedaPorUsuario() {
-		return DB_HistorialBusquedas.getInstance().reporteBusquedaPorUsuario();
+	public Map<Long, Long> obtenerBusquedaPorUsuario(Usuario user, String Token) {
+		if (validarsesion(user, Token))
+			return DB_HistorialBusquedas.getInstance().reporteBusquedaPorUsuario();
+		else
+			return null;
 	}
 
 }

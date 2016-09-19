@@ -5,6 +5,7 @@ import java.util.Map;
 
 import autentification.Accion;
 import autentification.Rol;
+import autentification.Usuario;
 import db.DB_HistorialBusquedas;
 
 public class FuncBusquedasPorFecha extends Accion {
@@ -16,8 +17,11 @@ public class FuncBusquedasPorFecha extends Accion {
 	}
 	
 	@Override
-	public Map<String, Long> obtenerBusquedasPorFecha() {
-		return DB_HistorialBusquedas.getInstance().reporteBusquedasPorFecha();
+	public Map<String, Long> obtenerBusquedasPorFecha(Usuario user, String Token) {
+		if (validarsesion(user, Token))
+			return DB_HistorialBusquedas.getInstance().reporteBusquedasPorFecha();
+		else
+			return null;
 	}
 
 }

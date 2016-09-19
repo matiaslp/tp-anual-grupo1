@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 
 import autentification.Accion;
 import autentification.Rol;
+import autentification.Usuario;
 import email.EnviarEmail;
 import helpers.LeerProperties;
 
@@ -18,13 +19,12 @@ public class FuncEnviarMail extends Accion {
 	}
 
 	@Override
-	public boolean enviarMail(String nombreDeBusqueda, String correo) throws MessagingException {
-		if (EnviarEmail.mandarCorreoXSegundos(nombreDeBusqueda,
-				Integer.valueOf(LeerProperties.getInstance().prop.getProperty("segundosDeDemoraParaEmail")), correo)) {
-			return true;
-		} else {
+	public boolean enviarMail(Usuario user, String Token, String nombreDeBusqueda, String correo) throws MessagingException {
+		if (validarsesion(user, Token))
+			return EnviarEmail.mandarCorreoXSegundos(nombreDeBusqueda,
+				Integer.valueOf(LeerProperties.getInstance().prop.getProperty("segundosDeDemoraParaEmail")), correo);
+		else
 			return false;
-		}
 	}
 
 }
