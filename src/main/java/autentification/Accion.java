@@ -1,5 +1,6 @@
 package autentification;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -7,6 +8,8 @@ import javax.mail.MessagingException;
 import db.RegistroHistorico;
 
 public abstract class Accion {
+	
+	protected static ArrayList<Rol> Roles;
 
 	public boolean enviarMail(String nombreDeBusqueda, String correo) throws MessagingException {
 		return false;
