@@ -66,8 +66,24 @@ public class AuthAPI {
 		listaUsuarios.add(user);
 		return true;
 	}
+	public boolean buscarUsuarioEnLista(String username) {
+		
+		for (Usuario unUsuario:listaUsuarios){
+			if(unUsuario.getUsername()==username){return true; }
+		}
+		return false;
+		
+	}
+	public Usuario consegirUsuarioDeLista(String username) {
+		Usuario usuarioNoEncontrado=null;
+		for (Usuario unUsuario:listaUsuarios){
+			if(unUsuario.getUsername()==username){return unUsuario; }
+		}
+		return usuarioNoEncontrado;
+		
+	}
 
-	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
+	public static boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
 		if (user.getRol().equals(Rol.ADMIN)) {
 			if (user.getFuncionalidades().get(funcionalidad) != null) {
 				return false; // ya existe

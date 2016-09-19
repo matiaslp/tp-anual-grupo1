@@ -10,52 +10,37 @@ import org.junit.Before;
 import org.junit.Test;
 
 import autentification.Accion;
+import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
+import autentification.funciones.FuncBusquedaPorUsuario;
+import autentification.funciones.FuncBusquedasPorFecha;
+import autentification.funciones.FuncCantidadResultadosPorTerminal;
+import autentification.funciones.FuncEnviarMail;
 import email.EnviarEmail;
 import helpers.LeerProperties;
 import procesos.AgregarAcciones;
 
 public class TestAgregarAcciones {
 	boolean agregado;
-	@SuppressWarnings("unused")
-	private Map<String, Accion> acciones;
-	private Usuario unUsuarioTerminal;
-	private Usuario unUsuarioAdministrador;
-	private Accion primeraAccion;
-	private Accion segundaAccion;
-	private Accion terceraAccion;
+	
+	private String listaAcciones[];
 	@Before
 	public void init() {
-		//CREO LOS DOS TIPOS DE USUARIOS QUE HAY
-		unUsuarioTerminal= new Usuario();
-		unUsuarioTerminal.setRol(Rol.TERMINAL);
-		unUsuarioAdministrador= new Usuario();
-		unUsuarioAdministrador.setRol(Rol.ADMIN);
-		//CREO LISTA DE ACCIONES
-		acciones = new HashMap<String, Accion>();
-		//CREO ACCIONES
-		primeraAccion=new Accion();
-		segundaAccion=new Accion();
-		terceraAccion=new Accion();
-		//AGGREGO ACCIONES A LA LISTA
-		acciones.put("primera", primeraAccion);
-		acciones.put("segunda", segundaAccion);
-		acciones.put("tercera", terceraAccion);
+		AuthAPI unAuthAPI=AuthAPI.getInstance();
+		unAuthAPI.crearUsuario("a", "123", Rol.ADMIN);
+		unAuthAPI.crearUsuario("b", "123", Rol.TERMINAL);
+		listaAcciones[0]="busquedaPorUsuario";
+		
+	
 	}
 
 	@Test
 	public void agregarAccionesAUsuarioTerminal() throws MessagingException {
 
 		// PONER LA BUSQUEDA QUE SE REALIZO Y SU TIEMPO
-		agregado = AgregarAcciones.AgregarAccionesA(unUsuarioTerminal,acciones);
+		agregado = AgregarAcciones.AgregarAccionesAUsuario("a",listaAcciones);
 		Assert.assertTrue(agregado);
 	}
-	@Test
-	public void agregarAccionesAUsuarioAdministrador() throws MessagingException {
-
-		// PONER LA BUSQUEDA QUE SE REALIZO Y SU TIEMPO
-		agregado = AgregarAcciones.AgregarAccionesA(unUsuarioAdministrador,acciones);
-		Assert.assertTrue(agregado);
-	}
+	
 }
