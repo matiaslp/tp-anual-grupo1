@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 
 import db.RegistroHistorico;
+import poi.POI;
 
 public abstract class Accion {
 	
@@ -29,6 +30,21 @@ public abstract class Accion {
 
 	public RegistroHistorico obtenerRegistroPorId(long id) {
 		return null;
+	}
+	
+	public void darDeBajaPOI(){
+	}
+	
+	public ArrayList<POI> busquedaPOI(){
+		return null;	
+	}
+	
+	public void crearProcesoMultilpe(){
+		
+	}
+	
+	public void agregarAcciones(){
+		
 	}
 
 
