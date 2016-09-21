@@ -1,37 +1,32 @@
 package test_miscellaneous;
 
-import java.util.HashMap;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.Accion;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
+import db.DB_Usuarios;
 
 public class TestAcciones {
 
 	private Usuario user;
 	private AuthAPI Autenticador;
+	private DB_Usuarios DBU;
 
 	@Before
 	public void init() {
 		Autenticador = AuthAPI.getInstance();
+		DBU= DB_Usuarios.getInstance();
 
-		user = new Usuario();
-		user.setID(1);
-		user.setPassword("password");
-		user.setUsername("usuario");
-		user.setRol(Rol.ADMIN);
-		user.setFuncionalidades(new HashMap<String, Accion>());
+		user = new Usuario("usuario","password",Rol.ADMIN);
 
 		user.getFuncionalidades().put("enviarMail", AuthAPI.Acciones.get("enviarMail"));
 
 		Autenticador = AuthAPI.getInstance();
 
-		Autenticador.getListaUsuarios().add(user);
+		DBU.agregarUsuarioALista(user);
 	}
 
 	@Test
@@ -54,7 +49,7 @@ public class TestAcciones {
 
 	@Test
 	public void testChequeoFuncionalidad() {
-		Assert.assertTrue(Autenticador.chequearFuncionalidad("enviarMail", user));
+		Assert.assertTrue(user.chequearFuncionalidad("enviarMail"));
 	}
 
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import abmc.POI_ABMC;
 import abmc.POI_DTO;
-import db.DB_Server;
+import db.DB_POI;
 import poi.Rubro;
 import poi.TiposPOI;
 
@@ -18,13 +18,13 @@ public class TestABMC_Alta {
 	POI_DTO poiDTOComercial;
 	POI_DTO poiDTOColectivo;
 	Rubro rubro;
-	DB_Server unServer;
-	DB_Server instancia;
+	DB_POI unServer;
+	DB_POI instancia;
 
 	@Before
 	public void init() {
 		poi_abmc = new POI_ABMC();
-		unServer = new DB_Server();
+		unServer = new DB_POI();
 		instancia = unServer.getInstance();
 
 		poiDTOBanco = new POI_DTO();
@@ -55,34 +55,34 @@ public class TestABMC_Alta {
 
 	@Test
 	public void altaBanco() {
-		boolean respuesta = DB_Server.agregarPOI(poiDTOBanco.converttoPOI());
+		boolean respuesta = DB_POI.agregarPOI(poiDTOBanco.converttoPOI());
 		Assert.assertTrue(respuesta);
 		Assert.assertTrue(poiDTOBanco.getNombre()
-				.equals(DB_Server.getListado().get(DB_Server.getListado().size() - 1).getNombre()));
+				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
 
 	}
 
 	@Test
 	public void altaCGP() {
-		boolean respuesta = DB_Server.agregarPOI(poiDTOCGP.converttoPOI());
+		boolean respuesta = DB_POI.agregarPOI(poiDTOCGP.converttoPOI());
 		Assert.assertTrue(respuesta);
 		Assert.assertTrue(poiDTOCGP.getNombre()
-				.equals(DB_Server.getListado().get(DB_Server.getListado().size() - 1).getNombre()));
+				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
 	}
 
 	@Test
 	public void altaLocalComercial() {
-		boolean respuesta = DB_Server.agregarPOI(poiDTOComercial.converttoPOI());
+		boolean respuesta = DB_POI.agregarPOI(poiDTOComercial.converttoPOI());
 		Assert.assertTrue(respuesta);
 		Assert.assertTrue(poiDTOComercial.getNombre()
-				.equals(DB_Server.getListado().get(DB_Server.getListado().size() - 1).getNombre()));
+				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
 	}
 
 	@Test
 	public void altaParadaColectivo() {
-		boolean respuesta = DB_Server.agregarPOI(poiDTOColectivo.converttoPOI());
+		boolean respuesta = DB_POI.agregarPOI(poiDTOColectivo.converttoPOI());
 		Assert.assertTrue(respuesta);
 		Assert.assertTrue(poiDTOColectivo.getNombre()
-				.equals(DB_Server.getListado().get(DB_Server.getListado().size() - 1).getNombre()));
+				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
 	}
 }

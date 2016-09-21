@@ -8,7 +8,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import db.DB_Server;
+import db.DB_POI;
 import poi.BusquedaDePOIsExternos;
 import poi.POI;
 
@@ -29,21 +29,21 @@ public class POI_ABMC implements Busqueda {
 		if (nuevoPOI.equals(null)) {
 			return false;
 		} else {
-			DB_Server.agregarPOI(nuevoPOI);
+			DB_POI.agregarPOI(nuevoPOI);
 			return true;
 		}
 	}
 
 	public boolean delete(int ID) {
-		if (DB_Server.getPOIbyId(ID) != null) {
-			return DB_Server.eliminarPOI(ID);
+		if (DB_POI.getPOIbyId(ID) != null) {
+			return DB_POI.eliminarPOI(ID);
 		} else
 			return false;
 	}
 
 	public boolean modificar(POI_DTO dto) {
 		POI poi = null;
-		poi = DB_Server.getPOIbyId(dto.getId());
+		poi = DB_POI.getPOIbyId(dto.getId());
 		if (poi != null) {
 			poi.setDatos(dto);
 			return true;
@@ -67,7 +67,7 @@ public class POI_ABMC implements Busqueda {
 			throws JSONException, MalformedURLException, IOException {
 		String filtros[] = texto.split("\\s+");
 		resultado = new ArrayList<POI>();
-		ArrayList<POI> listaLocal = DB_Server.getListado();
+		ArrayList<POI> listaLocal = DB_POI.getListado();
 		for (POI nodo : listaLocal) {
 			if (nodo.busquedaEstandar(filtros)) {
 				resultado.add(nodo);

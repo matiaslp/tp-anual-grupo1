@@ -14,6 +14,8 @@ import autentification.funciones.FuncBusquedaPorUsuario;
 import autentification.funciones.FuncBusquedasPorFecha;
 import autentification.funciones.FuncCantidadResultadosPorTerminal;
 import autentification.funciones.FuncEnviarMail;
+import db.DB_Sesiones;
+import db.DB_Usuarios;
 
 public class AuthAPI {
 
@@ -24,50 +26,19 @@ public class AuthAPI {
 			instance = new AuthAPI();
 		return instance;
 	}
-
-	Map<String, String> diccionarioTokenUser = new HashMap<String, String>();
+	
 	public static Map<String, Accion> Acciones;
-	// ESTA LISTA DE USUARIOS DEBERIA SER LA BASE DE DATOS
-	private ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 
 	public AuthAPI() {
-		diccionarioTokenUser = new HashMap<String, String>();
 		Acciones = new HashMap<String, Accion>();
-		// ESTA LISTA DE USUARIOS DEBERIA SER LA BASE DE DATOS
-		listaUsuarios = new ArrayList<Usuario>();
 		Acciones.put("busquedaPorUsuario", new FuncBusquedaPorUsuario());
 		Acciones.put("busquedasPorFecha", new FuncBusquedasPorFecha());
 		Acciones.put("cantidadResultadosPorTerminal", new FuncCantidadResultadosPorTerminal());
 		Acciones.put("enviarMail", new FuncEnviarMail());
 	}
-
-	public ArrayList<Usuario> getListaUsuarios() {
-		return listaUsuarios;
-	}
-
-	public Usuario crearUsuario(String username, String password, Rol rol) {
-		Usuario user = new Usuario();
-		user.setID(listaUsuarios.size() + 1);
-		user.setPassword(password);
-		user.setUsername(username);
-		user.setRol(rol);
-		if (rol.getNombre().equals("admin")) {
-			user.setFuncionalidades(new HashMap<String, Accion>());
-		}
-		return user;
-	}
-
-	public boolean agregarUsuarioALista(Usuario user) {
-		for (Usuario usuario : listaUsuarios) {
-			if (user.getUsername().equals(usuario.getUsername()) || user.getID() == usuario.getID()) {
-				return false;
-			}
-		}
-		listaUsuarios.add(user);
-		return true;
-	}
+	
 	public boolean buscarUsuarioEnLista(String username) {
-		
+		//ESTO NO DEBERIA IR EN DB_USUARIO?
 		for (Usuario unUsuario:listaUsuarios){
 			if(unUsuario.getUsername()==username){return true; }
 		}
@@ -75,6 +46,7 @@ public class AuthAPI {
 		
 	}
 	public Usuario consegirUsuarioDeLista(String username) {
+		//IDEM ANTERIOR
 		Usuario usuarioNoEncontrado=null;
 		for (Usuario unUsuario:listaUsuarios){
 			if(unUsuario.getUsername()==username){return unUsuario; }
@@ -111,23 +83,15 @@ public class AuthAPI {
 		}
 	}
 
-	public boolean chequearFuncionalidad(String funcionalidad, Usuario user) {
-		if (user.getFuncionalidades().get(funcionalidad) != null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public String iniciarSesion(String user, String pass) throws NoSuchAlgorithmException {
 
 		// LA PASS YA DEBERIA LLEGAR HASHEADA AL ENTRAR A ESTA FUNCION,
 		// preguntarme si no captan el por que
 
-		for (Usuario usuario : listaUsuarios) {
-			if (usuario.getUsername().equals(user) && usuario.getPassword().equals(pass)) {
+		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios()) {
+			if (usuario.validarUsuarioYPass(user, pass)) {
 				String token = generarToken(user, pass);
-				diccionarioTokenUser.put(token, user);
+				DB_Sesiones.getInstance().getDiccionarioTokenUser().put(token, user);
 				return token;
 			}
 		}
@@ -155,7 +119,7 @@ public class AuthAPI {
 
 	public Boolean validarToken(String Token) {
 
-		if (diccionarioTokenUser.get(Token) != null) {
+		if (DB_Sesiones.getInstance().getDiccionarioTokenUser().get(Token) != null) {
 			return true;
 		}
 

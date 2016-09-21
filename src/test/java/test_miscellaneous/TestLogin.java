@@ -12,31 +12,25 @@ import autentification.Accion;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
+import db.DB_Usuarios;
 
 public class TestLogin {
 	private Usuario terminal;
 	private Usuario prueba;
+	private DB_Usuarios DBU;
 	private AuthAPI Autenticador;
 
 	@Before
 	public void init() {
-		Autenticador = AuthAPI.getInstance();
+		DBU = DB_Usuarios.getInstance();
+		Autenticador=AuthAPI.getInstance();
 
-		prueba = new Usuario();
-		prueba.setID(1);
-		prueba.setPassword("password");
-		prueba.setUsername("usuario");
-		prueba.setRol(Rol.ADMIN);
-		prueba.setFuncionalidades(new HashMap<String, Accion>());
+		prueba = new Usuario("usuario","password",Rol.ADMIN);
 		prueba.getFuncionalidades().put("enviarMail", AuthAPI.Acciones.get("enviarMail"));
 
-		Autenticador.getListaUsuarios().add(prueba);
+		DBU.agregarUsuarioALista(prueba);
 
-		terminal = new Usuario();
-		terminal.setID(2);
-		terminal.setPassword("pass");
-		terminal.setUsername("terminal");
-		terminal.setRol(Rol.TERMINAL);
+		terminal = new Usuario("terminal","password",Rol.TERMINAL);
 
 	}
 
@@ -97,20 +91,20 @@ public class TestLogin {
 
 	@Test
 	public void testCrearUsuario() {
-		Usuario test = Autenticador.crearUsuario("username", "password", Rol.TERMINAL);
+		Usuario test = new Usuario("username", "password", Rol.TERMINAL);
 		Assert.assertTrue(test.getUsername().equals("username") && test.getPassword().equals("password")
 				&& test.getRol().equals(Rol.TERMINAL));
 	}
 
 	@Test
 	public void testAgregarUsuarioFalso() {
-		Assert.assertFalse(Autenticador.agregarUsuarioALista(prueba));
+		Assert.assertFalse(DBU.agregarUsuarioALista(prueba));
 	}
 
 	@Test
 	public void testAgregarUsuarioTrue() {
-		Autenticador.agregarUsuarioALista(Autenticador.crearUsuario("nuevo", "password", Rol.ADMIN));
-		Assert.assertTrue(Autenticador.getListaUsuarios().size() > 2);
+		DBU.agregarUsuarioALista(new Usuario("nuevo", "password", Rol.ADMIN));
+		Assert.assertTrue(DBU.getListaUsuarios().size() > 1);
 	}
 
 	@Test

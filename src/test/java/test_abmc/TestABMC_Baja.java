@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import abmc.POI_ABMC;
 import abmc.POI_DTO;
-import db.DB_Server;
+import db.DB_POI;
 import poi.Rubro;
 import poi.TiposPOI;
 
@@ -18,14 +18,14 @@ public class TestABMC_Baja {
 	POI_DTO poiDTOComercial;
 	POI_DTO poiDTOColectivo;
 	Rubro rubro;
-	DB_Server unServer;
-	DB_Server instancia;
+	DB_POI unServer;
+	DB_POI instancia;
 
 	@Before
 	public void init() {
 
 		poi_abmc = new POI_ABMC();
-		unServer = new DB_Server();
+		unServer = new DB_POI();
 		instancia = unServer.getInstance();
 
 		poiDTOBanco = new POI_DTO();
@@ -54,10 +54,10 @@ public class TestABMC_Baja {
 		poiDTOColectivo.setLongitud(-34.5664823);
 
 		// Se crean 4 POIs (uno por cada tipo)
-		DB_Server.agregarPOI(poiDTOBanco.converttoPOI());
-		DB_Server.agregarPOI(poiDTOCGP.converttoPOI());
-		DB_Server.agregarPOI(poiDTOComercial.converttoPOI());
-		DB_Server.agregarPOI(poiDTOColectivo.converttoPOI());
+		DB_POI.agregarPOI(poiDTOBanco.converttoPOI());
+		DB_POI.agregarPOI(poiDTOCGP.converttoPOI());
+		DB_POI.agregarPOI(poiDTOComercial.converttoPOI());
+		DB_POI.agregarPOI(poiDTOColectivo.converttoPOI());
 	}
 
 	// Se realizan 4 test de borrado, uno por cada POI
@@ -95,7 +95,7 @@ public class TestABMC_Baja {
 	// Comprobamos que efectivamente se elimina el POI
 	@Test
 	public void comprobarInexistencia() {
-		DB_Server.agregarPOI(poiDTOColectivo.converttoPOI());
+		DB_POI.agregarPOI(poiDTOColectivo.converttoPOI());
 		poi_abmc.delete(5);
 		boolean respuesta = poi_abmc.delete(5);
 		Assert.assertFalse(respuesta);

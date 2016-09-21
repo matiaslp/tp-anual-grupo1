@@ -3,14 +3,26 @@ package autentification;
 import java.util.HashMap;
 import java.util.Map;
 
+import db.DB_Usuarios;
+
 public class Usuario {
 
 	private Rol rol;
 	private String username;
 	private String password;
 	private long id;
-	private Map<String, Accion> funcionalidades = new HashMap<String, Accion>();
+	private Map<String, Accion> funcionalidades;
 	private String correo;
+	
+	public Usuario(String username, String password, Rol rol) {
+		this.setID(DB_Usuarios.getInstance().getListaUsuarios().size() + 1);
+		this.setPassword(password);
+		this.setUsername(username);
+		this.setRol(rol);
+		if (rol.getNombre().equals("admin")) {
+			this.setFuncionalidades(new HashMap<String, Accion>());
+		}
+	}
 
 	public Rol getRol() {
 		return rol;
@@ -67,5 +79,14 @@ public class Usuario {
 			return false;
 		}
 	}
+	
+	public boolean validarUsuarioYPass(String user,String pass){
+		if(user.equals(this.username) && pass.equals(this.password)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 
 }

@@ -11,7 +11,7 @@ import org.junit.Test;
 import abmc.Historico;
 import abmc.POI_ABMC;
 import db.DB_HistorialBusquedas;
-import db.DB_Server;
+import db.DB_POI;
 import db.RegistroHistorico;
 import poi.Banco;
 import poi.CGP;
@@ -32,7 +32,7 @@ public class TestABMC_Historico {
 	public void inicializar() {
 		abmc = new POI_ABMC();
 
-		new DB_Server();
+		new DB_POI();
 
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");
@@ -46,10 +46,10 @@ public class TestABMC_Historico {
 	// La cantidad de registros aumenta como consecuencua de otros tests
 	@Test
 	public void testHistorico() throws JSONException, MalformedURLException, IOException {
-		DB_Server.agregarPOI(cgp);
-		DB_Server.agregarPOI(parada);
-		DB_Server.agregarPOI(local);
-		DB_Server.agregarPOI(banco);
+		DB_POI.agregarPOI(cgp);
+		DB_POI.agregarPOI(parada);
+		DB_POI.agregarPOI(local);
+		DB_POI.agregarPOI(banco);
 
 		historico.buscar(ServicioAPI, "Mataderos", 1);
 		Assert.assertTrue(DB_HistorialBusquedas.getInstance().cantidadRegistros() == 1);

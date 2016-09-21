@@ -4,22 +4,22 @@ import java.util.ArrayList;
 
 import poi.POI;
 
-public class DB_Server {
+public class DB_POI {
 
 	private static ArrayList<POI> listadoPOI;
-	private static DB_Server instance = null;
+	private static DB_POI instance = null;
 
-	public DB_Server() {
+	public DB_POI() {
 		listadoPOI = new ArrayList<POI>();
 	}
 
 	public static ArrayList<POI> getListado() {
-		return DB_Server.listadoPOI;
+		return DB_POI.listadoPOI;
 	}
 
-	public DB_Server getInstance() {
+	public DB_POI getInstance() {
 		if (instance == null)
-			instance = new DB_Server();
+			instance = new DB_POI();
 		return instance;
 	}
 

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import abmc.POI_ABMC;
 import abmc.Timer;
-import db.DB_Server;
+import db.DB_POI;
 import poi.Banco;
 import poi.CGP;
 import poi.LocalComercial;
@@ -31,7 +31,7 @@ public class TestABMC_Timer {
 	public void inicializar() {
 		abmc = new POI_ABMC();
 
-		new DB_Server();
+		new DB_POI();
 
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");
@@ -43,10 +43,10 @@ public class TestABMC_Timer {
 	@Test
 	public void testTimer() throws JSONException, MalformedURLException, IOException {
 		ArrayList<POI> lista = null;
-		DB_Server.agregarPOI(cgp);
-		DB_Server.agregarPOI(parada);
-		DB_Server.agregarPOI(local);
-		DB_Server.agregarPOI(banco);
+		DB_POI.agregarPOI(cgp);
+		DB_POI.agregarPOI(parada);
+		DB_POI.agregarPOI(local);
+		DB_POI.agregarPOI(banco);
 
 		// new timer
 		Timer timer = new Timer();

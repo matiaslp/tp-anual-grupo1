@@ -12,6 +12,7 @@ import org.json.JSONException;
 import autentification.AuthAPI;
 import autentification.Usuario;
 import db.DB_HistorialBusquedas;
+import db.DB_Usuarios;
 import db.RegistroHistorico;
 import autentification.funciones.FuncEnviarMail;
 import helpers.LeerProperties;
@@ -31,8 +32,8 @@ public class Historico implements Busqueda {
 		FuncEnviarMail funcMail = ((FuncEnviarMail) AuthAPI.getInstance().getAcciones().get("enviarMail"));
 		if (timer.getSeconds() > Integer
 				.valueOf(LeerProperties.getInstance().prop.getProperty("segundosDeDemoraParaEmail"))) {
-			for (Usuario usuario : AuthAPI.getInstance().getListaUsuarios()) {
-				if (AuthAPI.getInstance().chequearFuncionalidad("enviarMail", usuario) && usuario.getCorreo() != null)
+			for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios()) {
+				if (usuario.chequearFuncionalidad("enviarMail") && usuario.getCorreo() != null)
 					try {
 						funcMail.enviarMail(texto, usuario.getCorreo());
 					} catch (MessagingException e) {
