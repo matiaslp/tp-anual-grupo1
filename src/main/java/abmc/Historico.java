@@ -1,4 +1,4 @@
-package abmc.consulta;
+package abmc;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,7 +19,7 @@ import poi.POI;
 //Esta clase funciona se encuentra detras de un Facade
 //Es recomendable consultar a la clase POI_ABMC.
 
-public class Historico implements Busqueda {
+class Historico implements Busqueda {
 	
 	
 	private static Historico instance = null;

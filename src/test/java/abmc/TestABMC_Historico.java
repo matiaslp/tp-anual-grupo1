@@ -1,8 +1,7 @@
-package test_abmc;
+package abmc;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 
 import javax.mail.MessagingException;
 
@@ -11,23 +10,26 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import abmc.Historico;
 import abmc.POI_ABMC;
-import abmc.consulta.Timer;
+import db.DB_HistorialBusquedas;
 import db.DB_POI;
+import db.RegistroHistorico;
 import poi.Banco;
 import poi.CGP;
 import poi.LocalComercial;
-import poi.POI;
 import poi.ParadaColectivo;
 
-public class TestABMC_Timer {
+public class TestABMC_Historico {
 	POI_ABMC abmc;
 	String ServicioAPI;
+	
 
 	Banco banco = new Banco("Santander", 0, 0);
 	LocalComercial local = new LocalComercial("Localcito", 0, 0, null);
 	ParadaColectivo parada = new ParadaColectivo("47", 0, 0);
 	CGP cgp = new CGP("Mataderos", 0, 0);
+	Historico historico;
 
 	@Before
 	public void inicializar() {
@@ -40,20 +42,24 @@ public class TestABMC_Timer {
 		banco.setCallePrincipal("Alberdi");
 		banco.setCalleLateral("Escalada");
 		ServicioAPI = "http://trimatek.org/Consultas/";
+		historico = new Historico();
+
 	}
 
+	// La cantidad de registros aumenta como consecuencua de otros tests
 	@Test
-	public void testTimer() throws JSONException, MalformedURLException, IOException, MessagingException {
-		ArrayList<POI> lista = null;
+	public void testHistorico() throws JSONException, MalformedURLException, IOException, MessagingException {
 		DB_POI.agregarPOI(cgp);
 		DB_POI.agregarPOI(parada);
 		DB_POI.agregarPOI(local);
 		DB_POI.agregarPOI(banco);
 
-		// new timer
-		Timer timer = new Timer();
-
-		lista = timer.buscar(ServicioAPI, "Mataderos a b r t", 1);
-		Assert.assertTrue(timer.getSeconds() > 1);
+		historico.buscar(ServicioAPI, "Mataderos", 1);
+		Assert.assertTrue(DB_HistorialBusquedas.getInstance().cantidadRegistros() == 1);
+		RegistroHistorico reg = DB_HistorialBusquedas.getInstance().registroHistoricoPorId(1);
+		Assert.assertTrue(reg.getUserID() == 1);
+		Assert.assertTrue(reg.getCantResultados() == 17);
+		Assert.assertTrue(reg.getTime().isBeforeNow());
+		Assert.assertEquals(reg.getBusqueda(), "Mataderos");
 	}
 }

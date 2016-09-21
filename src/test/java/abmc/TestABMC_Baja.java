@@ -1,4 +1,4 @@
-package test_abmc;
+package abmc;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,7 +10,7 @@ import db.DB_POI;
 import poi.Rubro;
 import poi.TiposPOI;
 
-public class TestABMC_Alta {
+public class TestABMC_Baja {
 	POI_ABMC abmc = new POI_ABMC();
 	POI_ABMC poi_abmc;
 	POI_DTO poiDTOBanco;
@@ -23,6 +23,7 @@ public class TestABMC_Alta {
 
 	@Before
 	public void init() {
+
 		poi_abmc = new POI_ABMC();
 		unServer = new DB_POI();
 		instancia = unServer.getInstance();
@@ -51,38 +52,53 @@ public class TestABMC_Alta {
 		poiDTOColectivo.setNombre("unaParadaDeColectivo");
 		poiDTOColectivo.setLatitud(-34.5664823);
 		poiDTOColectivo.setLongitud(-34.5664823);
+
+		// Se crean 4 POIs (uno por cada tipo)
+		DB_POI.agregarPOI(poiDTOBanco.converttoPOI());
+		DB_POI.agregarPOI(poiDTOCGP.converttoPOI());
+		DB_POI.agregarPOI(poiDTOComercial.converttoPOI());
+		DB_POI.agregarPOI(poiDTOColectivo.converttoPOI());
+	}
+
+	// Se realizan 4 test de borrado, uno por cada POI
+	@Test
+	public void bajaBanco() {
+		boolean respuesta = poi_abmc.delete(1);
+		Assert.assertTrue(respuesta);
 	}
 
 	@Test
-	public void altaBanco() {
-		boolean respuesta = DB_POI.agregarPOI(poiDTOBanco.converttoPOI());
+	public void bajaCGP() {
+		boolean respuesta = poi_abmc.delete(2);
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOBanco.getNombre()
-				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
-
 	}
 
 	@Test
-	public void altaCGP() {
-		boolean respuesta = DB_POI.agregarPOI(poiDTOCGP.converttoPOI());
+	public void bajaLocalComercial() {
+		boolean respuesta = poi_abmc.delete(3);
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOCGP.getNombre()
-				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
 	}
 
 	@Test
-	public void altaLocalComercial() {
-		boolean respuesta = DB_POI.agregarPOI(poiDTOComercial.converttoPOI());
+	public void bajaParadaColectivo() {
+		boolean respuesta = poi_abmc.delete(4);
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOComercial.getNombre()
-				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
 	}
 
+	// Comprobamos que no se puede borrar un POI al ingresar un ID inexistente
 	@Test
-	public void altaParadaColectivo() {
-		boolean respuesta = DB_POI.agregarPOI(poiDTOColectivo.converttoPOI());
-		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOColectivo.getNombre()
-				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
+	public void borrarInexistente() {
+		boolean respuesta = poi_abmc.delete(10);
+		Assert.assertFalse(respuesta);
+	}
+
+	// Comprobamos que efectivamente se elimina el POI
+	@Test
+	public void comprobarInexistencia() {
+		DB_POI.agregarPOI(poiDTOColectivo.converttoPOI());
+		poi_abmc.delete(5);
+		boolean respuesta = poi_abmc.delete(5);
+		Assert.assertFalse(respuesta);
+
 	}
 }

@@ -1,4 +1,4 @@
-package abmc.consulta;
+package abmc;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,7 +12,7 @@ import org.json.JSONException;
 
 import poi.POI;
 
-public class Timer implements Busqueda {
+class Timer implements Busqueda {
 
 	long seconds;
 

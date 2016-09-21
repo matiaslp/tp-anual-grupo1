@@ -1,4 +1,4 @@
-package test_abmc;
+package abmc;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

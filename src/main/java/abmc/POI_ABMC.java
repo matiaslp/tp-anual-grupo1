@@ -3,8 +3,6 @@ package abmc;
 import java.util.ArrayList;
 import javax.mail.MessagingException;
 import org.json.JSONException;
-import abmc.consulta.Busqueda;
-import abmc.consulta.Historico;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
