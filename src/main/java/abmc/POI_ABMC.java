@@ -1,20 +1,23 @@
 package abmc;
 
 import java.util.ArrayList;
-import java.util.List;
-
+import javax.mail.MessagingException;
 import org.json.JSONException;
+import abmc.consulta.Busqueda;
+import abmc.consulta.Historico;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-
 import db.DB_POI;
-import poi.BusquedaDePOIsExternos;
 import poi.POI;
+
+// Esta clase funciona como Facade para ocultar el subsistema de
+// busqueda/consulta y sus multiples clases de las que se podrian
+// hacer consultas Algunas con timer y registrando en el 
+// historial otras sin...
 
 public class POI_ABMC implements Busqueda {
 
-	private ArrayList<POI> resultado;
 	private static POI_ABMC instance = null;
 
 	public static POI_ABMC getInstance() {
@@ -51,68 +54,12 @@ public class POI_ABMC implements Busqueda {
 		return false;
 	}
 
-	public boolean poiExists(ArrayList<POI> list, POI poi) {
-
-		if (list.size() > 0)
-			for (POI nodo : list) {
-				if (nodo.compararPOI(poi))
-					return true;
-			}
-		return false;
-	}
 
 	// Busqueda por texto libre ABIERTA (busca todos los pois que contengan al
 	// menos UNA palabra contenida en la busqueda)
 	public ArrayList<POI> buscar(String url, String texto, long userID)
-			throws JSONException, MalformedURLException, IOException {
-		String filtros[] = texto.split("\\s+");
-		resultado = new ArrayList<POI>();
-		ArrayList<POI> listaLocal = DB_POI.getListado();
-		for (POI nodo : listaLocal) {
-			if (nodo.busquedaEstandar(filtros)) {
-				resultado.add(nodo);
-			}
-		}
-		if (url != "") {
-			List<POI> listaExterna = new ArrayList<POI>();
-			for (String palabra : filtros) {
-				listaExterna = BusquedaDePOIsExternos.buscarPOIsExternos(url, palabra);// cgp
-				if (!(listaExterna.isEmpty())) {
-					for (POI x : listaExterna) {
-						if (!poiExists(resultado, x))
-							resultado.add(x);
-					}
-				}
-				if (filtros.length > 1) {
-					for (String palabra2 : filtros) {
-						listaExterna = BusquedaDePOIsExternos.buscarPOIsExternos(url, palabra, palabra2);// bancos
-						if (!(listaExterna.isEmpty())) {
-							for (POI x : listaExterna) {
-								if (!poiExists(resultado, x))
-									resultado.add(x);
-							}
-						}
-					}
+			throws JSONException, MalformedURLException, IOException, MessagingException {
 
-					// si hay una sola palabra se busca solo por servicio o solo
-					// por banco
-				}
-				listaExterna = BusquedaDePOIsExternos.buscarPOIsExternos(url, palabra, "");// bancos
-				if (!(listaExterna.isEmpty())) {
-					for (POI x : listaExterna) {
-						if (!poiExists(resultado, x))
-							resultado.add(x);
-					}
-				}
-				listaExterna = BusquedaDePOIsExternos.buscarPOIsExternos(url, "", palabra);// bancos
-				if (!(listaExterna.isEmpty())) {
-					for (POI x : listaExterna) {
-						if (!poiExists(resultado, x))
-							resultado.add(x);
-					}
-				}
-			}
-		}
-		return resultado;
+		return Historico.getInstance().buscar(url, texto, userID);
 	}
 }

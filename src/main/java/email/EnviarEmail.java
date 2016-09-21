@@ -14,6 +14,10 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import autentification.AuthAPI;
+import autentification.Usuario;
+import autentification.funciones.FuncEnviarMail;
+import db.DB_Usuarios;
 import helpers.LeerProperties;
 
 public abstract class EnviarEmail {
@@ -77,6 +81,13 @@ public abstract class EnviarEmail {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	// Se envia email a todos los usuarios que tenga la funcionalidad de recibirEmails activada
+	public static void MandarCorreoXSegundosUsuarios(String texto, int segundos) throws MessagingException {		
+		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios())
+			if (usuario.chequearFuncionalidad("enviarMail") && usuario.getCorreo() != null)
+				EnviarEmail.mandarCorreoXSegundos(texto, segundos, usuario.getCorreo());
 	}
 
 }

@@ -3,13 +3,15 @@ package test_abmc;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import javax.mail.MessagingException;
+
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import abmc.Historico;
 import abmc.POI_ABMC;
+import abmc.consulta.Historico;
 import db.DB_HistorialBusquedas;
 import db.DB_POI;
 import db.RegistroHistorico;
@@ -21,6 +23,7 @@ import poi.ParadaColectivo;
 public class TestABMC_Historico {
 	POI_ABMC abmc;
 	String ServicioAPI;
+	
 
 	Banco banco = new Banco("Santander", 0, 0);
 	LocalComercial local = new LocalComercial("Localcito", 0, 0, null);
@@ -45,7 +48,7 @@ public class TestABMC_Historico {
 
 	// La cantidad de registros aumenta como consecuencua de otros tests
 	@Test
-	public void testHistorico() throws JSONException, MalformedURLException, IOException {
+	public void testHistorico() throws JSONException, MalformedURLException, IOException, MessagingException {
 		DB_POI.agregarPOI(cgp);
 		DB_POI.agregarPOI(parada);
 		DB_POI.agregarPOI(local);

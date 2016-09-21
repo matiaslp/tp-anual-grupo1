@@ -10,7 +10,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class DB_HistorialBusquedas {
 
-	private Map<Long, RegistroHistorico> listadoRegistros = new HashMap<Long, RegistroHistorico>();
+	private Map<Long, RegistroHistorico> listadoRegistros;
 
 	private static DB_HistorialBusquedas instance = null;
 

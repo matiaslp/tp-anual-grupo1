@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import abmc.POI_ABMC;
-import abmc.Timer;
+import abmc.consulta.Timer;
 import db.DB_POI;
 import poi.Banco;
 import poi.CGP;
@@ -41,7 +43,7 @@ public class TestABMC_Timer {
 	}
 
 	@Test
-	public void testTimer() throws JSONException, MalformedURLException, IOException {
+	public void testTimer() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 		DB_POI.agregarPOI(cgp);
 		DB_POI.agregarPOI(parada);
