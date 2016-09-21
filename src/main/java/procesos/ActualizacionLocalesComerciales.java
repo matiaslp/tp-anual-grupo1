@@ -1,14 +1,13 @@
 package procesos;
 
+public class ActualizacionLocalesComerciales extends Proceso {
 
-public class ActualizacionLocalesComerciales extends Proceso{
-	
 	String filePath;
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public ActualizacionLocalesComerciales(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
@@ -16,9 +15,5 @@ public class ActualizacionLocalesComerciales extends Proceso{
 		super(cantidadReintentos, enviarEmail, disableAccion);
 		this.filePath = filePath;
 	}
-
-
-
-
 
 }

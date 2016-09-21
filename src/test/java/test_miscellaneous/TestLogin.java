@@ -23,14 +23,14 @@ public class TestLogin {
 	@Before
 	public void init() {
 		DBU = DB_Usuarios.getInstance();
-		Autenticador=AuthAPI.getInstance();
+		Autenticador = AuthAPI.getInstance();
 
-		prueba = new Usuario("usuario","password",Rol.ADMIN);
+		prueba = new Usuario("usuario", "password", Rol.ADMIN);
 		prueba.getFuncionalidades().put("enviarMail", AuthAPI.Acciones.get("enviarMail"));
 
 		DBU.agregarUsuarioALista(prueba);
 
-		terminal = new Usuario("terminal","password",Rol.TERMINAL);
+		terminal = new Usuario("terminal", "password", Rol.TERMINAL);
 
 	}
 

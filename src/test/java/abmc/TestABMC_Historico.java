@@ -23,7 +23,6 @@ import poi.ParadaColectivo;
 public class TestABMC_Historico {
 	POI_ABMC abmc;
 	String ServicioAPI;
-	
 
 	Banco banco = new Banco("Santander", 0, 0);
 	LocalComercial local = new LocalComercial("Localcito", 0, 0, null);

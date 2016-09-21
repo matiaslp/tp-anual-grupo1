@@ -10,12 +10,12 @@ import db.DB_HistorialBusquedas;
 
 public class FuncBusquedasPorFecha extends Accion {
 
-	public FuncBusquedasPorFecha(){	
+	public FuncBusquedasPorFecha() {
 		Roles = new ArrayList<Rol>();
-		//Agregar Roles para esta funcionalidad
+		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
 	}
-	
+
 	@Override
 	public Map<String, Long> obtenerBusquedasPorFecha(Usuario user, String Token) {
 		if (validarsesion(user, Token))

@@ -6,22 +6,22 @@ import autentification.Accion;
 import autentification.Usuario;
 
 public class DB_Usuarios extends Accion {
-	
+
 	private ArrayList<Usuario> listaUsuarios;
-	
+
 	private static DB_Usuarios instance = null;
-	
-	public DB_Usuarios(){
+
+	public DB_Usuarios() {
 		setListaUsuarios(new ArrayList<Usuario>());
 	}
-	
-	public static DB_Usuarios getInstance(){
-		if(instance == null){
+
+	public static DB_Usuarios getInstance() {
+		if (instance == null) {
 			instance = new DB_Usuarios();
 		}
 		return instance;
 	}
-	
+
 	public boolean agregarUsuarioALista(Usuario user) {
 		for (Usuario usuario : getListaUsuarios()) {
 			if (user.getUsername().equals(usuario.getUsername()) || user.getID() == usuario.getID()) {

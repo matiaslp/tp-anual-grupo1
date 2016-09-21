@@ -82,9 +82,10 @@ public abstract class EnviarEmail {
 			return false;
 		}
 	}
-	
-	// Se envia email a todos los usuarios que tenga la funcionalidad de recibirEmails activada
-	public static void MandarCorreoXSegundosUsuarios(String texto, int segundos) throws MessagingException {		
+
+	// Se envia email a todos los usuarios que tenga la funcionalidad de
+	// recibirEmails activada
+	public static void MandarCorreoXSegundosUsuarios(String texto, int segundos) throws MessagingException {
 		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios())
 			if (usuario.chequearFuncionalidad("enviarMail") && usuario.getCorreo() != null)
 				EnviarEmail.mandarCorreoXSegundos(texto, segundos, usuario.getCorreo());

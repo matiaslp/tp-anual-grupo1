@@ -52,7 +52,6 @@ public class POI_ABMC implements Busqueda {
 		return false;
 	}
 
-
 	// Busqueda por texto libre ABIERTA (busca todos los pois que contengan al
 	// menos UNA palabra contenida en la busqueda)
 	public ArrayList<POI> buscar(String url, String texto, long userID)

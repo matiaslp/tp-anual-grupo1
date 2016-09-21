@@ -10,12 +10,12 @@ import db.DB_HistorialBusquedas;
 
 public class FuncCantidadResultadosPorTerminal extends Accion {
 
-	public FuncCantidadResultadosPorTerminal(){	
+	public FuncCantidadResultadosPorTerminal() {
 		Roles = new ArrayList<Rol>();
-		//Agregar Roles para esta funcionalidad
+		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
 	}
-	
+
 	@Override
 	public Map<Long, Long> obtenerCantidadResultadosPorTerminal(Usuario user, String Token, long terminal) {
 		if (validarsesion(user, Token))

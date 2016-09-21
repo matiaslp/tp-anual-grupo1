@@ -7,10 +7,10 @@ import autentification.Rol;
 
 public class FuncActualizacionLocalesComerciales extends Accion {
 
-	public FuncActualizacionLocalesComerciales(){	
+	public FuncActualizacionLocalesComerciales() {
 		Roles = new ArrayList<Rol>();
-		//Agregar Roles para esta funcionalidad
+		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
 	}
-	
+
 }

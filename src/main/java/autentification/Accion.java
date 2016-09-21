@@ -9,11 +9,12 @@ import db.RegistroHistorico;
 import poi.POI;
 
 public abstract class Accion {
-	
+
 	protected static ArrayList<Rol> Roles;
 	protected String nombreFuncion;
 
-	public boolean enviarMail(Usuario user, String Token, String nombreDeBusqueda, String correo) throws MessagingException {
+	public boolean enviarMail(Usuario user, String Token, String nombreDeBusqueda, String correo)
+			throws MessagingException {
 		return false;
 	}
 
@@ -32,30 +33,29 @@ public abstract class Accion {
 	public RegistroHistorico obtenerRegistroPorId(Usuario user, String Token, long id) {
 		return null;
 	}
-	
-	public void darDeBajaPOI(Usuario user, String Token){
-	}
-	
-	public ArrayList<POI> busquedaPOI(Usuario user, String Token){
-		return null;	
-	}
-	
-	public void crearProcesoMultilpe(Usuario user, String Token){
-		
-	}
-	
-	public void agregarAcciones(Usuario user, String Token){
-		
-	}
-	
-	public POI obtenerInfoPOI(Usuario user, String Token){
-		return null;
-		
-	}
-	
-	protected boolean validarsesion(Usuario user, String Token){
-		return AuthAPI.getInstance().validarToken(Token) && user.chequearFuncionalidad(nombreFuncion);
+
+	public void darDeBajaPOI(Usuario user, String Token) {
 	}
 
+	public ArrayList<POI> busquedaPOI(Usuario user, String Token) {
+		return null;
+	}
+
+	public void crearProcesoMultilpe(Usuario user, String Token) {
+
+	}
+
+	public void agregarAcciones(Usuario user, String Token) {
+
+	}
+
+	public POI obtenerInfoPOI(Usuario user, String Token) {
+		return null;
+
+	}
+
+	protected boolean validarsesion(Usuario user, String Token) {
+		return AuthAPI.getInstance().validarToken(Token) && user.chequearFuncionalidad(nombreFuncion);
+	}
 
 }

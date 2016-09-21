@@ -18,9 +18,9 @@ public class TestAcciones {
 	@Before
 	public void init() {
 		Autenticador = AuthAPI.getInstance();
-		DBU= DB_Usuarios.getInstance();
+		DBU = DB_Usuarios.getInstance();
 
-		user = new Usuario("usuario","password",Rol.ADMIN);
+		user = new Usuario("usuario", "password", Rol.ADMIN);
 
 		user.getFuncionalidades().put("enviarMail", AuthAPI.Acciones.get("enviarMail"));
 

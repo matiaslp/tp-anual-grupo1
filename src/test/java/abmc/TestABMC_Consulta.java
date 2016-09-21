@@ -102,7 +102,8 @@ public class TestABMC_Consulta {
 	}
 
 	@Test
-	public void testConsultaRemotaVariasPalabras() throws JSONException, MalformedURLException, IOException, MessagingException {
+	public void testConsultaRemotaVariasPalabras()
+			throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 
 		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", 1);
@@ -125,7 +126,8 @@ public class TestABMC_Consulta {
 	}
 
 	@Test
-	public void testConsultavariasPalabras() throws JSONException, MalformedURLException, IOException, MessagingException {
+	public void testConsultavariasPalabras()
+			throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 
 		DB_POI.agregarPOI(cgp);

@@ -57,8 +57,8 @@ public class TestABMC_Alta {
 	public void altaBanco() {
 		boolean respuesta = DB_POI.agregarPOI(poiDTOBanco.converttoPOI());
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOBanco.getNombre()
-				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
+		Assert.assertTrue(
+				poiDTOBanco.getNombre().equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
 
 	}
 
@@ -66,8 +66,8 @@ public class TestABMC_Alta {
 	public void altaCGP() {
 		boolean respuesta = DB_POI.agregarPOI(poiDTOCGP.converttoPOI());
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(poiDTOCGP.getNombre()
-				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
+		Assert.assertTrue(
+				poiDTOCGP.getNombre().equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
 	}
 
 	@Test

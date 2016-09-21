@@ -26,7 +26,7 @@ public class AuthAPI {
 			instance = new AuthAPI();
 		return instance;
 	}
-	
+
 	public static Map<String, Accion> Acciones;
 
 	public AuthAPI() {
@@ -36,23 +36,28 @@ public class AuthAPI {
 		Acciones.put("cantidadResultadosPorTerminal", new FuncCantidadResultadosPorTerminal());
 		Acciones.put("enviarMail", new FuncEnviarMail());
 	}
-	
+
 	public boolean buscarUsuarioEnLista(String username) {
-		//ESTO NO DEBERIA IR EN DB_USUARIO?
-		for (Usuario unUsuario:listaUsuarios){
-			if(unUsuario.getUsername()==username){return true; }
+		// ESTO NO DEBERIA IR EN DB_USUARIO?
+		for (Usuario unUsuario : listaUsuarios) {
+			if (unUsuario.getUsername() == username) {
+				return true;
+			}
 		}
 		return false;
-		
+
 	}
+
 	public Usuario consegirUsuarioDeLista(String username) {
-		//IDEM ANTERIOR
-		Usuario usuarioNoEncontrado=null;
-		for (Usuario unUsuario:listaUsuarios){
-			if(unUsuario.getUsername()==username){return unUsuario; }
+		// IDEM ANTERIOR
+		Usuario usuarioNoEncontrado = null;
+		for (Usuario unUsuario : listaUsuarios) {
+			if (unUsuario.getUsername() == username) {
+				return unUsuario;
+			}
 		}
 		return usuarioNoEncontrado;
-		
+
 	}
 
 	public static boolean agregarFuncionalidad(String funcionalidad, Usuario user) {

@@ -6,11 +6,10 @@ import autentification.Accion;
 import autentification.Rol;
 
 public class FuncMultiple extends Accion {
-	
-	
-	public FuncMultiple(){	
+
+	public FuncMultiple() {
 		Roles = new ArrayList<Rol>();
-		//Agregar Roles para esta funcionalidad
+		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
 	}
 

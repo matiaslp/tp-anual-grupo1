@@ -17,7 +17,7 @@ import poi.POI;
 // Es recomendable consultar a la clase POI_ABMC.
 
 class Consulta implements Busqueda {
-	
+
 	private static Consulta instance = null;
 
 	public static Consulta getInstance() {
@@ -80,7 +80,7 @@ class Consulta implements Busqueda {
 		}
 		return resultado;
 	}
-	
+
 	private boolean poiExists(ArrayList<POI> list, POI poi) {
 
 		if (list.size() > 0)

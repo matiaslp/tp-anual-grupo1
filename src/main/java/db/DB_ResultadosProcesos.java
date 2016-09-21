@@ -18,7 +18,7 @@ public class DB_ResultadosProcesos {
 			instance = new DB_ResultadosProcesos();
 		return instance;
 	}
-	
+
 	public int cantidadResultados() {
 		return listadoResultados.size();
 	}

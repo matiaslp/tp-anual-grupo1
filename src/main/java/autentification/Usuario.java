@@ -13,7 +13,7 @@ public class Usuario {
 	private long id;
 	private Map<String, Accion> funcionalidades;
 	private String correo;
-	
+
 	public Usuario(String username, String password, Rol rol) {
 		this.setID(DB_Usuarios.getInstance().getListaUsuarios().size() + 1);
 		this.setPassword(password);
@@ -71,7 +71,7 @@ public class Usuario {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	
+
 	public boolean chequearFuncionalidad(String funcionalidad) {
 		if (this.getFuncionalidades().get(funcionalidad) != null) {
 			return true;
@@ -79,14 +79,13 @@ public class Usuario {
 			return false;
 		}
 	}
-	
-	public boolean validarUsuarioYPass(String user,String pass){
-		if(user.equals(this.username) && pass.equals(this.password)){
+
+	public boolean validarUsuarioYPass(String user, String pass) {
+		if (user.equals(this.username) && pass.equals(this.password)) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
 
 }

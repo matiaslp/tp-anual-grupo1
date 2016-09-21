@@ -9,7 +9,6 @@ import javax.mail.MessagingException;
 import org.joda.time.DateTime;
 import org.json.JSONException;
 
-
 import db.DB_HistorialBusquedas;
 import db.RegistroHistorico;
 import email.EnviarEmail;
@@ -20,8 +19,7 @@ import poi.POI;
 //Es recomendable consultar a la clase POI_ABMC.
 
 class Historico implements Busqueda {
-	
-	
+
 	private static Historico instance = null;
 
 	public static Historico getInstance() {
@@ -29,7 +27,6 @@ class Historico implements Busqueda {
 			instance = new Historico();
 		return instance;
 	}
-
 
 	public ArrayList<POI> buscar(String url, String texto, long userID)
 			throws JSONException, MalformedURLException, IOException, MessagingException {
@@ -40,9 +37,11 @@ class Historico implements Busqueda {
 		Timer timer = new Timer();
 		ArrayList<POI> resultado = timer.buscar(url, texto, userID);
 
-		// Se evalua si el Timer tardo mas de los segundos estipulados por archivo de configuracion
+		// Se evalua si el Timer tardo mas de los segundos estipulados por
+		// archivo de configuracion
 		if (timer.getSeconds() > segundos)
-			// Se envia Email a todos los usuarios que tenga la funcion de recibir emails habilitada
+			// Se envia Email a todos los usuarios que tenga la funcion de
+			// recibir emails habilitada
 			EnviarEmail.MandarCorreoXSegundosUsuarios(texto, segundos);
 
 		// Registrar busqueda

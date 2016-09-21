@@ -16,7 +16,6 @@ class Timer implements Busqueda {
 
 	long seconds;
 
-
 	public ArrayList<POI> buscar(String url, String texto, long userID)
 			throws JSONException, MalformedURLException, IOException, MessagingException {
 
