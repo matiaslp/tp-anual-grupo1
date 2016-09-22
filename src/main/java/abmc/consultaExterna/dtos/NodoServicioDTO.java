@@ -1,8 +1,8 @@
-package dtos;
+package abmc.consultaExterna.dtos;
 
 import java.util.List;
 
-public class NodoServicioDTO {
+class NodoServicioDTO {
 	String nombre;
 	List<HorariosDTO> horarios;
 

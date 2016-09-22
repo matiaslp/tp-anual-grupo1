@@ -1,8 +1,8 @@
-package dtos;
+package abmc.consultaExterna.dtos;
 
 import java.util.ArrayList;
 
-public class Banco_DTO {
+class Banco_DTO {
 	String banco;
 	long x;
 	long y;

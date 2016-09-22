@@ -10,10 +10,16 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
-import autentification.funciones.FuncBusquedaPorUsuario;
-import autentification.funciones.FuncBusquedasPorFecha;
-import autentification.funciones.FuncCantidadResultadosPorTerminal;
+import autentification.funciones.FuncActualizacionLocalesComerciales;
+import autentification.funciones.FuncAgregarAcciones;
+import autentification.funciones.FuncBajaPOIs;
+import autentification.funciones.FuncBusquedaPOI;
+import autentification.funciones.FuncReporteBusquedaPorUsuario;
+import autentification.funciones.FuncReporteBusquedasPorFecha;
+import autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
 import autentification.funciones.FuncEnviarMail;
+import autentification.funciones.FuncMultiple;
+import autentification.funciones.FuncObtenerInfoPOI;
 import db.DB_Sesiones;
 import db.DB_Usuarios;
 
@@ -31,10 +37,16 @@ public class AuthAPI {
 
 	public AuthAPI() {
 		Acciones = new HashMap<String, Accion>();
-		Acciones.put("busquedaPorUsuario", new FuncBusquedaPorUsuario());
-		Acciones.put("busquedasPorFecha", new FuncBusquedasPorFecha());
-		Acciones.put("cantidadResultadosPorTerminal", new FuncCantidadResultadosPorTerminal());
+		Acciones.put("reporteBusquedaPorUsuario", new FuncReporteBusquedaPorUsuario());
+		Acciones.put("reporteBusquedasPorFecha", new FuncReporteBusquedasPorFecha());
+		Acciones.put("reportecantidadResultadosPorTerminal", new FuncReporteCantidadResultadosPorTerminal());
 		Acciones.put("enviarMail", new FuncEnviarMail());
+		Acciones.put("actualizacionLocalesComerciales", new FuncActualizacionLocalesComerciales());
+		Acciones.put("agregarAcciones", new FuncAgregarAcciones());
+		Acciones.put("bajaPOIs", new FuncBajaPOIs());
+		Acciones.put("obtenerInfoPOI", new FuncObtenerInfoPOI());
+		Acciones.put("busquedaPOI", new FuncBusquedaPOI());
+		Acciones.put("procesoMultiple", new FuncMultiple());
 	}
 
 	public boolean buscarUsuarioEnLista(String username) {

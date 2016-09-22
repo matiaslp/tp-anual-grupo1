@@ -1,6 +1,6 @@
-package dtos;
+package abmc.consultaExterna.dtos;
 
-public class HorariosDTO {
+class HorariosDTO {
 	int diaSemana;
 	int horaDesde;
 	int minutosDesde;

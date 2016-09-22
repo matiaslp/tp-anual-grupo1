@@ -12,6 +12,7 @@ public class FuncBajaPOIs extends Accion {
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
 		Roles.add(Rol.TERMINAL);
+		nombreFuncion = "bajaPOIs";
 	}
 
 }

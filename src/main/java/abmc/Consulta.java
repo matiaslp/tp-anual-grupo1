@@ -8,7 +8,7 @@ import java.util.List;
 import org.json.JSONException;
 
 import db.DB_POI;
-import poi.BusquedaDePOIsExternos;
+import abmc.consultaExterna.BusquedaDePOIsExternos;
 import poi.POI;
 
 //Esta clase funciona se encuentra detras de un Facade y si

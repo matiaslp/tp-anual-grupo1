@@ -1,9 +1,9 @@
-package dtos;
+package abmc.consultaExterna.dtos;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CGP_DTO {
+class CGP_DTO {
 	int comuna;
 	String zonas;
 	String director;

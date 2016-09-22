@@ -3,6 +3,8 @@ package autentification;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.LocalDate;
+
 import db.DB_Usuarios;
 
 public class Usuario {
@@ -13,16 +15,15 @@ public class Usuario {
 	private long id;
 	private Map<String, Accion> funcionalidades;
 	private String correo;
+	private LocalDate fechaBaja;
 
 	public Usuario(String username, String password, Rol rol) {
 		this.setID(DB_Usuarios.getInstance().getListaUsuarios().size() + 1);
 		this.setPassword(password);
 		this.setUsername(username);
 		this.setRol(rol);
-		if (rol.getNombre().equals("admin")) {
-			this.setFuncionalidades(new HashMap<String, Accion>());
+		this.setFuncionalidades(new HashMap<String, Accion>());
 		}
-	}
 
 	public Rol getRol() {
 		return rol;

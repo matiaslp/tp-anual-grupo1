@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import poi.BusquedaDePOIsExternos;
+import abmc.consultaExterna.BusquedaDePOIsExternos;
 import poi.POI;
 
 public class TestBuscarPoiExterno {

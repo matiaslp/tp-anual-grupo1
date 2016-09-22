@@ -1,4 +1,4 @@
-package poi;
+package abmc.consultaExterna;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -8,8 +8,10 @@ import java.util.List;
 import org.json.JSONException;
 
 import abmc.POI_DTO;
-import dtos.Banco_Converter;
-import dtos.CGP_Converter;
+import abmc.consultaExterna.dtos.Banco_Converter;
+import abmc.consultaExterna.dtos.CGP_Converter;
+import poi.POI;
+import poi.TiposPOI;
 
 public class BusquedaDePOIsExternos {
 

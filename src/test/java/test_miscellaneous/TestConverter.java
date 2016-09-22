@@ -9,8 +9,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import abmc.POI_DTO;
-import dtos.Banco_Converter;
-import dtos.CGP_Converter;
+import abmc.consultaExterna.dtos.Banco_Converter;
+import abmc.consultaExterna.dtos.CGP_Converter;
 
 public class TestConverter {
 

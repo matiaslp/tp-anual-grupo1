@@ -8,18 +8,19 @@ import autentification.Rol;
 import autentification.Usuario;
 import db.DB_HistorialBusquedas;
 
-public class FuncCantidadResultadosPorTerminal extends Accion {
+public class FuncReporteBusquedaPorUsuario extends Accion {
 
-	public FuncCantidadResultadosPorTerminal() {
+	public FuncReporteBusquedaPorUsuario() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
+		nombreFuncion = "reporteBusquedaPorUsuario";
 	}
 
 	@Override
-	public Map<Long, Long> obtenerCantidadResultadosPorTerminal(Usuario user, String Token, long terminal) {
+	public Map<Long, Long> obtenerBusquedaPorUsuario(Usuario user, String Token) {
 		if (validarsesion(user, Token))
-			return DB_HistorialBusquedas.getInstance().reporteCantidadResultadosPorTerminal(terminal);
+			return DB_HistorialBusquedas.getInstance().reporteBusquedaPorUsuario();
 		else
 			return null;
 	}

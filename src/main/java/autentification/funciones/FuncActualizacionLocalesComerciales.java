@@ -11,6 +11,7 @@ public class FuncActualizacionLocalesComerciales extends Accion {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
+		nombreFuncion = "actualizacionLocalesComerciales";
 	}
 
 }
