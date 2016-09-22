@@ -22,11 +22,11 @@ public class FuncBusquedaPOI extends Accion {
 		Roles.add(Rol.ADMIN);
 		nombreFuncion = "busquedaPOI";
 	}
-	
+
 	public ArrayList<POI> busquedaPOI(Usuario user, String Token, String texto) {
 		String url = LeerProperties.getInstance().prop.getProperty("Bacos");
 		ArrayList<POI> resultado = null;
-		if (validarsesion(user, Token)){
+		if (validarsesion(user, Token)) {
 			try {
 				resultado = POI_ABMC.getInstance().buscar(url, texto, user.getID());
 			} catch (JSONException | IOException | MessagingException e) {
@@ -34,9 +34,8 @@ public class FuncBusquedaPOI extends Accion {
 				e.printStackTrace();
 			}
 			return resultado;
-		}
-		else
+		} else
 			return null;
-			
-}
+
+	}
 }

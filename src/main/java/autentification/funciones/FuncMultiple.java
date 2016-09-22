@@ -16,12 +16,10 @@ public class FuncMultiple extends Accion {
 		nombreFuncion = "procesoMultiple";
 	}
 
-	
-	public void crearProcesoMultilpe(Usuario user, String Token,
-			int cantidadReintentos, boolean enviarEmail, 
+	public void crearProcesoMultilpe(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			boolean disableAccion, ArrayList<Proceso> listProc) {
 		// TODO referenciar al proceso
 
 	}
-	
+
 }

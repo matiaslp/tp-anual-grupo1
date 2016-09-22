@@ -15,14 +15,12 @@ public class FuncAgregarAcciones extends Accion {
 		Roles.add(Rol.ADMIN);
 		nombreFuncion = "agregarAcciones";
 	}
-	
-	public void agregarAcciones(Usuario user, String Token,
-			int cantidadReintentos, boolean enviarEmail, 
+
+	public void agregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			boolean disableAccion, String filePath) {
-		if (validarsesion(user, Token)){
-		AgregarAcciones proceso = new AgregarAcciones(
-				cantidadReintentos, enviarEmail, disableAccion, filePath);
-		proceso.execute();
+		if (validarsesion(user, Token)) {
+			AgregarAcciones proceso = new AgregarAcciones(cantidadReintentos, enviarEmail, disableAccion, filePath);
+			proceso.execute();
 		}
 	}
 

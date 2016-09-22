@@ -18,12 +18,11 @@ public class FuncObtenerInfoPOI extends Accion {
 		nombreFuncion = "obtenerInfoPOI";
 	}
 
-	public POI obtenerInfoPOI(Usuario user, String Token, 
-			long id) {
+	public POI obtenerInfoPOI(Usuario user, String Token, long id) {
 		if (validarsesion(user, Token))
 			return DB_POI.getInstance().getPOIbyId(id);
 		else
 			return null;
 	}
-	
+
 }

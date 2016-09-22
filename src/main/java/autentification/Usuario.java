@@ -23,7 +23,7 @@ public class Usuario {
 		this.setUsername(username);
 		this.setRol(rol);
 		this.setFuncionalidades(new HashMap<String, Accion>());
-		}
+	}
 
 	public Rol getRol() {
 		return rol;

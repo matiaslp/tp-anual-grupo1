@@ -16,14 +16,13 @@ public class FuncActualizacionLocalesComerciales extends Accion {
 		nombreFuncion = "actualizacionLocalesComerciales";
 	}
 
-	public void agregarAcciones(Usuario user, String Token,
-			int cantidadReintentos, boolean enviarEmail, 
+	public void agregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			boolean disableAccion, String filePath) {
-		if (validarsesion(user, Token)){
-		ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales(
-				cantidadReintentos, enviarEmail, disableAccion, filePath);
-		proceso.execute();
+		if (validarsesion(user, Token)) {
+			ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales(cantidadReintentos,
+					enviarEmail, disableAccion, filePath);
+			proceso.execute();
 		}
 	}
-	
+
 }
