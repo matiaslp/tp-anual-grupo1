@@ -45,7 +45,7 @@ public class DB_POI {
 		}
 	}
 
-	public static POI getPOIbyId(double d) {
+	public POI getPOIbyId(double d) {
 		for (POI poi : listadoPOI) {
 			if (Long.compare(poi.getId(), (int) d) == 0)
 				return poi;

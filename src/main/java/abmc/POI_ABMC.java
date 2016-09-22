@@ -36,7 +36,7 @@ public class POI_ABMC implements Busqueda {
 	}
 
 	public boolean delete(int ID) {
-		if (DB_POI.getPOIbyId(ID) != null) {
+		if (DB_POI.getInstance().getPOIbyId(ID) != null) {
 			return DB_POI.eliminarPOI(ID);
 		} else
 			return false;
@@ -44,7 +44,7 @@ public class POI_ABMC implements Busqueda {
 
 	public boolean modificar(POI_DTO dto) {
 		POI poi = null;
-		poi = DB_POI.getPOIbyId(dto.getId());
+		poi = DB_POI.getInstance().getPOIbyId(dto.getId());
 		if (poi != null) {
 			poi.setDatos(dto);
 			return true;

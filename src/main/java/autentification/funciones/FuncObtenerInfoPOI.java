@@ -7,7 +7,6 @@ import autentification.Rol;
 import autentification.Usuario;
 import db.DB_POI;
 import poi.POI;
-import procesos.BajaPOIs;
 
 public class FuncObtenerInfoPOI extends Accion {
 	public FuncObtenerInfoPOI() {

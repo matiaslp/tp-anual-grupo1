@@ -1,12 +1,6 @@
 package autentification;
 
 import java.util.ArrayList;
-import java.util.Map;
-
-import javax.mail.MessagingException;
-
-import db.RegistroHistorico;
-import poi.POI;
 
 public abstract class Accion {
 
