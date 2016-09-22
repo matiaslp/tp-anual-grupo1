@@ -19,7 +19,6 @@ public class FuncEnviarMail extends Accion {
 		nombreFuncion = "enviarMail";
 	}
 
-	@Override
 	public boolean enviarMail(Usuario user, String Token, String nombreDeBusqueda, String correo)
 			throws MessagingException {
 		if (validarsesion(user, Token))

@@ -2,7 +2,7 @@ package poi;
 
 import java.util.HashMap;
 
-public class FlyweightFactoryEtiqueta {
+class FlyweightFactoryEtiqueta {
 	IFlyweightEtiqueta etiqueta;
 
 	private static final HashMap<String, Etiqueta> mapaEtiqueta = new HashMap<String, Etiqueta>();

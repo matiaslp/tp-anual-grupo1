@@ -17,7 +17,7 @@ public class DB_POI {
 		return DB_POI.listadoPOI;
 	}
 
-	public DB_POI getInstance() {
+	public static DB_POI getInstance() {
 		if (instance == null)
 			instance = new DB_POI();
 		return instance;

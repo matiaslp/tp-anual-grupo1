@@ -1,6 +1,6 @@
 package poi;
 
-public interface IFlyweightEtiqueta {
+interface IFlyweightEtiqueta {
 	public String getNombre();
 
 }

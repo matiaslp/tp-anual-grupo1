@@ -17,7 +17,6 @@ public class FuncReporteCantidadResultadosPorTerminal extends Accion {
 		nombreFuncion = "reportecantidadResultadosPorTerminal";
 	}
 
-	@Override
 	public Map<Long, Long> obtenerCantidadResultadosPorTerminal(Usuario user, String Token, long terminal) {
 		if (validarsesion(user, Token))
 			return DB_HistorialBusquedas.getInstance().reporteCantidadResultadosPorTerminal(terminal);

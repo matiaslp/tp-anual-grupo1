@@ -17,7 +17,6 @@ public class FuncReporteBusquedaPorUsuario extends Accion {
 		nombreFuncion = "reporteBusquedaPorUsuario";
 	}
 
-	@Override
 	public Map<Long, Long> obtenerBusquedaPorUsuario(Usuario user, String Token) {
 		if (validarsesion(user, Token))
 			return DB_HistorialBusquedas.getInstance().reporteBusquedaPorUsuario();

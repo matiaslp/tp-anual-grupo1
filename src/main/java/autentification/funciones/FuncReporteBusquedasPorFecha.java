@@ -17,7 +17,6 @@ public class FuncReporteBusquedasPorFecha extends Accion {
 		nombreFuncion = "reporteBusquedasPorFecha";
 	}
 
-	@Override
 	public Map<String, Long> obtenerBusquedasPorFecha(Usuario user, String Token) {
 		if (validarsesion(user, Token))
 			return DB_HistorialBusquedas.getInstance().reporteBusquedasPorFecha();
