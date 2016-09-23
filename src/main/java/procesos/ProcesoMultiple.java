@@ -6,9 +6,10 @@ public class ProcesoMultiple extends Proceso {
 
 	private static ArrayList<Proceso> listadoProcesos;
 
-	public ProcesoMultiple(int cantidadReintentos, boolean enviarEmail, boolean disableAccion) {
+	public ProcesoMultiple(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
+			ArrayList<Proceso> procList) {
 		super(cantidadReintentos, enviarEmail, disableAccion);
-		listadoProcesos = new ArrayList<Proceso>();
+		listadoProcesos = procList;
 	}
 
 	public void agregarProceso(Proceso proc) {

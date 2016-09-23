@@ -65,4 +65,19 @@ public class ResultadoProceso {
 		this.mensajeError = mensajeError;
 	}
 
+	// Si el id no se desea setear, el mismo es generado internamente
+	// al colocar el paramentro en cero
+	public ResultadoProceso(long id, DateTime inicioEjecucion, DateTime finEjecucion, Proceso proc, long userID,
+			String mensajeError) {
+		super();
+		this.id = id;
+		this.inicioEjecucion = inicioEjecucion;
+		this.finEjecucion = finEjecucion;
+		this.proc = proc;
+		this.userID = userID;
+		this.mensajeError = mensajeError;
+	}
+	
+	
+
 }
