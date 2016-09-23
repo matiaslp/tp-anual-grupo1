@@ -77,7 +77,5 @@ public class ResultadoProceso {
 		this.userID = userID;
 		this.mensajeError = mensajeError;
 	}
-	
-	
 
 }

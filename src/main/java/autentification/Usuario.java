@@ -60,15 +60,14 @@ public class Usuario {
 	public Map<String, Accion> getFuncionalidades() {
 		return funcionalidades;
 	}
-	
-	
+
 	public Map<String, Accion> getProceses() {
 		Map<String, Accion> resultado = new HashMap<String, Accion>();
-		
-		for ( Map.Entry<String,Accion> accion : funcionalidades.entrySet() ){
+
+		for (Map.Entry<String, Accion> accion : funcionalidades.entrySet()) {
 			if (accion.getValue().isProcess())
-				resultado.put(accion.getKey(),accion.getValue());
-		}	
+				resultado.put(accion.getKey(), accion.getValue());
+		}
 		return resultado;
 	}
 

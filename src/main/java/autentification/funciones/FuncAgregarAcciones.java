@@ -25,14 +25,13 @@ public class FuncAgregarAcciones extends Accion {
 			proceso.execute();
 		}
 	}
-	
+
 	// creacion Proceso para agregar a la lista en Proceso Multiple
 	public Proceso prepAgregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			boolean disableAccion, String filePath) {
 		if (validarsesion(user, Token)) {
 			return new AgregarAcciones(cantidadReintentos, enviarEmail, disableAccion, filePath);
-		}
-		else
+		} else
 			return null;
 	}
 

@@ -26,14 +26,13 @@ public class FuncBajaPOIs extends Accion {
 			proceso.execute();
 		}
 	}
-	
+
 	// creacion Proceso para agregar a la lista en Proceso Multiple
 	public Proceso prepDarDeBajaPOI(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			boolean disableAccion) {
 		if (validarsesion(user, Token)) {
 			return new BajaPOIs(cantidadReintentos, enviarEmail, disableAccion);
-		}
-		else
+		} else
 			return null;
 	}
 

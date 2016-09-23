@@ -21,8 +21,7 @@ public class FuncMultiple extends Accion {
 	public void crearProcesoMultilpe(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			boolean disableAccion, ArrayList<Proceso> listProc) {
 		if (validarsesion(user, Token)) {
-			ProcesoMultiple proceso = new ProcesoMultiple(cantidadReintentos,
-					enviarEmail, disableAccion, listProc);
+			ProcesoMultiple proceso = new ProcesoMultiple(cantidadReintentos, enviarEmail, disableAccion, listProc);
 			proceso.execute();
 		}
 	}
