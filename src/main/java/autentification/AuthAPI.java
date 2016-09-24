@@ -74,14 +74,10 @@ public class AuthAPI {
 
 	public static boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
 		if (user.getRol().equals(Rol.ADMIN)) {
-			if (user.getFuncionalidades().get(funcionalidad) != null) {
+			if (user.getFuncionalidad(funcionalidad) != null) {
 				return false; // ya existe
 			} else {
-				if (user.getFuncionalidades().put(funcionalidad, Acciones.get(funcionalidad)) != null) {
-					return true;
-				} else {
-					return false; // la funcionalidad no existe.
-				}
+				return user.agregarFuncionalidad(funcionalidad);
 			}
 		} else {
 			return false; // El usuario no es admin
@@ -108,7 +104,7 @@ public class AuthAPI {
 		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios()) {
 			if (usuario.validarUsuarioYPass(user, pass)) {
 				String token = generarToken(user, pass);
-				DB_Sesiones.getInstance().getDiccionarioTokenUser().put(token, user);
+				DB_Sesiones.getInstance().agregarTokenUser(token, user);
 				return token;
 			}
 		}
@@ -136,15 +132,15 @@ public class AuthAPI {
 
 	public Boolean validarToken(String Token) {
 
-		if (DB_Sesiones.getInstance().getDiccionarioTokenUser().get(Token) != null) {
+		if (DB_Sesiones.getInstance().validarToken(Token) != null) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public Map<String, Accion> getAcciones() {
-		return Acciones;
+	public Accion getAccion(String funcionalidad) {
+		return Acciones.get(funcionalidad);
 	}
 
 }

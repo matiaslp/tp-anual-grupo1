@@ -22,6 +22,7 @@ public class Usuario {
 		this.setPassword(password);
 		this.setUsername(username);
 		this.setRol(rol);
+		this.fechaBaja = null;
 		this.setFuncionalidades(new HashMap<String, Accion>());
 	}
 
@@ -97,6 +98,28 @@ public class Usuario {
 		} else {
 			return false;
 		}
+	}
+	
+	public boolean agregarFuncionalidad(String funcionalidad){
+		Accion func = AuthAPI.getInstance().getAccion(funcionalidad);
+		if(func !=null){ //existe
+			funcionalidades.put(funcionalidad, func);
+			return true;
+		}else{
+			return false; //no existe
+		}
+	}
+
+	public LocalDate getFechaBaja() {
+		return fechaBaja;
+	}
+
+	public void setFechaBaja(LocalDate fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
+	
+	public Accion getFuncionalidad(String funcionalidad){
+		return funcionalidades.get(funcionalidad);
 	}
 
 }

@@ -27,5 +27,13 @@ public class DB_Sesiones {
 	public void setDiccionarioTokenUser(Map<String, String> diccionarioTokenUser) {
 		this.diccionarioTokenUser = diccionarioTokenUser;
 	}
+	
+	public void agregarTokenUser(String token, String user){
+		diccionarioTokenUser.put(token, user);
+	}
+	
+	public String validarToken(String token){
+		return diccionarioTokenUser.get(token);
+	}
 
 }
