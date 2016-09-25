@@ -1,18 +1,22 @@
 package procesos;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.java.util.jar.pack.Package.File;
+import org.joda.time.DateTime;
 
 import antlr.collections.List;
 import autentification.Accion;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
+import db.DB_Usuarios;
+import db.ResultadoProceso;
 import procesos.Proceso;
 
 public class AgregarAcciones extends Proceso {
@@ -21,6 +25,63 @@ public class AgregarAcciones extends Proceso {
 
 	@Override
 	public void execute() {
+		
+		// tu codigo
+		// archivo esta de esta forma
+				// unUsuario nomAccion nomAccion nomAccion
+				String linea;
+				String palabras[];
+				String unUsername;
+				String listaAcciones[] = null;
+				FileReader fr=null;
+		//REVISAR SI EXISTE O NO Y SI SE PUEDE LEER O NO
+				try {
+
+					DateTime start = new DateTime();
+					
+					if ((fr = new FileReader(filePath))!=null){
+					
+					BufferedReader br = new BufferedReader(fr);
+					// lee linea a linea
+					while ((linea = br.readLine()) != null) {
+						System.out.println(linea);
+
+						palabras = linea.split(" ");
+						unUsername = palabras[0];
+
+						// arma la lista de acciones para un usuario
+						for (int i = 1; i <= palabras.length; i++) {
+							listaAcciones[i - 1] = palabras[i];
+						}
+
+						AgregarAcciones.AgregarAccionesAUsuario(unUsername, listaAcciones);
+					}
+					br.close();
+					}
+					
+					DateTime end = new DateTime();
+					
+					
+				} catch (FileNotFoundException e) {
+					DateTime end = new DateTime();
+					ResultadoProceso resultado = new ResultadoProceso(0,start,end,this,userID,"FileNotFoundException:No existe archivo "+filePath, resultado.ERROR);
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					DateTime end = new DateTime();
+					ResultadoProceso resultado = new ResultadoProceso(0,start,end,this,userID,"IOException:No se puede leer archivo "+filePath, resultado.ERROR);
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+		
+		
+		//ResultadoProceso resultado = new ResultadoProceso(0,start,end,this,userID,"tumensajede error", resultado.OK)
+		
+		
+		
+		
+		
 		// TODO Auto-generated method stub
 
 		// lee prmer renglon
@@ -29,33 +90,10 @@ public class AgregarAcciones extends Proceso {
 		// lee siguiente renglon
 	}
 
-	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String filePath) {
+	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String filePath) throws IOException {
 		super(cantidadReintentos, enviarEmail, disableAccion);
 		this.filePath = filePath;
-		// archivo esta de esta forma
-		// unUsuario nomAccion nomAccion nomAccion
-		String linea;
-		String palabras[];
-		String unUsername;
-		String listaAcciones[];
-
-		FileReader fr = new FileReader(filePath);
-		BufferedReader br = new BufferedReader(fr);
-		// lee linea a linea
-		while ((linea = br.readLine()) != null) {
-			System.out.println(linea);
-
-			palabras = linea.split(" ");
-			unUsername = palabras[0];
-
-			// arma la lista de acciones para un usuario
-			for (int i = 1; i <= palabras.length; i++) {
-				listaAcciones[i - 1] = palabras[i];
-			}
-
-			AgregarAcciones.AgregarAccionesAUsuario(unUsername, listaAcciones);
-		}
-		br.close();
+		
 
 	}
 
@@ -63,21 +101,26 @@ public class AgregarAcciones extends Proceso {
 	public static boolean AgregarAccionesAUsuario(String unUsername, String[] listaAcciones) {
 		boolean agregoAccion = false;
 		Usuario unUsuario;
-		AuthAPI unAuthAPI = AuthAPI.getInstance();
-		if (unAuthAPI.buscarUsuarioEnLista(unUsername)) {
-			unUsuario = unAuthAPI.consegirUsuarioDeLista(unUsername);
+		DB_Usuarios db_usuario = DB_Usuarios.getInstance();
+		if (db_usuario.buscarUsuarioEnLista(unUsername)) {
+			//
+			System.out.println("AgregarAccionesAUsuario(String unUsername, String[] listaAcciones) lo encontro en lista");
+			unUsuario = db_usuario.consegirUsuarioDeLista(unUsername);
+			for (String unaAccion : listaAcciones) {
+
+				agregoAccion = AuthAPI.agregarFuncionalidad(unaAccion, unUsuario);
+				if (agregoAccion == false) {
+					return false;
+				}
+			}
+			return true;
 		} else {
+			System.out.println("AgregarAccionesAUsuario(String unUsername, String[] listaAcciones) no lo encontro en lista");
 			return false;
 		}
 
-		for (String unaAccion : listaAcciones) {
-
-			agregoAccion = AuthAPI.agregarFuncionalidad(unaAccion, unUsuario);
-			if (agregoAccion == false) {
-				return false;
-			}
-		}
-		return true;
+		
+		
 	}
 
 	private boolean validarAccionUsuarioTerminal(Accion accion) {

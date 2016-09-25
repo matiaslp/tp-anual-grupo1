@@ -121,5 +121,8 @@ public class Usuario {
 	public Accion getFuncionalidad(String funcionalidad){
 		return funcionalidades.get(funcionalidad);
 	}
+	
+	
+
 
 }

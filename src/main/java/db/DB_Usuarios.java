@@ -40,4 +40,35 @@ public class DB_Usuarios extends Accion {
 		this.listaUsuarios = listaUsuarios;
 	}
 
+	//LUCAS
+	public boolean buscarUsuarioEnLista(String username) {
+		
+		for (Usuario unUsuario : this.getListaUsuarios()) {
+			if (unUsuario.getUsername() == username) {
+				//
+				System.out.println("buscarUsuarioEnLista(String username,DB_Usuarios db_usuarios) retorno true");
+				return true;
+			}
+		}
+		//
+		System.out.println("buscarUsuarioEnLista(String username,DB_Usuarios db_usuarios) retorno false");
+		return false;
+
+	}
+	//LUCAS
+	public Usuario consegirUsuarioDeLista(String username) {
+		
+		Usuario usuarioNoEncontrado = null;
+		for (Usuario unUsuario : this.getListaUsuarios()) {
+			if (unUsuario.getUsername() == username) {
+				//
+				System.out.println("consegirUsuarioDeLista(String username,DB_Usuarios db_usuarios) retorno unUsuario");
+				return unUsuario;
+			}
+		}
+		//
+		System.out.println("consegirUsuarioDeLista(String username,DB_Usuarios db_usuarios) retorno unUsuarioNoEncontrado nulo");
+		return usuarioNoEncontrado;
+
+	}
 }

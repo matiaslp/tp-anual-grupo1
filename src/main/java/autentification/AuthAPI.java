@@ -49,29 +49,7 @@ public class AuthAPI {
 		Acciones.put("procesoMultiple", new FuncMultiple());
 	}
 
-	public boolean buscarUsuarioEnLista(String username) {
-		// ESTO NO DEBERIA IR EN DB_USUARIO?
-		for (Usuario unUsuario : listaUsuarios) {
-			if (unUsuario.getUsername() == username) {
-				return true;
-			}
-		}
-		return false;
-
-	}
-
-	public Usuario consegirUsuarioDeLista(String username) {
-		// IDEM ANTERIOR
-		Usuario usuarioNoEncontrado = null;
-		for (Usuario unUsuario : listaUsuarios) {
-			if (unUsuario.getUsername() == username) {
-				return unUsuario;
-			}
-		}
-		return usuarioNoEncontrado;
-
-	}
-
+	//LUCAS
 	public static boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
 		if (user.getRol().equals(Rol.ADMIN)) {
 			if (user.getFuncionalidad(funcionalidad) != null) {
@@ -83,7 +61,7 @@ public class AuthAPI {
 			return false; // El usuario no es admin
 		}
 	}
-
+	//LUCAS
 	public boolean sacarFuncionalidad(String funcionalidad, Usuario user) {
 		if (user.getRol().getNombre().equals("admin")) {
 			if (user.getFuncionalidades().remove(funcionalidad) != null) {
