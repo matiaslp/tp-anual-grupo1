@@ -31,7 +31,11 @@ public class Usuario {
 			funcionalidades.put("busquedaPoi", AuthAPI.Acciones.get("busquedaPOI"));
 			funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
 		}
+		
+	//AGREGADO POR LUCAS
+		DB_Usuarios.getInstance().agregarUsuarioALista(this);
 	}
+	
 
 	public Rol getRol() {
 		return rol;

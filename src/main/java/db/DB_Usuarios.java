@@ -62,7 +62,7 @@ public class DB_Usuarios extends Accion {
 		for (Usuario unUsuario : this.getListaUsuarios()) {
 			if (unUsuario.getUsername() == username) {
 				//
-				System.out.println("consegirUsuarioDeLista(String username,DB_Usuarios db_usuarios) retorno unUsuario");
+				System.out.println("consegirUsuarioDeLista(String username,DB_Usuarios db_usuarios) retorno unUsuario "+unUsuario.getUsername());
 				return unUsuario;
 			}
 		}

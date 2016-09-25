@@ -33,6 +33,7 @@ public class TestCalculoDeCercania {
 
 	@Test
 	public void testcercaniaCGPFalso() {
+		
 		// LAs comunas deben ser distintas para que esten lejos los poi
 		POIreferencia.setComuna(1);
 		// Localizado a ~5 cuadras

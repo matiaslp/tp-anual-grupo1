@@ -25,7 +25,7 @@ public class AgregarAcciones extends Proceso {
 
 	@Override
 	public void execute() {
-		
+		DateTime start = new DateTime();
 		// tu codigo
 		// archivo esta de esta forma
 				// unUsuario nomAccion nomAccion nomAccion
@@ -34,10 +34,10 @@ public class AgregarAcciones extends Proceso {
 				String unUsername;
 				String listaAcciones[] = null;
 				FileReader fr=null;
-		//REVISAR SI EXISTE O NO Y SI SE PUEDE LEER O NO
+		//REVISA SI EXISTE O NO Y SI SE PUEDE LEER O NO
 				try {
 
-					DateTime start = new DateTime();
+					
 					
 					if ((fr = new FileReader(filePath))!=null){
 					
@@ -64,12 +64,12 @@ public class AgregarAcciones extends Proceso {
 					
 				} catch (FileNotFoundException e) {
 					DateTime end = new DateTime();
-					ResultadoProceso resultado = new ResultadoProceso(0,start,end,this,userID,"FileNotFoundException:No existe archivo "+filePath, resultado.ERROR);
+					//ResultadoProceso resultado = new ResultadoProceso(0,start,end,this,userID,"FileNotFoundException:No existe archivo "+filePath, resultado.ERROR);
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
 					DateTime end = new DateTime();
-					ResultadoProceso resultado = new ResultadoProceso(0,start,end,this,userID,"IOException:No se puede leer archivo "+filePath, resultado.ERROR);
+					//ResultadoProceso resultado = new ResultadoProceso(0,start,end,this,userID,"IOException:No se puede leer archivo "+filePath, resultado.ERROR);
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -90,31 +90,33 @@ public class AgregarAcciones extends Proceso {
 		// lee siguiente renglon
 	}
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String filePath) throws IOException {
 		super(cantidadReintentos, enviarEmail, disableAccion);
 =======
-	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String filePath,
+	/public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String filePath,
 			Usuario unUser) {
 		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
 >>>>>>> 3a579bc2d0aaaa48de54bc2e64cc5fbae2f0b3fd
 		this.filePath = filePath;
 		
 
-	}
+	}*/
 
 	// REVISAR
-	public static boolean AgregarAccionesAUsuario(String unUsername, String[] listaAcciones) {
+	public static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones) {
 		boolean agregoAccion = false;
 		Usuario unUsuario;
 		DB_Usuarios db_usuario = DB_Usuarios.getInstance();
+		AuthAPI authapi=AuthAPI.getInstance();
+		
 		if (db_usuario.buscarUsuarioEnLista(unUsername)) {
 			//
-			System.out.println("AgregarAccionesAUsuario(String unUsername, String[] listaAcciones) lo encontro en lista");
+			System.out.println("AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones) lo encontro en lista");
 			unUsuario = db_usuario.consegirUsuarioDeLista(unUsername);
-			for (String unaAccion : listaAcciones) {
+			for (String unaAccion : listadoAcciones) {
 
-				agregoAccion = AuthAPI.agregarFuncionalidad(unaAccion, unUsuario);
+				agregoAccion = authapi.agregarFuncionalidad(unaAccion, unUsuario);
 				if (agregoAccion == false) {
 					return false;
 				}
