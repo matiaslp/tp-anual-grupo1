@@ -40,7 +40,7 @@ public class AgregarAcciones extends Proceso {
 				String linea;
 				String palabras[];
 				String unUsername;
-				String listaAcciones[] = null;
+				ArrayList<String> listadoAcciones = new ArrayList<String>();
 				FileReader fr=null;
 		//REVISA SI EXISTE O NO Y SI SE PUEDE LEER O NO
 				try {
@@ -59,10 +59,10 @@ public class AgregarAcciones extends Proceso {
 
 						// arma la lista de acciones para un usuario
 						for (int i = 1; i <= palabras.length; i++) {
-							listaAcciones[i - 1] = palabras[i];
+							listadoAcciones.add(palabras[i]);
 						}
 
-						AgregarAcciones.AgregarAccionesAUsuario(unUsername, listaAcciones);
+						AgregarAcciones.AgregarAccionesAUsuario(unUsername, listadoAcciones);
 					}
 					br.close();
 					}
@@ -126,14 +126,7 @@ public class AgregarAcciones extends Proceso {
 			return false;
 		}
 		
-		public static boolean AgregarAccionesAMuchosUsuarios(ArrayList<String>  unUsernames, ArrayList<String> listadoAcciones){
-			for (String unUsuario1 : unUsernames) {
 
-				 AgregarAccionesAUsuario(unUsuario1, listadoAcciones);
-				
-				}
-			 return true;
-		}	
 		
 	}
 
