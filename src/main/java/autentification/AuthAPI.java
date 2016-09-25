@@ -49,7 +49,7 @@ public class AuthAPI {
 		Acciones.put("procesoMultiple", new FuncMultiple());
 	}
 
-	//LUCAS
+	
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
 			if (user.chequearFuncionalidad(funcionalidad)) {
 				System.out.println("agregarFuncionalidad(String funcionalidad, Usuario user)  ya existe");
@@ -67,7 +67,7 @@ public class AuthAPI {
 				return false; //no tiene permiso
 			}
 	}
-	//LUCAS
+	
 	public boolean sacarFuncionalidad(String funcionalidad, Usuario user) {
 			if (user.getFuncionalidades().remove(funcionalidad) != null) {
 				return true;
