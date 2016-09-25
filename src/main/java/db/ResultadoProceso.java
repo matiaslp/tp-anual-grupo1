@@ -10,11 +10,7 @@ public class ResultadoProceso {
 	private DateTime finEjecucion;
 	Proceso proc;
 	private long userID;
-
-	enum resultado {
-		OK, ERROR
-	}
-
+	Resultado resultado;
 	String mensajeError;
 
 	public long getId() {
@@ -65,10 +61,18 @@ public class ResultadoProceso {
 		this.mensajeError = mensajeError;
 	}
 
+	public Resultado getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(Resultado resultado) {
+		this.resultado = resultado;
+	}
+
 	// Si el id no se desea setear, el mismo es generado internamente
 	// al colocar el paramentro en cero
 	public ResultadoProceso(long id, DateTime inicioEjecucion, DateTime finEjecucion, Proceso proc, long userID,
-			String mensajeError) {
+			String mensajeError, Resultado unResultado) {
 		super();
 		this.id = id;
 		this.inicioEjecucion = inicioEjecucion;
@@ -76,6 +80,7 @@ public class ResultadoProceso {
 		this.proc = proc;
 		this.userID = userID;
 		this.mensajeError = mensajeError;
+		this.resultado = unResultado;
 	}
 
 }
