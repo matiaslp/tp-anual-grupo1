@@ -19,19 +19,19 @@ public class FuncActualizacionLocalesComerciales extends Accion {
 	}
 
 	public void agregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			boolean disableAccion, String filePath) {
+			boolean disableAccion, String filePath, Usuario unUser) {
 		if (validarsesion(user, Token)) {
 			ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales(cantidadReintentos,
-					enviarEmail, disableAccion, filePath);
+					enviarEmail, disableAccion, filePath, unUser);
 			proceso.execute();
 		}
 	}
 
 	// creacion Proceso para agregar a la lista en Proceso Multiple
 	public Proceso prepAgregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			boolean disableAccion, String filePath) {
+			boolean disableAccion, String filePath, Usuario unUser) {
 		if (validarsesion(user, Token)) {
-			return new ActualizacionLocalesComerciales(cantidadReintentos, enviarEmail, disableAccion, filePath);
+			return new ActualizacionLocalesComerciales(cantidadReintentos, enviarEmail, disableAccion, filePath, unUser);
 		} else
 			return null;
 	}

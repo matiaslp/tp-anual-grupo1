@@ -29,8 +29,9 @@ public class AgregarAcciones extends Proceso {
 		// lee siguiente renglon
 	}
 
-	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String filePath) {
-		super(cantidadReintentos, enviarEmail, disableAccion);
+	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String filePath,
+			Usuario unUser) {
+		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
 		this.filePath = filePath;
 		// archivo esta de esta forma
 		// unUsuario nomAccion nomAccion nomAccion
