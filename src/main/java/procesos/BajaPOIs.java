@@ -1,5 +1,7 @@
 package procesos;
 
+import autentification.Usuario;
+
 public class BajaPOIs extends Proceso {
 
 	@Override
@@ -8,8 +10,9 @@ public class BajaPOIs extends Proceso {
 
 	}
 
-	public BajaPOIs(int cantidadReintentos, boolean enviarEmail, boolean disableAccion) {
-		super(cantidadReintentos, enviarEmail, disableAccion);
+	public BajaPOIs(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
+			Usuario unUser) {
+		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
 	}
 
 }

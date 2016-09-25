@@ -51,27 +51,24 @@ public class AuthAPI {
 
 	//LUCAS
 	public static boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
-		if (user.getRol().equals(Rol.ADMIN)) {
 			if (user.getFuncionalidad(funcionalidad) != null) {
 				return false; // ya existe
 			} else {
-				return user.agregarFuncionalidad(funcionalidad);
+				for(Rol rol : Acciones.get(funcionalidad).getRoles()){
+					if(rol.equals(user.getRol())){
+						return user.agregarFuncionalidad(funcionalidad);
+					}
+				}
+				return false; //no tiene permiso
 			}
-		} else {
-			return false; // El usuario no es admin
-		}
 	}
 	//LUCAS
 	public boolean sacarFuncionalidad(String funcionalidad, Usuario user) {
-		if (user.getRol().getNombre().equals("admin")) {
 			if (user.getFuncionalidades().remove(funcionalidad) != null) {
 				return true;
 			} else {
 				return false; // No existe la funcionalidad
 			}
-		} else {
-			return false; // El usuario no es admin
-		}
 	}
 
 	public String iniciarSesion(String user, String pass) throws NoSuchAlgorithmException {

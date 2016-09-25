@@ -90,8 +90,14 @@ public class AgregarAcciones extends Proceso {
 		// lee siguiente renglon
 	}
 
+<<<<<<< HEAD
 	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String filePath) throws IOException {
 		super(cantidadReintentos, enviarEmail, disableAccion);
+=======
+	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String filePath,
+			Usuario unUser) {
+		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
+>>>>>>> 3a579bc2d0aaaa48de54bc2e64cc5fbae2f0b3fd
 		this.filePath = filePath;
 		
 

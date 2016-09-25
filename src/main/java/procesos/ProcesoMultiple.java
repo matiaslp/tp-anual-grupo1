@@ -2,13 +2,15 @@ package procesos;
 
 import java.util.ArrayList;
 
+import autentification.Usuario;
+
 public class ProcesoMultiple extends Proceso {
 
 	private static ArrayList<Proceso> listadoProcesos;
 
 	public ProcesoMultiple(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
-			ArrayList<Proceso> procList) {
-		super(cantidadReintentos, enviarEmail, disableAccion);
+			ArrayList<Proceso> procList, Usuario unUser) {
+		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
 		listadoProcesos = procList;
 	}
 

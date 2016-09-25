@@ -19,18 +19,18 @@ public class FuncBajaPOIs extends Accion {
 	}
 
 	public void darDeBajaPOI(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			boolean disableAccion) {
+			boolean disableAccion, Usuario unUser) {
 		if (validarsesion(user, Token)) {
-			BajaPOIs proceso = new BajaPOIs(cantidadReintentos, enviarEmail, disableAccion);
+			BajaPOIs proceso = new BajaPOIs(cantidadReintentos, enviarEmail, disableAccion, unUser);
 			proceso.execute();
 		}
 	}
 
 	// creacion Proceso para agregar a la lista en Proceso Multiple
 	public Proceso prepDarDeBajaPOI(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			boolean disableAccion) {
+			boolean disableAccion, Usuario unUser) {
 		if (validarsesion(user, Token)) {
-			return new BajaPOIs(cantidadReintentos, enviarEmail, disableAccion);
+			return new BajaPOIs(cantidadReintentos, enviarEmail, disableAccion, unUser);
 		} else
 			return null;
 	}
