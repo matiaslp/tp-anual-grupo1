@@ -16,6 +16,7 @@ import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
 import db.AgregarAccionesTransaction;
+import db.DB_AgregarAccionesTransaction;
 import db.DB_ResultadosProcesos;
 import db.DB_Usuarios;
 import db.Resultado;
@@ -41,7 +42,7 @@ public class AgregarAcciones extends Proceso {
 				String linea;
 				String palabras[];
 				String unUsername;
-				String listaAcciones[] = null;
+				ArrayList<String> listadoAcciones = new ArrayList<String>();
 				FileReader fr=null;
 				// Creo la Transaccion
 				AgregarAccionesTransaction Transaction  = new AgregarAccionesTransaction(0,user.getID());
@@ -62,11 +63,13 @@ public class AgregarAcciones extends Proceso {
 
 						// arma la lista de acciones para un usuario
 						for (int i = 1; i <= palabras.length; i++) {
-							listaAcciones[i - 1] = palabras[i];
+							listadoAcciones.add(palabras[i]);
 						}
-						Usuario user = DB_Usuarios.getInstance().getUusarioByName(unUsername);
-						AgregarAcciones.AgregarAccionesAUsuario(unUsername, listaAcciones);
+
+						AgregarAcciones.AgregarAccionesAUsuario(unUsername, listadoAcciones, Transaction);
+
 					}
+					DB_AgregarAccionesTransaction.getInstance().agregarTransactions(Transaction);
 					br.close();
 					}
 					
@@ -106,8 +109,9 @@ public class AgregarAcciones extends Proceso {
 
 
 	// REVISAR
-	public static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones) {
+	private static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones, AgregarAccionesTransaction transaction) {
 		boolean agregoAccion = false;
+		String transac = null;
 		Usuario unUsuario;
 		DB_Usuarios db_usuario = DB_Usuarios.getInstance();
 		AuthAPI authapi=AuthAPI.getInstance();
@@ -115,6 +119,7 @@ public class AgregarAcciones extends Proceso {
 		if (db_usuario.buscarUsuarioEnLista(unUsername)) {
 			//
 			System.out.println("AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones) lo encontro en lista");
+			transac = transac + unUsername;
 			unUsuario = db_usuario.getUusarioByName(unUsername);
 			for (String unaAccion : listadoAcciones) {
 
@@ -124,22 +129,17 @@ public class AgregarAcciones extends Proceso {
 				}
 				else {
 					// Agregar accion a transaccion
+					transac = transac + unaAccion;
 				}
 			}
+			transaction.agregarCambios(transac);
 			return true;
 		} else {
 			System.out.println("AgregarAccionesAUsuario(String unUsername, String[] listaAcciones) no lo encontro en lista");
 			return false;
 		}
 		
-		public static boolean AgregarAccionesAMuchosUsuarios(ArrayList<String>  unUsernames, ArrayList<String> listadoAcciones){
-			for (String unUsuario1 : unUsernames) {
 
-				 AgregarAccionesAUsuario(unUsuario1, listadoAcciones);
-				
-				}
-			 return true;
-		}	
 		
 	}
 
@@ -149,6 +149,15 @@ public class AgregarAcciones extends Proceso {
 
 	private boolean validarAccionUsuarioAdministrador(Accion accion) {
 		return true;
+	}
+	
+	
+	public void undo() {
+		
+		AgregarAccionesTransaction transaction = DB_AgregarAccionesTransaction.getInstance().getLastTransactionByUser(user.getID());
+		// De aca en mas es muy similar al execute() pero en vez de agregar, se eliminan las funcionalidades
+		
+		
 	}
 
 }

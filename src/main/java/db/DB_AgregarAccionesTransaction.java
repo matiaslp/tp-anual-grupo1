@@ -19,7 +19,7 @@ public class DB_AgregarAccionesTransaction {
 		return instance;
 	}
 
-	public static boolean eliminarTransactions(int d) {
+	public boolean eliminarTransactions(int d) {
 
 		for (AgregarAccionesTransaction Transaction : listTransactions) {
 			if (Long.compare(Transaction.getId(), d) == 0) {
@@ -30,15 +30,9 @@ public class DB_AgregarAccionesTransaction {
 		return false;
 	}
 
-	public static boolean agregarTransactions(AgregarAccionesTransaction Transaction) {
-		try {
-			// testear
+	public void agregarTransactions(AgregarAccionesTransaction Transaction) {
 			Transaction.setId(listTransactions.size() + 1);
 			listTransactions.add(Transaction);
-			return true;
-		} catch (Exception ex) {
-			return false;
-		}
 	}
 
 	public AgregarAccionesTransaction getTransactionsbyId(double d) {
@@ -47,6 +41,17 @@ public class DB_AgregarAccionesTransaction {
 				return Transaction;
 		}
 		return null;
+	}
+	
+	public AgregarAccionesTransaction getLastTransactionByUser(long userID) {
+		
+		long tempId = 0;
+		AgregarAccionesTransaction resultado = null;
+		for (AgregarAccionesTransaction Transaction : listTransactions) {
+			if (Long.compare(Transaction.getUserID(), userID) == 0 && Transaction.getId() > tempId)
+				resultado = Transaction;
+		}
+				return resultado;
 	}
 	
 	
