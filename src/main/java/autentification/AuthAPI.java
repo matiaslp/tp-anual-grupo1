@@ -51,7 +51,7 @@ public class AuthAPI {
 
 	//LUCAS
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
-			if (user.getFuncionalidad(funcionalidad) != null) {
+			if (user.chequearFuncionalidad(funcionalidad)) {
 				System.out.println("agregarFuncionalidad(String funcionalidad, Usuario user)  ya existe");
 				return false; // ya existe
 			} else {

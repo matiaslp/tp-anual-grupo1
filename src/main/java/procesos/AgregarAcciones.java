@@ -119,6 +119,9 @@ public class AgregarAcciones extends Proceso {
 				if (agregoAccion == false) {
 					return false;
 				}
+				else {
+					// Agregar accion a transaccion
+				}
 			}
 			return true;
 		} else {
