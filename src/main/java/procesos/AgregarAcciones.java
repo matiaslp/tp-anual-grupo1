@@ -15,6 +15,7 @@ import autentification.Accion;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
+import db.AgregarAccionesTransaction;
 import db.DB_ResultadosProcesos;
 import db.DB_Usuarios;
 import db.Resultado;
@@ -42,6 +43,8 @@ public class AgregarAcciones extends Proceso {
 				String unUsername;
 				String listaAcciones[] = null;
 				FileReader fr=null;
+				// Creo la Transaccion
+				AgregarAccionesTransaction Transaction  = new AgregarAccionesTransaction(0,user.getID());
 		//REVISA SI EXISTE O NO Y SI SE PUEDE LEER O NO
 				try {
 
@@ -61,7 +64,7 @@ public class AgregarAcciones extends Proceso {
 						for (int i = 1; i <= palabras.length; i++) {
 							listaAcciones[i - 1] = palabras[i];
 						}
-
+						Usuario user = DB_Usuarios.getInstance().getUusarioByName(unUsername);
 						AgregarAcciones.AgregarAccionesAUsuario(unUsername, listaAcciones);
 					}
 					br.close();
@@ -112,7 +115,7 @@ public class AgregarAcciones extends Proceso {
 		if (db_usuario.buscarUsuarioEnLista(unUsername)) {
 			//
 			System.out.println("AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones) lo encontro en lista");
-			unUsuario = db_usuario.consegirUsuarioDeLista(unUsername);
+			unUsuario = db_usuario.getUusarioByName(unUsername);
 			for (String unaAccion : listadoAcciones) {
 
 				agregoAccion = authapi.agregarFuncionalidad(unaAccion, unUsuario);
