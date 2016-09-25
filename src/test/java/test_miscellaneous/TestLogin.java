@@ -1,14 +1,12 @@
 package test_miscellaneous;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.Accion;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
@@ -110,6 +108,11 @@ public class TestLogin {
 	@Test
 	public void agregarFuncionalidadTerminal() {
 		Assert.assertFalse(Autenticador.agregarFuncionalidad("enviarMail", terminal));
+	}
+	
+	@Test
+	public void chequearFuncionalidadesAgregadas(){
+		Assert.assertTrue(prueba.getFuncionalidades().size()>2 && terminal.getFuncionalidades().size() == 2);
 	}
 
 }
