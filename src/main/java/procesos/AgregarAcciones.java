@@ -45,7 +45,7 @@ public class AgregarAcciones extends Proceso {
 				ArrayList<String> listadoAcciones = new ArrayList<String>();
 				FileReader fr=null;
 				// Creo la Transaccion
-				AgregarAccionesTransaction Transaction  = new AgregarAccionesTransaction(0,user.getID());
+				AgregarAccionesTransaction Transaction  = new AgregarAccionesTransaction(user.getID());
 		//REVISA SI EXISTE O NO Y SI SE PUEDE LEER O NO
 				try {
 

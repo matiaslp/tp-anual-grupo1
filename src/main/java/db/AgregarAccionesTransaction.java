@@ -30,9 +30,8 @@ public class AgregarAccionesTransaction {
 	}
 	
 	
-	public AgregarAccionesTransaction(long id, long userID) {
+	public AgregarAccionesTransaction(long userID) {
 		super();
-		this.id = id;
 		this.userID = userID;
 		listadoCambios = new HashMap<Long,String>();
 	}

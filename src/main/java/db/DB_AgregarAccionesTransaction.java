@@ -30,9 +30,9 @@ public class DB_AgregarAccionesTransaction {
 		return false;
 	}
 
-	public void agregarTransactions(AgregarAccionesTransaction Transaction) {
-			Transaction.setId(listTransactions.size() + 1);
-			listTransactions.add(Transaction);
+	public void agregarTransactions(AgregarAccionesTransaction transaction) {
+		transaction.setId(listTransactions.size() + 1);
+		listTransactions.add(transaction);
 	}
 
 	public AgregarAccionesTransaction getTransactionsbyId(double d) {
@@ -42,18 +42,16 @@ public class DB_AgregarAccionesTransaction {
 		}
 		return null;
 	}
-	
+
 	public AgregarAccionesTransaction getLastTransactionByUser(long userID) {
-		
+
 		long tempId = 0;
 		AgregarAccionesTransaction resultado = null;
-		for (AgregarAccionesTransaction Transaction : listTransactions) {
-			if (Long.compare(Transaction.getUserID(), userID) == 0 && Transaction.getId() > tempId)
-				resultado = Transaction;
+		for (AgregarAccionesTransaction transaction : listTransactions) {
+			if (Long.compare(transaction.getUserID(), userID) == 0 && transaction.getId() > tempId)
+				resultado = transaction;
 		}
-				return resultado;
+		return resultado;
 	}
-	
-	
-	
+
 }
