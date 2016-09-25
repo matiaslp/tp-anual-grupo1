@@ -125,8 +125,15 @@ public class AgregarAcciones extends Proceso {
 			System.out.println("AgregarAccionesAUsuario(String unUsername, String[] listaAcciones) no lo encontro en lista");
 			return false;
 		}
-
 		
+		public static boolean AgregarAccionesAMuchosUsuarios(ArrayList<String>  unUsernames, ArrayList<String> listadoAcciones){
+			for (String unUsuario1 : unUsernames) {
+
+				 AgregarAccionesAUsuario(unUsuario1, listadoAcciones);
+				
+				}
+			 return true;
+		}	
 		
 	}
 
