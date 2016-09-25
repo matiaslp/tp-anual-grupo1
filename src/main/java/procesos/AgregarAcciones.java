@@ -45,7 +45,7 @@ public class AgregarAcciones extends Proceso {
 				ArrayList<String> listadoAcciones = new ArrayList<String>();
 				FileReader fr=null;
 				// Creo la Transaccion
-				AgregarAccionesTransaction Transaction  = new AgregarAccionesTransaction(user.getID());
+				AgregarAccionesTransaction Transaction  = new AgregarAccionesTransaction(0,user.getID());
 		//REVISA SI EXISTE O NO Y SI SE PUEDE LEER O NO
 				try {
 
@@ -109,7 +109,7 @@ public class AgregarAcciones extends Proceso {
 
 
 	// REVISAR
-	private static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones, AgregarAccionesTransaction transaction) {
+	public static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones, AgregarAccionesTransaction transaction) {
 		boolean agregoAccion = false;
 		String transac = null;
 		Usuario unUsuario;
@@ -120,7 +120,7 @@ public class AgregarAcciones extends Proceso {
 			//
 			System.out.println("AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones) lo encontro en lista");
 			transac = transac + unUsername;
-			unUsuario = db_usuario.getUusarioByName(unUsername);
+			unUsuario = db_usuario.getUsarioByName(unUsername);
 			for (String unaAccion : listadoAcciones) {
 
 				agregoAccion = authapi.agregarFuncionalidad(unaAccion, unUsuario);
