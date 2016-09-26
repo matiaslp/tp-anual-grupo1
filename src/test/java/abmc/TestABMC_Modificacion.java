@@ -25,8 +25,7 @@ public class TestABMC_Modificacion {
 	public void init() {
 
 		poi_abmc = new POI_ABMC();
-		unServer = new DB_POI();
-		instancia = unServer.getInstance();
+		instancia = DB_POI.getInstance();
 
 		poiDTOBanco = new POI_DTO();
 		poiDTOBanco.setTipo(TiposPOI.BANCO);
@@ -54,10 +53,10 @@ public class TestABMC_Modificacion {
 		poiDTOColectivo.setLongitud(-34.5664823);
 
 		// Se crean 4 POIs (uno por cada tipo)
-		DB_POI.agregarPOI(poiDTOBanco.converttoPOI());
-		DB_POI.agregarPOI(poiDTOCGP.converttoPOI());
-		DB_POI.agregarPOI(poiDTOComercial.converttoPOI());
-		DB_POI.agregarPOI(poiDTOColectivo.converttoPOI());
+		instancia.agregarPOI(poiDTOBanco.converttoPOI());
+		instancia.agregarPOI(poiDTOCGP.converttoPOI());
+		instancia.agregarPOI(poiDTOComercial.converttoPOI());
+		instancia.agregarPOI(poiDTOColectivo.converttoPOI());
 	}
 
 	@Test

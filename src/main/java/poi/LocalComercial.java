@@ -25,6 +25,10 @@ public class LocalComercial extends POI {
 		this.setRubro(rubro);
 	}
 
+	public LocalComercial() {
+		
+	}
+
 	public Rubro getRubro() {
 		return rubro;
 	}

@@ -22,7 +22,7 @@ import poi.ParadaColectivo;
 public class TestABMC_Consulta {
 	POI_ABMC abmc;
 	String ServicioAPI;
-
+	DB_POI instance;
 	Banco banco = new Banco("Santander", 0, 0);
 	LocalComercial local = new LocalComercial("Localcito", 0, 0, null);
 	ParadaColectivo parada = new ParadaColectivo("47", 0, 0);
@@ -31,9 +31,7 @@ public class TestABMC_Consulta {
 	@Before
 	public void inicializar() {
 		abmc = new POI_ABMC();
-
-		new DB_POI();
-
+		instance = DB_POI.getInstance();
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");
 		banco.setCallePrincipal("Alberdi");
@@ -44,10 +42,10 @@ public class TestABMC_Consulta {
 	@Test
 	public void testConsultaVacia() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		DB_POI.agregarPOI(cgp);
-		DB_POI.agregarPOI(parada);
-		DB_POI.agregarPOI(local);
-		DB_POI.agregarPOI(banco);
+		instance.agregarPOI(cgp);
+		instance.agregarPOI(parada);
+		instance.agregarPOI(local);
+		instance.agregarPOI(banco);
 
 		lista = abmc.buscar(ServicioAPI, "", 1);
 		Assert.assertTrue(lista.isEmpty());
@@ -57,10 +55,10 @@ public class TestABMC_Consulta {
 	@Test
 	public void testConsultaLocal() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		DB_POI.agregarPOI(cgp);
-		DB_POI.agregarPOI(parada);
-		DB_POI.agregarPOI(local);
-		DB_POI.agregarPOI(banco);
+		instance.agregarPOI(cgp);
+		instance.agregarPOI(parada);
+		instance.agregarPOI(local);
+		instance.agregarPOI(banco);
 
 		lista = abmc.buscar("", "Alberdi", 1);
 		Assert.assertTrue(lista.size() == 1);
@@ -70,10 +68,10 @@ public class TestABMC_Consulta {
 	@Test
 	public void testConsultaLocal2() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		DB_POI.agregarPOI(cgp);
-		DB_POI.agregarPOI(parada);
-		DB_POI.agregarPOI(local);
-		DB_POI.agregarPOI(banco);
+		instance.agregarPOI(cgp);
+		instance.agregarPOI(parada);
+		instance.agregarPOI(local);
+		instance.agregarPOI(banco);
 
 		lista = abmc.buscar("", "Mataderos", 1);
 		Assert.assertTrue(lista.size() == 2);
@@ -115,10 +113,10 @@ public class TestABMC_Consulta {
 	public void testConsulta() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 
-		DB_POI.agregarPOI(cgp);
-		DB_POI.agregarPOI(parada);
-		DB_POI.agregarPOI(local);
-		DB_POI.agregarPOI(banco);
+		instance.agregarPOI(cgp);
+		instance.agregarPOI(parada);
+		instance.agregarPOI(local);
+		instance.agregarPOI(banco);
 
 		lista = abmc.buscar(ServicioAPI, "Galicia", 1);
 		Assert.assertTrue(!(lista.isEmpty()));
@@ -130,10 +128,10 @@ public class TestABMC_Consulta {
 			throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 
-		DB_POI.agregarPOI(cgp);
-		DB_POI.agregarPOI(parada);
-		DB_POI.agregarPOI(local);
-		DB_POI.agregarPOI(banco);
+		instance.agregarPOI(cgp);
+		instance.agregarPOI(parada);
+		instance.agregarPOI(local);
+		instance.agregarPOI(banco);
 
 		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", 1);
 		Assert.assertTrue(lista.size() == 18);

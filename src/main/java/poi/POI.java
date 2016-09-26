@@ -2,6 +2,8 @@ package poi;
 
 import java.util.ArrayList;
 
+import org.joda.time.LocalDate;
+
 import abmc.POI_DTO;
 import geolocation.GeoLocation;
 import helpers.LevDist;
@@ -9,31 +11,32 @@ import helpers.MetodosComunes;
 
 public abstract class POI {
 
-	long id;
-	String nombre;
-	String callePrincipal;
-	String calleLateral;
-	long numeracion;
-	long piso;
-	String departamento;
-	String unidad;
-	long codigoPostal;
-	String localidad;
-	String barrio;
-	String provincia;
-	String pais;
-	GeoLocation ubicacion;
-	long comuna;
+	protected long id;
+	protected String nombre;
+	protected String callePrincipal;
+	protected String calleLateral;
+	protected long numeracion;
+	protected long piso;
+	protected String departamento;
+	protected String unidad;
+	protected long codigoPostal;
+	protected String localidad;
+	protected String barrio;
+	protected String provincia;
+	protected String pais;
+	protected GeoLocation ubicacion;
+	protected long comuna;
 	// define cuando otro punto es cercano.
-	long cercania = 500;
+	protected long cercania = 500;
 	// este atributo hay que ver si nos sirve porque
 	// las subclases tienen el nombre del tipo, de por si.
-	TiposPOI tipo;
-	public ArrayList<NodoServicio> servicios = new ArrayList<NodoServicio>();
+	protected TiposPOI tipo;
+	protected ArrayList<NodoServicio> servicios = new ArrayList<NodoServicio>();
 	// pueden ser varias y se crean a travez de
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
-	Etiqueta[] etiquetas;
-
+	protected Etiqueta[] etiquetas;
+	protected LocalDate fechaBaja;
+	
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
 		return (distanciaCoordDosPOIs(this, unPOI) * 1000 < x);
 	}
@@ -262,6 +265,14 @@ public abstract class POI {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	public LocalDate getFechaBaja() {
+		return fechaBaja;
+	}
+
+	public void setFechaBaja(LocalDate fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
 
 	public boolean determinarCercaniaPOI(GeoLocation ubicacion) {
 		double lat1 = this.ubicacion.getLatitudeInDegrees();
@@ -272,7 +283,7 @@ public abstract class POI {
 
 		return this.cercania > distancia;
 	}
-
+	
 	public void setDatos(POI_DTO dto) {
 		this.setCallePrincipal(dto.getCallePrincipal());
 		this.setCalleLateral(dto.getCalleLateral());

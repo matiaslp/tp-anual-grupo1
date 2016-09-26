@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import abmc.POI_ABMC;
-import abmc.POI_DTO;
 import db.DB_POI;
 import poi.Rubro;
 import poi.TiposPOI;
@@ -24,8 +22,7 @@ public class TestABMC_Alta {
 	@Before
 	public void init() {
 		poi_abmc = new POI_ABMC();
-		unServer = new DB_POI();
-		instancia = unServer.getInstance();
+		instancia = DB_POI.getInstance();
 
 		poiDTOBanco = new POI_DTO();
 		poiDTOBanco.setTipo(TiposPOI.BANCO);
@@ -55,7 +52,7 @@ public class TestABMC_Alta {
 
 	@Test
 	public void altaBanco() {
-		boolean respuesta = DB_POI.agregarPOI(poiDTOBanco.converttoPOI());
+		boolean respuesta = instancia.agregarPOI(poiDTOBanco.converttoPOI());
 		Assert.assertTrue(respuesta);
 		Assert.assertTrue(
 				poiDTOBanco.getNombre().equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
@@ -64,7 +61,7 @@ public class TestABMC_Alta {
 
 	@Test
 	public void altaCGP() {
-		boolean respuesta = DB_POI.agregarPOI(poiDTOCGP.converttoPOI());
+		boolean respuesta = instancia.agregarPOI(poiDTOCGP.converttoPOI());
 		Assert.assertTrue(respuesta);
 		Assert.assertTrue(
 				poiDTOCGP.getNombre().equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
@@ -72,7 +69,7 @@ public class TestABMC_Alta {
 
 	@Test
 	public void altaLocalComercial() {
-		boolean respuesta = DB_POI.agregarPOI(poiDTOComercial.converttoPOI());
+		boolean respuesta = instancia.agregarPOI(poiDTOComercial.converttoPOI());
 		Assert.assertTrue(respuesta);
 		Assert.assertTrue(poiDTOComercial.getNombre()
 				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));
@@ -80,7 +77,7 @@ public class TestABMC_Alta {
 
 	@Test
 	public void altaParadaColectivo() {
-		boolean respuesta = DB_POI.agregarPOI(poiDTOColectivo.converttoPOI());
+		boolean respuesta = DB_POI.getInstance().agregarPOI(poiDTOColectivo.converttoPOI());
 		Assert.assertTrue(respuesta);
 		Assert.assertTrue(poiDTOColectivo.getNombre()
 				.equals(DB_POI.getListado().get(DB_POI.getListado().size() - 1).getNombre()));

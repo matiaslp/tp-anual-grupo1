@@ -23,7 +23,8 @@ import poi.ParadaColectivo;
 public class TestABMC_Historico {
 	POI_ABMC abmc;
 	String ServicioAPI;
-
+	DB_POI instance;
+	
 	Banco banco = new Banco("Santander", 0, 0);
 	LocalComercial local = new LocalComercial("Localcito", 0, 0, null);
 	ParadaColectivo parada = new ParadaColectivo("47", 0, 0);
@@ -33,9 +34,8 @@ public class TestABMC_Historico {
 	@Before
 	public void inicializar() {
 		abmc = new POI_ABMC();
-
-		new DB_POI();
-
+		instance = DB_POI.getInstance();
+		
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");
 		banco.setCallePrincipal("Alberdi");
@@ -48,10 +48,10 @@ public class TestABMC_Historico {
 	// La cantidad de registros aumenta como consecuencua de otros tests
 	@Test
 	public void testHistorico() throws JSONException, MalformedURLException, IOException, MessagingException {
-		DB_POI.agregarPOI(cgp);
-		DB_POI.agregarPOI(parada);
-		DB_POI.agregarPOI(local);
-		DB_POI.agregarPOI(banco);
+		instance.agregarPOI(cgp);
+		instance.agregarPOI(parada);
+		instance.agregarPOI(local);
+		instance.agregarPOI(banco);
 
 		historico.buscar(ServicioAPI, "Mataderos", 1);
 		Assert.assertTrue(DB_HistorialBusquedas.getInstance().cantidadRegistros() == 1);

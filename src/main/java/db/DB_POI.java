@@ -23,7 +23,7 @@ public class DB_POI {
 		return instance;
 	}
 
-	public static boolean eliminarPOI(int d) {
+	public boolean eliminarPOI(long d) {
 
 		for (POI poi : listadoPOI) {
 			if (Long.compare(poi.getId(), d) == 0) {
@@ -34,7 +34,7 @@ public class DB_POI {
 		return false;
 	}
 
-	public static boolean agregarPOI(POI nuevoPOI) {
+	public boolean agregarPOI(POI nuevoPOI) {
 		try {
 			// testear
 			nuevoPOI.setId(listadoPOI.size() + 1);
@@ -52,5 +52,23 @@ public class DB_POI {
 		}
 		return null;
 	}
+	
+	public POI getPOIbyNombre(String nombre) {
+		for (POI poi : listadoPOI) {
+			if (poi.getNombre().equals(nombre))
+				return poi;
+		}
+		return null;
+	}
 
+	public void actualizarPOI(POI poi) {
+		eliminarPOI(poi.getId());
+		agregarPOI(poi);
+	}
+
+	public void removePoi(POI poi) {
+		
+		
+	}
+	
 }

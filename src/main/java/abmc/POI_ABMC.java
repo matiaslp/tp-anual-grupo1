@@ -30,14 +30,14 @@ public class POI_ABMC implements Busqueda {
 		if (nuevoPOI.equals(null)) {
 			return false;
 		} else {
-			DB_POI.agregarPOI(nuevoPOI);
+			DB_POI.getInstance().agregarPOI(nuevoPOI);
 			return true;
 		}
 	}
 
 	public boolean delete(int ID) {
 		if (DB_POI.getInstance().getPOIbyId(ID) != null) {
-			return DB_POI.eliminarPOI(ID);
+			return DB_POI.getInstance().eliminarPOI(ID);
 		} else
 			return false;
 	}
