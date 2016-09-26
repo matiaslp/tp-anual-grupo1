@@ -1,7 +1,7 @@
 package db;
 
 import java.util.ArrayList;
-
+import org.joda.time.DateTime;
 import poi.POI;
 
 public class DB_POI {
@@ -51,6 +51,20 @@ public class DB_POI {
 				return poi;
 		}
 		return null;
+	}
+	
+	//Me falta probarlo
+	public static boolean bajaPoi(String[] valoresBusqueda, DateTime fechaBaja) {
+		for (POI poi : listadoPOI) {
+			//Si el POI coincide con la busqueda
+			if (poi.busquedaEstandar(valoresBusqueda)) {
+				if(poi.darDeBaja(fechaBaja))
+					return true; //se dio de baja
+				else
+					return false; //ya estaba dado de baja
+			}
+		}
+		return false;
 	}
 
 }

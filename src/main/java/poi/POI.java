@@ -2,6 +2,8 @@ package poi;
 
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 import abmc.POI_DTO;
 import geolocation.GeoLocation;
 import helpers.LevDist;
@@ -23,6 +25,32 @@ public abstract class POI {
 	String provincia;
 	String pais;
 	GeoLocation ubicacion;
+	DateTime fechaBaja;
+	
+	public DateTime getFechaBaja() {
+		return fechaBaja;
+	}
+
+	public void setFechaBaja(DateTime fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
+	
+	public boolean darDeBaja(DateTime fecha) {
+		//Si retorna false significa que ya estaba dado de baja
+		if (fechaBaja != null)
+			return false;
+		fechaBaja = fecha;
+		return true;
+	}
+
+	public void darAlta() {
+		this.fechaBaja = null;
+	}
+	
+	public boolean dadoDeBaja() {
+		return (this.fechaBaja != null);
+	}
+
 	long comuna;
 	// define cuando otro punto es cercano.
 	long cercania = 500;
