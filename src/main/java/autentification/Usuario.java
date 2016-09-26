@@ -28,7 +28,7 @@ public class Usuario {
 			funcionalidades = AuthAPI.Acciones;
 		}else{
 			funcionalidades = new HashMap<String,Accion>();
-			funcionalidades.put("busquedaPoi", AuthAPI.Acciones.get("busquedaPOI"));
+			funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
 			funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
 		}
 		

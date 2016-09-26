@@ -45,13 +45,9 @@ public class DB_Usuarios extends Accion {
 		
 		for (Usuario unUsuario : this.getListaUsuarios()) {
 			if (unUsuario.getUsername() == username) {
-				//
-				System.out.println("buscarUsuarioEnLista(String username,DB_Usuarios db_usuarios) retorno true");
 				return true;
 			}
 		}
-		//
-		System.out.println("buscarUsuarioEnLista(String username,DB_Usuarios db_usuarios) retorno false");
 		return false;
 
 	}
@@ -61,13 +57,9 @@ public class DB_Usuarios extends Accion {
 		Usuario usuarioNoEncontrado = null;
 		for (Usuario unUsuario : this.getListaUsuarios()) {
 			if (unUsuario.getUsername() == username) {
-				//
-				System.out.println("consegirUsuarioDeLista(String username,DB_Usuarios db_usuarios) retorno unUsuario "+unUsuario.getUsername());
-				return unUsuario;
+			return unUsuario;
 			}
 		}
-		//
-		System.out.println("consegirUsuarioDeLista(String username,DB_Usuarios db_usuarios) retorno unUsuarioNoEncontrado nulo");
 		return usuarioNoEncontrado;
 
 	}

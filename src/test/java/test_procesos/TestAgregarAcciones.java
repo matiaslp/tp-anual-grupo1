@@ -59,10 +59,10 @@ public class TestAgregarAcciones {
 			
 		//PONER LAS SIGUIENTES LISTAS DE ACCIONES
 		
-		listadoAccionesQueEstanEnTerminal.add("busquedaPoi");
+		listadoAccionesQueEstanEnTerminal.add("busquedaPOI");
 		listadoAccionesQueEstanEnTerminal.add("obtenerInfoPOI");
 		
-		listadoAccionesQueEstanEnAdmin.add("busquedaPoi");
+		listadoAccionesQueEstanEnAdmin.add("busquedaPOI");
 		listadoAccionesQueEstanEnAdmin.add("obtenerInfoPOI");
 		listadoAccionesQueEstanEnAdmin.add("reporteBusquedaPorUsuario");
 		listadoAccionesQueEstanEnAdmin.add("reporteBusquedasPorFecha");
@@ -85,19 +85,7 @@ public class TestAgregarAcciones {
 
 	@Test
 	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnAdmin() throws MessagingException {
-		
-		
-		for (String unaAccion : listadoAccionesQueEstanEnAdmin) {
-
-			System.out.println("T1 accion en lista "+unaAccion);
-			}
-		
-		for (Usuario unUsuario : db_usuario.getListaUsuarios()) {
-
-			System.out.println("usuario: "+unUsuario.getUsername()+" pasword: "+unUsuario.getPassword());
-			}
-		// PONER LA BUSQUEDA QUE SE REALIZO Y SU TIEMPO
-		
+			
 		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnAdmin,transaction);
 		
 		
@@ -106,25 +94,14 @@ public class TestAgregarAcciones {
 				for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
 					encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
 					if(encontrada==false){encontradaTodas=false;}
-					System.out.println(encontrada+" "+encontradaTodas+"  "+unafuncionabilidad);
+				
 					}
 				Assert.assertTrue(encontradaTodas);
 		
 	}
 	@Test
 	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnAdmin() throws MessagingException {
-		
-		
-		for (String unaAccion : listadoAccionesQueEstanEnAdmin) {
-
-			System.out.println("T2 accion en lista "+unaAccion);
-			}
-		
-		for (Usuario unUsuario : db_usuario.getListaUsuarios()) {
-
-			System.out.println("usuario: "+unUsuario.getUsername()+" pasword: "+unUsuario.getPassword());
-			}
-		// PONER LA BUSQUEDA QUE SE REALIZO Y SU TIEMPO
+				
 		AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnAdmin,transaction);
 		
 		//comprobacion si tiene toda la lista a agregar
@@ -132,7 +109,7 @@ public class TestAgregarAcciones {
 			for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
 				encontrada=db_usuario. getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
 				if(encontrada==false){encontradaTodas=false;}
-				System.out.println(encontrada+" "+encontradaTodas+"  "+unafuncionabilidad);
+			
 				}
 			Assert.assertFalse(encontradaTodas);
 		
@@ -141,25 +118,15 @@ public class TestAgregarAcciones {
 	
 	@Test
 	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnTerminal() throws MessagingException {
-		
-		
-		for (String unaAccion : listadoAccionesQueEstanEnTerminal) {
-
-			System.out.println("T3 accion en lista "+unaAccion);
-			}
-		
-		for (Usuario unUsuario : db_usuario.getListaUsuarios()) {
-
-			System.out.println("usuario: "+unUsuario.getUsername()+" pasword: "+unUsuario.getPassword());
-			}
-		// PONER LA BUSQUEDA QUE SE REALIZO Y SU TIEMPO
+				
+	
 		agregado = AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnTerminal,transaction);
 		//comprobacion si tiene toda la lista a agregar
 		encontradaTodas=true;
 			for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
 				encontrada=db_usuario. getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
 				if(encontrada==false){encontradaTodas=false;}
-				System.out.println(encontrada+" "+encontradaTodas+"  "+unafuncionabilidad);
+				
 				}
 			Assert.assertTrue(encontradaTodas);
 		
@@ -167,25 +134,14 @@ public class TestAgregarAcciones {
 	
 	@Test
 	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnTerminal() throws MessagingException {
-		
-		
-		for (String unaAccion : listadoAccionesQueEstanEnTerminal) {
-
-			System.out.println("T4 accion en lista "+unaAccion);
-			}
-		
-		for (Usuario unUsuario : db_usuario.getListaUsuarios()) {
-
-			System.out.println("usuario: "+unUsuario.getUsername()+" pasword: "+unUsuario.getPassword());
-			}
-		// PONER LA BUSQUEDA QUE SE REALIZO Y SU TIEMPO
+	
 		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnTerminal,transaction);
 		//comprobacion si tiene toda la lista a agregar
 		encontradaTodas=true;
 			for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
 				encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
 				if(encontrada==false){encontradaTodas=false;}
-				System.out.println(encontrada+" "+encontradaTodas+"  "+unafuncionabilidad);
+				
 				}
 			Assert.assertTrue(encontradaTodas);
 		

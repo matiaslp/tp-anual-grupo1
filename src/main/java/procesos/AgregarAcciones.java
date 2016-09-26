@@ -117,8 +117,6 @@ public class AgregarAcciones extends Proceso {
 		AuthAPI authapi=AuthAPI.getInstance();
 		
 		if (db_usuario.buscarUsuarioEnLista(unUsername)) {
-			//
-			System.out.println("AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones) lo encontro en lista");
 			transac = transac + unUsername;
 			unUsuario = db_usuario.getUsarioByName(unUsername);
 			for (String unaAccion : listadoAcciones) {
@@ -135,7 +133,6 @@ public class AgregarAcciones extends Proceso {
 			transaction.agregarCambios(transac);
 			return true;
 		} else {
-			System.out.println("AgregarAccionesAUsuario(String unUsername, String[] listaAcciones) no lo encontro en lista");
 			return false;
 		}
 		
