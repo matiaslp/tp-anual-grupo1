@@ -18,21 +18,21 @@ public class FuncAgregarAcciones extends Accion {
 		isProcess = true;
 	}
 
-//	public void agregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-//			boolean disableAccion, String filePath, Usuario unUser) {
-//		if (validarsesion(user, Token)) {
-//			AgregarAcciones proceso = new AgregarAcciones(cantidadReintentos, enviarEmail, disableAccion, filePath, unUser);
-//			proceso.execute();
-//		}
-//	}
-//
-//	// creacion Proceso para agregar a la lista en Proceso Multiple
-//	public Proceso prepAgregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-//			boolean disableAccion, String filePath, Usuario unUser) {
-//		if (validarsesion(user, Token)) {
-//			return new AgregarAcciones(cantidadReintentos, enviarEmail, disableAccion, filePath, unUser);
-//		} else
-//			return null;
-//	}
+	public void agregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
+			boolean disableAccion, String filePath, Usuario unUser) {
+		if (validarsesion(user, Token)) {
+			AgregarAcciones proceso = new AgregarAcciones(cantidadReintentos, enviarEmail, disableAccion, filePath, unUser);
+			proceso.execute();
+		}
+	}
+
+	// creacion Proceso para agregar a la lista en Proceso Multiple
+	public Proceso prepAgregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
+			boolean disableAccion, String filePath, Usuario unUser) {
+		if (validarsesion(user, Token)) {
+			return new AgregarAcciones(cantidadReintentos, enviarEmail, disableAccion, filePath, unUser);
+		} else
+			return null;
+	}
 
 }
