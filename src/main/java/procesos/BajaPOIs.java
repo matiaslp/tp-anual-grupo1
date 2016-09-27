@@ -4,20 +4,21 @@ import org.joda.time.DateTime;
 
 import db.DB_POI;
 import poi.POI;
+import autentification.Usuario;
 
 public class BajaPOIs extends Proceso {
 
 	DB_POI DB;
-	
+
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 
 	}
 
-	public BajaPOIs(int cantidadReintentos, boolean enviarEmail, boolean disableAccion) {
-		super(cantidadReintentos, enviarEmail, disableAccion);
-		this.DB = DB_POI.getInstance();
+	public BajaPOIs(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
+			Usuario unUser) {
+		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
 	}
 
 	public boolean bajaPoi(POI poi, DateTime fecha){
@@ -30,5 +31,5 @@ public class BajaPOIs extends Proceso {
 			return false;
 		}
 	}
-		
+
 }

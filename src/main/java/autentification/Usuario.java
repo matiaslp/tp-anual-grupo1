@@ -19,8 +19,20 @@ public class Usuario {
 		this.setPassword(password);
 		this.setUsername(username);
 		this.setRol(rol);
-		this.setFuncionalidades(new HashMap<String, Accion>());
+		this.fechaBaja = null;
+		
+		if(rol.equals(Rol.ADMIN)){
+			funcionalidades = AuthAPI.Acciones;
+		}else{
+			funcionalidades = new HashMap<String,Accion>();
+			funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
+			funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
+		}
+		
+	//AGREGADO POR LUCAS
+		DB_Usuarios.getInstance().agregarUsuarioALista(this);
 	}
+	
 
 	public Rol getRol() {
 		return rol;
@@ -95,5 +107,30 @@ public class Usuario {
 			return false;
 		}
 	}
+	
+	public boolean agregarFuncionalidad(String funcionalidad){
+		Accion func = AuthAPI.getInstance().getAccion(funcionalidad);
+		if(func !=null){ //existe
+			funcionalidades.put(funcionalidad, func);
+			return true;
+		}else{
+			return false; //no existe
+		}
+	}
+
+	public LocalDate getFechaBaja() {
+		return fechaBaja;
+	}
+
+	public void setFechaBaja(LocalDate fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
+	
+	public Accion getFuncionalidad(String funcionalidad){
+		return funcionalidades.get(funcionalidad);
+	}
+	
+	
+
 
 }

@@ -2,6 +2,8 @@ package abmc;
 
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 import geolocation.GeoLocation;
 import poi.Banco;
 import poi.CGP;
@@ -28,6 +30,7 @@ public class POI_DTO {
 	String provincia;
 	String pais;
 	GeoLocation ubicacion;
+	DateTime fechaBaja;
 	int comuna;
 	TiposPOI tipo;
 	double latitud;
@@ -69,6 +72,7 @@ public class POI_DTO {
 		nuevoPOI.setPais(pais);
 		nuevoPOI.setComuna(comuna);
 		nuevoPOI.setTipo(tipo);
+		nuevoPOI.setFechaBaja(fechaBaja);
 
 		return nuevoPOI;
 
@@ -306,4 +310,16 @@ public class POI_DTO {
 		this.horas = horas;
 	}
 
+	public void darBaja(DateTime fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
+	
+	public void darAlta() {
+		this.fechaBaja = null;
+	}
+	
+	public DateTime getFechaBaja() {
+		return fechaBaja;
+	}
+	
 }

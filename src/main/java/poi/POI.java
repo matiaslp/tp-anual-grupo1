@@ -3,6 +3,7 @@ package poi;
 import java.util.ArrayList;
 
 import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 
 import abmc.POI_DTO;
 import geolocation.GeoLocation;
@@ -26,6 +27,31 @@ public abstract class POI {
 	protected String pais;
 	protected GeoLocation ubicacion;
 	protected long comuna;
+
+	public DateTime getFechaBaja() {
+		return fechaBaja;
+	}
+
+	public void setFechaBaja(DateTime fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
+
+	public boolean darDeBaja(DateTime fecha) {
+		//Si retorna false significa que ya estaba dado de baja
+		if (fechaBaja != null)
+			return false;
+		fechaBaja = fecha;
+		return true;
+	}
+
+	public void darAlta() {
+		this.fechaBaja = null;
+	}
+
+	public boolean dadoDeBaja() {
+		return (this.fechaBaja != null);
+	}
+
 	// define cuando otro punto es cercano.
 	protected long cercania = 500;
 	// este atributo hay que ver si nos sirve porque
@@ -36,7 +62,7 @@ public abstract class POI {
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
 	protected Etiqueta[] etiquetas;
 	protected LocalDate fechaBaja;
-	
+
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
 		return (distanciaCoordDosPOIs(this, unPOI) * 1000 < x);
 	}
@@ -265,7 +291,7 @@ public abstract class POI {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public LocalDate getFechaBaja() {
 		return fechaBaja;
 	}
@@ -283,7 +309,7 @@ public abstract class POI {
 
 		return this.cercania > distancia;
 	}
-	
+
 	public void setDatos(POI_DTO dto) {
 		this.setCallePrincipal(dto.getCallePrincipal());
 		this.setCalleLateral(dto.getCalleLateral());

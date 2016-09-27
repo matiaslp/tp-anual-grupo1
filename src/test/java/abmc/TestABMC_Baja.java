@@ -1,5 +1,8 @@
 package abmc;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,6 +53,9 @@ public class TestABMC_Baja {
 		poiDTOColectivo.setNombre("unaParadaDeColectivo");
 		poiDTOColectivo.setLatitud(-34.5664823);
 		poiDTOColectivo.setLongitud(-34.5664823);
+		
+		DateTimeFormatter formatoFecha = DateTimeFormat.forPattern("dd, MMMM, yyyy");
+		DateTime hoy = new DateTime();
 
 		// Se crean 4 POIs (uno por cada tipo)
 		instancia.agregarPOI(poiDTOBanco.converttoPOI());
@@ -97,6 +103,20 @@ public class TestABMC_Baja {
 		poi_abmc.delete(5);
 		boolean respuesta = poi_abmc.delete(5);
 		Assert.assertFalse(respuesta);
-
+	}
+	
+	@Test
+	public void darDeBajaUnPOI() {
+		DateTime hoy = new DateTime();
+		DB_POI.getListado().get(1).darDeBaja(hoy);
+		Assert.assertTrue(DB_POI.getListado().get(1).dadoDeBaja());
+	}
+	
+	@Test
+	public void darDeBajaPoiDadoDeBaja() {
+		DateTime hoy = new DateTime();
+		DB_POI.getListado().get(1).darDeBaja(hoy);
+		Assert.assertFalse(DB_POI.getListado().get(1).darDeBaja(hoy));
+		
 	}
 }

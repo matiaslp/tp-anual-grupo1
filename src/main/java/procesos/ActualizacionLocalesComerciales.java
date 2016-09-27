@@ -14,6 +14,8 @@ import db.DB_POI;
 import poi.LocalComercial;
 import poi.POI;
 
+import autentification.Usuario;
+
 public class ActualizacionLocalesComerciales extends Proceso {
 
 	String filePath = "";
@@ -24,8 +26,8 @@ public class ActualizacionLocalesComerciales extends Proceso {
 	}
 
 	public ActualizacionLocalesComerciales(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
-			String filePath) {
-		super(cantidadReintentos, enviarEmail, disableAccion);
+			String filePath, Usuario unUser) {
+		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
 		this.filePath = filePath;
 
 	}

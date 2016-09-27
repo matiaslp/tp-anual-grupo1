@@ -49,55 +49,26 @@ public class AuthAPI {
 		Acciones.put("procesoMultiple", new FuncMultiple());
 	}
 
-	public boolean buscarUsuarioEnLista(String username) {
-		// ESTO NO DEBERIA IR EN DB_USUARIO?
-		for (Usuario unUsuario : listaUsuarios) {
-			if (unUsuario.getUsername() == username) {
-				return true;
-			}
-		}
-		return false;
-
-	}
-
-	public Usuario consegirUsuarioDeLista(String username) {
-		// IDEM ANTERIOR
-		Usuario usuarioNoEncontrado = null;
-		for (Usuario unUsuario : listaUsuarios) {
-			if (unUsuario.getUsername() == username) {
-				return unUsuario;
-			}
-		}
-		return usuarioNoEncontrado;
-
-	}
-
-	public static boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
-		if (user.getRol().equals(Rol.ADMIN)) {
-			if (user.getFuncionalidades().get(funcionalidad) != null) {
+	
+	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
+			if (user.chequearFuncionalidad(funcionalidad)) {
 				return false; // ya existe
 			} else {
-				if (user.getFuncionalidades().put(funcionalidad, Acciones.get(funcionalidad)) != null) {
-					return true;
-				} else {
-					return false; // la funcionalidad no existe.
+				for(Rol rol : Acciones.get(funcionalidad).getRoles()){
+					if(rol.equals(user.getRol())){
+						return user.agregarFuncionalidad(funcionalidad);
+					}
 				}
+				return false; //no tiene permiso
 			}
-		} else {
-			return false; // El usuario no es admin
-		}
 	}
-
+	
 	public boolean sacarFuncionalidad(String funcionalidad, Usuario user) {
-		if (user.getRol().getNombre().equals("admin")) {
 			if (user.getFuncionalidades().remove(funcionalidad) != null) {
 				return true;
 			} else {
 				return false; // No existe la funcionalidad
 			}
-		} else {
-			return false; // El usuario no es admin
-		}
 	}
 
 	public String iniciarSesion(String user, String pass) throws NoSuchAlgorithmException {
@@ -108,7 +79,7 @@ public class AuthAPI {
 		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios()) {
 			if (usuario.validarUsuarioYPass(user, pass)) {
 				String token = generarToken(user, pass);
-				DB_Sesiones.getInstance().getDiccionarioTokenUser().put(token, user);
+				DB_Sesiones.getInstance().agregarTokenUser(token, user);
 				return token;
 			}
 		}
@@ -136,15 +107,15 @@ public class AuthAPI {
 
 	public Boolean validarToken(String Token) {
 
-		if (DB_Sesiones.getInstance().getDiccionarioTokenUser().get(Token) != null) {
+		if (DB_Sesiones.getInstance().validarToken(Token) != null) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public Map<String, Accion> getAcciones() {
-		return Acciones;
+	public Accion getAccion(String funcionalidad) {
+		return Acciones.get(funcionalidad);
 	}
 
 }

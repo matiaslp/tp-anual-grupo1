@@ -12,7 +12,7 @@ public abstract class Accion {
 		return AuthAPI.getInstance().validarToken(Token) && user.chequearFuncionalidad(nombreFuncion);
 	}
 
-	public static ArrayList<Rol> getRoles() {
+	public ArrayList<Rol> getRoles() {
 		return Roles;
 	}
 
