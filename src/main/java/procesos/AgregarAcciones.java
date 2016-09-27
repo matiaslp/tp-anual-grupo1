@@ -24,13 +24,15 @@ import db.ResultadoProceso;
 import procesos.Proceso;
 
 public class AgregarAcciones extends Proceso {
+	
+	String filePath;
 
-	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, Usuario unUser) {
+	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String file, Usuario unUser) {
 		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
-		// TODO Auto-generated constructor stub
+			filePath = file;
 	}
 
-	String filePath;
+	
 
 	@Override
 	public void execute() {
