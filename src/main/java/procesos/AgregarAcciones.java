@@ -100,20 +100,32 @@ public class AgregarAcciones extends Proceso {
 		ResultadoProceso resultado = new ResultadoProceso(0, start, end, this, user.getID(), null, Resultado.OK);
 		DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 		return;
+	}
+	
+	public void undo() {
+		AgregarAccionesTransaction transaction = DB_AgregarAccionesTransaction.getInstance()
+				.getLastTransactionByUser(user.getID());
+		Map<Long, String> listadoCambios = transaction.getListadoCambios();
+		for (Map.Entry<Long, String> cambio : listadoCambios.entrySet()) {
+			String acciones[] = cambio.getValue().split(" ");
+			String unUsername = acciones[0];
+			acciones = Arrays.copyOfRange(acciones, 1, acciones.length);
 
-		// ResultadoProceso resultado = new
-		// ResultadoProceso(0,start,end,this,userID,"tumensajede error",
-		// resultado.OK)
+			// Si el usuario existe
+			if (DB_Usuarios.getInstance().buscarUsuarioEnLista(unUsername)) {
+				Usuario unUsuario = DB_Usuarios.getInstance().getUsarioByName(unUsername);
 
-		// TODO Auto-generated method stub
+				// Remover todas las funcionalidades que fueron agregadas
+				for (int i = 1; i <= acciones.length; i++)
+					AuthAPI.getInstance().sacarFuncionalidad(acciones[i], unUsuario);
 
-		// lee prmer renglon
-		// for
-		// agrega funcionabilidad con metodo de auth api
-		// lee siguiente renglon
+			}
+			// Eliminamos la transacciones que fue rollbackeada
+			DB_AgregarAccionesTransaction.getInstance().eliminarTransactions(transaction.getId());
+
+		}
 	}
 
-	// REVISAR
 	static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones,
 			AgregarAccionesTransaction transaction) {
 		boolean agregoAccion = false;
@@ -151,30 +163,5 @@ public class AgregarAcciones extends Proceso {
 		return true;
 	}
 
-	public void undo() {
 
-		AgregarAccionesTransaction transaction = DB_AgregarAccionesTransaction.getInstance()
-				.getLastTransactionByUser(user.getID());
-		// De aca en mas es muy similar al execute() pero en vez de agregar, se
-		// eliminan las funcionalidades
-		Map<Long, String> listadoCambios = transaction.getListadoCambios();
-		for (Map.Entry<Long, String> cambio : listadoCambios.entrySet()) {
-			String acciones[] = cambio.getValue().split(" ");
-			String unUsername = acciones[0];
-			acciones = Arrays.copyOfRange(acciones, 1, acciones.length);
-
-			// Si el usuario existe
-			if (DB_Usuarios.getInstance().buscarUsuarioEnLista(unUsername)) {
-				Usuario unUsuario = DB_Usuarios.getInstance().getUsarioByName(unUsername);
-
-				// Remover todas las funcionalidades que fueron agregadas
-				for (int i = 1; i <= acciones.length; i++)
-					AuthAPI.getInstance().sacarFuncionalidad(acciones[i], unUsuario);
-
-			}
-			// Eliminamos la transacciones que fue rollbackeada
-			DB_AgregarAccionesTransaction.getInstance().eliminarTransactions(transaction.getId());
-
-		}
-	}
 }
