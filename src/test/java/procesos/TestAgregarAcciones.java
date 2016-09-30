@@ -1,4 +1,4 @@
-package test_procesos;
+package procesos;
 
 
 import java.util.ArrayList;
