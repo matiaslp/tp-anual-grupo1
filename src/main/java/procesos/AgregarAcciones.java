@@ -107,9 +107,9 @@ public class AgregarAcciones extends Proceso {
 
 		AgregarAccionesTransaction transaction = DB_AgregarAccionesTransaction.getInstance()
 				.getLastTransactionByUser(user.getID());
-		Map<Long, String> listadoCambios = transaction.getListadoCambios();
-		for (Map.Entry<Long, String> cambio : listadoCambios.entrySet()) {
-			String acciones[] = cambio.getValue().split(" ");
+		ArrayList<String> listadoCambios = transaction.getListadoCambios();
+		for ( String cambio : listadoCambios) {
+			String acciones[] = cambio.split(" ");
 			String unUsername = acciones[0];
 			acciones = Arrays.copyOfRange(acciones, 1, acciones.length);
 

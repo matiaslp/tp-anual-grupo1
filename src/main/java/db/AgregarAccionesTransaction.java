@@ -1,5 +1,6 @@
 package db;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ public class AgregarAccionesTransaction {
 	
 	private long id;
 	private long userID;
-	private Map<Long, String> listadoCambios; 
+	private ArrayList<String> listadoCambios; 
 	
 	
 	public long getId() {
@@ -26,16 +27,16 @@ public class AgregarAccionesTransaction {
 	}
 	
 	public void agregarCambios(String registro) {
-		listadoCambios.put(Long.parseLong(registro), registro);
+		listadoCambios.add(registro);
 	}
 	
-	public Map<Long, String> getListadoCambios() {
+	public ArrayList<String> getListadoCambios() {
 		return listadoCambios;
 	}
 	public AgregarAccionesTransaction(long userID) {
 		super();
 		this.userID = userID;
-		listadoCambios = new HashMap<Long,String>();
+		listadoCambios = new ArrayList<String>();
 	}
 	
 	
