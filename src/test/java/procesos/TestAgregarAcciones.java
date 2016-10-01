@@ -150,8 +150,7 @@ public class TestAgregarAcciones {
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
 		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, "/home/matiasl/reposGit/tp-anual-grupo1/src/test/java/accionesAAgregar", adminPrueba);
-		
-		Assert.assertTrue(adminPrueba.chequearFuncionalidad("enviarMail"));
+		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
 		
 		
