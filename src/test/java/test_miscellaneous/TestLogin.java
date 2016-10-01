@@ -106,13 +106,26 @@ public class TestLogin {
 	}
 
 	@Test
-	public void agregarFuncionalidadTerminal() {
+	public void testagregarFuncionalidadTerminalSinPermiso() {
 		Assert.assertFalse(Autenticador.agregarFuncionalidad("enviarMail", terminal));
 	}
 	
 	@Test
-	public void chequearFuncionalidadesAgregadas(){
-		Assert.assertTrue(prueba.getFuncionalidades().size()>2 && terminal.getFuncionalidades().size() == 2);
+	public void testAgregarFuncionalidadExistente(){
+		Assert.assertFalse(Autenticador.agregarFuncionalidad("busquedaPOI", terminal));
+	}
+	
+	@Test
+	public void sacarFuncionalidadtest(){
+		Autenticador.sacarFuncionalidad("busquedaPOI", terminal);
+		Assert.assertTrue(terminal.getFuncionalidad("busquedaPOI")==null);
+	}
+	
+	@Test
+	public void testAgregarFuncionalidadConPermiso(){
+		Autenticador.sacarFuncionalidad("busquedaPOI", terminal);
+		Autenticador.agregarFuncionalidad("busquedaPOI", terminal);
+		Assert.assertTrue(terminal.getFuncionalidad("busquedaPOI")!=null);
 	}
 
 }

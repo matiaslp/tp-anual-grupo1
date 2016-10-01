@@ -19,11 +19,15 @@ public class Usuario {
 		this.setPassword(password);
 		this.setUsername(username);
 		this.setRol(rol);
-				
+		this.setFuncionalidades(new HashMap<String,Accion>());
+		
 		if(rol.equals(Rol.ADMIN)){
-			funcionalidades = AuthAPI.Acciones;
+			funcionalidades.put("bajaPOIs", AuthAPI.Acciones.get("bajaPOIs"));
+			funcionalidades.put("actualizacionLocalesComerciales", AuthAPI.Acciones.get("actualizacionLocalesComerciales"));
+			funcionalidades.put("procesoMultiple", AuthAPI.Acciones.get("procesoMultiple"));
+			funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
+			funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
 		}else{
-			funcionalidades = new HashMap<String,Accion>();
 			funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
 			funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
 		}

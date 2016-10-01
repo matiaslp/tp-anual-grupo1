@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Accion {
 
-	protected static ArrayList<Rol> Roles;
+	protected ArrayList<Rol> Roles;
 	protected String nombreFuncion;
 	protected boolean isProcess = false;
 
@@ -16,7 +16,7 @@ public abstract class Accion {
 		return Roles;
 	}
 
-	public static void setRoles(ArrayList<Rol> roles) {
+	public void setRoles(ArrayList<Rol> roles) {
 		Roles = roles;
 	}
 

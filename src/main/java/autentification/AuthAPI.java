@@ -54,7 +54,8 @@ public class AuthAPI {
 			if (user.chequearFuncionalidad(funcionalidad)) {
 				return false; // ya existe
 			} else {
-				for(Rol rol : Acciones.get(funcionalidad).getRoles()){
+				ArrayList<Rol> roles = Acciones.get(funcionalidad).getRoles();
+				for(Rol rol : roles){
 					if(rol.equals(user.getRol())){
 						return user.agregarFuncionalidad(funcionalidad);
 					}
@@ -81,8 +82,9 @@ public class AuthAPI {
 				try {
 					token = generarToken(user, pass);
 				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
+					//No pudo hashear en SHA-256, no pudo iniciar sesion.
 					e.printStackTrace();
+					return null;
 				}
 				DB_Sesiones.getInstance().agregarTokenUser(token, user);
 				return token;

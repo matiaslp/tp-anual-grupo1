@@ -17,10 +17,10 @@ import poi.POI;
 public class FuncBusquedaPOI extends Accion {
 
 	public FuncBusquedaPOI() {
-		Roles = new ArrayList<Rol>();
+		this.setRoles(new ArrayList<Rol>());
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
-		Roles.add(Rol.TERMINAL);
+		this.Roles.add(Rol.ADMIN);
+		this.Roles.add(Rol.TERMINAL);
 		nombreFuncion = "busquedaPOI";
 	}
 
