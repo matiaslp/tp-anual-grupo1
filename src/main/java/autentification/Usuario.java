@@ -29,6 +29,7 @@ public class Usuario {
 			funcionalidades.put("procesoMultiple", AuthAPI.Acciones.get("procesoMultiple"));
 			funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
 			funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
+			funcionalidades.put("cambiarEstadoMail", AuthAPI.Acciones.get("cambiarEstadoMail"));
 		}else{
 			funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
 			funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));

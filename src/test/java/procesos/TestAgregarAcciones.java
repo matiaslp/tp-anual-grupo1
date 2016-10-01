@@ -57,7 +57,7 @@ public class TestAgregarAcciones {
 		listadoAccionesQueEstanEnAdmin.add("reporteBusquedaPorUsuario");
 		listadoAccionesQueEstanEnAdmin.add("reporteBusquedasPorFecha");
 		listadoAccionesQueEstanEnAdmin.add("reportecantidadResultadosPorTerminal");
-		listadoAccionesQueEstanEnAdmin.add("enviarMail");
+		listadoAccionesQueEstanEnAdmin.add("cambiarEstadoMail");
 		listadoAccionesQueEstanEnAdmin.add("actualizacionLocalesComerciales");
 		listadoAccionesQueEstanEnAdmin.add("agregarAcciones");
 		listadoAccionesQueEstanEnAdmin.add("bajaPOIs");
@@ -84,6 +84,7 @@ public class TestAgregarAcciones {
 				for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
 					encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
 					if(encontrada==false){encontradaTodas=false;}
+					System.out.println(unafuncionabilidad+ "---encontrada: "+encontrada+"---bandera: "+encontradaTodas);
 				
 					}
 				Assert.assertTrue(encontradaTodas);
@@ -143,13 +144,13 @@ public class TestAgregarAcciones {
 		Usuario adminPrueba = new Usuario("adminPrueba", "123", Rol.ADMIN);
 		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
-		AuthAPI.getInstance().sacarFuncionalidad("enviarMail",adminPrueba);
+		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
-		Assert.assertFalse(adminPrueba.chequearFuncionalidad("enviarMail"));
+		Assert.assertFalse(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
 		Assert.assertFalse(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, "/home/matiasl/reposGit/tp-anual-grupo1/src/test/java/accionesAAgregar", adminPrueba);
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, "C:/Users/LAG/git/tp-anual-grupo1/src/test/java/accionesAAgregar", adminPrueba);
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
 		
