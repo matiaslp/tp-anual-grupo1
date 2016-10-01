@@ -83,7 +83,7 @@ public class TestAgregarAcciones {
 			
 		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnAdmin,transaction);
 		
-		Map<String, Accion> list = unUsuarioAdmin.getFuncionalidades();
+		
 		//comprobacion si tiene toda la lista a agregar
 			encontradaTodas=true;
 				for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
@@ -153,15 +153,25 @@ public class TestAgregarAcciones {
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
 		Assert.assertFalse(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
 		Assert.assertFalse(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
+		
+		
+		
+		Usuario unUsuarioTerminal1 = new Usuario("terminal1", "123", Rol.TERMINAL);
+		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
+		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
+		Assert.assertFalse(unUsuarioTerminal1.chequearFuncionalidad("busquedaPOI"));
+		Assert.assertFalse(unUsuarioTerminal1.chequearFuncionalidad("obtenerInfoPOI"));
+		
+		
+		
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
 		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, (new File (".").getAbsolutePath ())+"/src/test/java/accionesAAgregar", adminPrueba);
+		
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
 		
-		
-		
-		
+		Assert.assertTrue(unUsuarioTerminal1.chequearFuncionalidad("busquedaPOI"));
 		
 	}
 }
