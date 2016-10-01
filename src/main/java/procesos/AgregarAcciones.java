@@ -133,20 +133,17 @@ public class AgregarAcciones extends Proceso {
 		String transac = null;
 		Usuario unUsuario;
 		DB_Usuarios db_usuario = DB_Usuarios.getInstance();
-		AuthAPI authapi = AuthAPI.getInstance();
 
 		if (db_usuario.buscarUsuarioEnLista(unUsername)) {
-			transac = transac + unUsername;
+			transac = unUsername;
 			unUsuario = db_usuario.getUsarioByName(unUsername);
 			for (String unaAccion : listadoAcciones) {
 
 				agregoAccion = AuthAPI.getInstance().agregarFuncionalidad(unaAccion, unUsuario);
-				if (agregoAccion == false) {
-					return false;
-				} else {
+				if (agregoAccion != false)
 					// Agregar accion a transaccion
 					transac = transac + " " + unaAccion;
-				}
+
 			}
 			transaction.agregarCambios(transac);
 			return true;

@@ -2,6 +2,7 @@ package procesos;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 
@@ -9,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import autentification.Accion;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
@@ -78,7 +80,7 @@ public class TestAgregarAcciones {
 			
 		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnAdmin,transaction);
 		
-		
+		Map<String, Accion> list = unUsuarioAdmin.getFuncionalidades();
 		//comprobacion si tiene toda la lista a agregar
 			encontradaTodas=true;
 				for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
