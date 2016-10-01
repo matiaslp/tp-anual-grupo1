@@ -143,7 +143,6 @@ public class TestAgregarAcciones {
 		Usuario adminPrueba = new Usuario("adminPrueba", "123", Rol.ADMIN);
 		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
-		int size = admin.getFuncionalidades().size();
 		AuthAPI.getInstance().sacarFuncionalidad("enviarMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
 		Assert.assertFalse(adminPrueba.chequearFuncionalidad("enviarMail"));
