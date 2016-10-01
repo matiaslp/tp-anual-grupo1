@@ -1,6 +1,7 @@
 package procesos;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -27,6 +28,8 @@ public class TestAgregarAcciones {
 	boolean agregado;
 	Usuario unUsuarioAdmin;
 	Usuario unUsuarioTerminal;
+	
+	
 	
 //	private String listaAcciones1[];
 //	private String listaAcciones2[];
@@ -86,7 +89,7 @@ public class TestAgregarAcciones {
 				for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
 					encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
 					if(encontrada==false){encontradaTodas=false;}
-					System.out.println(unafuncionabilidad+ "---encontrada: "+encontrada+"---bandera: "+encontradaTodas);
+					
 				
 					}
 				Assert.assertTrue(encontradaTodas);
@@ -152,9 +155,11 @@ public class TestAgregarAcciones {
 		Assert.assertFalse(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, "C:/Users/LAG/git/tp-anual-grupo1/src/test/java/accionesAAgregar", adminPrueba);
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, (new File (".").getAbsolutePath ())+"/src/test/java/accionesAAgregar", adminPrueba);
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
+		
+		
 		
 		
 		
