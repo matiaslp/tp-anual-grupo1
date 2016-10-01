@@ -44,7 +44,7 @@ public class DB_Usuarios extends Accion {
 	public boolean buscarUsuarioEnLista(String username) {
 		
 		for (Usuario unUsuario : this.getListaUsuarios()) {
-			if (unUsuario.getUsername() == username) {
+			if (unUsuario.getUsername().equals(username)) {
 				return true;
 			}
 		}
@@ -56,7 +56,7 @@ public class DB_Usuarios extends Accion {
 		
 		Usuario usuarioNoEncontrado = null;
 		for (Usuario unUsuario : this.getListaUsuarios()) {
-			if (unUsuario.getUsername() == username) {
+			if (unUsuario.getUsername().equals(username)) {
 			return unUsuario;
 			}
 		}

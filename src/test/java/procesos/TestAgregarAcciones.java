@@ -73,69 +73,69 @@ public class TestAgregarAcciones {
 
 	}
 
-	@Test
-	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnAdmin() throws MessagingException {
-			
-		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnAdmin,transaction);
-		
-		
-		//comprobacion si tiene toda la lista a agregar
-			encontradaTodas=true;
-				for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
-					encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
-					if(encontrada==false){encontradaTodas=false;}
-				
-					}
-				Assert.assertTrue(encontradaTodas);
-		
-	}
-	@Test
-	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnAdmin() throws MessagingException {
-				
-		AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnAdmin,transaction);
-		
-		//comprobacion si tiene toda la lista a agregar
-		encontradaTodas=true;
-			for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
-				encontrada=db_usuario. getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
-				if(encontrada==false){encontradaTodas=false;}
-			
-				}
-			Assert.assertFalse(encontradaTodas);
-		
-	}
-	
-	
-	@Test
-	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnTerminal() throws MessagingException {
-				
-	
-		agregado = AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnTerminal,transaction);
-		//comprobacion si tiene toda la lista a agregar
-		encontradaTodas=true;
-			for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
-				encontrada=db_usuario. getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
-				if(encontrada==false){encontradaTodas=false;}
-				
-				}
-			Assert.assertTrue(encontradaTodas);
-		
-	}
-	
-	@Test
-	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnTerminal() throws MessagingException {
-	
-		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnTerminal,transaction);
-		//comprobacion si tiene toda la lista a agregar
-		encontradaTodas=true;
-			for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
-				encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
-				if(encontrada==false){encontradaTodas=false;}
-				
-				}
-			Assert.assertTrue(encontradaTodas);
-		
-	}
+//	@Test
+//	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnAdmin() throws MessagingException {
+//			
+//		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnAdmin,transaction);
+//		
+//		
+//		//comprobacion si tiene toda la lista a agregar
+//			encontradaTodas=true;
+//				for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
+//					encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
+//					if(encontrada==false){encontradaTodas=false;}
+//				
+//					}
+//				Assert.assertTrue(encontradaTodas);
+//		
+//	}
+//	@Test
+//	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnAdmin() throws MessagingException {
+//				
+//		AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnAdmin,transaction);
+//		
+//		//comprobacion si tiene toda la lista a agregar
+//		encontradaTodas=true;
+//			for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
+//				encontrada=db_usuario. getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
+//				if(encontrada==false){encontradaTodas=false;}
+//			
+//				}
+//			Assert.assertFalse(encontradaTodas);
+//		
+//	}
+//	
+//	
+//	@Test
+//	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnTerminal() throws MessagingException {
+//				
+//	
+//		agregado = AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnTerminal,transaction);
+//		//comprobacion si tiene toda la lista a agregar
+//		encontradaTodas=true;
+//			for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
+//				encontrada=db_usuario. getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
+//				if(encontrada==false){encontradaTodas=false;}
+//				
+//				}
+//			Assert.assertTrue(encontradaTodas);
+//		
+//	}
+//	
+//	@Test
+//	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnTerminal() throws MessagingException {
+//	
+//		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnTerminal,transaction);
+//		//comprobacion si tiene toda la lista a agregar
+//		encontradaTodas=true;
+//			for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
+//				encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
+//				if(encontrada==false){encontradaTodas=false;}
+//				
+//				}
+//			Assert.assertTrue(encontradaTodas);
+//		
+//	}
 	
 	
 	@Test
@@ -144,6 +144,8 @@ public class TestAgregarAcciones {
 		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
 		AuthAPI.getInstance().sacarFuncionalidad("enviarMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
+		Assert.assertFalse(adminPrueba.chequearFuncionalidad("enviarMail"));
+		Assert.assertFalse(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
 		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, "/home/matiasl/reposGit/tp-anual-grupo1/src/test/java/accionesAAgregar", adminPrueba);

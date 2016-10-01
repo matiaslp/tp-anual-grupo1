@@ -140,7 +140,7 @@ public class AgregarAcciones extends Proceso {
 			unUsuario = db_usuario.getUsarioByName(unUsername);
 			for (String unaAccion : listadoAcciones) {
 
-				agregoAccion = authapi.agregarFuncionalidad(unaAccion, unUsuario);
+				agregoAccion = AuthAPI.getInstance().agregarFuncionalidad(unaAccion, unUsuario);
 				if (agregoAccion == false) {
 					return false;
 				} else {
