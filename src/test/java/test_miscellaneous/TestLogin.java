@@ -24,7 +24,7 @@ public class TestLogin {
 		Autenticador = AuthAPI.getInstance();
 
 		prueba = new Usuario("usuario", "password", Rol.ADMIN);
-		prueba.getFuncionalidades().put("enviarMail", AuthAPI.Acciones.get("enviarMail"));
+		prueba.getFuncionalidades().put("cambiarEstadoMail", AuthAPI.Acciones.get("cambiarEstadoMail"));
 
 		DBU.agregarUsuarioALista(prueba);
 
@@ -107,7 +107,7 @@ public class TestLogin {
 
 	@Test
 	public void testagregarFuncionalidadTerminalSinPermiso() {
-		Assert.assertFalse(Autenticador.agregarFuncionalidad("enviarMail", terminal));
+		Assert.assertFalse(Autenticador.agregarFuncionalidad("cambiarEstadoMail", terminal));
 	}
 	
 	@Test

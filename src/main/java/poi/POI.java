@@ -25,25 +25,7 @@ public abstract class POI {
 	protected String provincia;
 	protected String pais;
 	protected GeoLocation ubicacion;
-	protected long comuna;
-
-	public boolean darDeBaja(DateTime fecha) {
-		//Si retorna false significa que ya estaba dado de baja
-		if (fechaBaja != null)
-			return false;
-		fechaBaja = fecha;
-		return true;
-	}
-
-	public void darAlta() {
-		this.fechaBaja = null;
-	}
-
-	public boolean dadoDeBaja() {
-		return (this.fechaBaja != null);
-	}
-
-	// define cuando otro punto es cercano.
+	protected long comuna;	// define cuando otro punto es cercano.
 	protected long cercania = 500;
 	// este atributo hay que ver si nos sirve porque
 	// las subclases tienen el nombre del tipo, de por si.
@@ -52,7 +34,8 @@ public abstract class POI {
 	// pueden ser varias y se crean a travez de
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
 	protected Etiqueta[] etiquetas;
-	protected DateTime fechaBaja;
+	protected DateTime fechaBaja = null;
+	protected boolean esLocal = true;
 
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
 		return (distanciaCoordDosPOIs(this, unPOI) * 1000 < x);
@@ -318,50 +301,47 @@ public abstract class POI {
 
 	public boolean busquedaEstandar(String filtros[]) {
 
-		// List<String> filtros = new ArrayList<String>();
-		// if (texto1 != null )
-		// filtros.add(texto1);
-		// if (texto2 != null )
-		// filtros.add(texto2);
-		for (String filtro : filtros) {
-			if (MetodosComunes.isNumeric(filtro)) {
-				long valor = Long.parseLong(filtro);
-				if (numeracion == valor)
+		if(this.fechaBaja != null){
+			for (String filtro : filtros) {
+				if (MetodosComunes.isNumeric(filtro)) {
+					long valor = Long.parseLong(filtro);
+					if (numeracion == valor)
+						return true;
+					else if (piso == valor)
+						return true;
+					else if (codigoPostal == valor)
+						return true;
+					else if (comuna == valor)
+						return true;
+				} else if (LevDist.calcularDistancia(filtro, this.nombre))
 					return true;
-				else if (piso == valor)
+				else if (LevDist.calcularDistancia(filtro, this.callePrincipal))
 					return true;
-				else if (codigoPostal == valor)
+				else if (LevDist.calcularDistancia(filtro, this.calleLateral))
 					return true;
-				else if (comuna == valor)
+				else if (LevDist.calcularDistancia(filtro, this.departamento))
 					return true;
-			} else if (LevDist.calcularDistancia(filtro, this.nombre))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, this.callePrincipal))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, this.calleLateral))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, this.departamento))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, this.unidad))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, this.localidad))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, this.barrio))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, this.provincia))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, this.pais))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, TiposPOI.BANCO.name()))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, TiposPOI.CGP.name()))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, TiposPOI.LOCAL_COMERCIAL.name()))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, TiposPOI.PARADA_COLECTIVO.name()))
-				return true;
-			else if (buscarEtiqueta(filtro))
-				return true;
+				else if (LevDist.calcularDistancia(filtro, this.unidad))
+					return true;
+				else if (LevDist.calcularDistancia(filtro, this.localidad))
+					return true;
+				else if (LevDist.calcularDistancia(filtro, this.barrio))
+					return true;
+				else if (LevDist.calcularDistancia(filtro, this.provincia))
+					return true;
+				else if (LevDist.calcularDistancia(filtro, this.pais))
+					return true;
+				else if (LevDist.calcularDistancia(filtro, TiposPOI.BANCO.name()))
+					return true;
+				else if (LevDist.calcularDistancia(filtro, TiposPOI.CGP.name()))
+					return true;
+				else if (LevDist.calcularDistancia(filtro, TiposPOI.LOCAL_COMERCIAL.name()))
+					return true;
+				else if (LevDist.calcularDistancia(filtro, TiposPOI.PARADA_COLECTIVO.name()))
+					return true;
+				else if (buscarEtiqueta(filtro))
+					return true;
+			}
 		}
 		return false;
 	}
@@ -443,7 +423,7 @@ public abstract class POI {
 			return false;
 		return true;
 	}
-	
+
 	public boolean compararEtiquetas(POI poi){
 		if(this.etiquetas.length == poi.getEtiquetas().length){
 			for(Etiqueta etiqueta : this.etiquetas){
@@ -453,6 +433,22 @@ public abstract class POI {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean darDeBaja(DateTime fecha) {
+		//Si retorna false significa que ya estaba dado de baja
+		if (fechaBaja != null)
+			return false;
+		fechaBaja = fecha;
+		return true;
+	}
+
+	public void darAlta() {
+		this.fechaBaja = null;
+	}
+
+	public boolean dadoDeBaja() {
+		return (this.fechaBaja != null);
 	}
 
 }
