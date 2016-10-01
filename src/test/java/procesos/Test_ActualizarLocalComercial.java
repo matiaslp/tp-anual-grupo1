@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
 import db.DB_POI;
@@ -16,10 +17,12 @@ public class Test_ActualizarLocalComercial {
 	
 	DB_POI dbPOI;
 	Usuario usuario;
+	AuthAPI Autenticador;
 	
 	@Before
 	public void init(){
 		dbPOI = DB_POI.getInstance();
+		Autenticador = AuthAPI.getInstance();
 		usuario = new Usuario("aa", "bb", Rol.ADMIN);
 	}
 	
