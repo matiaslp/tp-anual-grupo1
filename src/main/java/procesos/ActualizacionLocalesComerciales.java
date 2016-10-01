@@ -40,7 +40,7 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			String line = null;
 
 			while ((line = reader.readLine()) != null) {
-		    	String[] parametros = line.split(",");
+		    	String[] parametros = line.split(";");
 
 		    	if(parametros.length == 2){
 		    		String[] palabrasClaves = parametros[1].split(" ");
@@ -70,12 +70,5 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			}
 		}
 	}
-
-	/*
-	Test:
-		Proceso procesoActualizar = new ActualizacionLocalesComerciales();
-		filePath = ...;
-		procesarArchivo(filePath);
-
-	*/
+	
 }

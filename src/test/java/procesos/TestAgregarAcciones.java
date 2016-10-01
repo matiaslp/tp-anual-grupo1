@@ -2,8 +2,6 @@ package procesos;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 
@@ -11,21 +9,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.Accion;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
-import autentification.funciones.FuncReporteBusquedaPorUsuario;
-import autentification.funciones.FuncReporteBusquedasPorFecha;
-import autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
+import autentification.funciones.FuncAgregarAcciones;
 import db.AgregarAccionesTransaction;
 import db.DB_Usuarios;
-import autentification.funciones.FuncAgregarAcciones;
-import autentification.funciones.FuncEnviarMail;
-import email.EnviarEmail;
-import helpers.LeerProperties;
-import poi.POI;
-import procesos.AgregarAcciones;
 
 
 public class TestAgregarAcciones {

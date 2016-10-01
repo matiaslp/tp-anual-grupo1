@@ -19,8 +19,7 @@ public class Usuario {
 		this.setPassword(password);
 		this.setUsername(username);
 		this.setRol(rol);
-		this.fechaBaja = null;
-		
+				
 		if(rol.equals(Rol.ADMIN)){
 			funcionalidades = AuthAPI.Acciones;
 		}else{
@@ -118,14 +117,6 @@ public class Usuario {
 		}
 	}
 
-	public LocalDate getFechaBaja() {
-		return fechaBaja;
-	}
-
-	public void setFechaBaja(LocalDate fechaBaja) {
-		this.fechaBaja = fechaBaja;
-	}
-	
 	public Accion getFuncionalidad(String funcionalidad){
 		return funcionalidades.get(funcionalidad);
 	}

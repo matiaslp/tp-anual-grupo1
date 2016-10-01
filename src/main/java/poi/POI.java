@@ -2,7 +2,6 @@ package poi;
 
 import java.util.ArrayList;
 
-import org.joda.time.LocalDate;
 import org.joda.time.DateTime;
 
 import abmc.POI_DTO;
@@ -27,14 +26,6 @@ public abstract class POI {
 	protected String pais;
 	protected GeoLocation ubicacion;
 	protected long comuna;
-
-	public DateTime getFechaBaja() {
-		return fechaBaja;
-	}
-
-	public void setFechaBaja(DateTime fechaBaja) {
-		this.fechaBaja = fechaBaja;
-	}
 
 	public boolean darDeBaja(DateTime fecha) {
 		//Si retorna false significa que ya estaba dado de baja
@@ -61,7 +52,7 @@ public abstract class POI {
 	// pueden ser varias y se crean a travez de
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
 	protected Etiqueta[] etiquetas;
-	protected LocalDate fechaBaja;
+	protected DateTime fechaBaja;
 
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
 		return (distanciaCoordDosPOIs(this, unPOI) * 1000 < x);
@@ -292,11 +283,11 @@ public abstract class POI {
 		this.id = id;
 	}
 
-	public LocalDate getFechaBaja() {
+	public DateTime getFechaBaja() {
 		return fechaBaja;
 	}
 
-	public void setFechaBaja(LocalDate fechaBaja) {
+	public void setFechaBaja(DateTime fechaBaja) {
 		this.fechaBaja = fechaBaja;
 	}
 
@@ -451,6 +442,17 @@ public abstract class POI {
 		} else if (!unidad.equals(other.unidad))
 			return false;
 		return true;
+	}
+	
+	public boolean compararEtiquetas(POI poi){
+		if(this.etiquetas.length == poi.getEtiquetas().length){
+			for(Etiqueta etiqueta : this.etiquetas){
+				if(!poi.buscarEtiqueta(etiqueta.getNombre()))
+					return false;
+			}
+			return true;
+		}
+		return false;
 	}
 
 }
