@@ -3,7 +3,7 @@ package procesos;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
+
 
 import javax.mail.MessagingException;
 
@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.Accion;
+
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
@@ -170,8 +170,19 @@ public class TestAgregarAcciones {
 		
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
+
 		
 		Assert.assertTrue(unUsuarioTerminal1.chequearFuncionalidad("busquedaPOI"));
+
+	}
+	
+	@Test
+	public void agregarAccionesProcessUndo() {
+		
+		
+
 		
 	}
+	
+	
 }
