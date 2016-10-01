@@ -14,6 +14,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import autentification.Rol;
 import autentification.Usuario;
 import db.DB_Usuarios;
 import helpers.LeerProperties;
@@ -85,7 +86,7 @@ public abstract class EnviarEmail {
 	// recibirEmails activada
 	public static void MandarCorreoXSegundosUsuarios(String texto, int segundos) throws MessagingException {
 		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios())
-			if (usuario.chequearFuncionalidad("enviarMail") && usuario.getCorreo() != null)
+			if (usuario.isMailHabilitado() && usuario.getCorreo() != null)
 				EnviarEmail.mandarCorreoXSegundos(texto, segundos, usuario.getCorreo());
 	}
 
