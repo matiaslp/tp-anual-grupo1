@@ -158,10 +158,14 @@ public class TestAgregarAcciones {
 		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, (new File (".").getAbsolutePath ())+"/src/test/java/accionesAAgregar", adminPrueba);
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
-		
-		
+	}
+	
+	@Test
+	public void agregarAccionesProcessUndo() {
 		
 		
 		
 	}
+	
+	
 }

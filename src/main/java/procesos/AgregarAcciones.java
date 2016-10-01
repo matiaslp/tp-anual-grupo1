@@ -58,7 +58,6 @@ public class AgregarAcciones extends Proceso {
 				BufferedReader br = new BufferedReader(fr);
 				// lee linea a linea
 				while ((linea = br.readLine()) != null) {
-					System.out.println(linea);
 
 					palabras = linea.split(" ");
 					unUsername = palabras[0];
