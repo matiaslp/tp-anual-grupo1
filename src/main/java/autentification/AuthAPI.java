@@ -73,8 +73,7 @@ public class AuthAPI {
 
 	public String iniciarSesion(String user, String pass) {
 
-		// LA PASS YA DEBERIA LLEGAR HASHEADA AL ENTRAR A ESTA FUNCION,
-		// preguntarme si no captan el por que
+		// LA PASS YA DEBERIA LLEGAR HASHEADA AL ENTRAR A ESTA FUNCION
 
 		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios()) {
 			if (usuario.validarUsuarioYPass(user, pass)) {
