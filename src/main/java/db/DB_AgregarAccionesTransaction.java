@@ -19,10 +19,10 @@ public class DB_AgregarAccionesTransaction {
 		return instance;
 	}
 
-	public boolean eliminarTransactions(int d) {
+	public boolean eliminarTransactions(long l) {
 
 		for (AgregarAccionesTransaction Transaction : listTransactions) {
-			if (Long.compare(Transaction.getId(), d) == 0) {
+			if (Long.compare(Transaction.getId(), l) == 0) {
 				listTransactions.remove(Transaction);
 				return true;
 			}

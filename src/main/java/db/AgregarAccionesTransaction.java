@@ -29,7 +29,9 @@ public class AgregarAccionesTransaction {
 		listadoCambios.put(Long.parseLong(registro), registro);
 	}
 	
-	
+	public Map<Long, String> getListadoCambios() {
+		return listadoCambios;
+	}
 	public AgregarAccionesTransaction(long userID) {
 		super();
 		this.userID = userID;
