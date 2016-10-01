@@ -2,6 +2,8 @@ package abmc;
 
 import java.util.ArrayList;
 import javax.mail.MessagingException;
+
+import org.joda.time.DateTime;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -36,8 +38,11 @@ public class POI_ABMC implements Busqueda {
 	}
 
 	public boolean delete(int ID) {
-		if (DB_POI.getInstance().getPOIbyId(ID) != null) {
-			return DB_POI.getInstance().eliminarPOI(ID);
+		POI poi = DB_POI.getInstance().getPOIbyId(ID);
+		if (poi != null) {
+			DateTime now = new DateTime();
+			poi.setFechaBaja(now);
+			return true;
 		} else
 			return false;
 	}
