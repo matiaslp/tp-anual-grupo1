@@ -71,14 +71,20 @@ public class AuthAPI {
 			}
 	}
 
-	public String iniciarSesion(String user, String pass) throws NoSuchAlgorithmException {
+	public String iniciarSesion(String user, String pass) {
 
 		// LA PASS YA DEBERIA LLEGAR HASHEADA AL ENTRAR A ESTA FUNCION,
 		// preguntarme si no captan el por que
 
 		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios()) {
 			if (usuario.validarUsuarioYPass(user, pass)) {
-				String token = generarToken(user, pass);
+				String token = null;
+				try {
+					token = generarToken(user, pass);
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				DB_Sesiones.getInstance().agregarTokenUser(token, user);
 				return token;
 			}

@@ -20,6 +20,7 @@ import autentification.funciones.FuncReporteBusquedasPorFecha;
 import autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
 import db.AgregarAccionesTransaction;
 import db.DB_Usuarios;
+import autentification.funciones.FuncAgregarAcciones;
 import autentification.funciones.FuncEnviarMail;
 import email.EnviarEmail;
 import helpers.LeerProperties;
@@ -144,6 +145,24 @@ public class TestAgregarAcciones {
 				
 				}
 			Assert.assertTrue(encontradaTodas);
+		
+	}
+	
+	
+	@Test
+	public void agregarAccionesProcesoTest() {
+		Usuario adminPrueba = new Usuario("adminPrueba", "123", Rol.ADMIN);
+		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
+		AuthAPI.getInstance().sacarFuncionalidad("enviarMail",adminPrueba);
+		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
+		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
+		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, "/home/matiasl/reposGit/tp-anual-grupo1/src/test/java/accionesAAgregar", adminPrueba);
+		
+		Assert.assertTrue(adminPrueba.chequearFuncionalidad("enviarMail"));
+		Assert.assertTrue(adminPrueba.chequearFuncionalidad("actualizacionLocalesComerciales"));
+		
+		
 		
 	}
 }
