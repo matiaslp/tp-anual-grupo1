@@ -32,7 +32,7 @@ public class ActualizacionLocalesComerciales extends Proceso {
 
 	}
 
-	public void procesarArchivo(String filePath) {
+	public boolean procesarArchivo(String filePath) {
 		Path path = Paths.get(filePath);
 		Map<String, String[]> locales = new HashMap<String,String[]>();
 		try {
@@ -47,28 +47,34 @@ public class ActualizacionLocalesComerciales extends Proceso {
 		    		locales.put(parametros[0], palabrasClaves);
 		    	}
 		    }
-			actualizar(locales);
+			return actualizar(locales);
 		} catch (IOException e){
 			e.printStackTrace();
+			return false;
 		}
 	}
 
-	public void actualizar(Map<String, String[]> locales){
-		for(Entry<String, String[]> e: locales.entrySet()){
-			POI local = (LocalComercial) DB_POI.getInstance().getPOIbyNombre(e.getKey());
-			if(local != null){
-				local.setEtiquetas(e.getValue());
-				DB_POI.getInstance().actualizarPOI(local);
+	public boolean actualizar(Map<String, String[]> locales){
+		try{
+			for(Entry<String, String[]> e: locales.entrySet()){
+				POI local = (LocalComercial) DB_POI.getInstance().getPOIbyNombre(e.getKey());
+				if(local != null){
+					local.setEtiquetas(e.getValue());
+					DB_POI.getInstance().actualizarPOI(local);
+				}
+				else {
+					local = new LocalComercial();
+					local.setNombre(e.getKey());
+					local.setEtiquetas(e.getValue());
+					DB_POI.getInstance().agregarPOI(local);
+				}
 			}
-			else {
-				local = new LocalComercial();
-				local.setNombre(e.getKey());
-				local.setEtiquetas(e.getValue());
-				DB_POI.getInstance().agregarPOI(local);
-				// Revisar todo lo que involucre LocalComercial por los nuevos valores null
-				// que pueden llegar a tener
-			}
+			return true;
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
 		}
+		
 	}
 	
 }

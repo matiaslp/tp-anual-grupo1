@@ -67,11 +67,11 @@ public class DB_POI {
 	}
 
 	//Me falta probarlo
-	public static boolean bajaPoi(String[] valoresBusqueda, DateTime fechaBaja) {
+	public boolean bajaPoi(String[] valoresBusqueda, DateTime fechaBaja) {
 		for (POI poi : listadoPOI) {
 			//Si el POI coincide con la busqueda
 			if (poi.busquedaEstandar(valoresBusqueda)) {
-				if(poi.darDeBaja(fechaBaja))
+				if(poi.dadoDeBaja())
 					return true; //se dio de baja
 				else
 					return false; //ya estaba dado de baja

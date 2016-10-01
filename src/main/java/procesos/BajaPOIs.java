@@ -8,7 +8,7 @@ import autentification.Usuario;
 
 public class BajaPOIs extends Proceso {
 
-	DB_POI DB;
+	DB_POI dbPOI = DB_POI.getInstance();
 
 	@Override
 	public void execute() {
@@ -21,15 +21,10 @@ public class BajaPOIs extends Proceso {
 		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
 	}
 
-	public boolean bajaPoi(POI poi, DateTime fecha){
-		POI poiPersistido = DB_POI.getInstance().getPOIbyId(poi.getId());
-		if(poiPersistido != null && poiPersistido.getFechaBaja().equals(fecha)){
-			DB.eliminarPOI(poi.getId());
-			return true;
-		} else {
-			//SE rompio la internet y vuela todo a la chota wiiiiiiiii digo... CHAOS EVERYWHERE >:D
-			return false;
-		}
+	public boolean bajaPoi(String valorBusqueda, DateTime fechaBaja){
+		String[] valoresBusqueda = {valorBusqueda};
+		
+		return dbPOI.bajaPoi(valoresBusqueda, fechaBaja);
 	}
 
 }

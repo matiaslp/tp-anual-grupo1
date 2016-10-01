@@ -16,7 +16,10 @@ public class LocalComercial extends POI {
 	public ArrayList<Integer> horas = new ArrayList<Integer>();
 
 	public int getDistancia() {
-		return rubro.getCercania();
+		if(rubro != null)
+			return rubro.getCercania();
+		else
+			return 0;
 	}
 
 	public LocalComercial(String nombre, double latitud, double longitud, Rubro rubro) {
