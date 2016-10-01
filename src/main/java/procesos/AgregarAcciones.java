@@ -64,7 +64,7 @@ public class AgregarAcciones extends Proceso {
 					unUsername = palabras[0];
 
 					// arma la lista de acciones para un usuario
-					for (int i = 1; i <= palabras.length; i++) {
+					for (int i = 1; i < palabras.length; i++) {
 						listadoAcciones.add(palabras[i]);
 					}
 
@@ -102,7 +102,9 @@ public class AgregarAcciones extends Proceso {
 		return;
 	}
 	
+	// Undo del ultimo proceso de AgregarAcciones ejecutado por el usuario que esta realizando el "undo"
 	public void undo() {
+
 		AgregarAccionesTransaction transaction = DB_AgregarAccionesTransaction.getInstance()
 				.getLastTransactionByUser(user.getID());
 		Map<Long, String> listadoCambios = transaction.getListadoCambios();
@@ -116,13 +118,12 @@ public class AgregarAcciones extends Proceso {
 				Usuario unUsuario = DB_Usuarios.getInstance().getUsarioByName(unUsername);
 
 				// Remover todas las funcionalidades que fueron agregadas
-				for (int i = 1; i <= acciones.length; i++)
+				for (int i = 1; i < acciones.length; i++)
 					AuthAPI.getInstance().sacarFuncionalidad(acciones[i], unUsuario);
 
 			}
 			// Eliminamos la transacciones que fue rollbackeada
 			DB_AgregarAccionesTransaction.getInstance().eliminarTransactions(transaction.getId());
-
 		}
 	}
 
@@ -154,14 +155,4 @@ public class AgregarAcciones extends Proceso {
 		}
 
 	}
-
-	private boolean validarAccionUsuarioTerminal(Accion accion) {
-		return true;
-	}
-
-	private boolean validarAccionUsuarioAdministrador(Accion accion) {
-		return true;
-	}
-
-
 }
