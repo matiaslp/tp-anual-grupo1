@@ -26,5 +26,4 @@ public class BajaPOIs extends Proceso {
 		
 		return dbPOI.bajaPoi(valoresBusqueda, fechaBaja);
 	}
-
 }

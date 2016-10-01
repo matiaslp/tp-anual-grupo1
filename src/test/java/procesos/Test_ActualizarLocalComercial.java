@@ -1,4 +1,6 @@
-package test_poi;
+package procesos;
+
+import java.io.File;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +21,7 @@ public class Test_ActualizarLocalComercial {
 	public void testActualizar(){
 		//Corro el proceso
 		//URL url = getClass().getResource("actualizarLocalesComerciales.txt");
-		String filePath = "C:\\Users\\Alberto\\Desktop\\Facultad\\DDS\\tp-anual-grupo1\\src\\test\\java\\procesos\\actualizarLocalesComerciales.txt";
+		String filePath = (new File (".").getAbsolutePath ())+ "\\src\\test\\java\\procesos\\actualizarLocalesComerciales.txt";
 		
 		//Creo los locales comerciales pero solo agrego el 1, 
 		//esperando que los otros 2 los cree el proceso
