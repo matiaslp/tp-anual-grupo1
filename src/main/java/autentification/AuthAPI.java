@@ -17,7 +17,7 @@ import autentification.funciones.FuncBusquedaPOI;
 import autentification.funciones.FuncReporteBusquedaPorUsuario;
 import autentification.funciones.FuncReporteBusquedasPorFecha;
 import autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
-import autentification.funciones.FuncEnviarMail;
+import autentification.funciones.FuncCambiarEstadoMail;
 import autentification.funciones.FuncMultiple;
 import autentification.funciones.FuncObtenerInfoPOI;
 import db.DB_Sesiones;
@@ -40,7 +40,7 @@ public class AuthAPI {
 		Acciones.put("reporteBusquedaPorUsuario", new FuncReporteBusquedaPorUsuario());
 		Acciones.put("reporteBusquedasPorFecha", new FuncReporteBusquedasPorFecha());
 		Acciones.put("reportecantidadResultadosPorTerminal", new FuncReporteCantidadResultadosPorTerminal());
-		Acciones.put("enviarMail", new FuncEnviarMail());
+		Acciones.put("cambiarEstadoMail", new FuncCambiarEstadoMail());
 		Acciones.put("actualizacionLocalesComerciales", new FuncActualizacionLocalesComerciales());
 		Acciones.put("agregarAcciones", new FuncAgregarAcciones());
 		Acciones.put("bajaPOIs", new FuncBajaPOIs());
