@@ -3,6 +3,7 @@ package procesos;
 import java.io.File;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import autentification.Rol;
@@ -10,12 +11,17 @@ import autentification.Usuario;
 import db.DB_POI;
 import poi.LocalComercial;
 import poi.POI;
-import procesos.ActualizacionLocalesComerciales;
 
 public class Test_ActualizarLocalComercial {
 	
-	DB_POI dbPOI = DB_POI.getInstance();
-	Usuario usuario = new Usuario("aa", "bb", Rol.ADMIN);
+	DB_POI dbPOI;
+	Usuario usuario;
+	
+	@Before
+	public void init(){
+		dbPOI = DB_POI.getInstance();
+		usuario = new Usuario("aa", "bb", Rol.ADMIN);
+	}
 	
 	@Test
 	public void testActualizar(){
