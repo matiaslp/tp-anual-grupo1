@@ -13,13 +13,15 @@ public class Usuario {
 	private long id;
 	private Map<String, Accion> funcionalidades;
 	private String correo;
-	
+	private boolean mailHabilitado;
+
 	public Usuario(String username, String password, Rol rol) {
 		this.setID(DB_Usuarios.getInstance().getListaUsuarios().size() + 1);
 		this.setPassword(password);
 		this.setUsername(username);
 		this.setRol(rol);
 		this.setFuncionalidades(new HashMap<String,Accion>());
+		this.setMailHabilitado(true);
 		
 		if(rol.equals(Rol.ADMIN)){
 			funcionalidades.put("bajaPOIs", AuthAPI.Acciones.get("bajaPOIs"));
@@ -126,6 +128,15 @@ public class Usuario {
 	}
 	
 	
+	public boolean isMailHabilitado() {
+		return mailHabilitado;
+	}
+
+
+	public boolean setMailHabilitado(boolean mailHabilitado) {
+		this.mailHabilitado = mailHabilitado;
+		return true;
+	}
 
 
 }
