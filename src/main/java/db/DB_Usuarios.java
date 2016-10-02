@@ -40,18 +40,6 @@ public class DB_Usuarios extends Accion {
 		this.listaUsuarios = listaUsuarios;
 	}
 
-	//LUCAS
-	public boolean buscarUsuarioEnLista(String username) {
-		
-		for (Usuario unUsuario : this.getListaUsuarios()) {
-			if (unUsuario.getUsername().equals(username)) {
-				return true;
-			}
-		}
-		return false;
-
-	}
-	//LUCAS
 	public Usuario getUsuarioByName(String username) {
 		
 		Usuario usuarioNoEncontrado = null;

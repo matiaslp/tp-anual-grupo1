@@ -37,10 +37,12 @@ public class AgregarAcciones extends Proceso {
 		String linea;
 		String palabras[];
 		String unUsername;
+		String usuariosInexistentes = null;
+		String accionesInexistentes = null;
 		ArrayList<String> listadoAcciones = new ArrayList<String>();
 		FileReader fr = null;
 		// Creamos la Transaccion
-		AgregarAccionesTransaction Transaction = new AgregarAccionesTransaction(user.getID());
+		AgregarAccionesTransaction transaction = new AgregarAccionesTransaction(user.getID());
 		// REVISA SI EXISTE O NO Y SI SE PUEDE LEER O NO
 		try {
 
@@ -52,17 +54,20 @@ public class AgregarAcciones extends Proceso {
 
 					palabras = linea.split(" ");
 					unUsername = palabras[0];
-
+					if (DB_Usuarios.getInstance().getUsuarioByName(unUsername) == null)
+						usuariosInexistentes = usuariosInexistentes + unUsername;
 					// arma la lista de acciones para un usuario
 					for (int i = 1; i < palabras.length; i++) {
+						if (AuthAPI.getInstance().getAccion(palabras[i]) == null)
+							accionesInexistentes = accionesInexistentes + palabras[i];
 						listadoAcciones.add(palabras[i]);
 					}
 
-					AgregarAcciones.AgregarAccionesAUsuario(unUsername, listadoAcciones, Transaction);
+					AgregarAcciones.AgregarAccionesAUsuario(unUsername, listadoAcciones, transaction);
 
 				}
 				// Se agrega la transaccion a DB_AgregarAccionesTransaction
-				DB_AgregarAccionesTransaction.getInstance().agregarTransactions(Transaction);
+				DB_AgregarAccionesTransaction.getInstance().agregarTransactions(transaction);
 				br.close();
 			}
 
@@ -93,7 +98,14 @@ public class AgregarAcciones extends Proceso {
 		// Obtenemos el tiempo de fin de proceso
 		DateTime end = new DateTime();
 		// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
-		ResultadoProceso resultado = new ResultadoProceso(start, end, this, user.getID(), null, Resultado.OK);
+		ResultadoProceso resultado;
+		if (usuariosInexistentes == null || accionesInexistentes == null)
+			resultado = new ResultadoProceso(start, end, this, user.getID(), null, Resultado.OK);
+		else {
+			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
+		"Acciones inexistentes: " + accionesInexistentes + "\n";
+			resultado = new ResultadoProceso(start, end, this, user.getID(), mensaje, Resultado.ERROR);
+		}
 		DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 		return resultado;
 	}
@@ -112,7 +124,7 @@ public class AgregarAcciones extends Proceso {
 			acciones = Arrays.copyOfRange(acciones, 1, acciones.length);
 
 			// Si el usuario existe
-			if (DB_Usuarios.getInstance().buscarUsuarioEnLista(unUsername)) {
+			if (DB_Usuarios.getInstance().getUsuarioByName(unUsername) != null) {
 				Usuario unUsuario = DB_Usuarios.getInstance().getUsuarioByName(unUsername);
 
 				// Remover todas las funcionalidades que fueron agregadas
@@ -132,7 +144,7 @@ public class AgregarAcciones extends Proceso {
 		Usuario unUsuario;
 		DB_Usuarios db_usuario = DB_Usuarios.getInstance();
 
-		if (db_usuario.buscarUsuarioEnLista(unUsername)) {
+		if (db_usuario.getUsuarioByName(unUsername) != null) {
 			transac = unUsername;
 			unUsuario = db_usuario.getUsuarioByName(unUsername);
 			for (String unaAccion : listadoAcciones) {
