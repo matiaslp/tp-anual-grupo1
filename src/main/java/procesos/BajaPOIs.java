@@ -31,14 +31,8 @@ public class BajaPOIs extends Proceso {
 	private String filePath;
 	
 	@Override
-	public void execute() {
-		if(!bajaPoi(filePath)){
-			for(int i = 1;(this.cantidadReintentos > 0 && this.cantidadReintentos < i && !bajaPoi(filePath)); i++){
-				if(this.enviarEmail){
-					//enviar mail
-				}
-			}
-		}
+	public ResultadoProceso procesado() {
+		return bajaPoi(filePath);
 	}
 
 	public BajaPOIs(int cantidadReintentos, boolean enviarEmail,
@@ -47,7 +41,7 @@ public class BajaPOIs extends Proceso {
 		this.cantidadReintentos = cantidadReintentos;
 	}
 
-	public boolean bajaPoi(String filePath){
+	public ResultadoProceso bajaPoi(String filePath){
 		DateTime start = new DateTime();
 		DateTime end;
 		Path path = Paths.get(filePath);
@@ -73,17 +67,22 @@ public class BajaPOIs extends Proceso {
 			valores.toArray(valoresBusqueda);
 			Map<Long, Boolean> resumen = dbPOI.bajaPoi(valoresBusqueda, fechas);
 			end = new DateTime();
-			for(Entry<Long, Boolean> entry : resumen.entrySet()){
-				if(entry.getValue()){
-					resultado = new ResultadoProceso(0, start, end, this, user.getID(),
-							generarMensaje(entry.getKey(), entry.getValue()) , Resultado.OK);
-				} else {
-					resultado = new ResultadoProceso(0, start, end, this, user.getID(),
-							generarMensaje(entry.getKey(), entry.getValue()) , Resultado.ERROR);
+			
+			if(!resumen.containsValue(false)){
+				resultado = new ResultadoProceso(0, start, end, this, user.getID(),
+							"Todos los POIs fueron eliminados correctamente" , Resultado.OK);
+			} else {
+				List<Long> pois_fallidos = new ArrayList<Long>();
+				for(Entry<Long, Boolean> e : resumen.entrySet()){
+					if(!e.getValue())
+						pois_fallidos.add(e.getKey());
 				}
+				resultado = new ResultadoProceso(0, start, end, this, user.getID(),
+							generarMensaje(pois_fallidos) , Resultado.ERROR);
 			}
+			
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
-			return true;
+			
 		} catch (IOException e){
 			end = new DateTime();
 			
@@ -91,16 +90,17 @@ public class BajaPOIs extends Proceso {
 					"FileNotFoundException:No existe archivo " + filePath, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
-			return false;
-		}
+			
+		} 
+		return resultado;
 	}
 
-	private String generarMensaje(Long key, Boolean value) {
-		String mensaje = "El poi con ID: " + key;
-		if(value)
-			mensaje += " fue eliminado de manera correcta";
-		else
-			mensaje += " intento ser eliminado pero fallo";
+	private String generarMensaje(List<Long> keys) {
+		String mensaje = "El poi con ID: ";
+		for(Long key : keys){
+			mensaje += key + " - ";
+		}
+		mensaje += " intentaron ser eliminados pero fallaron";
 		return mensaje;
 	}
 }

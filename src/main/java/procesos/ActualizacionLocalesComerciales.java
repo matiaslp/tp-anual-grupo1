@@ -10,19 +10,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import db.DB_POI;
-import poi.LocalComercial;
-import poi.POI;
+import org.joda.time.DateTime;
 
 import autentification.Usuario;
+import db.DB_POI;
+import db.ResultadoProceso;
+import poi.LocalComercial;
+import poi.POI;
 
 public class ActualizacionLocalesComerciales extends Proceso {
 
 	String filePath = "";
 
 	@Override
-	public void execute() {
-		procesarArchivo(this.filePath);
+	public ResultadoProceso procesado() {
+		return procesarArchivo(this.filePath);
 	}
 
 	public ActualizacionLocalesComerciales(int cantidadReintentos, boolean enviarEmail,
@@ -32,9 +34,12 @@ public class ActualizacionLocalesComerciales extends Proceso {
 
 	}
 
-	public boolean procesarArchivo(String filePath) {
+	public ResultadoProceso procesarArchivo(String filePath) {
 		Path path = Paths.get(filePath);
 		Map<String, String[]> locales = new HashMap<String,String[]>();
+		ResultadoProceso resultado = null;
+		DateTime start = new DateTime();
+		DateTime end;
 		try {
 			BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
 			String line = null;
@@ -47,11 +52,17 @@ public class ActualizacionLocalesComerciales extends Proceso {
 		    		locales.put(parametros[0], palabrasClaves);
 		    	}
 		    }
-			return actualizar(locales);
+			boolean resultadoActualizar = actualizar(locales);
+			end = new DateTime();
+			if (resultadoActualizar){
+				
+			}
+				resultado = new ResultadoProceso(cantidadReintentos, start, end, null, cantidadReintentos, line, null);
 		} catch (IOException e){
 			e.printStackTrace();
 			return false;
 		}
+		return resultado;
 	}
 
 	public boolean actualizar(Map<String, String[]> locales){
@@ -76,5 +87,4 @@ public class ActualizacionLocalesComerciales extends Proceso {
 		}
 		
 	}
-	
 }

@@ -73,7 +73,7 @@ public class POI_DTO {
 		nuevoPOI.setComuna(comuna);
 		nuevoPOI.setTipo(tipo);
 		nuevoPOI.setFechaBaja(fechaBaja);
-
+		nuevoPOI.setEsLocal(false);
 		return nuevoPOI;
 
 	}
