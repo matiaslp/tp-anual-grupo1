@@ -9,38 +9,36 @@ import org.junit.Test;
 
 import autentification.AuthAPI;
 import autentification.Rol;
-import autentification.Usuario;
+import autentification.UsuariosFactory;
 import db.DB_Usuarios;
 
 public class TestLogin {
-	private Usuario terminal;
-	private Usuario prueba;
 	private DB_Usuarios DBU;
 	private AuthAPI Autenticador;
+	UsuariosFactory fact = new UsuariosFactory();
 
 	@Before
 	public void init() {
 		DBU = DB_Usuarios.getInstance();
 		Autenticador = AuthAPI.getInstance();
 
-		prueba = new Usuario("usuario", "password", Rol.ADMIN);
-		prueba.getFuncionalidades().put("cambiarEstadoMail", AuthAPI.Acciones.get("cambiarEstadoMail"));
+		
+		fact.crearUsuario("admin", "password", Rol.ADMIN);
+		
+		fact.crearUsuario("terminal", "password", Rol.TERMINAL);
 
-		DBU.agregarUsuarioALista(prueba);
-
-		terminal = new Usuario("terminal", "password", Rol.TERMINAL);
 
 	}
 
 	@Test
 	public void probarHasherLongitud() throws NoSuchAlgorithmException {
-		String hash = Autenticador.hashear(prueba.getPassword());
+		String hash = Autenticador.hashear(DBU.getUsuarioByName("admin").getPassword());
 		Assert.assertEquals(64, hash.length());
 	}
 
 	@Test
 	public void probarHasherIgualdad() throws NoSuchAlgorithmException {
-		String hash = Autenticador.hashear(prueba.getPassword());
+		String hash = Autenticador.hashear(DBU.getUsuarioByName("admin").getPassword());
 
 		Assert.assertTrue(
 				hash.equals("5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8".toUpperCase()));
@@ -48,23 +46,23 @@ public class TestLogin {
 
 	@Test
 	public void probarTokenLongitud() throws NoSuchAlgorithmException {
-		String token = Autenticador.generarToken(prueba.getUsername(), prueba.getPassword());
+		String token = Autenticador.generarToken(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
 
 		Assert.assertEquals(64, token.length());
 	}
 
 	@Test
 	public void probarRandomToken() throws NoSuchAlgorithmException, InterruptedException {
-		String token1 = Autenticador.generarToken(prueba.getUsername(), prueba.getPassword());
+		String token1 = Autenticador.generarToken(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
 		TimeUnit.SECONDS.sleep(3); // espero a que cambie la hora
-		String token2 = Autenticador.generarToken(prueba.getUsername(), prueba.getPassword());
+		String token2 = Autenticador.generarToken(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
 
 		Assert.assertFalse(token1.equals(token2));
 	}
 
 	@Test
 	public void testInicioDeSesionCorrecto() throws NoSuchAlgorithmException {
-		String token = Autenticador.iniciarSesion(prueba.getUsername(), prueba.getPassword());
+		String token = Autenticador.iniciarSesion(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
 		Assert.assertFalse(token == null);// esto con equals rompe
 	}
 
@@ -77,7 +75,7 @@ public class TestLogin {
 	@Test
 	public void testvalidarTokenCorrecto() throws NoSuchAlgorithmException {
 
-		String token = Autenticador.iniciarSesion(prueba.getUsername(), prueba.getPassword());
+		String token = Autenticador.iniciarSesion(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
 		Assert.assertTrue(Autenticador.validarToken(token));
 	}
 
@@ -89,43 +87,44 @@ public class TestLogin {
 
 	@Test
 	public void testCrearUsuario() {
-		Usuario test = new Usuario("username", "password", Rol.TERMINAL);
-		Assert.assertTrue(test.getUsername().equals("username") && test.getPassword().equals("password")
-				&& test.getRol().equals(Rol.TERMINAL));
+		fact.crearUsuario("username", "password", Rol.TERMINAL);
+		Assert.assertTrue(DBU.buscarUsuarioEnLista("username") && DBU.getUsuarioByName("username").getPassword().equals("password")
+				&& DBU.getUsuarioByName("username").getRol().equals(Rol.TERMINAL));
 	}
 
 	@Test
 	public void testAgregarUsuarioFalso() {
-		Assert.assertFalse(DBU.agregarUsuarioALista(prueba));
+		Assert.assertFalse(DBU.agregarUsuarioALista(DBU.getUsuarioByName("admin")));
 	}
 
 	@Test
 	public void testAgregarUsuarioTrue() {
-		DBU.agregarUsuarioALista(new Usuario("nuevo", "password", Rol.ADMIN));
-		Assert.assertTrue(DBU.getListaUsuarios().size() > 1);
+		Long tamanio = (long) DBU.getListaUsuarios().size();
+		fact.crearUsuario("nuevo", "password", Rol.ADMIN);
+		Assert.assertTrue(DBU.getListaUsuarios().size() == (tamanio+1));
 	}
 
 	@Test
 	public void testagregarFuncionalidadTerminalSinPermiso() {
-		Assert.assertFalse(Autenticador.agregarFuncionalidad("cambiarEstadoMail", terminal));
+		Assert.assertFalse(Autenticador.agregarFuncionalidad("cambiarEstadoMail", DBU.getUsuarioByName("terminal")));
 	}
 	
 	@Test
 	public void testAgregarFuncionalidadExistente(){
-		Assert.assertFalse(Autenticador.agregarFuncionalidad("busquedaPOI", terminal));
+		Assert.assertFalse(Autenticador.agregarFuncionalidad("busquedaPOI", DBU.getUsuarioByName("terminal")));
 	}
 	
 	@Test
 	public void sacarFuncionalidadtest(){
-		Autenticador.sacarFuncionalidad("busquedaPOI", terminal);
-		Assert.assertTrue(terminal.getFuncionalidad("busquedaPOI")==null);
+		Autenticador.sacarFuncionalidad("busquedaPOI", DBU.getUsuarioByName("terminal"));
+		Assert.assertTrue(DBU.getUsuarioByName("terminal").getFuncionalidad("busquedaPOI")==null);
 	}
 	
 	@Test
 	public void testAgregarFuncionalidadConPermiso(){
-		Autenticador.sacarFuncionalidad("busquedaPOI", terminal);
-		Autenticador.agregarFuncionalidad("busquedaPOI", terminal);
-		Assert.assertTrue(terminal.getFuncionalidad("busquedaPOI")!=null);
+		Autenticador.sacarFuncionalidad("busquedaPOI", DBU.getUsuarioByName("terminal"));
+		Autenticador.agregarFuncionalidad("busquedaPOI", DBU.getUsuarioByName("terminal"));
+		Assert.assertTrue(DBU.getUsuarioByName("terminal").getFuncionalidad("busquedaPOI")!=null);
 	}
 
 }

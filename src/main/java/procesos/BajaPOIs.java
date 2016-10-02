@@ -35,9 +35,9 @@ public class BajaPOIs extends Proceso {
 		return bajaPoi(filePath);
 	}
 
-	public BajaPOIs(int cantidadReintentos, boolean enviarEmail, Usuario unUser) {
+	public BajaPOIs(int cantidadReintentos, boolean enviarEmail, Usuario unUser, String filePath) {
 		super(cantidadReintentos, enviarEmail, unUser);
-		this.cantidadReintentos = cantidadReintentos;
+		this.filePath = filePath;
 	}
 
 	public ResultadoProceso bajaPoi(String filePath) {

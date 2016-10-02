@@ -3,8 +3,6 @@ package autentification;
 import java.util.HashMap;
 import java.util.Map;
 
-import db.DB_Usuarios;
-
 public class Usuario {
 
 	private Rol rol;
@@ -15,28 +13,7 @@ public class Usuario {
 	private String correo;
 	private boolean mailHabilitado;
 
-	public Usuario(String username, String password, Rol rol) {
-		this.setID(DB_Usuarios.getInstance().getListaUsuarios().size() + 1);
-		this.setPassword(password);
-		this.setUsername(username);
-		this.setRol(rol);
-		this.setFuncionalidades(new HashMap<String,Accion>());
-		this.setMailHabilitado(true);
-		
-		if(rol.equals(Rol.ADMIN)){
-			funcionalidades.put("bajaPOIs", AuthAPI.Acciones.get("bajaPOIs"));
-			funcionalidades.put("actualizacionLocalesComerciales", AuthAPI.Acciones.get("actualizacionLocalesComerciales"));
-			funcionalidades.put("procesoMultiple", AuthAPI.Acciones.get("procesoMultiple"));
-			funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
-			funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
-			funcionalidades.put("cambiarEstadoMail", AuthAPI.Acciones.get("cambiarEstadoMail"));
-		}else{
-			funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
-			funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
-		}
-		
-	//AGREGADO POR LUCAS
-		DB_Usuarios.getInstance().agregarUsuarioALista(this);
+	public Usuario() {
 	}
 	
 

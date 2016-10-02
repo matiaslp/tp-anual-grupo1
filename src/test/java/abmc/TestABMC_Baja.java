@@ -106,6 +106,7 @@ public class TestABMC_Baja {
 	public void darDeBajaUnPOI() {
 		DateTime hoy = new DateTime();
 		DB_POI.getListado().get(1).darDeBaja(hoy);
+		Assert.assertTrue(DB_POI.getListado().get(1).getFechaBaja()!=null);
 		Assert.assertTrue(DB_POI.getListado().get(1).dadoDeBaja());
 	}
 	
@@ -113,6 +114,7 @@ public class TestABMC_Baja {
 	public void darDeBajaPoiDadoDeBaja() {
 		DateTime hoy = new DateTime();
 		DB_POI.getListado().get(1).darDeBaja(hoy);
+		Assert.assertTrue(DB_POI.getListado().get(1).getFechaBaja()!=null);
 		Assert.assertFalse(DB_POI.getListado().get(1).darDeBaja(hoy));
 		
 	}
