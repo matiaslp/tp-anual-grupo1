@@ -39,7 +39,7 @@ public class POI_ABMC implements Busqueda {
 
 	public boolean delete(int ID) {
 		POI poi = DB_POI.getInstance().getPOIbyId(ID);
-		if (poi != null) {
+		if (poi != null && poi.getFechaBaja() == null) {
 			DateTime now = new DateTime();
 			poi.setFechaBaja(now);
 			return true;

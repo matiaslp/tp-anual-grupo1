@@ -68,6 +68,8 @@ public class TestABMC_Baja {
 
 	@Test
 	public void bajaCGP() {
+		//Este falla porque como es singleton se corre un test antes que lo modifica
+		//y queda modificado
 		boolean respuesta = poi_abmc.delete(2);
 		Assert.assertTrue(respuesta);
 	}
@@ -87,7 +89,7 @@ public class TestABMC_Baja {
 	// Comprobamos que no se puede borrar un POI al ingresar un ID inexistente
 	@Test
 	public void borrarInexistente() {
-		boolean respuesta = poi_abmc.delete(10);
+		boolean respuesta = poi_abmc.delete(100);
 		Assert.assertFalse(respuesta);
 	}
 
@@ -95,8 +97,8 @@ public class TestABMC_Baja {
 	@Test
 	public void comprobarInexistencia() {
 		instancia.agregarPOI(poiDTOColectivo.converttoPOI());
-		poi_abmc.delete(5);
-		boolean respuesta = poi_abmc.delete(5);
+		poi_abmc.delete(17);
+		boolean respuesta = poi_abmc.delete(17);
 		Assert.assertFalse(respuesta);
 	}
 	

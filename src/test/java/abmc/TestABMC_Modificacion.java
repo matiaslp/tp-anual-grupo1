@@ -96,7 +96,7 @@ public class TestABMC_Modificacion {
 	@Test
 	public void modificacionPOIInexistente() {
 		poiDTOColectivo.setNombre("unaParadaColectivoModificado");
-		poiDTOColectivo.setId(5);
+		poiDTOColectivo.setId(100);
 		boolean respuesta = poi_abmc.modificar(poiDTOColectivo);
 		Assert.assertFalse(respuesta);
 	}
