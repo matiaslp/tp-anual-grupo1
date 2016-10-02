@@ -69,7 +69,7 @@ public class BajaPOIs extends Proceso {
 			end = new DateTime();
 			
 			if(!resumen.containsValue(false)){
-				resultado = new ResultadoProceso(0, start, end, this, user.getID(),
+				resultado = new ResultadoProceso(start, end, this, user.getID(),
 							"Todos los POIs fueron eliminados correctamente" , Resultado.OK);
 			} else {
 				List<Long> pois_fallidos = new ArrayList<Long>();
@@ -77,7 +77,7 @@ public class BajaPOIs extends Proceso {
 					if(!e.getValue())
 						pois_fallidos.add(e.getKey());
 				}
-				resultado = new ResultadoProceso(0, start, end, this, user.getID(),
+				resultado = new ResultadoProceso(start, end, this, user.getID(),
 							generarMensaje(pois_fallidos) , Resultado.ERROR);
 			}
 			
@@ -86,7 +86,7 @@ public class BajaPOIs extends Proceso {
 		} catch (IOException e){
 			end = new DateTime();
 			
-			resultado = new ResultadoProceso(0, start, end, this, user.getID(),
+			resultado = new ResultadoProceso(start, end, this, user.getID(),
 					"FileNotFoundException:No existe archivo " + filePath, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
