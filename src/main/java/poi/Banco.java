@@ -82,6 +82,8 @@ public class Banco extends POI {
 	public Banco(String nombre, double latitud, double longitud) {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
+		this.setTipo(TiposPOI.BANCO);
+		this.servicios = new ArrayList<NodoServicio>();
 	}
 
 	public void setServicios(ArrayList<NodoServicio> serv) {
@@ -101,7 +103,7 @@ public class Banco extends POI {
 			} else if (LevDist.calcularDistancia(filtro, this.gerente)) {
 				return true;
 			} else {
-				this.compararServicios(filtro);
+				this.buscarServicios(filtro);
 			}
 		}
 

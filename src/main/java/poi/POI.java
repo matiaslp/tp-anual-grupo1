@@ -30,7 +30,7 @@ public abstract class POI {
 	// este atributo hay que ver si nos sirve porque
 	// las subclases tienen el nombre del tipo, de por si.
 	protected TiposPOI tipo;
-	protected ArrayList<NodoServicio> servicios = new ArrayList<NodoServicio>();
+	protected ArrayList<NodoServicio> servicios;
 	// pueden ser varias y se crean a travez de
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
 	protected Etiqueta[] etiquetas;
@@ -346,7 +346,7 @@ public abstract class POI {
 		return false;
 	}
 
-	public boolean compararServicios(String filtro) {
+	public boolean buscarServicios(String filtro) {
 		for (NodoServicio servicio : servicios) {
 			if (LevDist.calcularDistancia(filtro, servicio.nombre)) {
 				return true;
@@ -421,18 +421,56 @@ public abstract class POI {
 				return false;
 		} else if (!unidad.equals(other.unidad))
 			return false;
+		if(!compararEtiquetas(other)){
+			return false;
+		}
+		if(!compararServicios(other)){
+			return false;
+		}
+		
 		return true;
 	}
 
 	public boolean compararEtiquetas(POI poi){
-		if(this.etiquetas.length == poi.getEtiquetas().length){
-			for(Etiqueta etiqueta : this.etiquetas){
-				if(!poi.buscarEtiqueta(etiqueta.getNombre()))
-					return false;
-			}
+		if(this.etiquetas == null && poi.etiquetas == null){
 			return true;
+		}else if(this.etiquetas != null && poi.etiquetas == null){
+			return false;
+		}else if(this.etiquetas == null && poi.etiquetas !=null){
+			return false;
+		}else{
+			if(this.etiquetas.length == poi.getEtiquetas().length){
+				for(Etiqueta etiqueta : this.etiquetas){
+					if(!poi.buscarEtiqueta(etiqueta.getNombre()))
+						return false;
+				}
+				return true;
+			}
+			return false;
 		}
-		return false;
+
+	}
+	
+	public boolean compararServicios(POI poi){
+		if(this.servicios == null && poi.servicios == null){
+			return true;
+		}else if(this.servicios != null && poi.servicios == null){
+			return false;
+		}else if(this.servicios == null && poi.servicios != null){
+			return false;
+		}else if(this.servicios.size() != poi.servicios.size()){
+			return false;
+		}else{
+			for(int i = 0; i<this.servicios.size();i++){
+				NodoServicio nodoThisPoi = this.servicios.get(i);
+				NodoServicio nodoOtherPoi = poi.servicios.get(i);
+				
+				if(!nodoThisPoi.getName().equals(nodoOtherPoi.getName())){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public boolean darDeBaja(DateTime fecha) {
@@ -450,7 +488,7 @@ public abstract class POI {
 	public boolean dadoDeBaja() {
 		return (this.fechaBaja != null);
 	}
-	
+
 	public boolean dadoDeBaja(DateTime fecha) {
 		if(this.fechaBaja != null && fecha != null)
 			return this.fechaBaja.equals(fecha);

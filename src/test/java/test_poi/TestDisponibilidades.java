@@ -81,10 +81,10 @@ public class TestDisponibilidades {
 	public void inicializarLocal() {
 		Rubro rubro = new Rubro("supermercado");
 		local = new LocalComercial("coto", 23, 51, rubro);
-		local.dias.add(5); // Modificando estos parametros se puede testear
+		local.dias.add((long) 5); // Modificando estos parametros se puede testear
 							// todo. No time for writing all :(
-		local.horas.add(2);
-		local.horas.add(5);
+		local.horas.add((long) 2);
+		local.horas.add((long) 5);
 	}
 
 	@Test

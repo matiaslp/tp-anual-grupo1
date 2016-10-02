@@ -6,22 +6,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.hamcrest.internal.ArrayIterator;
 import org.joda.time.DateTime;
-
-import antlr.collections.List;
-import autentification.Accion;
 import autentification.AuthAPI;
-import autentification.Rol;
 import autentification.Usuario;
 import db.AgregarAccionesTransaction;
 import db.DB_AgregarAccionesTransaction;
 import db.DB_ResultadosProcesos;
 import db.DB_Usuarios;
-import db.RegistroHistorico;
 import db.Resultado;
 import db.ResultadoProceso;
 import procesos.Proceso;
@@ -30,17 +21,17 @@ public class AgregarAcciones extends Proceso {
 
 	String filePath;
 
-	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String file,
+	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, String file,
 			Usuario unUser) {
-		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
+		super(cantidadReintentos, enviarEmail, unUser);
 		filePath = file;
 	}
 
 	@Override
-	public void execute() {
+	public ResultadoProceso procesado() {
 
+		// Obtenemos el tiempo de inicio de proceso
 		DateTime start = new DateTime();
-		// tu codigo
 		// archivo esta de esta forma
 		// unUsuario nomAccion nomAccion nomAccion
 		String linea;
@@ -48,7 +39,7 @@ public class AgregarAcciones extends Proceso {
 		String unUsername;
 		ArrayList<String> listadoAcciones = new ArrayList<String>();
 		FileReader fr = null;
-		// Creo la Transaccion
+		// Creamos la Transaccion
 		AgregarAccionesTransaction Transaction = new AgregarAccionesTransaction(user.getID());
 		// REVISA SI EXISTE O NO Y SI SE PUEDE LEER O NO
 		try {
@@ -70,42 +61,50 @@ public class AgregarAcciones extends Proceso {
 					AgregarAcciones.AgregarAccionesAUsuario(unUsername, listadoAcciones, Transaction);
 
 				}
+				// Se agrega la transaccion a DB_AgregarAccionesTransaction
 				DB_AgregarAccionesTransaction.getInstance().agregarTransactions(Transaction);
 				br.close();
 			}
 
 			// Si el archivo no es encontrado
 		} catch (FileNotFoundException e) {
+			// Obtenemos el tiempo de fin de proceso
 			DateTime end = new DateTime();
-
+			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
 			ResultadoProceso resultado = new ResultadoProceso(0, start, end, this, user.getID(),
 					"FileNotFoundException:No existe archivo " + filePath, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
-			return;
+			return resultado;
 
 			// Si el archivo no se puede leer (permisos)
 		} catch (IOException e) {
+			// Obtenemos el tiempo de fin de proceso
 			DateTime end = new DateTime();
+			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
 			ResultadoProceso resultado = new ResultadoProceso(0, start, end, this, user.getID(),
 					"IOException:No se puede leer archivo " + filePath, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
-			return;
+			return resultado;
 		}
 
 		// Ejecucion exitosa
+		// Obtenemos el tiempo de fin de proceso
 		DateTime end = new DateTime();
+		// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
 		ResultadoProceso resultado = new ResultadoProceso(0, start, end, this, user.getID(), null, Resultado.OK);
 		DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
-		return;
+		return resultado;
 	}
 	
 	// Undo del ultimo proceso de AgregarAcciones ejecutado por el usuario que esta realizando el "undo"
 	public void undo() {
 
+		// obtenemos la ultima transaccion de este usuario
 		AgregarAccionesTransaction transaction = DB_AgregarAccionesTransaction.getInstance()
 				.getLastTransactionByUser(user.getID());
+		// obtenemos la lista de cambios de la transaccion y la recorremos
 		ArrayList<String> listadoCambios = transaction.getListadoCambios();
 		for ( String cambio : listadoCambios) {
 			String acciones[] = cambio.split(" ");
@@ -117,13 +116,13 @@ public class AgregarAcciones extends Proceso {
 				Usuario unUsuario = DB_Usuarios.getInstance().getUsarioByName(unUsername);
 
 				// Remover todas las funcionalidades que fueron agregadas
-				for (int i = 1; i < acciones.length; i++)
+				for (int i = 0; i < acciones.length; i++)
 					AuthAPI.getInstance().sacarFuncionalidad(acciones[i], unUsuario);
 
 			}
-			// Eliminamos la transacciones que fue rollbackeada
-			DB_AgregarAccionesTransaction.getInstance().eliminarTransactions(transaction.getId());
 		}
+		// Eliminamos la transacciones que fue rollbackeada
+		DB_AgregarAccionesTransaction.getInstance().eliminarTransactions(transaction.getId());
 	}
 
 	static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones,
@@ -144,6 +143,7 @@ public class AgregarAcciones extends Proceso {
 					transac = transac + " " + unaAccion;
 
 			}
+			// Agregamos a la transaccion los cambios realizados a este usuario
 			transaction.agregarCambios(transac);
 			return true;
 		} else {

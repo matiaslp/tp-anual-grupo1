@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import autentification.Accion;
 import autentification.Rol;
 import autentification.Usuario;
-import procesos.ActualizacionLocalesComerciales;
 import procesos.Proceso;
 import procesos.ProcesoMultiple;
 
@@ -19,9 +18,9 @@ public class FuncMultiple extends Accion {
 	}
 
 	public void crearProcesoMultilpe(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			boolean disableAccion, ArrayList<Proceso> listProc, Usuario unUser) {
+			ArrayList<Proceso> listProc, Usuario unUser) {
 		if (validarsesion(user, Token)) {
-			ProcesoMultiple proceso = new ProcesoMultiple(cantidadReintentos, enviarEmail, disableAccion, listProc, unUser);
+			ProcesoMultiple proceso = new ProcesoMultiple(cantidadReintentos, enviarEmail, listProc, unUser);
 			proceso.execute();
 		}
 	}

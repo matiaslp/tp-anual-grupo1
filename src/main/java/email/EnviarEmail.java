@@ -14,7 +14,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import autentification.Rol;
 import autentification.Usuario;
 import db.DB_Usuarios;
 import helpers.LeerProperties;

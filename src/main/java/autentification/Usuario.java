@@ -114,14 +114,8 @@ public class Usuario {
 		}
 	}
 	
-	public boolean agregarFuncionalidad(String funcionalidad){
-		Accion func = AuthAPI.getInstance().getAccion(funcionalidad);
-		if(func !=null){ //existe
-			funcionalidades.put(funcionalidad, func);
-			return true;
-		}else{
-			return false; //no existe
-		}
+	public void agregarFuncionalidad(String funcionalidad, Accion func){
+		funcionalidades.put(funcionalidad, func);
 	}
 
 	public Accion getFuncionalidad(String funcionalidad){

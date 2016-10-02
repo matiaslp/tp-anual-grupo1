@@ -25,9 +25,9 @@ public class ActualizacionLocalesComerciales extends Proceso {
 		procesarArchivo(this.filePath);
 	}
 
-	public ActualizacionLocalesComerciales(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
+	public ActualizacionLocalesComerciales(int cantidadReintentos, boolean enviarEmail,
 			String filePath, Usuario unUser) {
-		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
+		super(cantidadReintentos, enviarEmail, unUser);
 		this.filePath = filePath;
 
 	}

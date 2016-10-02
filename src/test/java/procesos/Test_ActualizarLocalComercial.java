@@ -52,7 +52,7 @@ public class Test_ActualizarLocalComercial {
 		
 		dbPOI.agregarPOI(local1);
 		dbPOI.agregarPOI(local3);
-		ActualizacionLocalesComerciales alc = new ActualizacionLocalesComerciales(0, false, false, filePath, usuario);	
+		ActualizacionLocalesComerciales alc = new ActualizacionLocalesComerciales(0, false, filePath, usuario);	
 		alc.procesarArchivo(filePath);
 		//Busco las modificaciones para corroborar que se corrio correctamente
 		//POI local1Actualizado = dbPOI.getPOIbyNombre("local1");

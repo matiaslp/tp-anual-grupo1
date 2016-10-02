@@ -2,8 +2,6 @@ package abmc;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.List;
-
 import javax.mail.MessagingException;
 
 import org.json.JSONException;
@@ -15,7 +13,6 @@ import db.DB_POI;
 import poi.Banco;
 import poi.CGP;
 import poi.LocalComercial;
-import poi.POI;
 import poi.ParadaColectivo;
 
 public class TestABMC_Timer {
@@ -50,7 +47,7 @@ public class TestABMC_Timer {
 		// new timer
 		Timer timer = new Timer();
 
-		List<POI> lista = timer.buscar(ServicioAPI, "Mataderos a b r t", 1);
+		timer.buscar(ServicioAPI, "Mataderos a b r t", 1);
 		Assert.assertTrue(timer.getSeconds() > 1);
 	}
 }

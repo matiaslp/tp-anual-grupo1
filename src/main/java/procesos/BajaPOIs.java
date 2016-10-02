@@ -41,9 +41,9 @@ public class BajaPOIs extends Proceso {
 		}
 	}
 
-	public BajaPOIs(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
+	public BajaPOIs(int cantidadReintentos, boolean enviarEmail,
 			Usuario unUser) {
-		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
+		super(cantidadReintentos, enviarEmail, unUser);
 		this.cantidadReintentos = cantidadReintentos;
 	}
 

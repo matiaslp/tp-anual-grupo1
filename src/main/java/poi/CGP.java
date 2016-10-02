@@ -88,6 +88,8 @@ public class CGP extends POI {
 	public CGP(String nombre, double latitud, double longitud) {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
+		this.setTipo(TiposPOI.CGP);
+		this.servicios = new ArrayList<NodoServicio>();
 	}
 
 	@Override
@@ -102,7 +104,7 @@ public class CGP extends POI {
 			} else if (LevDist.calcularDistancia(filtro, this.telefono)) {
 				return true;
 			} else {
-				this.compararServicios(filtro);
+				this.buscarServicios(filtro);
 			}
 		}
 
