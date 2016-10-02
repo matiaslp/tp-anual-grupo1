@@ -1,7 +1,12 @@
 package db;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.joda.time.DateTime;
+
 import poi.POI;
 
 public class DB_POI {
@@ -66,18 +71,19 @@ public class DB_POI {
 		agregarPOI(poi);
 	}
 
-	//Me falta probarlo
-	public boolean bajaPoi(String[] valoresBusqueda, DateTime fechaBaja) {
+	public Map<Long, Boolean> bajaPoi(String[] valoresBusqueda, List<DateTime> fechasBaja) {
+		Map<Long, Boolean> resumen = new HashMap<Long, Boolean>();
 		for (POI poi : listadoPOI) {
-			//Si el POI coincide con la busqueda
+			//Si el POI coincide con la busqueda.
 			if (poi.busquedaEstandar(valoresBusqueda)) {
-				if(poi.dadoDeBaja())
-					return true; //se dio de baja
-				else
-					return false; //ya estaba dado de baja
+				for(DateTime fecha : fechasBaja){
+					if(poi.dadoDeBaja(fecha)){
+						resumen.put(poi.getId(), eliminarPOI(poi.getId()));
+					}
+				}
 			}
 		}
-		return false;
+		
+		return resumen;
 	}
-
 }
