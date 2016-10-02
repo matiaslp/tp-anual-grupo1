@@ -13,7 +13,7 @@ import db.DB_POI;
 import poi.LocalComercial;
 import poi.POI;
 
-public class Test_ActualizarLocalComercial {
+public class TestActualizarLocalComercial {
 	
 	DB_POI dbPOI;
 	Usuario usuario;
