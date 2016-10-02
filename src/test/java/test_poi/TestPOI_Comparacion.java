@@ -24,9 +24,11 @@ public class TestPOI_Comparacion {
 	CGP otroCGP = new CGP("unCGP", 100, 20);
 
 	Rubro unRubro = new Rubro("Ferreteria");
-	LocalComercial unLocal = new LocalComercial("unLocal", 50, 100, unRubro);
-	Rubro otroRubro = new Rubro("Farmacia");
-	LocalComercial otroLocal = new LocalComercial("otroLocal", 50, 100, otroRubro);
+	LocalComercial unLocal = new LocalComercial("Local", 50, 100, unRubro);
+	Rubro otroRubro = new Rubro("Ferreteria");
+	LocalComercial otroLocal = new LocalComercial("Local", 50, 100, otroRubro);
+	Rubro rubroNull;
+	LocalComercial localNull = new LocalComercial("Local",50,100, rubroNull);
 
 	ParadaColectivo unaParada = new ParadaColectivo("La del 7", 10, 10);
 	ParadaColectivo otraParada = new ParadaColectivo("La del 114", 10, 10);
@@ -91,6 +93,10 @@ public class TestPOI_Comparacion {
 	@Test
 	public void compararLongNull(){
 		Assert.assertFalse(unBanco.compararPOI(bancoLongNull)); //piso null, sale ahi
+	}
+	
+	@Test
+	public void compararLocalesIguales(){
 	}
 	
 	
