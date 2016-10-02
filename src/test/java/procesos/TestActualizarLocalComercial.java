@@ -9,6 +9,7 @@ import org.junit.Test;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
+import autentification.UsuariosFactory;
 import autentification.funciones.FuncActualizacionLocalesComerciales;
 import db.DB_POI;
 import db.DB_Usuarios;
@@ -20,12 +21,13 @@ public class TestActualizarLocalComercial {
 	DB_POI dbPOI;
 	Usuario unUsuarioAdmin;
 	AuthAPI Autenticador;
+	UsuariosFactory fact = new UsuariosFactory();
 	
 	@Before
 	public void init(){
 		dbPOI = DB_POI.getInstance();
 		Autenticador = AuthAPI.getInstance();
-		unUsuarioAdmin = new Usuario("admin", "123", Rol.ADMIN);
+		fact.crearUsuario("admin", "123", Rol.ADMIN);
 	}
 	
 	@Test
@@ -54,7 +56,7 @@ public class TestActualizarLocalComercial {
 		dbPOI.agregarPOI(local1);
 		dbPOI.agregarPOI(local3);
 		
-		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
+		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("actualizacionLocalesComerciales", admin);
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");
