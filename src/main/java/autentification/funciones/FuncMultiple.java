@@ -17,10 +17,10 @@ public class FuncMultiple extends Accion {
 		nombreFuncion = "procesoMultiple";
 	}
 
-	public void crearProcesoMultilpe(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			ArrayList<Proceso> listProc, Usuario unUser) {
+	public void procesoMultiple(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
+			ArrayList<Proceso> listProc) {
 		if (validarsesion(user, Token)) {
-			ProcesoMultiple proceso = new ProcesoMultiple(cantidadReintentos, enviarEmail, listProc, unUser);
+			ProcesoMultiple proceso = new ProcesoMultiple(cantidadReintentos, enviarEmail, listProc, user);
 			proceso.execute();
 		}
 	}
