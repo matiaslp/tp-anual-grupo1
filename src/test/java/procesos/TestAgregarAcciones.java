@@ -1,6 +1,5 @@
 package procesos;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.mail.MessagingException;
@@ -12,7 +11,7 @@ import org.junit.Test;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
-import autentification.funciones.FuncAgregarAcciones;
+import autentification.UsuariosFactory;
 import db.AgregarAccionesTransaction;
 import db.DB_Usuarios;
 
@@ -26,6 +25,7 @@ public class TestAgregarAcciones {
 	Usuario unUsuarioTerminal;
 	Usuario unUsuarioAdmin2;
 	Usuario unUsuarioTerminal2;
+	UsuariosFactory fact = new UsuariosFactory();
 
 	private ArrayList<String> listadoAccionesQueEstanEnAdmin;
 	private ArrayList<String> listadoAccionesQueEstanEnTerminal;
@@ -56,10 +56,10 @@ public class TestAgregarAcciones {
 		listadoAccionesQueEstanEnAdmin.add("bajaPOIs");
 		listadoAccionesQueEstanEnAdmin.add("procesoMultiple");
 
-		unUsuarioAdmin = new Usuario("admin", "123", Rol.ADMIN);
-		unUsuarioTerminal = new Usuario("terminal", "123", Rol.TERMINAL);
-		unUsuarioAdmin2 = new Usuario("adminPrueba", "123", Rol.ADMIN);
-		unUsuarioTerminal2 = new Usuario("terminal1", "123", Rol.TERMINAL);
+		fact.crearUsuario("admin", "123", Rol.ADMIN);
+		fact.crearUsuario("terminal", "123", Rol.TERMINAL);
+		fact.crearUsuario("adminPrueba", "123", Rol.ADMIN);
+		fact.crearUsuario("terminal1", "123", Rol.TERMINAL);
 	}
 
 	@Test

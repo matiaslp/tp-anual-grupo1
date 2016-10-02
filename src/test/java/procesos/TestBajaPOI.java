@@ -9,6 +9,7 @@ import org.junit.Test;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
+import autentification.UsuariosFactory;
 import autentification.funciones.FuncActualizacionLocalesComerciales;
 import autentification.funciones.FuncBajaPOIs;
 import db.DB_POI;
@@ -22,12 +23,13 @@ public class TestBajaPOI {
 	DB_POI dbPOI;
 	Usuario unUsuarioAdmin;
 	AuthAPI Autenticador;
+	UsuariosFactory fact = new UsuariosFactory();
 	
 	@Before
 	public void init(){
 		dbPOI = DB_POI.getInstance();
 		Autenticador = AuthAPI.getInstance();
-		unUsuarioAdmin = new Usuario("admin", "123", Rol.ADMIN);
+		fact.crearUsuario("admin", "123", Rol.ADMIN);
 	}
 	
 	@Test
@@ -50,7 +52,7 @@ public class TestBajaPOI {
 		dbPOI.agregarPOI(local1);
 		dbPOI.agregarPOI(banco1);
 		
-		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
+		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
