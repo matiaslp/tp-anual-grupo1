@@ -346,7 +346,7 @@ public abstract class POI {
 		return false;
 	}
 
-	public boolean compararServicios(String filtro) {
+	public boolean buscarServicios(String filtro) {
 		for (NodoServicio servicio : servicios) {
 			if (LevDist.calcularDistancia(filtro, servicio.nombre)) {
 				return true;
@@ -421,18 +421,30 @@ public abstract class POI {
 				return false;
 		} else if (!unidad.equals(other.unidad))
 			return false;
+		if(!compararEtiquetas(other)){
+			return false;
+		}
 		return true;
 	}
 
 	public boolean compararEtiquetas(POI poi){
-		if(this.etiquetas.length == poi.getEtiquetas().length){
-			for(Etiqueta etiqueta : this.etiquetas){
-				if(!poi.buscarEtiqueta(etiqueta.getNombre()))
-					return false;
-			}
+		if(this.etiquetas == null && poi.etiquetas == null){
 			return true;
+		}else if(this.etiquetas != null && poi.etiquetas == null){
+			return false;
+		}else if(this.etiquetas == null && poi.etiquetas !=null){
+			return false;
+		}else{
+			if(this.etiquetas.length == poi.getEtiquetas().length){
+				for(Etiqueta etiqueta : this.etiquetas){
+					if(!poi.buscarEtiqueta(etiqueta.getNombre()))
+						return false;
+				}
+				return true;
+			}
+			return false;
 		}
-		return false;
+
 	}
 
 	public boolean darDeBaja(DateTime fecha) {
@@ -450,7 +462,7 @@ public abstract class POI {
 	public boolean dadoDeBaja() {
 		return (this.fechaBaja != null);
 	}
-	
+
 	public boolean dadoDeBaja(DateTime fecha) {
 		if(this.fechaBaja != null && fecha != null)
 			return this.fechaBaja.equals(fecha);

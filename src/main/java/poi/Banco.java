@@ -102,7 +102,7 @@ public class Banco extends POI {
 			} else if (LevDist.calcularDistancia(filtro, this.gerente)) {
 				return true;
 			} else {
-				this.compararServicios(filtro);
+				this.buscarServicios(filtro);
 			}
 		}
 

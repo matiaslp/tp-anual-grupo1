@@ -103,7 +103,7 @@ public class CGP extends POI {
 			} else if (LevDist.calcularDistancia(filtro, this.telefono)) {
 				return true;
 			} else {
-				this.compararServicios(filtro);
+				this.buscarServicios(filtro);
 			}
 		}
 
