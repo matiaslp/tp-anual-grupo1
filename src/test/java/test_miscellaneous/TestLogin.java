@@ -23,7 +23,7 @@ public class TestLogin {
 		Autenticador = AuthAPI.getInstance();
 
 		
-		fact.crearUsuario("admin", "password", Rol.ADMIN);
+		fact.crearUsuario("adminTestLogin", "password", Rol.ADMIN);
 		
 		fact.crearUsuario("terminal", "password", Rol.TERMINAL);
 
@@ -32,13 +32,13 @@ public class TestLogin {
 
 	@Test
 	public void probarHasherLongitud() throws NoSuchAlgorithmException {
-		String hash = Autenticador.hashear(DBU.getUsuarioByName("admin").getPassword());
+		String hash = Autenticador.hashear(DBU.getUsuarioByName("adminTestLogin").getPassword());
 		Assert.assertEquals(64, hash.length());
 	}
 
 	@Test
 	public void probarHasherIgualdad() throws NoSuchAlgorithmException {
-		String hash = Autenticador.hashear(DBU.getUsuarioByName("admin").getPassword());
+		String hash = Autenticador.hashear(DBU.getUsuarioByName("adminTestLogin").getPassword());
 
 		Assert.assertTrue(
 				hash.equals("5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8".toUpperCase()));
@@ -46,23 +46,23 @@ public class TestLogin {
 
 	@Test
 	public void probarTokenLongitud() throws NoSuchAlgorithmException {
-		String token = Autenticador.generarToken(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
+		String token = Autenticador.generarToken(DBU.getUsuarioByName("adminTestLogin").getUsername(), DBU.getUsuarioByName("adminTestLogin").getPassword());
 
 		Assert.assertEquals(64, token.length());
 	}
 
 	@Test
 	public void probarRandomToken() throws NoSuchAlgorithmException, InterruptedException {
-		String token1 = Autenticador.generarToken(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
+		String token1 = Autenticador.generarToken(DBU.getUsuarioByName("adminTestLogin").getUsername(), DBU.getUsuarioByName("adminTestLogin").getPassword());
 		TimeUnit.SECONDS.sleep(3); // espero a que cambie la hora
-		String token2 = Autenticador.generarToken(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
+		String token2 = Autenticador.generarToken(DBU.getUsuarioByName("adminTestLogin").getUsername(), DBU.getUsuarioByName("adminTestLogin").getPassword());
 
 		Assert.assertFalse(token1.equals(token2));
 	}
 
 	@Test
 	public void testInicioDeSesionCorrecto() throws NoSuchAlgorithmException {
-		String token = Autenticador.iniciarSesion(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
+		String token = Autenticador.iniciarSesion(DBU.getUsuarioByName("adminTestLogin").getUsername(), DBU.getUsuarioByName("adminTestLogin").getPassword());
 		Assert.assertFalse(token == null);// esto con equals rompe
 	}
 
@@ -75,7 +75,7 @@ public class TestLogin {
 	@Test
 	public void testvalidarTokenCorrecto() throws NoSuchAlgorithmException {
 
-		String token = Autenticador.iniciarSesion(DBU.getUsuarioByName("admin").getUsername(), DBU.getUsuarioByName("admin").getPassword());
+		String token = Autenticador.iniciarSesion(DBU.getUsuarioByName("adminTestLogin").getUsername(), DBU.getUsuarioByName("adminTestLogin").getPassword());
 		Assert.assertTrue(Autenticador.validarToken(token));
 	}
 
@@ -94,7 +94,7 @@ public class TestLogin {
 
 	@Test
 	public void testAgregarUsuarioFalso() {
-		Assert.assertFalse(DBU.agregarUsuarioALista(DBU.getUsuarioByName("admin")));
+		Assert.assertFalse(DBU.agregarUsuarioALista(DBU.getUsuarioByName("adminTestLogin")));
 	}
 
 	@Test
