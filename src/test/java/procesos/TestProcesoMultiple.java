@@ -68,21 +68,21 @@ public class TestProcesoMultiple {
 	void procesoMultipleTest() {
 
 		// usuario admin y sus funcionalidades
-		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
+		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
 		AuthAPI.getInstance().agregarFuncionalidad("procesoMultiple", admin);
 		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
 		AuthAPI.getInstance().agregarFuncionalidad("actualizacionLocalesComerciales", admin);
 		
 		// creamos un usuario adminPrueba
-		Usuario adminPrueba = DB_Usuarios.getInstance().getUsarioByName("adminPrueba");
+		Usuario adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
 		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
 		Assert.assertFalse(adminPrueba.getFuncionalidad("cambiarEstadoMail")!=null);
 		Assert.assertFalse(adminPrueba.getFuncionalidad("actualizacionLocalesComerciales")!=null);
 		
 		// creamos usuario unUsuarioTerminal1 y le sacamos funcionalidades
-		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsarioByName("terminal1");
+		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsuarioByName("terminal1");
 		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
 		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
