@@ -27,7 +27,8 @@ public abstract class Proceso {
 		if (resultado.getResultado().equals(Resultado.ERROR)) {
 			listaResultados.add(resultado);
 			// Se reintenta cantidadReintentos veces
-			for (int i = 1; (this.cantidadReintentos > 0 && this.cantidadReintentos < i); i++) {
+			for (int i = 1; (this.cantidadReintentos > 0 && this.cantidadReintentos < i 
+					&& resultado.getResultado().equals(Resultado.ERROR)); i++) {
 				resultado = procesado();
 				// acumulamos los resultado en una lista para armar el email
 				if (resultado.getResultado().equals(Resultado.ERROR))
