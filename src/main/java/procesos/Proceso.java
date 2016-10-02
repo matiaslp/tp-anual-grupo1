@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import autentification.Usuario;
 import db.Resultado;
 import db.ResultadoProceso;
+import email.EnviarEmail;
 
 public abstract class Proceso {
 
@@ -34,8 +35,8 @@ public abstract class Proceso {
 				if (resultado.getResultado().equals(Resultado.ERROR))
 					listaResultados.add(resultado);
 			}
-			if (this.enviarEmail) {
-				// enviar mail
+			if (this.enviarEmail && user.getCorreo() != null) {
+				EnviarEmail.mandarCorreoProcesoError(user,listaResultados);
 			}
 		}
 	}

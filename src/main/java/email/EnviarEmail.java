@@ -1,5 +1,6 @@
 package email;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -16,9 +17,47 @@ import javax.mail.internet.MimeMultipart;
 
 import autentification.Usuario;
 import db.DB_Usuarios;
+import db.Resultado;
+import db.ResultadoProceso;
 import helpers.LeerProperties;
 
 public abstract class EnviarEmail {
+	
+	public static boolean mandarCorreoProcesoError(Usuario user, ArrayList<ResultadoProceso> listaResultados) {
+		
+		String correoEnvia = LeerProperties.getInstance().prop.getProperty("email");
+		String claveCorreo = LeerProperties.getInstance().prop.getProperty("emailPassword");
+
+		String texto = null;
+		
+		for (ResultadoProceso resultado : listaResultados) {
+			String res = null;
+			String clase = resultado.getProc().getClass().toString();
+			if (resultado.getResultado().equals(Resultado.ERROR))
+				res = "con errores";
+			else if (resultado.getResultado().equals(Resultado.OK))
+				res = "satisfactoria";
+			texto = texto +  " Proceso " + clase + " ejecucion " + res + "\n" +
+			"Inicio de ejecucion: " + resultado.getInicioEjecucion().toString() + "\n" +
+			"Fin de ejecucion: " + resultado.getFinEjecucion().toString() + "\n" +
+			"Ejecutado por usuario: " + resultado.getUserID() + "\n" +
+			resultado.getMensajeError() + "\n";
+		}
+		
+		
+		String titulo = "Errores Ejecucion de Proceso";
+
+		boolean enviado = false;
+		try {
+			enviado = mandarCorreo(texto, titulo, user.getCorreo(), correoEnvia, claveCorreo);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return enviado;
+		
+	}
+	
 
 	public static boolean mandarCorreoXSegundos(String nombreDeBusqueda, double segundos, String correoRecibe)
 			throws MessagingException {
