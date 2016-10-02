@@ -117,7 +117,7 @@ public class TestProcesoMultiple {
 
 		// agregamos un proceso bajaPOIs
 		FuncBajaPOIs funcion2 = ((FuncBajaPOIs) admin.getFuncionalidad("bajaPOIs"));
-		Proceso proc2 = funcion2.prepDarDeBajaPOI(admin, tokenAdmin, 0, false);
+		Proceso proc2 = funcion2.prepDarDeBajaPOI(admin, tokenAdmin, 0, false, ""); // TODO agregar filepath
 		listProc.add(proc2);
 
 		// agregamos un proceso actualizacionLocalesComerciales
