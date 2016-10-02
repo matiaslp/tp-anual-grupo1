@@ -9,27 +9,28 @@ import org.junit.Test;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
+import autentification.funciones.FuncActualizacionLocalesComerciales;
 import db.DB_POI;
+import db.DB_Usuarios;
 import poi.LocalComercial;
 import poi.POI;
 
 public class TestActualizarLocalComercial {
 	
 	DB_POI dbPOI;
-	Usuario usuario;
+	Usuario unUsuarioAdmin;
 	AuthAPI Autenticador;
 	
 	@Before
 	public void init(){
 		dbPOI = DB_POI.getInstance();
 		Autenticador = AuthAPI.getInstance();
-		usuario = new Usuario("aa", "bb", Rol.ADMIN);
+		unUsuarioAdmin = new Usuario("admin", "123", Rol.ADMIN);
 	}
 	
 	@Test
 	public void testActualizar(){
 		//Corro el proceso
-		//URL url = getClass().getResource("actualizarLocalesComerciales.txt");
 		String filePath = (new File (".").getAbsolutePath ())+ "\\src\\test\\java\\procesos\\actualizarLocalesComerciales.txt";
 		
 		//Creo los locales comerciales pero solo agrego el 1, 
@@ -52,13 +53,19 @@ public class TestActualizarLocalComercial {
 		
 		dbPOI.agregarPOI(local1);
 		dbPOI.agregarPOI(local3);
-		ActualizacionLocalesComerciales alc = new ActualizacionLocalesComerciales(0, false, filePath, usuario);	
-		alc.procesarArchivo(filePath);
+		
+		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
+		AuthAPI.getInstance().agregarFuncionalidad("actualizacionLocalesComerciales", admin);
+		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
+		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, filePath);
+
 		//Busco las modificaciones para corroborar que se corrio correctamente
 		//POI local1Actualizado = dbPOI.getPOIbyNombre("local1");
 		POI local2Actualizado = dbPOI.getPOIbyNombre("local2");
 		POI local3Actualizado = dbPOI.getPOIbyNombre("local3");
 		
+		//Debido a que esta copiando la instancia 
 		//Assert.assertFalse(local1Actualizado.compararEtiquetas(local1));
 		Assert.assertTrue(local2Actualizado.compararEtiquetas(local2));
 		Assert.assertTrue(local3Actualizado.compararEtiquetas(local3));
