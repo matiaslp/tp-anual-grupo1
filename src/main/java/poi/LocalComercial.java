@@ -12,8 +12,8 @@ import helpers.MetodosComunes;
 public class LocalComercial extends POI {
 
 	Rubro rubro;
-	public ArrayList<Integer> dias = new ArrayList<Integer>();
-	public ArrayList<Integer> horas = new ArrayList<Integer>();
+	public ArrayList<Long> dias = new ArrayList<Long>();
+	public ArrayList<Long> horas = new ArrayList<Long>();
 
 	public int getDistancia() {
 		if(rubro != null)
@@ -26,6 +26,7 @@ public class LocalComercial extends POI {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
 		this.setRubro(rubro);
+		this.setTipo(TiposPOI.LOCAL_COMERCIAL);
 	}
 
 	public LocalComercial() {
@@ -40,34 +41,34 @@ public class LocalComercial extends POI {
 		this.rubro = rubro;
 	}
 
-	public ArrayList<Integer> getDias() {
+	public ArrayList<Long> getDias() {
 		return this.dias;
 	}
 
-	public ArrayList<Integer> getHoras() {
+	public ArrayList<Long> getHoras() {
 		return this.horas;
 	}
 
-	public void setDias(ArrayList<Integer> diasDisponibles) {
+	public void setDias(ArrayList<Long> diasDisponibles) {
 		this.dias = diasDisponibles;
 	}
 
-	public void setHoras(ArrayList<Integer> horasDisponibles) {
+	public void setHoras(ArrayList<Long> horasDisponibles) {
 		this.horas = horasDisponibles;
 	}
 
 	public boolean disponible() {
 		Calendar calendario = Calendar.getInstance();
-		Iterator<Integer> iteradorDias = dias.iterator(); // obtengo los dias
+		Iterator<Long> iteradorDias = dias.iterator(); // obtengo los dias
 		while (iteradorDias.hasNext()) { // recorro los dias
-			int dia = iteradorDias.next(); // elijo un dia en particular
+			Long dia = iteradorDias.next(); // elijo un dia en particular
 			if (calendario.get(Calendar.DAY_OF_WEEK) == dia) { // comparo si el
 																// dia de hoy es
 																// ese dia
-				Iterator<Integer> iteradorHoras = horas.iterator(); // obtengo
+				Iterator<Long> iteradorHoras = horas.iterator(); // obtengo
 																	// las horas
 				while (iteradorHoras.hasNext()) { // recorro las horas
-					int hora = iteradorHoras.next(); // elijo una hora en
+					Long hora = iteradorHoras.next(); // elijo una hora en
 														// particular
 					if (calendario.get(Calendar.HOUR_OF_DAY) == hora) { // comparo
 																		// si la

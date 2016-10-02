@@ -88,6 +88,7 @@ public class CGP extends POI {
 	public CGP(String nombre, double latitud, double longitud) {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
+		this.setTipo(TiposPOI.CGP);
 	}
 
 	@Override
