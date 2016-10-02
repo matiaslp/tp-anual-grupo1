@@ -1,10 +1,8 @@
 package procesos;
 
-import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -13,10 +11,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.joda.time.DateTime;
-import org.json.JSONArray;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import autentification.Usuario;
 import db.DB_POI;
@@ -43,20 +41,17 @@ public class BajaPOIs extends Proceso {
 	public ResultadoProceso bajaPoi(String filePath) {
 		DateTime start = new DateTime();
 		DateTime end;
-		Path path = Paths.get(filePath);
 		ResultadoProceso resultado = null;
 		try {
-			BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
-			String line = null;
 			List<Item_Borrar> listadoItems = new ArrayList<Item_Borrar>();
-			if ((line = reader.readLine()) != null) {
-				// IOUtils.toString(new URL(url), Charset.forName("UTF-8"))
-				JSONArray jsonArray = new JSONArray(line);
-				Type listType = new TypeToken<ArrayList<Item_Borrar>>() {
-				}.getType();
-				Gson gson = new Gson();
-				listadoItems = gson.fromJson(jsonArray.toString(), listType);
-			}
+			
+			// IOUtils.toString(new URL(url), Charset.forName("UTF-8"))
+			JsonReader jsonReader = new JsonReader(new FileReader(filePath));
+			Type listType = new TypeToken<ArrayList<Item_Borrar>>() {
+			}.getType();
+			Gson gson = new Gson();
+			listadoItems = gson.fromJson(jsonReader, listType);
+			
 			String[] valoresBusqueda = new String[listadoItems.size()];
 			List<String> valores = new ArrayList<String>();
 			List<DateTime> fechas = new ArrayList<DateTime>();
