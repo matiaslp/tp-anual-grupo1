@@ -458,4 +458,14 @@ public abstract class POI {
 			return false;
 	}
 
+	public boolean isEsLocal() {
+		return esLocal;
+	}
+
+	public void setEsLocal(boolean esLocal) {
+		this.esLocal = esLocal;
+	}
+	
+	
+	
 }
