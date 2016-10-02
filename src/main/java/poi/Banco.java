@@ -83,6 +83,7 @@ public class Banco extends POI {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
 		this.setTipo(TiposPOI.BANCO);
+		this.servicios = new ArrayList<NodoServicio>();
 	}
 
 	public void setServicios(ArrayList<NodoServicio> serv) {

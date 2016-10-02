@@ -97,6 +97,28 @@ public class TestPOI_Comparacion {
 	
 	@Test
 	public void compararLocalesIguales(){
+		Assert.assertTrue(unLocal.compararPOI(otroLocal));
+	}
+	
+	@Test
+	public void compararCGPIguales(){
+		unCGP.agregarServicio("servicio", null, 1, 5);
+		otroCGP.agregarServicio("servicio", null, 1, 5);
+		Assert.assertTrue(unCGP.compararPOI(otroCGP));
+	}
+	
+	@Test
+	public void compararCGPDistintos(){
+		unCGP.agregarServicio("servicio", null, 1, 5);
+		otroCGP.agregarServicio("asdf", null, 1, 5);
+		Assert.assertFalse(unCGP.compararPOI(otroCGP));
+	}
+	
+	@Test
+	public void compararCGPNull(){
+		unCGP.agregarServicio("servicio", null, 1, 5);
+		otroCGP.setServicios(null);
+		Assert.assertFalse(unCGP.compararPOI(otroCGP));
 	}
 	
 	

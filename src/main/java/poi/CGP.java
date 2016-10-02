@@ -89,6 +89,7 @@ public class CGP extends POI {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
 		this.setTipo(TiposPOI.CGP);
+		this.servicios = new ArrayList<NodoServicio>();
 	}
 
 	@Override

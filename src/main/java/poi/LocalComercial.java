@@ -129,9 +129,10 @@ public class LocalComercial extends POI {
 		if (rubro == null) {
 			if (other.rubro != null)
 				return false;
-		} else if (!rubro.equals(other.rubro))
-			return false;
-		return true;
+		} else if(rubro.getNombre().equals(other.rubro.getNombre())){
+			return true;
+		}
+		return false;
 	}
 
 }
