@@ -13,7 +13,7 @@ public class UsuariosFactory {
 	
 	public Usuario crearUsuario(String username, String password, Rol rol){
 		Usuario nuevoUsuario = null;
-		if(DB_Usuarios.getInstance().buscarUsuarioEnLista(username)){
+		if(DB_Usuarios.getInstance().getUsuarioByName(username) != null){
 			return null;
 		}else{
 			nuevoUsuario = new Usuario();

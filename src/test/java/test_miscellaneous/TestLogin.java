@@ -88,7 +88,7 @@ public class TestLogin {
 	@Test
 	public void testCrearUsuario() {
 		fact.crearUsuario("username", "password", Rol.TERMINAL);
-		Assert.assertTrue(DBU.buscarUsuarioEnLista("username") && DBU.getUsuarioByName("username").getPassword().equals("password")
+		Assert.assertTrue(DBU.getUsuarioByName("username") != null && DBU.getUsuarioByName("username").getPassword().equals("password")
 				&& DBU.getUsuarioByName("username").getRol().equals(Rol.TERMINAL));
 	}
 
