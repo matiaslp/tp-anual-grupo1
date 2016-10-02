@@ -1,9 +1,7 @@
 package procesos;
 
-
 import java.io.File;
 import java.util.ArrayList;
-
 
 import javax.mail.MessagingException;
 
@@ -11,14 +9,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
 import autentification.funciones.FuncAgregarAcciones;
 import db.AgregarAccionesTransaction;
 import db.DB_Usuarios;
-
 
 public class TestAgregarAcciones {
 	DB_Usuarios db_usuario;
@@ -30,35 +26,25 @@ public class TestAgregarAcciones {
 	Usuario unUsuarioTerminal;
 	Usuario unUsuarioAdmin2;
 	Usuario unUsuarioTerminal2;
-	
-	
-	
-//	private String listaAcciones1[];
-//	private String listaAcciones2[];
-//	private String listaAcciones3[];
+
 	private ArrayList<String> listadoAccionesQueEstanEnAdmin;
 	private ArrayList<String> listadoAccionesQueEstanEnTerminal;
-	
+
 	AgregarAccionesTransaction transaction;
-	
+
 	@Before
 	public void init() {
-		listadoAccionesQueEstanEnAdmin= new ArrayList<String>();
-		listadoAccionesQueEstanEnTerminal= new ArrayList<String>();
-		
-		db_usuario=db.DB_Usuarios.getInstance();
-		
+		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
+		listadoAccionesQueEstanEnTerminal = new ArrayList<String>();
+		db_usuario = db.DB_Usuarios.getInstance();
 		unAuthAPI = AuthAPI.getInstance();
-		
-		transaction= new AgregarAccionesTransaction(0);
-		
-		
-			
-		//PONER LAS SIGUIENTES LISTAS DE ACCIONES
-		
+		transaction = new AgregarAccionesTransaction(0);
+
+		// PONER LAS SIGUIENTES LISTAS DE ACCIONES
+
 		listadoAccionesQueEstanEnTerminal.add("busquedaPOI");
 		listadoAccionesQueEstanEnTerminal.add("obtenerInfoPOI");
-		
+
 		listadoAccionesQueEstanEnAdmin.add("busquedaPOI");
 		listadoAccionesQueEstanEnAdmin.add("obtenerInfoPOI");
 		listadoAccionesQueEstanEnAdmin.add("reporteBusquedaPorUsuario");
@@ -69,89 +55,84 @@ public class TestAgregarAcciones {
 		listadoAccionesQueEstanEnAdmin.add("agregarAcciones");
 		listadoAccionesQueEstanEnAdmin.add("bajaPOIs");
 		listadoAccionesQueEstanEnAdmin.add("procesoMultiple");
-		
-		
-		unUsuarioAdmin=new Usuario("admin", "123", Rol.ADMIN);
-		
-		unUsuarioTerminal=new Usuario("terminal", "123", Rol.TERMINAL);
-		
+
+		unUsuarioAdmin = new Usuario("admin", "123", Rol.ADMIN);
+		unUsuarioTerminal = new Usuario("terminal", "123", Rol.TERMINAL);
 		unUsuarioAdmin2 = new Usuario("adminPrueba", "123", Rol.ADMIN);
 		unUsuarioTerminal2 = new Usuario("terminal1", "123", Rol.TERMINAL);
-		
-		
-		
-
 	}
 
 	@Test
 	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnAdmin() throws MessagingException {
-			
-		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnAdmin,transaction);
-		
-		
-		//comprobacion si tiene toda la lista a agregar
-			encontradaTodas=true;
-				for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
-					encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
-					if(encontrada==false){encontradaTodas=false;}
-					
-				
-					}
-				Assert.assertTrue(encontradaTodas);
-		
+
+		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnAdmin, transaction);
+		// comprobacion si tiene toda la lista a agregar
+		encontradaTodas = true;
+		for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
+			encontrada = db_usuario.getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
+			if (encontrada == false) {
+				encontradaTodas = false;
+			}
+		}
+		Assert.assertTrue(encontradaTodas);
+
 	}
+
 	@Test
 	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnAdmin() throws MessagingException {
-				
-		AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnAdmin,transaction);
-		
-		//comprobacion si tiene toda la lista a agregar
-		encontradaTodas=true;
-			for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
-				encontrada=db_usuario. getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
-				if(encontrada==false){encontradaTodas=false;}
-			
-				}
-			Assert.assertFalse(encontradaTodas);
-		
+
+		AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnAdmin, transaction);
+
+		// comprobacion si tiene toda la lista a agregar
+		encontradaTodas = true;
+		for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
+			encontrada = db_usuario.getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
+			if (encontrada == false) {
+				encontradaTodas = false;
+			}
+
+		}
+		Assert.assertFalse(encontradaTodas);
+
 	}
-	
-	
+
 	@Test
 	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnTerminal() throws MessagingException {
-				
-	
-		agregado = AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnTerminal,transaction);
-		//comprobacion si tiene toda la lista a agregar
-		encontradaTodas=true;
-			for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
-				encontrada=db_usuario. getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
-				if(encontrada==false){encontradaTodas=false;}
-				
-				}
-			Assert.assertTrue(encontradaTodas);
-		
+
+		agregado = AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnTerminal, transaction);
+		// comprobacion si tiene toda la lista a agregar
+		encontradaTodas = true;
+		for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
+			encontrada = db_usuario.getUsarioByName("terminal").chequearFuncionalidad(unafuncionabilidad);
+			if (encontrada == false) {
+				encontradaTodas = false;
+			}
+
+		}
+		Assert.assertTrue(encontradaTodas);
+
 	}
-	
+
 	@Test
 	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnTerminal() throws MessagingException {
-	
-		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnTerminal,transaction);
-		//comprobacion si tiene toda la lista a agregar
-		encontradaTodas=true;
-			for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
-				encontrada=db_usuario. getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
-				if(encontrada==false){encontradaTodas=false;}
-				
-				}
-			Assert.assertTrue(encontradaTodas);
-		
+
+		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnTerminal, transaction);
+		// comprobacion si tiene toda la lista a agregar
+		encontradaTodas = true;
+		for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
+			encontrada = db_usuario.getUsarioByName("admin").chequearFuncionalidad(unafuncionabilidad);
+			if (encontrada == false) {
+				encontradaTodas = false;
+			}
+
+		}
+		Assert.assertTrue(encontradaTodas);
+
 	}
 	
 	@Test
 	public void agregarAccionesProcesoTest() {
 		// creamos usuarios admin y adminPrueba y les agregamos funcionalidades
-	//	Usuario adminPrueba = new Usuario("adminPrueba", "123", Rol.ADMIN);
 		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
 		Usuario adminPrueba = DB_Usuarios.getInstance().getUsarioByName("adminPrueba");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
@@ -162,7 +143,6 @@ public class TestAgregarAcciones {
 		
 		
 		// creamos usuario unUsuarioTerminal1 y le sacamos funcionalidades
-	//	Usuario unUsuarioTerminal1 = new Usuario("terminal1", "123", Rol.TERMINAL);
 		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsarioByName("terminal1");
 		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
 		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
@@ -174,7 +154,7 @@ public class TestAgregarAcciones {
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, (new File (".").getAbsolutePath ())+"/src/test/java/accionesAAgregar");
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, (new File (".").getAbsolutePath ())+"/src/test/java/procesos/accionesAAgregar");
 		
 		// Se valida que el usuario adminPrueba tiene las funcionalidades agregadas
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
@@ -188,7 +168,6 @@ public class TestAgregarAcciones {
 	@Test
 	public void agregarAccionesProcessUndo() {
 		// creamos usuarios admin y adminPrueba y les agregamos funcionalidades
-	//	Usuario adminPrueba = DB_Usuarios.getInstance().getUsarioByName("adminPrueba");
 		Usuario adminPrueba = DB_Usuarios.getInstance().getUsarioByName("adminPrueba");
 		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
@@ -199,7 +178,6 @@ public class TestAgregarAcciones {
 		
 		
 		// creamos usuario unUsuarioTerminal1 y le sacamos funcionalidades
-	//	Usuario unUsuarioTerminal1 = new Usuario("terminal1", "123", Rol.TERMINAL);
 		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsarioByName("terminal1");
 		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
 		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
@@ -211,7 +189,7 @@ public class TestAgregarAcciones {
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, (new File (".").getAbsolutePath ())+"/src/test/java/accionesAAgregar");
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, (new File (".").getAbsolutePath ())+"/src/test/java/procesos/accionesAAgregar");
 		
 		// Se valida que el usuario adminPrueba tiene las funcionalidades agregadas
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
@@ -230,6 +208,4 @@ public class TestAgregarAcciones {
 		Assert.assertFalse(unUsuarioTerminal1.chequearFuncionalidad("busquedaPOI"));
 		
 	}
-	
-	
 }

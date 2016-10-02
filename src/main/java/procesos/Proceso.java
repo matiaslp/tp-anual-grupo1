@@ -1,6 +1,10 @@
 package procesos;
 
+import java.util.ArrayList;
+
 import autentification.Usuario;
+import db.Resultado;
+import db.ResultadoProceso;
 
 public abstract class Proceso {
 
@@ -9,8 +13,31 @@ public abstract class Proceso {
 	protected boolean disableAccion;
 	protected Usuario user;
 
+	
+	// debe ser implementado en las clases hijo
+	public ResultadoProceso procesado() {
+		return null;
+		
+	}
+	
 	public void execute() {
-
+		// ejecutamos el proceso
+		ResultadoProceso resultado = procesado();
+		ArrayList<ResultadoProceso> listaResultados = new ArrayList<ResultadoProceso>();
+		// Si el resultado es erroneo
+		if (resultado.getResultado().equals(Resultado.ERROR)) {
+			listaResultados.add(resultado);
+			// Se reintenta cantidadReintentos veces
+			for (int i = 1; (this.cantidadReintentos > 0 && this.cantidadReintentos < i); i++) {
+				resultado = procesado();
+				// acumulamos los resultado en una lista para armar el email
+				if (resultado.getResultado().equals(Resultado.ERROR))
+					listaResultados.add(resultado);
+			}
+			if (this.enviarEmail) {
+				// enviar mail
+			}
+		}
 	}
 
 	public Proceso(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
