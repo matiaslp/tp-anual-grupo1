@@ -450,5 +450,12 @@ public abstract class POI {
 	public boolean dadoDeBaja() {
 		return (this.fechaBaja != null);
 	}
+	
+	public boolean dadoDeBaja(DateTime fecha) {
+		if(this.fechaBaja != null && fecha != null)
+			return this.fechaBaja.equals(fecha);
+		else 
+			return false;
+	}
 
 }
