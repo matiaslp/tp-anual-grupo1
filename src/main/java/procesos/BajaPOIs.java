@@ -29,19 +29,18 @@ public class BajaPOIs extends Proceso {
 
 	private DB_POI dbPOI = DB_POI.getInstance();
 	private String filePath;
-	
+
 	@Override
 	public ResultadoProceso procesado() {
 		return bajaPoi(filePath);
 	}
 
-	public BajaPOIs(int cantidadReintentos, boolean enviarEmail,
-			Usuario unUser) {
+	public BajaPOIs(int cantidadReintentos, boolean enviarEmail, Usuario unUser) {
 		super(cantidadReintentos, enviarEmail, unUser);
 		this.cantidadReintentos = cantidadReintentos;
 	}
 
-	public ResultadoProceso bajaPoi(String filePath){
+	public ResultadoProceso bajaPoi(String filePath) {
 		DateTime start = new DateTime();
 		DateTime end;
 		Path path = Paths.get(filePath);
@@ -51,53 +50,54 @@ public class BajaPOIs extends Proceso {
 			String line = null;
 			List<Item_Borrar> listadoItems = new ArrayList<Item_Borrar>();
 			if ((line = reader.readLine()) != null) {
-				//IOUtils.toString(new URL(url), Charset.forName("UTF-8"))
+				// IOUtils.toString(new URL(url), Charset.forName("UTF-8"))
 				JSONArray jsonArray = new JSONArray(line);
-				Type listType = new TypeToken<ArrayList<Item_Borrar>>(){}.getType();
+				Type listType = new TypeToken<ArrayList<Item_Borrar>>() {
+				}.getType();
 				Gson gson = new Gson();
 				listadoItems = gson.fromJson(jsonArray.toString(), listType);
-		    }
+			}
 			String[] valoresBusqueda = new String[listadoItems.size()];
 			List<String> valores = new ArrayList<String>();
 			List<DateTime> fechas = new ArrayList<DateTime>();
-			for(Item_Borrar item : listadoItems){
+			for (Item_Borrar item : listadoItems) {
 				valores.add(item.getParametro());
 				fechas.add(item.getFechaBorrado());
 			}
 			valores.toArray(valoresBusqueda);
 			Map<Long, Boolean> resumen = dbPOI.bajaPoi(valoresBusqueda, fechas);
 			end = new DateTime();
-			
-			if(!resumen.containsValue(false)){
+			// Si el listado de resumen tiene algun elemento con value false
+			// significa que ese elemento no se pudo borrar
+			if (!resumen.containsValue(false)) {
 				resultado = new ResultadoProceso(start, end, this, user.getID(),
-							"Todos los POIs fueron eliminados correctamente" , Resultado.OK);
+						"Todos los POIs fueron eliminados correctamente", Resultado.OK);
 			} else {
 				List<Long> pois_fallidos = new ArrayList<Long>();
-				for(Entry<Long, Boolean> e : resumen.entrySet()){
-					if(!e.getValue())
+				for (Entry<Long, Boolean> e : resumen.entrySet()) {
+					if (!e.getValue())
 						pois_fallidos.add(e.getKey());
 				}
-				resultado = new ResultadoProceso(start, end, this, user.getID(),
-							generarMensaje(pois_fallidos) , Resultado.ERROR);
+				resultado = new ResultadoProceso(start, end, this, user.getID(), generarMensaje(pois_fallidos),
+						Resultado.ERROR);
 			}
-			
+
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
-			
-		} catch (IOException e){
+
+		} catch (IOException e) {
 			end = new DateTime();
-			
+
 			resultado = new ResultadoProceso(start, end, this, user.getID(),
 					"FileNotFoundException:No existe archivo " + filePath, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
-			
-		} 
+		}
 		return resultado;
 	}
 
 	private String generarMensaje(List<Long> keys) {
 		String mensaje = "El poi con ID: ";
-		for(Long key : keys){
+		for (Long key : keys) {
 			mensaje += key + " - ";
 		}
 		mensaje += " intentaron ser eliminados pero fallaron";

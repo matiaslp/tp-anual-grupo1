@@ -6,7 +6,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -14,6 +16,7 @@ import org.joda.time.DateTime;
 
 import autentification.Usuario;
 import db.DB_POI;
+import db.Resultado;
 import db.ResultadoProceso;
 import poi.LocalComercial;
 import poi.POI;
@@ -27,8 +30,8 @@ public class ActualizacionLocalesComerciales extends Proceso {
 		return procesarArchivo(this.filePath);
 	}
 
-	public ActualizacionLocalesComerciales(int cantidadReintentos, boolean enviarEmail,
-			String filePath, Usuario unUser) {
+	public ActualizacionLocalesComerciales(int cantidadReintentos, boolean enviarEmail, String filePath,
+			Usuario unUser) {
 		super(cantidadReintentos, enviarEmail, unUser);
 		this.filePath = filePath;
 
@@ -36,7 +39,7 @@ public class ActualizacionLocalesComerciales extends Proceso {
 
 	public ResultadoProceso procesarArchivo(String filePath) {
 		Path path = Paths.get(filePath);
-		Map<String, String[]> locales = new HashMap<String,String[]>();
+		Map<String, String[]> locales = new HashMap<String, String[]>();
 		ResultadoProceso resultado = null;
 		DateTime start = new DateTime();
 		DateTime end;
@@ -45,46 +48,50 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			String line = null;
 
 			while ((line = reader.readLine()) != null) {
-		    	String[] parametros = line.split(";");
+				String[] parametros = line.split(";");
 
-		    	if(parametros.length == 2){
-		    		String[] palabrasClaves = parametros[1].split(" ");
-		    		locales.put(parametros[0], palabrasClaves);
-		    	}
-		    }
+				if (parametros.length == 2) {
+					String[] palabrasClaves = parametros[1].split(" ");
+					locales.put(parametros[0], palabrasClaves);
+				}
+			}
 			boolean resultadoActualizar = actualizar(locales);
 			end = new DateTime();
-			if (resultadoActualizar){
-				
-			}
-				resultado = new ResultadoProceso(cantidadReintentos, start, end, null, cantidadReintentos, line, null);
-		} catch (IOException e){
+			if (resultadoActualizar)
+				resultado = new ResultadoProceso(start, end, this, user.getID(),
+						"Los elementos se actualizaron correctamente", Resultado.OK);
+			else
+				resultado = new ResultadoProceso(start, end, this, user.getID(),
+						"No se pudieron actualizar todos los locales", Resultado.ERROR);
+		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			end = new DateTime();
+			resultado = new ResultadoProceso(start, end, this, user.getID(), "No existe el archio " + filePath,
+					Resultado.ERROR);
 		}
 		return resultado;
 	}
 
-	public boolean actualizar(Map<String, String[]> locales){
-		try{
-			for(Entry<String, String[]> e: locales.entrySet()){
+	public boolean actualizar(Map<String, String[]> locales) {
+		try {
+			List<Boolean> resultados = new ArrayList<Boolean>();
+			for (Entry<String, String[]> e : locales.entrySet()) {
 				POI local = (LocalComercial) DB_POI.getInstance().getPOIbyNombre(e.getKey());
-				if(local != null){
+				if (local != null) {
 					local.setEtiquetas(e.getValue());
-					DB_POI.getInstance().actualizarPOI(local);
-				}
-				else {
+					resultados.add(DB_POI.getInstance().actualizarPOI(local));
+				} else {
 					local = new LocalComercial();
 					local.setNombre(e.getKey());
 					local.setEtiquetas(e.getValue());
-					DB_POI.getInstance().agregarPOI(local);
+					resultados.add(DB_POI.getInstance().agregarPOI(local));
 				}
 			}
-			return true;
-		} catch (Exception e){
+			if(!resultados.contains(false))
+				return true;
+		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
 		}
-		
+		return false;
 	}
 }

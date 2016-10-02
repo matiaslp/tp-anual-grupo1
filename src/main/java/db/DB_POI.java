@@ -66,9 +66,11 @@ public class DB_POI {
 		return null;
 	}
 
-	public void actualizarPOI(POI poi) {
-		eliminarPOI(poi.getId());
-		agregarPOI(poi);
+	public boolean actualizarPOI(POI poi) {
+		if(eliminarPOI(poi.getId()))
+			return agregarPOI(poi);
+		else
+			return false;
 	}
 
 	public Map<Long, Boolean> bajaPoi(String[] valoresBusqueda, List<DateTime> fechasBaja) {
