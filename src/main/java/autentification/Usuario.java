@@ -12,6 +12,8 @@ public class Usuario {
 	private Map<String, Accion> funcionalidades;
 	private String correo;
 	private boolean mailHabilitado;
+	private boolean notificacionesActivadas;
+	private boolean auditoriaActivada;
 
 	public Usuario() {
 	}
@@ -99,6 +101,26 @@ public class Usuario {
 	public boolean setMailHabilitado(boolean mailHabilitado) {
 		this.mailHabilitado = mailHabilitado;
 		return true;
+	}
+
+
+	public boolean isNotificacionesActivadas() {
+		return notificacionesActivadas;
+	}
+
+
+	public void setNotificacionesActivadas(boolean notificacionesActivadas) {
+		this.notificacionesActivadas = notificacionesActivadas;
+	}
+
+
+	public boolean isAuditoriaActivada() {
+		return auditoriaActivada;
+	}
+
+
+	public void setAuditoriaActivada(boolean auditoriaActivada) {
+		this.auditoriaActivada = auditoriaActivada;
 	}
 
 

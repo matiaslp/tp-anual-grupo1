@@ -23,6 +23,8 @@ public class UsuariosFactory {
 			nuevoUsuario.setRol(rol);
 			nuevoUsuario.setFuncionalidades(new HashMap<String,Accion>());
 			nuevoUsuario.setMailHabilitado(true);
+			nuevoUsuario.setNotificacionesActivadas(true);
+			nuevoUsuario.setAuditoriaActivada(true);
 			
 			Map<String, Accion> funcionalidades = new HashMap <String, Accion>();
 			if(rol.equals(Rol.ADMIN)){
@@ -35,6 +37,8 @@ public class UsuariosFactory {
 			}else{
 				funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
 				funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
+				funcionalidades.put("notificacionBusquedaLarga", AuthAPI.Acciones.get("notificarBusquedaLarga"));
+				funcionalidades.put("auditoria", AuthAPI.Acciones.get("auditoria"));
 			}
 			
 		//AGREGADO POR LUCAS
