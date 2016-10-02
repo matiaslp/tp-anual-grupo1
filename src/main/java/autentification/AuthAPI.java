@@ -52,12 +52,18 @@ public class AuthAPI {
 	
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
 			if (user.chequearFuncionalidad(funcionalidad)) {
-				return false; // ya existe
+				return false; // ya existe en el usuario
 			} else {
-				ArrayList<Rol> roles = Acciones.get(funcionalidad).getRoles();
-				for(Rol rol : roles){
-					if(rol.equals(user.getRol())){
-						return user.agregarFuncionalidad(funcionalidad);
+				Accion accion = Acciones.get(funcionalidad);
+				if(accion ==null){
+					return false; //la accion no existe
+				}else{
+					ArrayList<Rol> roles = accion.getRoles();
+					for(Rol rol : roles){
+						if(rol.equals(user.getRol())){
+							user.agregarFuncionalidad(funcionalidad,accion);
+							return true;
+						}
 					}
 				}
 				return false; //no tiene permiso
