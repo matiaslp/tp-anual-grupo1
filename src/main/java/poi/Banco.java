@@ -79,6 +79,10 @@ public class Banco extends POI {
 		}
 	}
 
+	public Banco(){
+		
+	}
+	
 	public Banco(String nombre, double latitud, double longitud) {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
