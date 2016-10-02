@@ -19,12 +19,21 @@ public class FuncAgregarAcciones extends Accion {
 	}
 
 	public void agregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			boolean disableAccion, String filePath, Usuario unUser) {
+			boolean disableAccion, String filePath) {
 		if (validarsesion(user, Token)) {
-			AgregarAcciones proceso = new AgregarAcciones(cantidadReintentos, enviarEmail, disableAccion, filePath, unUser);
+			AgregarAcciones proceso = new AgregarAcciones(cantidadReintentos, enviarEmail, disableAccion, filePath, user);
 			proceso.execute();
 		}
 	}
+	
+	public void agregarAccionesUndo(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
+			boolean disableAccion) {
+		if (validarsesion(user, Token)) {
+			AgregarAcciones proceso = new AgregarAcciones(cantidadReintentos, enviarEmail, disableAccion, "", user);
+			proceso.undo();
+		}
+	}
+	
 
 	// creacion Proceso para agregar a la lista en Proceso Multiple
 	public Proceso prepAgregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
