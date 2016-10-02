@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import org.json.JSONException;
 
 import db.DB_HistorialBusquedas;
+import db.DB_Usuarios;
 import db.RegistroHistorico;
 import email.EnviarEmail;
 import helpers.LeerProperties;
@@ -40,9 +41,12 @@ class Historico implements Busqueda {
 		// Se evalua si el Timer tardo mas de los segundos estipulados por
 		// archivo de configuracion
 		if (timer.getSeconds() > segundos)
-			// Se envia Email a todos los usuarios que tenga la funcion de
-			// recibir emails habilitada
-			EnviarEmail.MandarCorreoXSegundosUsuarios(texto, segundos);
+				//Se chequea que el usuario tenga las notificaciones activadas.
+			if(DB_Usuarios.getInstance().getUsuarioById((int) userID).isNotificacionesActivadas()){
+				// Se envia Email a todos los usuarios que tenga la funcion de
+				// recibir emails habilitada
+				EnviarEmail.MandarCorreoXSegundosUsuarios(texto, segundos);
+			}
 
 		// Registrar busqueda
 		// Se deja el id seteado en 0 hasta que se implemente hibernate

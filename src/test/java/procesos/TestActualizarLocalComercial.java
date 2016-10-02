@@ -33,8 +33,7 @@ public class TestActualizarLocalComercial {
 	@Test
 	public void testActualizar(){
 		//Corro el proceso
-		String filePath = (new File (".").getAbsolutePath ())+ "\\src\\test\\java\\procesos\\actualizarLocalesComerciales.txt";
-		
+		String filePath = (new File (".").getAbsolutePath ())+"/src/test/java/procesos/actualizarLocalesComerciales.txt";
 		//Creo los locales comerciales pero solo agrego el 1, 
 		//esperando que los otros 2 los cree el proceso
 		LocalComercial local1 = new LocalComercial();

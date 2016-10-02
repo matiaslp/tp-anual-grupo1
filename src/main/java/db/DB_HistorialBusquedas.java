@@ -67,13 +67,17 @@ public class DB_HistorialBusquedas {
 	// Reporte de busquedas parciales por terminal
 	public Map<Long, Long> reporteCantidadResultadosPorTerminal(long terminal) {
 
-		Map<Long, Long> resumen = new HashMap<Long, Long>();
+		if(DB_Usuarios.getInstance().getUsuarioById((int) terminal).isAuditoriaActivada()){
+			Map<Long, Long> resumen = new HashMap<Long, Long>();
 
-		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-			if (Long.compare(terminal, registro.getValue().getUserID()) == 0)
-				resumen.put(registro.getValue().getId(), registro.getValue().getCantResultados());
+			for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
+				if (Long.compare(terminal, registro.getValue().getUserID()) == 0)
+					resumen.put(registro.getValue().getId(), registro.getValue().getCantResultados());
+			}
+			return resumen;
+		}else{
+			return null;
 		}
-		return resumen;
 	}
 
 	public Map<Long, Long> reporteBusquedaPorUsuario() {
@@ -86,22 +90,31 @@ public class DB_HistorialBusquedas {
 
 		// Obetengo la lista de usuarios que hicieron las busquedas
 		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-			if (!usuarios.contains(registro.getValue().getUserID()))
+			if (!usuarios.contains(registro.getValue().getUserID()) )
 				usuarios.add(registro.getValue().getUserID());
 		}
 
 		while (usuarios.size() > 0) {
 			// Obtengo el ultimo usuario
 			userId = usuarios.get(usuarios.size() - 1);
-			// Saco la cantidad de busquedas del usuario
-			for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
 
-				if (Long.compare(userId, registro.getValue().getUserID()) == 0)
-					sumaParcial += registro.getValue().getCantResultados();
+			//Veo si el usuario tiene la auditoria activada
+			if(DB_Usuarios.getInstance().getUsuarioById(Math.toIntExact(userId)).isAuditoriaActivada()) {
+
+				try{
+					// Saco la cantidad de busquedas del usuario
+					for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
+
+						if (Long.compare(userId, registro.getValue().getUserID()) == 0)
+							sumaParcial += registro.getValue().getCantResultados();
+					}
+					resumen.put(userId, sumaParcial);
+					usuarios.remove(usuarios.size() - 1);
+					sumaParcial = 0L;
+				}catch(ArithmeticException e){
+					return null;
+				}
 			}
-			resumen.put(userId, sumaParcial);
-			usuarios.remove(usuarios.size() - 1);
-			sumaParcial = 0L;
 		}
 		return resumen;
 

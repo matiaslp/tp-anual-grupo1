@@ -14,10 +14,12 @@ import autentification.funciones.FuncActualizacionLocalesComerciales;
 import autentification.funciones.FuncAgregarAcciones;
 import autentification.funciones.FuncBajaPOIs;
 import autentification.funciones.FuncBusquedaPOI;
+import autentification.funciones.FuncCambiarEstadoAuditoria;
 import autentification.funciones.FuncReporteBusquedaPorUsuario;
 import autentification.funciones.FuncReporteBusquedasPorFecha;
 import autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
 import autentification.funciones.FuncCambiarEstadoMail;
+import autentification.funciones.FuncCambiarEstadoNotificarBusquedaLarga;
 import autentification.funciones.FuncMultiple;
 import autentification.funciones.FuncObtenerInfoPOI;
 import db.DB_Sesiones;
@@ -47,6 +49,8 @@ public class AuthAPI {
 		Acciones.put("obtenerInfoPOI", new FuncObtenerInfoPOI());
 		Acciones.put("busquedaPOI", new FuncBusquedaPOI());
 		Acciones.put("procesoMultiple", new FuncMultiple());
+		Acciones.put("notificarBusquedaLarga", new FuncCambiarEstadoNotificarBusquedaLarga());
+		Acciones.put("auditoria", new FuncCambiarEstadoAuditoria());
 	}
 
 	

@@ -51,4 +51,8 @@ public class DB_Usuarios extends Accion {
 		return usuarioNoEncontrado;
 
 	}
+	
+	public Usuario getUsuarioById(int terminal){
+		return this.listaUsuarios.get(terminal);
+	}
 }
