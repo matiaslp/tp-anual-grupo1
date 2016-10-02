@@ -76,8 +76,10 @@ public class AgregarAcciones extends Proceso {
 			// Obtenemos el tiempo de fin de proceso
 			DateTime end = new DateTime();
 			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
+			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
+					"Acciones inexistentes: " + accionesInexistentes + "\n";
 			ResultadoProceso resultado = new ResultadoProceso(start, end, this, user.getID(),
-					"FileNotFoundException:No existe archivo " + filePath, Resultado.ERROR);
+					"FileNotFoundException:No existe archivo " + filePath + "\n" + mensaje, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
 			return resultado;
@@ -87,8 +89,10 @@ public class AgregarAcciones extends Proceso {
 			// Obtenemos el tiempo de fin de proceso
 			DateTime end = new DateTime();
 			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
+			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
+					"Acciones inexistentes: " + accionesInexistentes + "\n";
 			ResultadoProceso resultado = new ResultadoProceso(start, end, this, user.getID(),
-					"IOException:No se puede leer archivo " + filePath, Resultado.ERROR);
+					"IOException:No se puede leer archivo " + filePath + "\n" + mensaje , Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
 			return resultado;
