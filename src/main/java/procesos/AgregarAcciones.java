@@ -39,8 +39,8 @@ public class AgregarAcciones extends Proceso {
 	@Override
 	public ResultadoProceso procesado() {
 
+		// Obtenemos el tiempo de inicio de proceso
 		DateTime start = new DateTime();
-		// tu codigo
 		// archivo esta de esta forma
 		// unUsuario nomAccion nomAccion nomAccion
 		String linea;
@@ -48,7 +48,7 @@ public class AgregarAcciones extends Proceso {
 		String unUsername;
 		ArrayList<String> listadoAcciones = new ArrayList<String>();
 		FileReader fr = null;
-		// Creo la Transaccion
+		// Creamos la Transaccion
 		AgregarAccionesTransaction Transaction = new AgregarAccionesTransaction(user.getID());
 		// REVISA SI EXISTE O NO Y SI SE PUEDE LEER O NO
 		try {
@@ -70,14 +70,16 @@ public class AgregarAcciones extends Proceso {
 					AgregarAcciones.AgregarAccionesAUsuario(unUsername, listadoAcciones, Transaction);
 
 				}
+				// Se agrega la transaccion a DB_AgregarAccionesTransaction
 				DB_AgregarAccionesTransaction.getInstance().agregarTransactions(Transaction);
 				br.close();
 			}
 
 			// Si el archivo no es encontrado
 		} catch (FileNotFoundException e) {
+			// Obtenemos el tiempo de fin de proceso
 			DateTime end = new DateTime();
-
+			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
 			ResultadoProceso resultado = new ResultadoProceso(0, start, end, this, user.getID(),
 					"FileNotFoundException:No existe archivo " + filePath, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
@@ -86,7 +88,9 @@ public class AgregarAcciones extends Proceso {
 
 			// Si el archivo no se puede leer (permisos)
 		} catch (IOException e) {
+			// Obtenemos el tiempo de fin de proceso
 			DateTime end = new DateTime();
+			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
 			ResultadoProceso resultado = new ResultadoProceso(0, start, end, this, user.getID(),
 					"IOException:No se puede leer archivo " + filePath, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
@@ -95,7 +99,9 @@ public class AgregarAcciones extends Proceso {
 		}
 
 		// Ejecucion exitosa
+		// Obtenemos el tiempo de fin de proceso
 		DateTime end = new DateTime();
+		// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
 		ResultadoProceso resultado = new ResultadoProceso(0, start, end, this, user.getID(), null, Resultado.OK);
 		DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 		return resultado;
@@ -104,8 +110,10 @@ public class AgregarAcciones extends Proceso {
 	// Undo del ultimo proceso de AgregarAcciones ejecutado por el usuario que esta realizando el "undo"
 	public void undo() {
 
+		// obtenemos la ultima transaccion de este usuario
 		AgregarAccionesTransaction transaction = DB_AgregarAccionesTransaction.getInstance()
 				.getLastTransactionByUser(user.getID());
+		// obtenemos la lista de cambios de la transaccion y la recorremos
 		ArrayList<String> listadoCambios = transaction.getListadoCambios();
 		for ( String cambio : listadoCambios) {
 			String acciones[] = cambio.split(" ");
@@ -144,6 +152,7 @@ public class AgregarAcciones extends Proceso {
 					transac = transac + " " + unaAccion;
 
 			}
+			// Agregamos a la transaccion los cambios realizados a este usuario
 			transaction.agregarCambios(transac);
 			return true;
 		} else {
