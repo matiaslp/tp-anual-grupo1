@@ -117,13 +117,13 @@ public class AgregarAcciones extends Proceso {
 				Usuario unUsuario = DB_Usuarios.getInstance().getUsarioByName(unUsername);
 
 				// Remover todas las funcionalidades que fueron agregadas
-				for (int i = 1; i < acciones.length; i++)
+				for (int i = 0; i < acciones.length; i++)
 					AuthAPI.getInstance().sacarFuncionalidad(acciones[i], unUsuario);
 
 			}
-			// Eliminamos la transacciones que fue rollbackeada
-			DB_AgregarAccionesTransaction.getInstance().eliminarTransactions(transaction.getId());
 		}
+		// Eliminamos la transacciones que fue rollbackeada
+		DB_AgregarAccionesTransaction.getInstance().eliminarTransactions(transaction.getId());
 	}
 
 	static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones,
