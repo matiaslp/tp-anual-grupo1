@@ -154,7 +154,7 @@ public class TestAgregarAcciones {
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, (new File (".").getAbsolutePath ())+"/src/test/java/procesos/accionesAAgregar");
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, (new File (".").getAbsolutePath ())+"/src/test/java/procesos/accionesAAgregar");
 		
 		// Se valida que el usuario adminPrueba tiene las funcionalidades agregadas
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
@@ -189,7 +189,7 @@ public class TestAgregarAcciones {
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(admin, tokenAdmin, 0, false, false, (new File (".").getAbsolutePath ())+"/src/test/java/procesos/accionesAAgregar");
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, (new File (".").getAbsolutePath ())+"/src/test/java/procesos/accionesAAgregar");
 		
 		// Se valida que el usuario adminPrueba tiene las funcionalidades agregadas
 		Assert.assertTrue(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));
@@ -198,7 +198,7 @@ public class TestAgregarAcciones {
 		// Se valida que el usuario unUsuarioTerminal1 tiene la funcionalidad agregada
 		Assert.assertTrue(unUsuarioTerminal1.chequearFuncionalidad("busquedaPOI"));
 		
-		funcion.agregarAccionesUndo(admin, tokenAdmin, 0, false, false);
+		funcion.agregarAccionesUndo(admin, tokenAdmin, 0, false);
 		
 		// Se valida que el usuario adminPrueba no tiene las funcionalidades agregadas
 		Assert.assertFalse(adminPrueba.chequearFuncionalidad("cambiarEstadoMail"));

@@ -30,14 +30,14 @@ public class AgregarAcciones extends Proceso {
 
 	String filePath;
 
-	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, boolean disableAccion, String file,
+	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, String file,
 			Usuario unUser) {
-		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
+		super(cantidadReintentos, enviarEmail, unUser);
 		filePath = file;
 	}
 
 	@Override
-	public void execute() {
+	public ResultadoProceso procesado() {
 
 		DateTime start = new DateTime();
 		// tu codigo
@@ -82,7 +82,7 @@ public class AgregarAcciones extends Proceso {
 					"FileNotFoundException:No existe archivo " + filePath, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
-			return;
+			return resultado;
 
 			// Si el archivo no se puede leer (permisos)
 		} catch (IOException e) {
@@ -91,14 +91,14 @@ public class AgregarAcciones extends Proceso {
 					"IOException:No se puede leer archivo " + filePath, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
-			return;
+			return resultado;
 		}
 
 		// Ejecucion exitosa
 		DateTime end = new DateTime();
 		ResultadoProceso resultado = new ResultadoProceso(0, start, end, this, user.getID(), null, Resultado.OK);
 		DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
-		return;
+		return resultado;
 	}
 	
 	// Undo del ultimo proceso de AgregarAcciones ejecutado por el usuario que esta realizando el "undo"

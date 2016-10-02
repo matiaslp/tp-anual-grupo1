@@ -10,7 +10,6 @@ public abstract class Proceso {
 
 	protected int cantidadReintentos = 1;
 	protected boolean enviarEmail;
-	protected boolean disableAccion;
 	protected Usuario user;
 
 	
@@ -40,12 +39,11 @@ public abstract class Proceso {
 		}
 	}
 
-	public Proceso(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
+	public Proceso(int cantidadReintentos, boolean enviarEmail,
 			Usuario unUser) {
 		super();
 		this.cantidadReintentos = cantidadReintentos;
 		this.enviarEmail = enviarEmail;
-		this.disableAccion = disableAccion;
 		this.user = unUser;
 	}
 
@@ -63,14 +61,6 @@ public abstract class Proceso {
 
 	public void setEnviarEmail(boolean enviarEmail) {
 		this.enviarEmail = enviarEmail;
-	}
-
-	public boolean isDisableAccion() {
-		return disableAccion;
-	}
-
-	public void setDisableAccion(boolean disableAccion) {
-		this.disableAccion = disableAccion;
 	}
 
 	public Usuario getUser() {

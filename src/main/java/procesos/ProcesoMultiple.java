@@ -8,9 +8,9 @@ public class ProcesoMultiple extends Proceso {
 
 	private static ArrayList<Proceso> listadoProcesos;
 
-	public ProcesoMultiple(int cantidadReintentos, boolean enviarEmail, boolean disableAccion,
+	public ProcesoMultiple(int cantidadReintentos, boolean enviarEmail,
 			ArrayList<Proceso> procList, Usuario unUser) {
-		super(cantidadReintentos, enviarEmail, disableAccion, unUser);
+		super(cantidadReintentos, enviarEmail, unUser);
 		listadoProcesos = procList;
 	}
 
@@ -22,6 +22,10 @@ public class ProcesoMultiple extends Proceso {
 		listadoProcesos.remove(proc);
 	}
 
+	
+	// se tomo como decision de diseño que proceso Multiple no tenga la opcion de
+	// emviar email o ejecutarse N veces y delega dichas responsabilidades en
+	// los procesos que ejecuta
 	@Override
 	public void execute() {
 		for (Proceso proc : listadoProcesos)
