@@ -1,10 +1,6 @@
 package db;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import autentification.Usuario;
 
 public class AgregarAccionesTransaction {
 	
