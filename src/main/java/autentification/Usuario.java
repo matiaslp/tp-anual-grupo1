@@ -98,14 +98,6 @@ public class Usuario {
 		this.correo = correo;
 	}
 
-	public boolean chequearFuncionalidad(String funcionalidad) {
-		if (this.getFuncionalidades().get(funcionalidad) != null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public boolean validarUsuarioYPass(String user, String pass) {
 		if (user.equals(this.username) && pass.equals(this.password)) {
 			return true;
@@ -121,7 +113,6 @@ public class Usuario {
 	public Accion getFuncionalidad(String funcionalidad){
 		return funcionalidades.get(funcionalidad);
 	}
-	
 	
 	public boolean isMailHabilitado() {
 		return mailHabilitado;

@@ -9,7 +9,7 @@ public abstract class Accion {
 	protected boolean isProcess = false;
 
 	protected boolean validarsesion(Usuario user, String Token) {
-		return AuthAPI.getInstance().validarToken(Token) && user.chequearFuncionalidad(nombreFuncion);
+		return AuthAPI.getInstance().validarToken(Token) && user.getFuncionalidad(nombreFuncion)!=null;
 	}
 
 	public ArrayList<Rol> getRoles() {

@@ -51,7 +51,7 @@ public class AuthAPI {
 
 	
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
-			if (user.chequearFuncionalidad(funcionalidad)) {
+			if (user.getFuncionalidad(funcionalidad)!=null) {
 				return false; // ya existe en el usuario
 			} else {
 				Accion accion = Acciones.get(funcionalidad);
