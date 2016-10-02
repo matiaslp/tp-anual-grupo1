@@ -3,8 +3,6 @@ package procesos;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.mail.MessagingException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +10,7 @@ import org.junit.Test;
 import autentification.AuthAPI;
 import autentification.Rol;
 import autentification.Usuario;
+import autentification.UsuariosFactory;
 import autentification.funciones.FuncAgregarAcciones;
 import db.AgregarAccionesTransaction;
 import db.DB_Usuarios;
@@ -26,6 +25,7 @@ public class TestProcesoAgregarAcciones {
 	Usuario unUsuarioTerminal;
 	Usuario unUsuarioAdmin2;
 	Usuario unUsuarioTerminal2;
+	UsuariosFactory fact = new UsuariosFactory();
 
 	private ArrayList<String> listadoAccionesQueEstanEnAdmin;
 	private ArrayList<String> listadoAccionesQueEstanEnTerminal;
@@ -56,18 +56,18 @@ public class TestProcesoAgregarAcciones {
 		listadoAccionesQueEstanEnAdmin.add("bajaPOIs");
 		listadoAccionesQueEstanEnAdmin.add("procesoMultiple");
 
-		unUsuarioAdmin = new Usuario("admin", "123", Rol.ADMIN);
-		unUsuarioTerminal = new Usuario("terminal", "123", Rol.TERMINAL);
-		unUsuarioAdmin2 = new Usuario("adminPrueba", "123", Rol.ADMIN);
-		unUsuarioTerminal2 = new Usuario("terminal1", "123", Rol.TERMINAL);
+		fact.crearUsuario("admin", "123", Rol.ADMIN);
+		fact.crearUsuario("terminal", "123", Rol.TERMINAL);
+		fact.crearUsuario("adminPrueba", "123", Rol.ADMIN);
+		fact.crearUsuario("terminal1", "123", Rol.TERMINAL);
 	}
 
 	
 	@Test
 	public void agregarAccionesProcesoTest() {
 		// creamos usuarios admin y adminPrueba y les agregamos funcionalidades
-		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
-		Usuario adminPrueba = DB_Usuarios.getInstance().getUsarioByName("adminPrueba");
+		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
+		Usuario adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
 		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
@@ -76,7 +76,7 @@ public class TestProcesoAgregarAcciones {
 		
 		
 		// creamos usuario unUsuarioTerminal1 y le sacamos funcionalidades
-		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsarioByName("terminal1");
+		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsuarioByName("terminal1");
 		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
 		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
@@ -101,8 +101,8 @@ public class TestProcesoAgregarAcciones {
 	@Test
 	public void agregarAccionesProcessUndo() {
 		// creamos usuarios admin y adminPrueba y les agregamos funcionalidades
-		Usuario adminPrueba = DB_Usuarios.getInstance().getUsarioByName("adminPrueba");
-		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
+		Usuario adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
+		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
 		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
@@ -111,7 +111,7 @@ public class TestProcesoAgregarAcciones {
 		
 		
 		// creamos usuario unUsuarioTerminal1 y le sacamos funcionalidades
-		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsarioByName("terminal1");
+		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsuarioByName("terminal1");
 		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
 		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
