@@ -64,7 +64,7 @@ public class TestProcesoMultiple {
 	void procesoMultipleTest() {
 
 		// usuario admin y sus funcionalidades
-		Usuario admin = DB_Usuarios.getInstance().getUsarioByName("admin");
+		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
 		AuthAPI.getInstance().agregarFuncionalidad("procesoMultiple", admin);
 		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);

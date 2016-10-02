@@ -113,7 +113,7 @@ public class AgregarAcciones extends Proceso {
 
 			// Si el usuario existe
 			if (DB_Usuarios.getInstance().buscarUsuarioEnLista(unUsername)) {
-				Usuario unUsuario = DB_Usuarios.getInstance().getUsarioByName(unUsername);
+				Usuario unUsuario = DB_Usuarios.getInstance().getUsuarioByName(unUsername);
 
 				// Remover todas las funcionalidades que fueron agregadas
 				for (int i = 0; i < acciones.length; i++)
@@ -134,7 +134,7 @@ public class AgregarAcciones extends Proceso {
 
 		if (db_usuario.buscarUsuarioEnLista(unUsername)) {
 			transac = unUsername;
-			unUsuario = db_usuario.getUsarioByName(unUsername);
+			unUsuario = db_usuario.getUsuarioByName(unUsername);
 			for (String unaAccion : listadoAcciones) {
 
 				agregoAccion = AuthAPI.getInstance().agregarFuncionalidad(unaAccion, unUsuario);

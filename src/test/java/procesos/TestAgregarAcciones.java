@@ -69,7 +69,7 @@ public class TestAgregarAcciones {
 		// comprobacion si tiene toda la lista a agregar
 		encontradaTodas = true;
 		for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
-			encontrada = db_usuario.getUsarioByName("admin").getFuncionalidad(unafuncionabilidad)!=null;
+			encontrada = db_usuario.getUsuarioByName("admin").getFuncionalidad(unafuncionabilidad)!=null;
 			if (encontrada == false) {
 				encontradaTodas = false;
 			}
@@ -86,7 +86,7 @@ public class TestAgregarAcciones {
 		// comprobacion si tiene toda la lista a agregar
 		encontradaTodas = true;
 		for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
-			encontrada = db_usuario.getUsarioByName("terminal").getFuncionalidad(unafuncionabilidad)!=null;
+			encontrada = db_usuario.getUsuarioByName("terminal").getFuncionalidad(unafuncionabilidad)!=null;
 			if (encontrada == false) {
 				encontradaTodas = false;
 			}
@@ -103,7 +103,7 @@ public class TestAgregarAcciones {
 		// comprobacion si tiene toda la lista a agregar
 		encontradaTodas = true;
 		for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
-			encontrada = db_usuario.getUsarioByName("terminal").getFuncionalidad(unafuncionabilidad)!=null;
+			encontrada = db_usuario.getUsuarioByName("terminal").getFuncionalidad(unafuncionabilidad)!=null;
 			if (encontrada == false) {
 				encontradaTodas = false;
 			}
@@ -120,7 +120,7 @@ public class TestAgregarAcciones {
 		// comprobacion si tiene toda la lista a agregar
 		encontradaTodas = true;
 		for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
-			encontrada = db_usuario.getUsarioByName("admin").getFuncionalidad(unafuncionabilidad)!=null;
+			encontrada = db_usuario.getUsuarioByName("admin").getFuncionalidad(unafuncionabilidad)!=null;
 			if (encontrada == false) {
 				encontradaTodas = false;
 			}
