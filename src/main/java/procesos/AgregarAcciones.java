@@ -6,22 +6,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.hamcrest.internal.ArrayIterator;
 import org.joda.time.DateTime;
-
-import antlr.collections.List;
-import autentification.Accion;
 import autentification.AuthAPI;
-import autentification.Rol;
 import autentification.Usuario;
 import db.AgregarAccionesTransaction;
 import db.DB_AgregarAccionesTransaction;
 import db.DB_ResultadosProcesos;
 import db.DB_Usuarios;
-import db.RegistroHistorico;
 import db.Resultado;
 import db.ResultadoProceso;
 import procesos.Proceso;

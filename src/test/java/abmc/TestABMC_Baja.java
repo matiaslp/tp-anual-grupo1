@@ -1,8 +1,6 @@
 package abmc;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,9 +52,6 @@ public class TestABMC_Baja {
 		poiDTOColectivo.setLatitud(-34.5664823);
 		poiDTOColectivo.setLongitud(-34.5664823);
 		
-		DateTimeFormatter formatoFecha = DateTimeFormat.forPattern("dd, MMMM, yyyy");
-		DateTime hoy = new DateTime();
-
 		// Se crean 4 POIs (uno por cada tipo)
 		instancia.agregarPOI(poiDTOBanco.converttoPOI());
 		instancia.agregarPOI(poiDTOCGP.converttoPOI());

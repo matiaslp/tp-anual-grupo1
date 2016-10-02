@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import autentification.Accion;
 import autentification.Rol;
 import autentification.Usuario;
-import procesos.ActualizacionLocalesComerciales;
 import procesos.Proceso;
 import procesos.ProcesoMultiple;
 
