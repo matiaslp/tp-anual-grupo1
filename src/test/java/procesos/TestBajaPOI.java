@@ -2,6 +2,7 @@ package procesos;
 
 import java.io.File;
 
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,20 +34,21 @@ public class TestBajaPOI {
 	@Test
 	public void testBorrar(){
 		//Corro el proceso
-		String filePath = (new File (".").getAbsolutePath ())+ "\\src\\test\\java\\procesos\\actualizarLocalesComerciales.txt";
+		String filePath = (new File (".").getAbsolutePath ())+ "\\src\\test\\java\\procesos\\bajaPOI.txt";
 		
 		//Creo los locales comerciales pero solo agrego el 1, 
 		//esperando que los otros 2 los cree el proceso
 		LocalComercial local1 = new LocalComercial();
 		Banco banco1 = new Banco();
-		LocalComercial local3 = new LocalComercial();
 		
 		local1.setNombre("local1");
 		String[] etiquetas1 = {"matadero", "heladeria"};
 		local1.setEtiquetas(etiquetas1);
+		local1.setFechaBaja(new DateTime());
 		
 		banco1.setNombre("banco1");
-				
+		banco1.setFechaBaja(new DateTime());		
+		
 		dbPOI.agregarPOI(local1);
 		dbPOI.agregarPOI(banco1);
 		
@@ -54,15 +56,9 @@ public class TestBajaPOI {
 		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
-		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false);
+		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
 		
-		//Busco las modificaciones para corroborar que se corrio correctamente
-		//POI local1Actualizado = dbPOI.getPOIbyNombre("local1");
-		POI local2Actualizado = dbPOI.getPOIbyNombre("local2");
-		POI local3Actualizado = dbPOI.getPOIbyNombre("local3");
-		
-		//Assert.assertFalse(local1Actualizado.compararEtiquetas(local1));
-		Assert.assertTrue(local2Actualizado.compararEtiquetas(local2));
-		Assert.assertTrue(local3Actualizado.compararEtiquetas(local3));
+		Assert.assertNull(dbPOI.getPOIbyNombre("local1"));
+		Assert.assertNull(dbPOI.getPOIbyNombre("banco1"));
 	}
 }
