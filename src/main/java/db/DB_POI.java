@@ -75,12 +75,14 @@ public class DB_POI {
 
 	public Map<Long, Boolean> bajaPoi(String[] valoresBusqueda, List<DateTime> fechasBaja) {
 		Map<Long, Boolean> resumen = new HashMap<Long, Boolean>();
-		for (POI poi : listadoPOI) {
+		for (int i = listadoPOI.size(); i > 1 || i == 1; i--) {
 			//Si el POI coincide con la busqueda.
+			POI poi = listadoPOI.get(i-1);
 			if (poi.busquedaEstandar(valoresBusqueda)) {
 				for(DateTime fecha : fechasBaja){
 					if(poi.dadoDeBaja(fecha)){
 						resumen.put(poi.getId(), eliminarPOI(poi.getId()));
+						break;
 					}
 				}
 			}
