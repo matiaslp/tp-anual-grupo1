@@ -36,13 +36,13 @@ public class TestActualizarLocalComercial {
 		String filePath = (new File (".").getAbsolutePath ())+"/src/test/java/procesos/actualizarLocalesComerciales.txt";
 		//Creo los locales comerciales pero solo agrego el 1, 
 		//esperando que los otros 2 los cree el proceso
-		LocalComercial local1 = new LocalComercial();
+		LocalComercial local4 = new LocalComercial();
 		LocalComercial local2 = new LocalComercial();
 		LocalComercial local3 = new LocalComercial();
 		
-		local1.setNombre("local1");
-		String[] etiquetas1 = {"matadero", "heladeria"};
-		local1.setEtiquetas(etiquetas1);
+		local4.setNombre("local1");
+		String[] etiquetas4 = {"matadero", "heladeria"};
+		local4.setEtiquetas(etiquetas4);
 		
 		local2.setNombre("local2");
 		String[] etiquetas2 = {"juegos", "azul", "moron"};
@@ -52,7 +52,7 @@ public class TestActualizarLocalComercial {
 		String[] etiquetas3 = {"azul", "helado", "esquina"};
 		local3.setEtiquetas(etiquetas3);
 		
-		dbPOI.agregarPOI(local1);
+		dbPOI.agregarPOI(local4);
 		dbPOI.agregarPOI(local3);
 		
 		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
