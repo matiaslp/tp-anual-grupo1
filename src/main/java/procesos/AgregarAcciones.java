@@ -141,7 +141,7 @@ public class AgregarAcciones extends Proceso {
 		DB_AgregarAccionesTransaction.getInstance().eliminarTransactions(transaction.getId());
 	}
 
-	static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones,
+	public static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones,
 			AgregarAccionesTransaction transaction) {
 		boolean agregoAccion = false;
 		String transac = null;
