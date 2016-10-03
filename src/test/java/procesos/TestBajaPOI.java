@@ -58,7 +58,7 @@ public class TestBajaPOI {
 		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
 		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
 		
-		Assert.assertNull(dbPOI.getPOIbyNombre("local1"));
-		Assert.assertNull(dbPOI.getPOIbyNombre("banco1"));
+		Assert.assertTrue(dbPOI.getPOIbyNombre("local1").dadoDeBaja());
+		Assert.assertTrue(dbPOI.getPOIbyNombre("banco1").dadoDeBaja());
 	}
 }
