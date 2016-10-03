@@ -171,10 +171,12 @@ public class TestProcesoMultiple {
 		// Se valida que el usuario unUsuarioTerminal1 tiene la funcionalidad agregada
 		Assert.assertTrue(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
 
+		// Validaciones Proceso BajaPOIs
 		// Se valida que los elementos ya no existan en la lista
 		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("local1"));
 		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("banco1"));
 		
+		// validaciones Proceso ActualizarLocalesComerciales
 		// Se valida que los elementos se agreguen o actualizen
 		POI local2Actualizado = DB_POI.getInstance().getPOIbyNombre("local2");
 		POI local3Actualizado = DB_POI.getInstance().getPOIbyNombre("local3");
