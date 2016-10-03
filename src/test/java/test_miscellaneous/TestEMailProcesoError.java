@@ -29,8 +29,8 @@ public class TestEMailProcesoError {
 	ArrayList<ResultadoProceso> listaResultados;
 	
 	ResultadoProceso primerResultadoDeProceso;
-	//ResultadoProceso segundoResultadoDeProceso;
-//	ResultadoProceso tercerResultadoDeProceso;
+	ResultadoProceso segundoResultadoDeProceso;
+ 	ResultadoProceso tercerResultadoDeProceso;
 	
 	private ArrayList<String> listadoAccionesQueEstanEnAdmin;
 	AgregarAccionesTransaction transaction;
@@ -44,19 +44,32 @@ public class TestEMailProcesoError {
 		
 		transaction = new AgregarAccionesTransaction(0);
 		
+		unUsuario= new Usuario();
 		unUsuario.setUsername("Pablo");
 		unUsuario.setCorreo("lag2392@gmail.com");
 		unUsuario.setPassword("123");
 		unUsuario.setRol(Rol.TERMINAL);
 		
+		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
 		listadoAccionesQueEstanEnAdmin.add("obtenerInfoPOI");
 		listadoAccionesQueEstanEnAdmin.add("reporteBusquedaPorUsuario");
 		
 		primerResultadoDeProceso= new ResultadoProceso(new DateTime().minusHours(1),new DateTime()
 				,new AgregarAcciones(0, envio, "unaAccion", unUsuario),
-				11,"anda mal",Resultado.ERROR);
+				11,"Anda mal primerResultadoDeProceso",Resultado.ERROR);
 		
+		segundoResultadoDeProceso= new ResultadoProceso(new DateTime().minusHours(1),new DateTime()
+				,new AgregarAcciones(0, envio, "segundaAccion", unUsuario),
+				11,"Anda mal segundoResultadoDeProceso",Resultado.ERROR);
+		
+		tercerResultadoDeProceso= new ResultadoProceso(new DateTime().minusHours(1),new DateTime()
+				,new AgregarAcciones(0, envio, "terceraAccion", unUsuario),
+				11,"Anda mal tercerResultadoDeProceso",Resultado.ERROR);
+		
+		listaResultados = new ArrayList<ResultadoProceso>();
 		listaResultados.add(primerResultadoDeProceso);
+		listaResultados.add(segundoResultadoDeProceso);
+		listaResultados.add(tercerResultadoDeProceso);
 		
 		
 	}
