@@ -45,6 +45,7 @@ public class TestABMC_Timer {
 		instancia.agregarPOI(banco);
 
 		// new timer
+		// El test verifica contra un tiempo prefijado, si la maquina que lo corre es muy veloz puede dar error, pero no significa que este mal el test.
 		Timer timer = new Timer();
 
 		timer.buscar(ServicioAPI, "Mataderos a b r t", 1);
