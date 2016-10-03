@@ -46,7 +46,7 @@ public class TestEMailProcesoError {
 		
 		unUsuario= new Usuario();
 		unUsuario.setUsername("Pablo");
-		unUsuario.setCorreo("lag2392@gmail.com");
+		unUsuario.setCorreo("lag21392@gmail.com");
 		unUsuario.setPassword("123");
 		unUsuario.setRol(Rol.TERMINAL);
 		

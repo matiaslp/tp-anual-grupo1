@@ -28,10 +28,10 @@ public abstract class EnviarEmail {
 		String correoEnvia = LeerProperties.getInstance().prop.getProperty("email");
 		String claveCorreo = LeerProperties.getInstance().prop.getProperty("emailPassword");
 
-		String texto = null;
+		String texto = "";
 		
 		for (ResultadoProceso resultado : listaResultados) {
-			String res = null;
+			String res = "";
 			String clase = resultado.getProc().getClass().toString();
 			if (resultado.getResultado().equals(Resultado.ERROR))
 				res = "con errores";
@@ -41,7 +41,7 @@ public abstract class EnviarEmail {
 			"Inicio de ejecucion: " + resultado.getInicioEjecucion().toString() + "\n" +
 			"Fin de ejecucion: " + resultado.getFinEjecucion().toString() + "\n" +
 			"Ejecutado por usuario: " + resultado.getUserID() + "\n" +
-			resultado.getMensajeError() + "\n";
+			resultado.getMensajeError() + "\n\n";
 		}
 		
 		
