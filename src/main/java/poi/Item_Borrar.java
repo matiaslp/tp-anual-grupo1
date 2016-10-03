@@ -1,21 +1,25 @@
 package poi;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Item_Borrar {
 	private String parametro;
-	//private DateTime fechaBorrado;
-	private SimpleDateFormat fechaBorrado = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	private Date fechaBorrado;
+	
+	public Item_Borrar(){
+		
+	}
+	
 	public String getParametro() {
 		return parametro;
 	}
 	public void setParametro(String parametro) {
 		this.parametro = parametro;
 	}
-	public SimpleDateFormat getFechaBorrado() {
+	public Date getFechaBorrado() {
 		return fechaBorrado;
 	}
-	public void setFechaBorrado(SimpleDateFormat fechaBorrado) {
+	public void setFechaBorrado(Date fechaBorrado) {
 		this.fechaBorrado = fechaBorrado;
 	}
 	

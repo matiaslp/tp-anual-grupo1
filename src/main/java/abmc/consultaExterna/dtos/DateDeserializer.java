@@ -10,7 +10,7 @@ import com.google.gson.JsonElement;
 
 public class DateDeserializer implements JsonDeserializer<Date> {
 	  public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-		    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		    SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
 		    Date date = null;
 		    try {
 			  date = sdf.parse(json.getAsJsonPrimitive().getAsString());

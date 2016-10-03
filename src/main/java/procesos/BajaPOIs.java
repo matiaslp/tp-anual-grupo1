@@ -3,7 +3,6 @@ package procesos;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import abmc.consultaExterna.dtos.DateDeserializer;
+import abmc.consultaExterna.dtos.ItemBorrarConstructor;
 import autentification.Usuario;
 import db.DB_POI;
 import db.DB_ResultadosProcesos;
@@ -47,9 +47,9 @@ public class BajaPOIs extends Proceso {
 		try {
 			List<Item_Borrar> listadoItems = new ArrayList<Item_Borrar>();
 			
-			// IOUtils.toString(new URL(url), Charset.forName("UTF-8"))
 			GsonBuilder gsonBuilder = new GsonBuilder();
 			gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
+			gsonBuilder.registerTypeAdapter(Item_Borrar.class, new ItemBorrarConstructor());
 			Gson gson = gsonBuilder.create();
 
 			JsonReader jsonReader = new JsonReader(new FileReader(filePath));
@@ -62,7 +62,7 @@ public class BajaPOIs extends Proceso {
 			List<DateTime> fechas = new ArrayList<DateTime>();
 			for (Item_Borrar item : listadoItems) {
 				valores.add(item.getParametro());
-				fechas.add(DateTime.parse(item.getFechaBorrado().toString()));
+				fechas.add(new DateTime(item.getFechaBorrado()));
 			}
 			valores.toArray(valoresBusqueda);
 			Map<Long, Boolean> resumen = dbPOI.bajaPoi(valoresBusqueda, fechas);
