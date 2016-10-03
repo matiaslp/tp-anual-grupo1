@@ -34,7 +34,7 @@ class Consulta implements Busqueda {
 		ArrayList<POI> resultado = new ArrayList<POI>();
 		ArrayList<POI> listaLocal = DB_POI.getListado();
 		for (POI nodo : listaLocal) {
-			if (nodo.busquedaEstandar(filtros)) {
+			if (nodo.busquedaEstandar(filtros) && nodo.getFechaBaja() == null) {
 				resultado.add(nodo);
 			}
 		}

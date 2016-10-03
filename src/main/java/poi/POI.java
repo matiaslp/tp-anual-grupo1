@@ -301,47 +301,45 @@ public abstract class POI {
 
 	public boolean busquedaEstandar(String filtros[]) {
 
-		if(this.fechaBaja != null){
-			for (String filtro : filtros) {
-				if (MetodosComunes.isNumeric(filtro)) {
-					long valor = Long.parseLong(filtro);
-					if (numeracion == valor)
-						return true;
-					else if (piso == valor)
-						return true;
-					else if (codigoPostal == valor)
-						return true;
-					else if (comuna == valor)
-						return true;
-				} else if (LevDist.calcularDistancia(filtro, this.nombre))
+		for (String filtro : filtros) {
+			if (MetodosComunes.isNumeric(filtro)) {
+				long valor = Long.parseLong(filtro);
+				if (numeracion == valor)
 					return true;
-				else if (LevDist.calcularDistancia(filtro, this.callePrincipal))
+				else if (piso == valor)
 					return true;
-				else if (LevDist.calcularDistancia(filtro, this.calleLateral))
+				else if (codigoPostal == valor)
 					return true;
-				else if (LevDist.calcularDistancia(filtro, this.departamento))
+				else if (comuna == valor)
 					return true;
-				else if (LevDist.calcularDistancia(filtro, this.unidad))
-					return true;
-				else if (LevDist.calcularDistancia(filtro, this.localidad))
-					return true;
-				else if (LevDist.calcularDistancia(filtro, this.barrio))
-					return true;
-				else if (LevDist.calcularDistancia(filtro, this.provincia))
-					return true;
-				else if (LevDist.calcularDistancia(filtro, this.pais))
-					return true;
-				else if (LevDist.calcularDistancia(filtro, TiposPOI.BANCO.name()))
-					return true;
-				else if (LevDist.calcularDistancia(filtro, TiposPOI.CGP.name()))
-					return true;
-				else if (LevDist.calcularDistancia(filtro, TiposPOI.LOCAL_COMERCIAL.name()))
-					return true;
-				else if (LevDist.calcularDistancia(filtro, TiposPOI.PARADA_COLECTIVO.name()))
-					return true;
-				else if (buscarEtiqueta(filtro))
-					return true;
-			}
+			} else if (LevDist.calcularDistancia(filtro, this.nombre))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, this.callePrincipal))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, this.calleLateral))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, this.departamento))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, this.unidad))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, this.localidad))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, this.barrio))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, this.provincia))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, this.pais))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, TiposPOI.BANCO.name()))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, TiposPOI.CGP.name()))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, TiposPOI.LOCAL_COMERCIAL.name()))
+				return true;
+			else if (LevDist.calcularDistancia(filtro, TiposPOI.PARADA_COLECTIVO.name()))
+				return true;
+			else if (buscarEtiqueta(filtro))
+				return true;
 		}
 		return false;
 	}

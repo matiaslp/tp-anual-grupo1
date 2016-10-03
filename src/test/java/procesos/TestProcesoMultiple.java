@@ -81,6 +81,10 @@ public class TestProcesoMultiple {
 		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
 		AuthAPI.getInstance().agregarFuncionalidad("actualizacionLocalesComerciales", admin);
 		
+		
+		//---------------------------
+		//Init AgregarAcciones
+		//---------------------------
 		// creamos un usuario adminPrueba
 		Usuario adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
 		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
@@ -95,6 +99,7 @@ public class TestProcesoMultiple {
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("obtenerInfoPOI")!=null);
 
+		//---------------------------
 		//Init BajaPOI
 		//---------------------------
 		LocalComercial local1 = new LocalComercial();
@@ -110,8 +115,8 @@ public class TestProcesoMultiple {
 
 		DB_POI.getInstance().agregarPOI(local1);
 		DB_POI.getInstance().agregarPOI(banco1);
-		//--------------------
 		
+		//---------------------------
 		//Init ActualizacionLocalesComerciales
 		//---------------------------
 		//Creo los locales comerciales pero solo agrego el 3 y 4, 
@@ -134,7 +139,6 @@ public class TestProcesoMultiple {
 				
 		DB_POI.getInstance().agregarPOI(local3);
 		DB_POI.getInstance().agregarPOI(local4);
-		//--------------------
 				
 		// iniciamos sesion con usuario admin
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
