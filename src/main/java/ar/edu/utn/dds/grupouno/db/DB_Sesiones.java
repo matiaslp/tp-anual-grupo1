@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class DB_Sesiones {
 
-	private Map<String, String> diccionarioTokenUser;
+	private Map<String, String> listaSesiones;
 
 	private static DB_Sesiones instance = null;
 
@@ -21,27 +21,27 @@ public class DB_Sesiones {
 	}
 
 	public Map<String, String> getDiccionarioTokenUser() {
-		return diccionarioTokenUser;
+		return listaSesiones;
 	}
 
 	public void setDiccionarioTokenUser(Map<String, String> diccionarioTokenUser) {
-		this.diccionarioTokenUser = diccionarioTokenUser;
+		this.listaSesiones = diccionarioTokenUser;
 	}
 	
 	public void agregarTokenUser(String token, String user){
-		diccionarioTokenUser.put(token, user);
+		listaSesiones.put(token, user);
 	}
 	
 	public void removerTokenUser(String token, String user) {
-		diccionarioTokenUser.remove(token, user);
+		listaSesiones.remove(token, user);
 	}
 	
 	public void removerSesiones(String user) {
-		while (diccionarioTokenUser.values().remove(user));
+		while (listaSesiones.values().remove(user));
 	}
 	
 	public String validarToken(String token){
-		return diccionarioTokenUser.get(token);
+		return listaSesiones.get(token);
 	}
 
 }
