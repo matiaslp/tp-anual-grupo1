@@ -128,9 +128,9 @@ public class AuthAPI {
 		return hashear(stringGenerador);
 	}
 
-	public Boolean validarToken(String Token) {
+	public Boolean validarToken(String token) {
 
-		if (DB_Sesiones.getInstance().validarToken(Token) != null) {
+		if (DB_Sesiones.getInstance().validarToken(token) != null) {
 			return true;
 		}
 

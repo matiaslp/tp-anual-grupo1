@@ -34,12 +34,12 @@ public class TestProcesoAgregarAcciones {
 		fact.crearUsuario("terminal1", "123", Rol.TERMINAL);
 		
 		// creamos usuario admin y le agregamos la funcionalidad agregarAcciones
-		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
+		admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
 		
 		
 		// creamos usuario adminPrueba y le sacamos las funcionalidad cambiarEstadoMail actualizacionLocalesComerciales
-		Usuario adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
+		adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
 		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
 		Assert.assertFalse(adminPrueba.getFuncionalidad("cambiarEstadoMail")!=null);
@@ -47,7 +47,7 @@ public class TestProcesoAgregarAcciones {
 		
 		
 		// creamos usuario unUsuarioTerminal1 y le sacamos las funcionalidades busquedaPOI obtenerInfoPOI
-		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsuarioByName("terminal1");
+		unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsuarioByName("terminal1");
 		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
 		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
