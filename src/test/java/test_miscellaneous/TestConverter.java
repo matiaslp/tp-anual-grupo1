@@ -8,9 +8,9 @@ import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import abmc.POI_DTO;
-import abmc.consultaExterna.dtos.Banco_Converter;
-import abmc.consultaExterna.dtos.CGP_Converter;
+import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.Banco_Converter;
+import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.CGP_Converter;
+import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 
 public class TestConverter {
 

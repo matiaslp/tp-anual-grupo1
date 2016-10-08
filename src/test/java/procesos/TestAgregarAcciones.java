@@ -8,12 +8,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.AuthAPI;
-import autentification.Rol;
-import autentification.Usuario;
-import autentification.UsuariosFactory;
-import db.AgregarAccionesTransaction;
-import db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
+import ar.edu.utn.dds.grupouno.autentification.Rol;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
+import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.procesos.AgregarAcciones;
 
 public class TestAgregarAcciones {
 	DB_Usuarios db_usuario;
@@ -36,7 +37,7 @@ public class TestAgregarAcciones {
 	public void init() {
 		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
 		listadoAccionesQueEstanEnTerminal = new ArrayList<String>();
-		db_usuario = db.DB_Usuarios.getInstance();
+		db_usuario = ar.edu.utn.dds.grupouno.db.DB_Usuarios.getInstance();
 		unAuthAPI = AuthAPI.getInstance();
 		transaction = new AgregarAccionesTransaction(0);
 

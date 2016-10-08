@@ -10,15 +10,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import abmc.Historico;
-import abmc.POI_ABMC;
-import db.DB_HistorialBusquedas;
-import db.DB_POI;
-import db.RegistroHistorico;
-import poi.Banco;
-import poi.CGP;
-import poi.LocalComercial;
-import poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.abmc.Historico;
+import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
+import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
+import ar.edu.utn.dds.grupouno.db.poi.Banco;
+import ar.edu.utn.dds.grupouno.db.poi.CGP;
+import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
 
 public class TestABMC_Historico {
 	POI_ABMC abmc;

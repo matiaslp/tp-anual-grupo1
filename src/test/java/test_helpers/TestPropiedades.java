@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import helpers.LeerProperties;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 
 public class TestPropiedades {
 

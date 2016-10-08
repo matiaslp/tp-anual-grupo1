@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import helpers.LeerProperties;
-import helpers.LevDist;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
+import ar.edu.utn.dds.grupouno.helpers.LevDist;
 
 public class TestLevenstein {
 	String a, b, c, d, e;

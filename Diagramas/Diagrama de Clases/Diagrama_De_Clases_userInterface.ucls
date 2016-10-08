@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.10" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="userInterface.administrador" project="tp-anual" 
-    file="/tp-anual/src/main/java/userInterface/administrador.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="ar.edu.utn.dds.grupouno.userInterface.administrador" project="tp-anual" 
+    file="/tp-anual/src/main/java/ar/edu/utn/dds/grupouno/userInterface/administrador.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="67" y="57"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

@@ -6,8 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import email.EnviarEmail;
-import helpers.LeerProperties;
+import ar.edu.utn.dds.grupouno.email.EnviarEmail;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 
 public class TestEMailDeDistancia {
 

@@ -8,13 +8,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.AuthAPI;
-import autentification.Rol;
-import autentification.Usuario;
-import autentification.UsuariosFactory;
-import autentification.funciones.FuncAgregarAcciones;
-import db.AgregarAccionesTransaction;
-import db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
+import ar.edu.utn.dds.grupouno.autentification.Rol;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones;
+import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
+import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 
 public class TestProcesoAgregarAcciones {
 	DB_Usuarios db_usuario;

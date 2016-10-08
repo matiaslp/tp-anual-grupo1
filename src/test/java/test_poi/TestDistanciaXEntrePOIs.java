@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import poi.CGP;
-import poi.POI;
+import ar.edu.utn.dds.grupouno.db.poi.CGP;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
 
 public class TestDistanciaXEntrePOIs {
 	public POI poiUno;

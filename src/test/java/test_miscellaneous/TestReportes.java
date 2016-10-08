@@ -7,8 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import db.DB_HistorialBusquedas;
-import db.RegistroHistorico;
+import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 
 public class TestReportes {
 

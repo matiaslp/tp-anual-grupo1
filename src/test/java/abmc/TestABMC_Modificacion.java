@@ -4,11 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import abmc.POI_ABMC;
-import abmc.POI_DTO;
-import db.DB_POI;
-import poi.Rubro;
-import poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
+import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
+import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.poi.Rubro;
+import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
 
 public class TestABMC_Modificacion {
 	POI_ABMC abmc = new POI_ABMC();

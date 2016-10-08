@@ -7,15 +7,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.AuthAPI;
-import autentification.Rol;
-import autentification.Usuario;
-import autentification.UsuariosFactory;
-import autentification.funciones.FuncBajaPOIs;
-import db.DB_POI;
-import db.DB_Usuarios;
-import poi.Banco;
-import poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
+import ar.edu.utn.dds.grupouno.autentification.Rol;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
+import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.poi.Banco;
+import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 
 public class TestBajaPOI {
 

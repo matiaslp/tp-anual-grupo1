@@ -11,13 +11,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import abmc.POI_ABMC;
-import db.DB_POI;
-import poi.Banco;
-import poi.CGP;
-import poi.LocalComercial;
-import poi.POI;
-import poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
+import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.poi.Banco;
+import ar.edu.utn.dds.grupouno.db.poi.CGP;
+import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
 
 public class TestABMC_Consulta {
 	POI_ABMC abmc;

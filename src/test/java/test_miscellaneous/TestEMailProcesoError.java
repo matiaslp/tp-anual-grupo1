@@ -9,15 +9,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.Rol;
-import autentification.Usuario;
-import autentification.UsuariosFactory;
-import db.AgregarAccionesTransaction;
-import db.Resultado;
-import db.ResultadoProceso;
-import email.EnviarEmail;
-import helpers.LeerProperties;
-import procesos.AgregarAcciones;
+import ar.edu.utn.dds.grupouno.autentification.Rol;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
+import ar.edu.utn.dds.grupouno.db.Resultado;
+import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
+import ar.edu.utn.dds.grupouno.email.EnviarEmail;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
+import ar.edu.utn.dds.grupouno.procesos.AgregarAcciones;
 
 public class TestEMailProcesoError {
 

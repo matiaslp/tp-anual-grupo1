@@ -7,10 +7,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.AuthAPI;
-import autentification.Rol;
-import autentification.UsuariosFactory;
-import db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
+import ar.edu.utn.dds.grupouno.autentification.Rol;
+import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 
 public class TestLogin {
 	private DB_Usuarios DBU;

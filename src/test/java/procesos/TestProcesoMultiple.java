@@ -8,20 +8,21 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import autentification.AuthAPI;
-import autentification.Rol;
-import autentification.Usuario;
-import autentification.UsuariosFactory;
-import autentification.funciones.FuncActualizacionLocalesComerciales;
-import autentification.funciones.FuncAgregarAcciones;
-import autentification.funciones.FuncBajaPOIs;
-import autentification.funciones.FuncMultiple;
-import db.AgregarAccionesTransaction;
-import db.DB_POI;
-import db.DB_Usuarios;
-import poi.Banco;
-import poi.LocalComercial;
-import poi.POI;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
+import ar.edu.utn.dds.grupouno.autentification.Rol;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.autentification.funciones.FuncActualizacionLocalesComerciales;
+import ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones;
+import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
+import ar.edu.utn.dds.grupouno.autentification.funciones.FuncMultiple;
+import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
+import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.poi.Banco;
+import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.procesos.Proceso;
 
 public class TestProcesoMultiple {
 
@@ -45,7 +46,7 @@ public class TestProcesoMultiple {
 	public void init() {
 		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
 		listadoAccionesQueEstanEnTerminal = new ArrayList<String>();
-		db_usuario = db.DB_Usuarios.getInstance();
+		db_usuario = ar.edu.utn.dds.grupouno.db.DB_Usuarios.getInstance();
 		unAuthAPI = AuthAPI.getInstance();
 		transaction = new AgregarAccionesTransaction(0);
 

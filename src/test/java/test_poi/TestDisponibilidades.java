@@ -3,12 +3,12 @@ package test_poi;
 import org.junit.Before;
 import org.junit.Test;
 
-import poi.Banco;
-import poi.CGP;
-import poi.LocalComercial;
-import poi.NodoServicio;
-import poi.ParadaColectivo;
-import poi.Rubro;
+import ar.edu.utn.dds.grupouno.db.poi.Banco;
+import ar.edu.utn.dds.grupouno.db.poi.CGP;
+import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.db.poi.NodoServicio;
+import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.db.poi.Rubro;
 
 import java.util.Calendar;
 
