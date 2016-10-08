@@ -72,6 +72,11 @@ public class TestProcesoMultiple {
 		fact.crearUsuario("terminal1", "123", Rol.TERMINAL);
 	}
 	
+	
+	//-----------------------------------------------------------------------------------------------------------------
+	// Es importante saber que el archivo json debe tener la fecha de hoy para que el test corra bien
+	//-----------------------------------------------------------------------------------------------------------------
+	
 	@Test
 	public void procesoMultipleTest() {
 
@@ -155,7 +160,7 @@ public class TestProcesoMultiple {
 		// agregamos un proceso bajaPOIs
 		FuncBajaPOIs funcion2 = ((FuncBajaPOIs) admin.getFuncionalidad("bajaPOIs"));
 		Proceso proc2 = funcion2.prepDarDeBajaPOI(admin, tokenAdmin, 0, false, 
-				(new File (".").getAbsolutePath ()) + "/src/test/java/procesos/bajaPois.json");
+				(new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json");
 		listProc.add(proc2);
 
 		// agregamos un proceso actualizacionLocalesComerciales

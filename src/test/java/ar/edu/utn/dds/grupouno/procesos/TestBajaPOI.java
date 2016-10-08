@@ -31,6 +31,9 @@ public class TestBajaPOI {
 		fact.crearUsuario("admin", "123", Rol.ADMIN);
 	}
 
+	//-----------------------------------------------------------------------------------------------------------------
+	// Es importante saber que el archivo json debe tener la fecha de hoy para que el test corra bien
+	//-----------------------------------------------------------------------------------------------------------------
 	@Test
 	public void testBorrar() {
 		// Corro el proceso
@@ -58,7 +61,7 @@ public class TestBajaPOI {
 		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
 		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
 		
-		Assert.assertTrue(dbPOI.getPOIbyNombre("local1").dadoDeBaja());
-		Assert.assertTrue(dbPOI.getPOIbyNombre("banco1").dadoDeBaja());
+		Assert.assertNull(dbPOI.getPOIbyNombre("local1"));
+		Assert.assertNull(dbPOI.getPOIbyNombre("banco1"));
 	}
 }
