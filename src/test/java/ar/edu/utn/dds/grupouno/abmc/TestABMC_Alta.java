@@ -1,4 +1,4 @@
-package abmc;
+package ar.edu.utn.dds.grupouno.abmc;
 
 import org.junit.Assert;
 import org.junit.Before;

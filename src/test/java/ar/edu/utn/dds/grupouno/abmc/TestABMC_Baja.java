@@ -1,4 +1,4 @@
-package abmc;
+package ar.edu.utn.dds.grupouno.abmc;
 
 import org.joda.time.DateTime;
 import org.junit.Assert;

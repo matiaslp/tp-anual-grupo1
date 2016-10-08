@@ -1,4 +1,4 @@
-package abmc;
+package ar.edu.utn.dds.grupouno.abmc;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
