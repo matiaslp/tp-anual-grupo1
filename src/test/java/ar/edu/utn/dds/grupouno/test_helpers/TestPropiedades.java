@@ -1,4 +1,4 @@
-package test_helpers;
+package ar.edu.utn.dds.grupouno.test_helpers;
 
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package test_poi;
+package ar.edu.utn.dds.grupouno.test_poi;
 
 import org.junit.Before;
 import org.junit.Test;

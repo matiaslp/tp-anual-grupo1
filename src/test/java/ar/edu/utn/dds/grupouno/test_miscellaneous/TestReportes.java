@@ -1,4 +1,4 @@
-package test_miscellaneous;
+package ar.edu.utn.dds.grupouno.test_miscellaneous;
 
 import java.util.Map;
 
