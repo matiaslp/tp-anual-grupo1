@@ -149,7 +149,7 @@ public class TestProcesoMultiple {
 		// agregamos un proceso de AgregarAcciones
 		FuncAgregarAcciones funcion = ((FuncAgregarAcciones) admin.getFuncionalidad("agregarAcciones"));
 		Proceso proc1 = funcion.prepAgregarAcciones(admin, tokenAdmin, 0, false,
-				(new File(".").getAbsolutePath()) + "/src/test/java/procesos/accionesAAgregar");
+				(new File(".").getAbsolutePath()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/accionesAAgregar");
 		listProc.add(proc1);
 
 		// agregamos un proceso bajaPOIs
@@ -161,7 +161,7 @@ public class TestProcesoMultiple {
 		// agregamos un proceso actualizacionLocalesComerciales
 		FuncActualizacionLocalesComerciales funcion3 = ((FuncActualizacionLocalesComerciales) admin.getFuncionalidad("actualizacionLocalesComerciales"));
 		Proceso proc3 = funcion3.prepAgregarAcciones(admin, tokenAdmin, 0, false, 
-				(new File (".").getAbsolutePath ())+"/src/test/java/procesos/actualizarLocalesComerciales.txt");
+				(new File (".").getAbsolutePath ())+"/src/test/java/ar/edu/utn/dds/grupouno/procesos/actualizarLocalesComerciales.txt");
 		listProc.add(proc3);
 
 		// Ejecutamos el proceso multiple

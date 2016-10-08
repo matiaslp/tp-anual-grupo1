@@ -36,7 +36,7 @@ public class TestBajaPOI {
 		// Corro el proceso
 		// String filePath = (new File (".").getAbsolutePath ())+
 		// "\\src\\test\\java\\procesos\\bajaPois.json";
-		String filePath = (new File (".").getAbsolutePath ()) + "/src/test/java/procesos/bajaPois.json";
+		String filePath = (new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json";
 		// Creo los locales comerciales pero solo agrego el 1, esperando que los otros 2 los cree el proceso
 		LocalComercial local1 = new LocalComercial();
 		Banco banco1 = new Banco();

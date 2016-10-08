@@ -64,7 +64,7 @@ public class TestProcesoAgregarAcciones {
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(admin, tokenAdmin, 0, false, (new File (".").getAbsolutePath ())+"/src/test/java/procesos/accionesAAgregar");
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, (new File (".").getAbsolutePath ())+"/src/test/java/ar/edu/utn/dds/grupouno/procesos/accionesAAgregar");
 		
 		// Se valida que el usuario adminPrueba tiene las funcionalidades agregadas
 		Assert.assertTrue(adminPrueba.getFuncionalidad("cambiarEstadoMail")!=null);
@@ -80,7 +80,7 @@ public class TestProcesoAgregarAcciones {
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(admin, tokenAdmin, 0, false, (new File (".").getAbsolutePath ())+"/src/test/java/procesos/accionesAAgregar");
+		funcion.agregarAcciones(admin, tokenAdmin, 0, false, (new File (".").getAbsolutePath ())+"/src/test/java/ar/edu/utn/dds/grupouno/procesos/accionesAAgregar");
 		
 		// Se valida que el usuario adminPrueba tiene las funcionalidades agregadas
 		Assert.assertTrue(adminPrueba.getFuncionalidad("cambiarEstadoMail")!=null);
