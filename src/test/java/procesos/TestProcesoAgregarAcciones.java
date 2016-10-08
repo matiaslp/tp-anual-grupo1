@@ -53,15 +53,14 @@ public class TestProcesoAgregarAcciones {
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("obtenerInfoPOI")!=null);
 		
+		// iniciamos sesion con usuario admin
+		tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 
 	}
 
 	
 	@Test
 	public void agregarAccionesProcesoTest() {
-		
-		// iniciamos sesion con usuario admin
-		tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
@@ -78,9 +77,6 @@ public class TestProcesoAgregarAcciones {
 	
 	@Test
 	public void agregarAccionesProcessUndo() {
-		
-		// iniciamos sesion con usuario admin
-		tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
