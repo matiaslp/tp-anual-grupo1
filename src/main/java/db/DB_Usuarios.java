@@ -21,6 +21,17 @@ public class DB_Usuarios extends Accion {
 		}
 		return instance;
 	}
+	
+	public boolean deleteUsuario( long l) {
+		Usuario user = getUsuarioById(l);
+		if ( user != null) {
+			listaUsuarios.remove(user);
+			DB_Sesiones.getInstance().removerSesiones(user.getUsername());
+			return true;
+		}
+		return false;
+	}
+	
 
 	public boolean agregarUsuarioALista(Usuario user) {
 		for (Usuario usuario : getListaUsuarios()) {
@@ -52,7 +63,11 @@ public class DB_Usuarios extends Accion {
 
 	}
 	
-	public Usuario getUsuarioById(int terminal){
-		return this.listaUsuarios.get(terminal);
+	public Usuario getUsuarioById(long l){
+		for ( Usuario user : listaUsuarios ) {
+			if (user.getID() == l)
+				return user;
+		}
+		return null;
 	}
 }

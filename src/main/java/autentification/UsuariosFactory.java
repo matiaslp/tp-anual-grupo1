@@ -17,7 +17,11 @@ public class UsuariosFactory {
 			return null;
 		}else{
 			nuevoUsuario = new Usuario();
-			nuevoUsuario.setID(DB_Usuarios.getInstance().getListaUsuarios().size() + 1);
+			int size = DB_Usuarios.getInstance().getListaUsuarios().size();
+			if (size > 0)
+				nuevoUsuario.setID(DB_Usuarios.getInstance().getListaUsuarios().get(size-1).getID()+1);
+			else
+				nuevoUsuario.setID(1);
 			nuevoUsuario.setPassword(password);
 			nuevoUsuario.setUsername(username);
 			nuevoUsuario.setRol(rol);
@@ -41,7 +45,6 @@ public class UsuariosFactory {
 				funcionalidades.put("auditoria", AuthAPI.Acciones.get("auditoria"));
 			}
 			
-		//AGREGADO POR LUCAS
 			DB_Usuarios.getInstance().agregarUsuarioALista(nuevoUsuario);
 			return nuevoUsuario;
 		}

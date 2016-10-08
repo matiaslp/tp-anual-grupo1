@@ -3,6 +3,7 @@ package procesos;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,72 +19,49 @@ import db.DB_Usuarios;
 public class TestProcesoAgregarAcciones {
 	DB_Usuarios db_usuario;
 	AuthAPI unAuthAPI;
-	boolean encontrada;
-	boolean encontradaTodas;
-	boolean agregado;
-	Usuario unUsuarioAdmin;
-	Usuario unUsuarioTerminal;
-	Usuario unUsuarioAdmin2;
-	Usuario unUsuarioTerminal2;
 	UsuariosFactory fact = new UsuariosFactory();
-
-	private ArrayList<String> listadoAccionesQueEstanEnAdmin;
-	private ArrayList<String> listadoAccionesQueEstanEnTerminal;
+	Usuario admin, adminPrueba, unUsuarioTerminal1;
+	String tokenAdmin;
 
 	AgregarAccionesTransaction transaction;
 
 	@Before
 	public void init() {
-		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
-		listadoAccionesQueEstanEnTerminal = new ArrayList<String>();
-		db_usuario = db.DB_Usuarios.getInstance();
-		unAuthAPI = AuthAPI.getInstance();
-		transaction = new AgregarAccionesTransaction(0);
-
-		// PONER LAS SIGUIENTES LISTAS DE ACCIONES
-
-		listadoAccionesQueEstanEnTerminal.add("busquedaPOI");
-		listadoAccionesQueEstanEnTerminal.add("obtenerInfoPOI");
-
-		listadoAccionesQueEstanEnAdmin.add("busquedaPOI");
-		listadoAccionesQueEstanEnAdmin.add("obtenerInfoPOI");
-		listadoAccionesQueEstanEnAdmin.add("reporteBusquedaPorUsuario");
-		listadoAccionesQueEstanEnAdmin.add("reporteBusquedasPorFecha");
-		listadoAccionesQueEstanEnAdmin.add("reportecantidadResultadosPorTerminal");
-		listadoAccionesQueEstanEnAdmin.add("cambiarEstadoMail");
-		listadoAccionesQueEstanEnAdmin.add("actualizacionLocalesComerciales");
-		listadoAccionesQueEstanEnAdmin.add("agregarAcciones");
-		listadoAccionesQueEstanEnAdmin.add("bajaPOIs");
-		listadoAccionesQueEstanEnAdmin.add("procesoMultiple");
-
+		DB_Usuarios.getInstance();
+		AuthAPI.getInstance();
 		fact.crearUsuario("admin", "123", Rol.ADMIN);
-		fact.crearUsuario("terminal", "123", Rol.TERMINAL);
 		fact.crearUsuario("adminPrueba", "123", Rol.ADMIN);
 		fact.crearUsuario("terminal1", "123", Rol.TERMINAL);
-	}
-
-	
-	@Test
-	public void agregarAccionesProcesoTest() {
-		// creamos usuarios admin y adminPrueba y les agregamos funcionalidades
+		
+		// creamos usuario admin y le agregamos la funcionalidad agregarAcciones
 		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
-		Usuario adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
+		
+		
+		// creamos usuario adminPrueba y le sacamos las funcionalidad cambiarEstadoMail actualizacionLocalesComerciales
+		Usuario adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
 		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
 		Assert.assertFalse(adminPrueba.getFuncionalidad("cambiarEstadoMail")!=null);
 		Assert.assertFalse(adminPrueba.getFuncionalidad("actualizacionLocalesComerciales")!=null);
 		
 		
-		// creamos usuario unUsuarioTerminal1 y le sacamos funcionalidades
+		// creamos usuario unUsuarioTerminal1 y le sacamos las funcionalidades busquedaPOI obtenerInfoPOI
 		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsuarioByName("terminal1");
 		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
 		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("obtenerInfoPOI")!=null);
 		
+
+	}
+
+	
+	@Test
+	public void agregarAccionesProcesoTest() {
+		
 		// iniciamos sesion con usuario admin
-		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
+		tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
@@ -100,25 +78,9 @@ public class TestProcesoAgregarAcciones {
 	
 	@Test
 	public void agregarAccionesProcessUndo() {
-		// creamos usuarios admin y adminPrueba y les agregamos funcionalidades
-		Usuario adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
-		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
-		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
-		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
-		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
-		Assert.assertFalse(adminPrueba.getFuncionalidad("cambiarEstadoMail")!=null);
-		Assert.assertFalse(adminPrueba.getFuncionalidad("actualizacionComerciales")!=null);
-		
-		
-		// creamos usuario unUsuarioTerminal1 y le sacamos funcionalidades
-		Usuario unUsuarioTerminal1 = DB_Usuarios.getInstance().getUsuarioByName("terminal1");
-		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
-		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
-		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
-		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("obtenerInfoPOI")!=null);
 		
 		// iniciamos sesion con usuario admin
-		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
+		tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		
 		// usuario admin realiza la accion de ejecutar el proceso agregarAcciones
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
@@ -140,6 +102,15 @@ public class TestProcesoAgregarAcciones {
 		// Se valida que el usuario unUsuarioTerminal1 no tiene la funcionalidad agregada
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
 		
+	}
+	
+	@After
+	public void ending() {
+		
+		// Eliminamos los usuarios
+		DB_Usuarios.getInstance().deleteUsuario(admin.getID());
+		DB_Usuarios.getInstance().deleteUsuario(adminPrueba.getID());
+		DB_Usuarios.getInstance().deleteUsuario(unUsuarioTerminal1.getID());
 	}
 	
 	

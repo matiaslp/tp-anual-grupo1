@@ -32,6 +32,14 @@ public class DB_Sesiones {
 		diccionarioTokenUser.put(token, user);
 	}
 	
+	public void removerTokenUser(String token, String user) {
+		diccionarioTokenUser.remove(token, user);
+	}
+	
+	public void removerSesiones(String user) {
+		while (diccionarioTokenUser.values().remove(user));
+	}
+	
 	public String validarToken(String token){
 		return diccionarioTokenUser.get(token);
 	}

@@ -103,6 +103,12 @@ public class AuthAPI {
 
 		return null;
 	}
+	
+	public void cerrarSesion(String user, String token) {
+		
+		DB_Sesiones.getInstance().removerTokenUser(token, user);
+	}
+	
 
 	public String hashear(String string) throws NoSuchAlgorithmException {
 		// Esta funcion en una de esas quizas va en las comunes
