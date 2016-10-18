@@ -5,8 +5,6 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
-
 @ManagedBean
 public class LoginBean {
 	private String usuario;
