@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.10" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="abmc.POI_ABMC" project="tp-anual" 
-    file="/tp-anual/src/main/java/abmc/POI_ABMC.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="ar.edu.utn.dds.grupouno.abmc.POI_ABMC" project="tp-anual" 
+    file="/tp-anual/src/main/java/ar/edu/utn/dds/grupouno/abmc/POI_ABMC.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="461" y="-406"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="abmc.POI_DTO" project="tp-anual" file="/tp-anual/src/main/java/abmc/POI_DTO.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO" project="tp-anual" 
+    file="/tp-anual/src/main/java/ar/edu/utn/dds/grupouno/abmc/consultaExterna/dtos/POI_DTO.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="116" y="321"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
