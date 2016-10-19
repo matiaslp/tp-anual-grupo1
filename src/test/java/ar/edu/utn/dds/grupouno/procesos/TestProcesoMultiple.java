@@ -69,12 +69,7 @@ public class TestProcesoMultiple {
 		fact.crearUsuario("adminPrueba", "123", Rol.ADMIN);
 		fact.crearUsuario("terminal1", "123", Rol.TERMINAL);
 	}
-	
-	
-	//-----------------------------------------------------------------------------------------------------------------
-	// Es importante saber que el archivo json debe tener la fecha de hoy para que el test corra bien
-	//-----------------------------------------------------------------------------------------------------------------
-	
+		
 	@Test
 	public void procesoMultipleTest() {
 
@@ -110,12 +105,12 @@ public class TestProcesoMultiple {
 		Banco banco1 = new Banco();
 		
 		local1.setNombre("local1");
-		String[] etiquetas1 = { "matadero", "heladeria" };
+		String[] etiquetas1 = { "mataderos", "heladeria" };
 		local1.setEtiquetas(etiquetas1);
-		local1.setFechaBaja(new DateTime());
+		local1.setFechaBaja(new DateTime(2016,10,18,0,0));
 
 		banco1.setNombre("banco1");
-		banco1.setFechaBaja(new DateTime());
+		banco1.setFechaBaja(new DateTime(2016,10,18,0,0));
 
 		DB_POI.getInstance().agregarPOI(local1);
 		DB_POI.getInstance().agregarPOI(banco1);
@@ -138,7 +133,7 @@ public class TestProcesoMultiple {
 		local3.setEtiquetas(etiquetas3);
 				
 		local4.setNombre("local4");
-		String[] etiquetas4 = {"matadero", "heladeria"};
+		String[] etiquetas4 = {"mataderos", "heladeria"};
 		local4.setEtiquetas(etiquetas4);
 				
 		DB_POI.getInstance().agregarPOI(local3);
