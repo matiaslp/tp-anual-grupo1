@@ -78,14 +78,27 @@ public class DB_POI {
 		for (int i = listadoPOI.size(); i > 1 || i == 1; i--) {
 			//Si el POI coincide con la busqueda.
 			POI poi = listadoPOI.get(i-1);
-			if (poi.busquedaEstandar(valoresBusqueda)) {
-				for(DateTime fecha : fechasBaja){
-					if(poi.dadoDeBaja(fecha)){
-						resumen.put(poi.getId(), eliminarPOI(poi.getId()));
-						break;
-					}
+			int indexFechas=0;
+			for(String valor : valoresBusqueda){
+				String[] arrayValor = new String[1];
+				arrayValor[0] = valor;
+				if(poi.busquedaEstandar(arrayValor) && poi.dadoDeBaja(fechasBaja.get(indexFechas))){
+					resumen.put(poi.getId(), eliminarPOI(poi.getId()));
+					break;
 				}
+				indexFechas++;
 			}
+			
+			
+			
+			//if (poi.busquedaEstandar(valoresBusqueda)) {
+			//	for(DateTime fecha : fechasBaja){
+			//		if(poi.dadoDeBaja(fecha)){
+			//			resumen.put(poi.getId(), eliminarPOI(poi.getId()));
+			//			break;
+			//		}
+			//	}
+			//}
 		}
 		
 		return resumen;

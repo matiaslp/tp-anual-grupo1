@@ -20,29 +20,27 @@ public class TestBajaPOI {
 	Usuario unUsuarioAdmin;
 	AuthAPI Autenticador;
 	UsuariosFactory fact = new UsuariosFactory();
+	String filePath;
+	LocalComercial local1;
+	Banco banco1;
+	DateTime fecha;
+	Usuario admin;
+	String tokenAdmin;
+	FuncBajaPOIs funcion;
+	
 
+	
 	@Before
 	public void init() {
 		DB_POI.getInstance();
 		DB_POI.getListado().clear();
 		Autenticador = AuthAPI.getInstance();
 		fact.crearUsuario("admin", "123", Rol.ADMIN);
-	}
-
-	//-----------------------------------------------------------------------------------------------------------------
-	// Es importante saber que el archivo json debe tener la fecha de hoy para que el test corra bien
-	//-----------------------------------------------------------------------------------------------------------------
-	@Test
-	public void testBorrar() {
-		// Corro el proceso
-		// String filePath = (new File (".").getAbsolutePath ())+
-		// "\\src\\test\\java\\procesos\\bajaPois.json";
-		String filePath = (new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json";
-		// Creo los locales comerciales pero solo agrego el 1, esperando que los otros 2 los cree el proceso
-		LocalComercial local1 = new LocalComercial();
-		Banco banco1 = new Banco();
+		filePath = (new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json";
+		local1 = new LocalComercial();
+		banco1 = new Banco();
 		
-		DateTime fecha = new DateTime(2016,10,18,0,0);
+		fecha = new DateTime(2016,10,18,0,0);
 		
 		local1.setNombre("local1");
 		String[] etiquetas1 = { "matadero", "heladeria" };
@@ -55,13 +53,30 @@ public class TestBajaPOI {
 		DB_POI.getInstance().agregarPOI(local1);
 		DB_POI.getInstance().agregarPOI(banco1);
 
-		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
+		admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
-		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
-		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
+		tokenAdmin=AuthAPI.getInstance().iniciarSesion("admin", "123");
+		funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
+	}
+
+	@Test
+	public void testBorrarFechaOk() {
+
+		
 		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
 		
 		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("local1"));
 		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("banco1"));
+	}
+	
+	@Test
+	public void testBorrarFechasDistintas(){
+		DB_POI.getInstance().getPOIbyNombre("local1").setFechaBaja(new DateTime(1900,1,1,0,0));
+		
+		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
+		
+		Assert.assertNotNull(DB_POI.getInstance().getPOIbyNombre("local1"));
+		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("banco1"));
+		
 	}
 }

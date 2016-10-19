@@ -345,15 +345,17 @@ public abstract class POI {
 	}
 
 	public boolean buscarServicios(String filtro) {
-		for (NodoServicio servicio : servicios) {
-			if (LevDist.calcularDistancia(filtro, servicio.nombre)) {
-				return true;
-			} else if (MetodosComunes.isNumeric(filtro)) {
-				long filtroNumerico = Long.parseLong(filtro);
-				if (servicio.horaInicio < filtroNumerico && filtroNumerico < servicio.horaFin) {
+		if(servicios!=null){
+			for (NodoServicio servicio : servicios) {
+				if (LevDist.calcularDistancia(filtro, servicio.nombre)) {
 					return true;
-				} else if (servicio.listaDias.contains(filtroNumerico)) {
-					return true;
+				} else if (MetodosComunes.isNumeric(filtro)) {
+					long filtroNumerico = Long.parseLong(filtro);
+					if (servicio.horaInicio < filtroNumerico && filtroNumerico < servicio.horaFin) {
+						return true;
+					} else if (servicio.listaDias.contains(filtroNumerico)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -425,7 +427,7 @@ public abstract class POI {
 		if(!compararServicios(other)){
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -448,7 +450,7 @@ public abstract class POI {
 		}
 
 	}
-	
+
 	public boolean compararServicios(POI poi){
 		if(this.servicios == null && poi.servicios == null){
 			return true;
@@ -462,7 +464,7 @@ public abstract class POI {
 			for(int i = 0; i<this.servicios.size();i++){
 				NodoServicio nodoThisPoi = this.servicios.get(i);
 				NodoServicio nodoOtherPoi = poi.servicios.get(i);
-				
+
 				if(!nodoThisPoi.getName().equals(nodoOtherPoi.getName())){
 					return false;
 				}
@@ -502,7 +504,7 @@ public abstract class POI {
 	public void setEsLocal(boolean esLocal) {
 		this.esLocal = esLocal;
 	}
-	
-	
-	
+
+
+
 }

@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.grupouno.procesos;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -47,15 +48,9 @@ public class BajaPOIs extends Proceso {
 		try {
 			List<Item_Borrar> listadoItems = new ArrayList<Item_Borrar>();
 			
-			GsonBuilder gsonBuilder = new GsonBuilder();
-			gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
-			gsonBuilder.registerTypeAdapter(Item_Borrar.class, new ItemBorrarConstructor());
-			Gson gson = gsonBuilder.create();
+			Gson gson = generarGson();
 
-			JsonReader jsonReader = new JsonReader(new FileReader(filePath));
-			Type listType = new TypeToken<ArrayList<Item_Borrar>>() {
-			}.getType();
-			listadoItems = gson.fromJson(jsonReader, listType);
+			listadoItems = leerJson(gson,filePath);
 			
 			String[] valoresBusqueda = new String[listadoItems.size()];
 			List<String> valores = new ArrayList<String>();
@@ -102,5 +97,19 @@ public class BajaPOIs extends Proceso {
 		}
 		mensaje += " intentaron ser eliminados pero fallaron";
 		return mensaje;
+	}
+	
+	private Gson generarGson(){
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
+		gsonBuilder.registerTypeAdapter(Item_Borrar.class, new ItemBorrarConstructor());
+		return gsonBuilder.create();
+	}
+	
+	private List<Item_Borrar> leerJson(Gson gson, String filepath) throws FileNotFoundException{
+		JsonReader jsonReader = new JsonReader(new FileReader(filePath));
+		Type listType = new TypeToken<ArrayList<Item_Borrar>>() {
+		}.getType();
+		return gson.fromJson(jsonReader, listType);
 	}
 }
