@@ -47,21 +47,15 @@ public class BajaPOIs extends Proceso {
 		ResultadoProceso resultado = null;
 		try {
 			List<Item_Borrar> listadoItems = new ArrayList<Item_Borrar>();
-			
+
 			Gson gson = generarGson();
 
 			listadoItems = leerJson(gson,filePath);
-			
-			String[] valoresBusqueda = new String[listadoItems.size()];
-			List<String> valores = new ArrayList<String>();
-			List<DateTime> fechas = new ArrayList<DateTime>();
-			for (Item_Borrar item : listadoItems) {
-				valores.add(item.getParametro());
-				fechas.add(new DateTime(item.getFechaBorrado()));
-			}
-			valores.toArray(valoresBusqueda);
-			Map<Long, Boolean> resumen = dbPOI.bajaPoi(valoresBusqueda, fechas);
+
+			Map<Long, Boolean> resumen = darDeBaja(listadoItems);
 			end = new DateTime();
+			
+			
 			// Si el listado de resumen tiene algun elemento con value false
 			// significa que ese elemento no se pudo borrar
 			if (!resumen.containsValue(false)) {
@@ -98,18 +92,30 @@ public class BajaPOIs extends Proceso {
 		mensaje += " intentaron ser eliminados pero fallaron";
 		return mensaje;
 	}
-	
+
 	private Gson generarGson(){
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
 		gsonBuilder.registerTypeAdapter(Item_Borrar.class, new ItemBorrarConstructor());
 		return gsonBuilder.create();
 	}
-	
+
 	private List<Item_Borrar> leerJson(Gson gson, String filepath) throws FileNotFoundException{
 		JsonReader jsonReader = new JsonReader(new FileReader(filePath));
 		Type listType = new TypeToken<ArrayList<Item_Borrar>>() {
 		}.getType();
 		return gson.fromJson(jsonReader, listType);
+	}
+
+	private Map<Long,Boolean> darDeBaja(List<Item_Borrar> listadoItems){
+		String[] valoresBusqueda = new String[listadoItems.size()];
+		List<String> valores = new ArrayList<String>();
+		List<DateTime> fechas = new ArrayList<DateTime>();
+		for (Item_Borrar item : listadoItems) {
+			valores.add(item.getParametro());
+			fechas.add(new DateTime(item.getFechaBorrado()));
+		}
+		valores.toArray(valoresBusqueda);
+		return dbPOI.bajaPoi(valoresBusqueda, fechas);	
 	}
 }
