@@ -3,6 +3,7 @@
 	<name>UserInterfac</name>
 	<comment></comment>
 	<projects>
+		<project>tp-anual</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
