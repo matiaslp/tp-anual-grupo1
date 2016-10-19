@@ -1,9 +1,6 @@
 package ar.edu.utn.dds.grupouno.procesos;
 
 import java.io.File;
-import java.util.ArrayList;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,8 +24,9 @@ public class TestProcesoAgregarAcciones {
 
 	@Before
 	public void init() {
-		DB_Usuarios.getInstance();
+		DB_Usuarios.getInstance().getListaUsuarios().clear();
 		AuthAPI.getInstance();
+		
 		fact.crearUsuario("admin", "123", Rol.ADMIN);
 		fact.crearUsuario("adminPrueba", "123", Rol.ADMIN);
 		fact.crearUsuario("terminal1", "123", Rol.TERMINAL);
@@ -36,7 +34,6 @@ public class TestProcesoAgregarAcciones {
 		// creamos usuario admin y le agregamos la funcionalidad agregarAcciones
 		admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
-		
 		
 		// creamos usuario adminPrueba y le sacamos las funcionalidad cambiarEstadoMail actualizacionLocalesComerciales
 		adminPrueba = DB_Usuarios.getInstance().getUsuarioByName("adminPrueba");
@@ -99,16 +96,5 @@ public class TestProcesoAgregarAcciones {
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
 		
 	}
-	
-	@After
-	public void ending() {
-		
-		// Eliminamos los usuarios
-		DB_Usuarios.getInstance().deleteUsuario(admin.getID());
-		DB_Usuarios.getInstance().deleteUsuario(adminPrueba.getID());
-		DB_Usuarios.getInstance().deleteUsuario(unUsuarioTerminal1.getID());
-	}
-	
-	
 	
 }

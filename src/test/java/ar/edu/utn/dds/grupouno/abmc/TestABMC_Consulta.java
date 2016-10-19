@@ -23,21 +23,25 @@ public class TestABMC_Consulta {
 	POI_ABMC abmc;
 	String ServicioAPI;
 	DB_POI instance;
-	Banco banco = new Banco("Santander", 0, 0);
-	LocalComercial local = new LocalComercial("Localcito", 0, 0, null);
-	ParadaColectivo parada = new ParadaColectivo("47", 0, 0);
-	CGP cgp = new CGP("Mataderos", 0, 0);
+	Banco banco;
+	LocalComercial local;
+	ParadaColectivo parada ;
+	CGP cgp;
 
 	@Before
 	public void inicializar() {
 		abmc = new POI_ABMC();
 		instance = DB_POI.getInstance();
+		DB_POI.getListado().clear();
+		banco = new Banco("Santander", 0, 0);
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");
 		banco.setCallePrincipal("Alberdi");
 		banco.setCalleLateral("Escalada");
 		ServicioAPI = "http://trimatek.org/Consultas/";
-
+		local = new LocalComercial("Localcito", 0, 0, null);
+		parada = new ParadaColectivo("47", 0, 0);
+		cgp = new CGP("Mataderos", 0, 0);
 		instance.agregarPOI(cgp);
 		instance.agregarPOI(parada);
 		instance.agregarPOI(local);
@@ -70,7 +74,7 @@ public class TestABMC_Consulta {
 	public void testConsultaRemota() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 		lista = abmc.buscar(ServicioAPI, "Mataderos", 1);
-		Assert.assertTrue(lista.size() == 15);
+		Assert.assertTrue(lista.size() == 17); //2 POI locales Mataderos, 16 externos pero 1 repetido.
 	}
 
 	// deberia devolver 1 solo resultado, pero como el servicio remoto
@@ -88,7 +92,7 @@ public class TestABMC_Consulta {
 			throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", 1);
-		Assert.assertTrue(lista.size() == 16);
+		Assert.assertTrue(lista.size() == 18);//2 POI locales, 15 POI ext de CGP porque funciona mal y 1 Banco galicia externo
 	}
 
 	@Test

@@ -52,6 +52,7 @@ public class TestABMC_Baja {
 		poiDTOColectivo.setLatitud(-34.5664823);
 		poiDTOColectivo.setLongitud(-34.5664823);
 		
+		DB_POI.getListado().clear();
 		// Se crean 4 POIs (uno por cada tipo)
 		instancia.agregarPOI(poiDTOBanco.converttoPOI());
 		instancia.agregarPOI(poiDTOCGP.converttoPOI());

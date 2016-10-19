@@ -20,7 +20,6 @@ import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
 public class TestABMC_Timer {
 	POI_ABMC abmc;
 	String ServicioAPI;
-	DB_POI instancia;
 	
 	Banco banco = new Banco("Santander", 0, 0);
 	LocalComercial local = new LocalComercial("Localcito", 0, 0, null);
@@ -30,7 +29,8 @@ public class TestABMC_Timer {
 	@Before
 	public void inicializar() {
 		abmc = new POI_ABMC();
-		instancia = DB_POI.getInstance();
+		DB_POI.getInstance();
+		DB_POI.getListado().clear();
 
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");
@@ -41,10 +41,10 @@ public class TestABMC_Timer {
 
 	@Test
 	public void testTimer() throws JSONException, MalformedURLException, IOException, MessagingException {
-		instancia.agregarPOI(cgp);
-		instancia.agregarPOI(parada);
-		instancia.agregarPOI(local);
-		instancia.agregarPOI(banco);
+		DB_POI.getInstance().agregarPOI(cgp);
+		DB_POI.getInstance().agregarPOI(parada);
+		DB_POI.getInstance().agregarPOI(local);
+		DB_POI.getInstance().agregarPOI(banco);
 
 		// new timer
 		// El test verifica contra un tiempo prefijado, si la maquina que lo corre es muy veloz puede dar error, pero no significa que este mal el test.

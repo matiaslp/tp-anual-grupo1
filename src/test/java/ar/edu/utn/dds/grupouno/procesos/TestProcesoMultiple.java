@@ -26,7 +26,6 @@ import ar.edu.utn.dds.grupouno.procesos.Proceso;
 
 public class TestProcesoMultiple {
 
-	DB_Usuarios db_usuario;
 	AuthAPI unAuthAPI;
 	boolean encontrada;
 	boolean encontradaTodas;
@@ -46,7 +45,6 @@ public class TestProcesoMultiple {
 	public void init() {
 		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
 		listadoAccionesQueEstanEnTerminal = new ArrayList<String>();
-		db_usuario = ar.edu.utn.dds.grupouno.db.DB_Usuarios.getInstance();
 		unAuthAPI = AuthAPI.getInstance();
 		transaction = new AgregarAccionesTransaction(0);
 

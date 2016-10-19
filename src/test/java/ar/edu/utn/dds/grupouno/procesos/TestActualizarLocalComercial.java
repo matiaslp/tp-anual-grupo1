@@ -33,14 +33,14 @@ public class TestActualizarLocalComercial {
 	@Test
 	public void testActualizar(){
 		
-		String filePath = (new File (".").getAbsolutePath ())+"/src/test/java/procesos/actualizarLocalesComerciales.txt";
+		String filePath = (new File (".").getAbsolutePath ())+"/src/test/java/ar/edu/utn/dds/grupouno/procesos/actualizarLocalesComerciales.txt";
 
 		//Creo un local para corroborar que se actualizan los locales que ya existen:
-		LocalComercial local4 = new LocalComercial();
-		local4.setNombre("local1");
-		String[] etiquetas = {"matadero", "heladeria"};
-		local4.setEtiquetas(etiquetas);
-		dbPOI.agregarPOI(local4);
+		LocalComercial local1 = new LocalComercial();
+		local1.setNombre("local1");
+		String[] etiquetas = {"mataderos", "heladeria"};
+		local1.setEtiquetas(etiquetas);
+		dbPOI.agregarPOI(local1);
 		
 		//Creo los locales que espero obtener despues de ejecutar el proceso:
 		LocalComercial localEsperado2 = new LocalComercial();
