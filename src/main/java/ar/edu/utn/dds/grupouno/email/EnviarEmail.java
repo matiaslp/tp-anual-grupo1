@@ -72,8 +72,8 @@ public abstract class EnviarEmail {
 		return enviado;
 	}
 
-	public static boolean mandarCorreo(String texto, String titulo, String correoRecibe, String correoEnvia,
-			String claveCorreo) throws MessagingException {
+	public static boolean mandarCorreo(String texto, String titulo, String correoRecibe, final String correoEnvia,
+			final String claveCorreo) throws MessagingException {
 
 		Authenticator authenticator = new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
