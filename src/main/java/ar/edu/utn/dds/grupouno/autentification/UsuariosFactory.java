@@ -32,6 +32,7 @@ public class UsuariosFactory {
 			
 			Map<String, Accion> funcionalidades = new HashMap <String, Accion>();
 			if(rol.equals(Rol.ADMIN)){
+				AuthAPI.getInstance();
 				funcionalidades .put("bajaPOIs", AuthAPI.Acciones.get("bajaPOIs"));
 				funcionalidades.put("actualizacionLocalesComerciales", AuthAPI.Acciones.get("actualizacionLocalesComerciales"));
 				funcionalidades.put("procesoMultiple", AuthAPI.Acciones.get("procesoMultiple"));

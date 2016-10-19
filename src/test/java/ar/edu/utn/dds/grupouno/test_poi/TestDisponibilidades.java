@@ -111,6 +111,11 @@ public class TestDisponibilidades {
 		local.horas.add((long) 21);
 		local.horas.add((long) 22);
 		local.horas.add((long) 23);
+		local.horas.add((long) 0);
+		local.horas.add((long) 1);
+		local.horas.add((long) 2);
+		local.horas.add((long) 3);
+		local.horas.add((long) 4);
 	}
 
 	@Test
