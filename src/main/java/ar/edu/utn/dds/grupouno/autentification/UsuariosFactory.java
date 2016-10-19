@@ -31,8 +31,8 @@ public class UsuariosFactory {
 			nuevoUsuario.setAuditoriaActivada(true);
 			
 			Map<String, Accion> funcionalidades = new HashMap <String, Accion>();
+			AuthAPI.getInstance();
 			if(rol.equals(Rol.ADMIN)){
-				AuthAPI.getInstance();
 				funcionalidades .put("bajaPOIs", AuthAPI.Acciones.get("bajaPOIs"));
 				funcionalidades.put("actualizacionLocalesComerciales", AuthAPI.Acciones.get("actualizacionLocalesComerciales"));
 				funcionalidades.put("procesoMultiple", AuthAPI.Acciones.get("procesoMultiple"));
