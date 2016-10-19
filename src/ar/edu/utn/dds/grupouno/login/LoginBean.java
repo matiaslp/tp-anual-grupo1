@@ -1,4 +1,6 @@
-package com.tutorial;
+package ar.edu.utn.dds.grupouno.login;
+
+import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -31,7 +33,7 @@ public class LoginBean {
 		this.contrasena = contrasena;
 	}
 
-	public void login() {
+	public String login() {
 //		String msg = "";
 //		Severity severity = FacesMessage.SEVERITY_INFO;
 //		if (usuario.equals("dds") && contrasena.equals("dds")) {
@@ -59,6 +61,7 @@ public class LoginBean {
 			// Iniciamos sesion
 			FacesContext.getCurrentInstance().getExternalContext().
 			getSessionMap().put("username", user.getID());
+			return "success";
 			// error de logueo
 		} else {
 			msg = "Usuario no autorizado";
@@ -66,6 +69,7 @@ public class LoginBean {
 		}
 		FacesContext.getCurrentInstance().addMessage(null, 
 				new FacesMessage(severity, msg, null));
+		return "failure";
 	}
 	
 	public void cancelar(){
