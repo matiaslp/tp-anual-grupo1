@@ -1,3 +1,5 @@
 target/
 build/
 .metadata/
+.settings/
+META-INF/
