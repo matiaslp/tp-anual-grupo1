@@ -8,17 +8,30 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.utn.dds.grupouno.autentification.Rol;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 
 public class TestReportes {
 
 	private DB_HistorialBusquedas historial;
+	Usuario terminal;
+	UsuariosFactory fact;
 
 	@Before
 	public void init() {
 
 		historial = DB_HistorialBusquedas.getInstance();
+		
+		DB_Usuarios.getInstance();
+		
+		fact = new UsuariosFactory();
+		fact.crearUsuario("terminal", "123", Rol.TERMINAL);
+		terminal = DB_Usuarios.getInstance().getUsuarioByName("terminal");
+		terminal.setID(10);
 
 		DateTime time = new DateTime(2016, 1, 1, 1, 1);
 		RegistroHistorico registro = new RegistroHistorico(1, time, 10, "busqueda1", 10, 5);
@@ -78,6 +91,8 @@ public class TestReportes {
 
 	@Test
 	public void testReporteCantidadResultadosPorUsuario() {
+		fact.crearUsuario("otro", "admin", Rol.ADMIN);
+		DB_Usuarios.getInstance().getUsuarioByName("otro").setID(1);
 		Map<Long, Long> resultado = historial.reporteBusquedaPorUsuario();
 
 		// System.out.printf("\nIdUsuario cantidadResultados \n");
