@@ -4,6 +4,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
+	<managed-bean>
+		<managed-bean-name>actualizarLocales</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.ActualizarLocales</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>loginBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.login.LoginBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
@@ -12,10 +22,6 @@
 					<from-outcome>loginPage</from-outcome>
 					<to-view-id>/login.xhtml</to-view-id>
 				</navigation-case>
-   				<navigation-case>
-       				<from-outcome>success</from-outcome>
-       				<to-view-id>/welcome.xhtml</to-view-id>
-   				</navigation-case>
     			<navigation-case>
         			<from-outcome>failure</from-outcome>
         			<to-view-id>/login.xhtml</to-view-id>
@@ -51,6 +57,14 @@
 		<navigation-case>
 			<from-action>#{processes.agregaracciones}</from-action>
 			<to-view-id>/agregaracciones.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>login.xhtml</display-name>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
