@@ -5,14 +5,29 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
 	<managed-bean>
-		<managed-bean-name>actualizarLocales</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.ActualizarLocales</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
 		<managed-bean-name>loginBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.login.LoginBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>actualizarLocalesBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.ActualizarLocalesBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>cantidadReintentos</property-name>
+			<property-class>int</property-class>
+			<value></value>
+		</managed-property>
+		<managed-property>
+			<property-name>filePath</property-name>
+			<property-class>java.lang.String</property-class>
+			<value></value>
+		</managed-property>
+		<managed-property>
+			<property-name>enviarEmail</property-name>
+			<property-class>boolean</property-class>
+			<value></value>
+		</managed-property>
 	</managed-bean>
 
 	<navigation-rule>
