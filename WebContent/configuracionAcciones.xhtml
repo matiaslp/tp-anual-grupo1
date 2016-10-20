@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:growl id="msgs" showDetail="true" />
+		    <p:panel header="Acciones ante la busqueda" style="margin-bottom:10px;">
+		    	<h:panelGrid columns="2" cellpadding="5">
+		        	<p:selectOneMenu id="AccionSeleccionar" value="#{AccionesDeConsultaBean.accion}" style="width:150px">
+		            	<f:selectItems value="#{AccionesDeConsultaBean.accionesParaSeleccionar}" />
+		            </p:selectOneMenu>
+		            <p:commandButton value="Agregar" update="msgs" actionListener="#{AccionesDeConsultaBean.agregar}" icon="ui-icon-check">
+		            	<f:param name="accionElegida" value="AccionesDeConsultaBean.accion"></f:param>
+		            </p:commandButton>
+		        </h:panelGrid>
+		  		<p:separator />
+		
+		  		<p:dataTable var="acciones" value="#{AccionesDeConsultaBean.accionesSeleccionadas}">
+					<p:column headerText="Acciones">
+		    			<h:outputText value="#{acciones.nombre}" />
+		   			</p:column>
+		    		<p:column style="width:32px;text-align: center">
+		    			<p:commandButton value="Agregar" update="msgs" actionListener="#{AccionesDeConsultaBean.eliminar}" icon="ui-icon-check" >
+		    				<f:param name="accionesElegidas" value="acciones"></f:param>
+		    			</p:commandButton>
+		    		</p:column>
+		  		</p:dataTable>
+				<p:separator />
+				<p:commandButton value="OK" update="msgs" actionListener="#{AccionesDeConsultaBean.confirmar}" icon="ui-icon-check" />
+		  		<p:commandButton value="Cancelar" update="msgs" actionListener="#{AccionesDeConsultaBean.cancelar}" icon="ui-icon-check" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
