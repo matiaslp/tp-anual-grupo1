@@ -63,7 +63,7 @@ public class TestActualizarLocalComercial {
 		AuthAPI.getInstance().agregarFuncionalidad("actualizacionLocalesComerciales", admin);
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");
-		funcion.agregarAcciones(admin, tokenAdmin, 0, false, filePath);
+		funcion.actualizarLocales(admin, tokenAdmin, 0, false, filePath);
 
 		//Busco las modificaciones para corroborar que se corrio correctamente
 		POI local2Actualizado = dbPOI.getPOIbyNombre("local2");

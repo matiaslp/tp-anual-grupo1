@@ -18,7 +18,7 @@ public class FuncActualizacionLocalesComerciales extends Accion {
 		isProcess = true;
 	}
 
-	public void agregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
+	public void actualizarLocales(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			String filePath) {
 		if (validarsesion(user, Token)) {
 			ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales(cantidadReintentos,

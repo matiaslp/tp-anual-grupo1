@@ -21,6 +21,7 @@ import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 
+
 public class ActualizacionLocalesComerciales extends Proceso {
 
 	String filePath = "";
