@@ -1,7 +1,5 @@
 package ar.edu.utn.dds.grupouno.login;
 
-import java.io.Serializable;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
