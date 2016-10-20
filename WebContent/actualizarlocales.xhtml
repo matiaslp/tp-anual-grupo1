@@ -12,6 +12,19 @@
 	<ui:define name="content">
 	    <h:form>
 			<p:panel id="panel" header="Actualizacion de Locales Comerciales">
+			
+			<p/>
+			<p:inputText id="cantReintentos" value="#{BusquedaBean.textoLibre}" >Cantidad de Reintentos: 
+       		</p:inputText>
+			
+			<p/>
+			<p:selectBooleanButton id="enviarEmail" value="#{selectBooleanView.value1}" onLabel="Yes" offLabel="No" style="width:60px">Enviar eMail: 
+			</p:selectBooleanButton>
+
+			<p/>
+			<p:inputText id="filePath" value="#{BusquedaBean.textoLibre}" >FilePath: 
+        	</p:inputText>
+			
 			</p:panel>
 		</h:form>
 	</ui:define>
