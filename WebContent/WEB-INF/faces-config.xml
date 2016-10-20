@@ -12,22 +12,17 @@
 	<managed-bean>
 		<managed-bean-name>actualizarLocalesBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.ActualizarLocalesBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>cantidadReintentos</property-name>
-			<property-class>int</property-class>
-			<value></value>
-		</managed-property>
-		<managed-property>
-			<property-name>filePath</property-name>
-			<property-class>java.lang.String</property-class>
-			<value></value>
-		</managed-property>
-		<managed-property>
-			<property-name>enviarEmail</property-name>
-			<property-class>boolean</property-class>
-			<value></value>
-		</managed-property>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>bajaPoisBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.BajaPOIsBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>agregarAccionesBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.AgregarAccionesBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>
@@ -79,6 +74,38 @@
 		<from-view-id>/login.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>success</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>actualizarlocales.xhtml</display-name>
+		<from-view-id>/actualizarlocales.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>procesomultiple.xhtml</display-name>
+		<from-view-id>/procesomultiple.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>agregaracciones.xhtml</display-name>
+		<from-view-id>/agregaracciones.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>bajapois.xhtml</display-name>
+		<from-view-id>/bajapois.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
