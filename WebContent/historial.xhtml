@@ -25,10 +25,18 @@
         <p:inputText id="usuario" value="#{BusquedaBean.textoLibre}" >Usuario: 
         </p:inputText>
         <p/>
+        
+        <!--  De esta forma sin calendario
         <p:inputText id="fechaDesde" value="#{HistorialBusqueda.fechaDesde}"> Fecha Desde: 
-        </p:inputText>
+        </p:inputText> -->
+        <p:outputLabel for="fechaDesde" value="Fecha Desde:" />
+        <p:calendar id="fechaDesde" value="#{calendarView.date3}" showOn="button" />
+        
+        <!--  De esta forma sin calendario 
         <p:inputText id="fechaHasta" value="#{HistorialBusqueda.fechaHasta}"> Fecha Hasta: 
-        </p:inputText>
+        </p:inputText> -->
+        <p:outputLabel for="fechaHasta" value="Fecha Hasta:" />
+        <p:calendar id="fechaHasta" value="#{calendarView.date3}" showOn="button" />
      
      </h:form>
      <h:panelGrid columns="1" cellpadding="5">   
