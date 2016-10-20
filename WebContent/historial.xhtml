@@ -16,18 +16,23 @@
 <h:form>
     <p:outputPanel deferred="true">
         <h3>Criterio de busqueda</h3>
-        <p>Usuario</p>
     </p:outputPanel>
  </h:form>
-
-    <h:panelGrid columns="1" cellpadding="5">
+	
+    <h:form>
      <h:outputLabel for="usuario" value="" style="font-weight:bold" />
-        <p:inputText id="usuario" value="#{BusquedaBean.textoLibre}" />
+     	<p/>
+        <p:inputText id="usuario" value="#{BusquedaBean.textoLibre}" >Usuario: 
+        </p:inputText>
+        <p/>
+        <p:inputText id="fechaDesde" value="#{HistorialBusqueda.fechaDesde}"> Fecha Desde: 
+        </p:inputText>
+        <p:inputText id="fechaHasta" value="#{HistorialBusqueda.fechaHasta}"> Fecha Hasta: 
+        </p:inputText>
      
-     </h:panelGrid>
-     <h:panelGrid columns="2" cellpadding="5">   
-        <p:commandButton value="Agregar" update="display" icon="ui-icon-check" />
-        
+     </h:form>
+     <h:panelGrid columns="1" cellpadding="5">   
+             
         <p:commandButton value="Buscar" update="display"
          actionListener="#{BusquedaBean.init}"  icon="ui-icon-check" 
        />
