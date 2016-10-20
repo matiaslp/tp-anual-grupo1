@@ -109,6 +109,22 @@
 			<to-view-id>/welcome.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>processes</from-outcome>
+			<to-view-id>/processes.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>busqueda</from-outcome>
+			<to-view-id>/busqueda.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	
 	<lifecycle>
 		<phase-listener>ar.edu.utn.dds.grupouno.security.AuthorizationListener</phase-listener>
