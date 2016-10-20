@@ -21,4 +21,7 @@
         			<to-view-id>/login.xhtml</to-view-id>
     			</navigation-case>
 	</navigation-rule>
+	<lifecycle>
+		<phase-listener>ar.edu.utn.dds.grupouno.security.AuthorizationListener</phase-listener>
+	</lifecycle>
 </faces-config>

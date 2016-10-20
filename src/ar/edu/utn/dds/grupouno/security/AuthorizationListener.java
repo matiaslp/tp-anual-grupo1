@@ -12,17 +12,17 @@ public class AuthorizationListener implements PhaseListener {
 
 public void afterPhase(PhaseEvent event) {
 	
-//	FacesContext facesContext = event.getFacesContext();
-//	String currentPage = facesContext.getViewRoot().getViewId();
-//	
-//	boolean isLoginPage = (currentPage.lastIndexOf("login.xhtml") > -1);
-//	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-//	Object currentUser = session.getAttribute("username");
-//	 
-//	if (!isLoginPage && (currentUser == null || currentUser == "")) {
-//	NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
-//	nh.handleNavigation(facesContext, null, "loginPage");
-//	}
+	FacesContext facesContext = event.getFacesContext();
+	String currentPage = facesContext.getViewRoot().getViewId();
+	
+	boolean isLoginPage = (currentPage.lastIndexOf("login.xhtml") > -1);
+	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+	Object currentUser = session.getAttribute("username");
+	 
+	if (!isLoginPage && (currentUser == null || currentUser == "")) {
+	NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
+	nh.handleNavigation(facesContext, null, "loginPage");
+	}
 	
 	
 	
