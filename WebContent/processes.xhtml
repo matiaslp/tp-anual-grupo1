@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -12,15 +12,15 @@
 	    <h:form>
 			<p:panel id="panel" header="Procesos">
 				<p:messages id="msgs" />
-				<h:panelGrid columns="1" cellpadding="5" style="width:100%" layout="grid">
-					<p:commandButton value="Actualizacion de Locales Comerciales" style="width:50%" update="panel"
+				<h:panelGrid columns="1" cellpadding="5" style="width:50%" layout="grid">
+					<p:commandButton value="Actualizacion de Locales Comerciales" style="width:100%" update="panel"
 						action="actualizarlocales" />
-					<p:commandButton value="Baja de POIs" style="width:50%" update="panel"
+					<p:commandButton value="Baja de POIs"  style="width:100% " update="panel"
 						action="bajapois"/>
-					<p:commandButton value="Agregar Acciones a Usuarios" update="panel"
-						action="agregaracciones" style="width:50%"/>
-					<p:commandButton value="Proceso Multiple" update="panel"
-						action="procesomultiple" style="width:50%"/>
+					<p:commandButton value="Agregar Acciones a Usuarios" style="width:100%" update="panel"
+						action="agregaracciones" />
+					<p:commandButton value="Proceso Multiple" style="width:100%" update="panel"
+						action="procesomultiple" />
 					</h:panelGrid>
 			</p:panel>
 		</h:form>
