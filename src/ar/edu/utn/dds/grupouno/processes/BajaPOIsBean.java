@@ -45,7 +45,7 @@ public class BajaPOIsBean {
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
 		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
 		
-		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");
+		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
 		funcion.darDeBajaPOI(usuario, token, cantidadReintentos, enviarEmail, filePath);
 		return "index";
 	}

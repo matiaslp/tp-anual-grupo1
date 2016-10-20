@@ -44,7 +44,7 @@ public class AgregarAccionesBean {
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
 		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
 		
-		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");
+		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
 		funcion.agregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);
 		return "index";
 	}
