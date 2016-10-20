@@ -29,6 +29,21 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.acciones.AccionesDeConsultaBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>busquedaBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.busqueda.BusquedaBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>basicView</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.busqueda.BasicView</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>poi</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.busqueda.PoiService</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
