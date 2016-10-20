@@ -34,6 +34,7 @@
      <h:panelGrid columns="1" cellpadding="5">   
              
         <p:commandButton value="Buscar" update="display"
+         actionListener="#{BusquedaBean.init}"  icon="ui-icon-search" 
        />
         
         <h:outputText id="display" value="#{basicView.text}" />
