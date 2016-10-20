@@ -34,7 +34,6 @@
      <h:panelGrid columns="1" cellpadding="5">   
              
         <p:commandButton value="Buscar" update="display"
-         actionListener="#{BusquedaBean.init}"  icon="ui-icon-check" 
        />
         
         <h:outputText id="display" value="#{basicView.text}" />
@@ -64,10 +63,25 @@
     <h:outputText value="#{poi.direccion}" />
     </p:column>
     
- 
-   
+    <p:column style="width:32px;text-align: center">
+    	<p:commandButton update=":form:poiDetalle" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search" title="View">
+        	<f:setPropertyActionListener value="#{poi}" target="#{dtSelectionView.selectedPOI}" />
+    	</p:commandButton>
+    </p:column>
     
 </p:dataTable>
+    
+    <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+        <p:outputPanel id="poiDetalle" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty dtSelectionView.selectedPOI}" columnClasses="label,value">
+ 
+                <h:outputText value="POI:" />
+                <h:outputText value="#{dtSelectionView.selectedPOI.id}" />
+ 
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:overlayPanel>
+    
     
  </p:panel>   
 </h:form>
