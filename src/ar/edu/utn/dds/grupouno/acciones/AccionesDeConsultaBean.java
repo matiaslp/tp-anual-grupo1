@@ -1,42 +1,52 @@
 package ar.edu.utn.dds.grupouno.acciones;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 
 @ManagedBean(name="AccionesDeConsultaBean")
 @ViewScoped
 public class AccionesDeConsultaBean {
-	private List<Accion> accionesParaSeleccionar = new ArrayList<Accion>();
-	private List<Accion> accionesSeleccionadas = new ArrayList<Accion>();
-	private Accion accion = null;
+	private Set<String> accionesParaSeleccionar = new HashSet<String>();
+	private Set<String> accionesSeleccionadas = new HashSet<String>();
+	private String accion = null;
 	
 	@PostConstruct
     public void init() {
-        cars = service.createCars(10);
+		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
+		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
+
+		accionesParaSeleccionar = AuthAPI.getInstance().getAcciones().keySet();
     }
 	
-	public List<Accion> getAccionesParaSeleccionar() {
+	public Set<String> getAccionesParaSeleccionar() {
 		return accionesParaSeleccionar;
 	}
-	public void setAccionesParaSeleccionar(List<Accion> accionesParaSeleccionar) {
+	public void setAccionesParaSeleccionar(Set<String> accionesParaSeleccionar) {
 		this.accionesParaSeleccionar = accionesParaSeleccionar;
 	}
-	public List<Accion> getAccionesSeleccionadas() {
+	public Set<String> getAccionesSeleccionadas() {
 		return accionesSeleccionadas;
 	}
-	public void setAccionesSeleccionadas(List<Accion> accionesSeleccionadas) {
+	public void setAccionesSeleccionadas(Set<String> accionesSeleccionadas) {
 		this.accionesSeleccionadas = accionesSeleccionadas;
 	}
 	
-	public Accion getAccion() {
+	public String getAccion() {
 		return accion;
 	}
-	public void setAccion(Accion accion) {
+	public void setAccion(String accion) {
 		this.accion = accion;
 	}
 	
@@ -52,7 +62,7 @@ public class AccionesDeConsultaBean {
 		return "cancel";
 	}
 	
-	public void agregar(Accion accion){
+	public void agregar(String accion){
 		this.accionesSeleccionadas.add(accion);
 	}
 }
