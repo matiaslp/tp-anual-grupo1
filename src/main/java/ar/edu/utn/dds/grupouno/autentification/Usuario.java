@@ -14,10 +14,22 @@ public class Usuario {
 	private boolean mailHabilitado;
 	private boolean notificacionesActivadas;
 	private boolean auditoriaActivada;
+	private boolean log = true;
 
 	public Usuario() {
 	}
 	
+
+	public boolean isLog() {
+		return log;
+	}
+
+
+	public boolean setLog(boolean log) {
+		this.log = log;
+		return true;
+	}
+
 
 	public Rol getRol() {
 		return rol;
