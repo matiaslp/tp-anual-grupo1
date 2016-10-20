@@ -18,7 +18,7 @@ import org.json.JSONException;
 
  
 
-@ManagedBean(name="dtBasicView")
+@ManagedBean(name="BusquedaBean")
 @ViewScoped
 public class BusquedaBean  {
 	private String usuario;
