@@ -12,11 +12,15 @@
 	    <h:form>
 			<p:panel id="panel" header="Procesos">
 				<p:messages id="msgs" />
-				<h:panelGrid columns="3" cellpadding="5">
-				<p:commandButton value="actualizacion de Locales Comerciales" update="panel"
-					outcome=actualizarlocales icon="ui-icon-check" />
-					<p:commandButton value="Cancelar" update="panel"
-					action="#{loginBean.cancelar}" icon="ui-icon-check" />
+				<h:panelGrid columns="1" cellpadding="5" style="width=100%" layout="grid">
+					<p:commandButton value="Actualizacion de Locales Comerciales" style="width=100%" update="panel"
+						action="actualizarlocales" />
+					<p:commandButton value="Baja de POIs"  style="width=100%" update="panel"
+						action="bajapois"/>
+					<p:commandButton value="Agregar Acciones a Usuarios" update="panel"
+						action="agregaracciones" />
+					<p:commandButton value="Proceso Multiple" update="panel"
+						action="procesomultiple" />
 					</h:panelGrid>
 			</p:panel>
 		</h:form>
