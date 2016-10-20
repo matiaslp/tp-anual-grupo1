@@ -9,9 +9,25 @@
 		
 		
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+
 	<ui:define name="content">
 	    <h:form>
 			<p:panel id="panel" header="Agregar Acciones Para Todos Los Usuarios">
+			
+			<p/>
+			<p:inputText id="cantReintentos" value="#{agregarAccionesBean.cantidadReintentos}" >Cantidad de Reintentos: 
+       		</p:inputText>
+			
+			<p/>
+			<p:selectBooleanButton id="enviarEmail" value="#{agregarAccionesBean.enviarEmail}" onLabel="Yes" offLabel="No" style="width:60px">Enviar eMail: 
+			</p:selectBooleanButton>
+
+			<p/>
+			<p:inputText id="filePath" value="#{agregarAccionesBean.filePath}" >FilePath: 
+        	</p:inputText>
+        	<p/>
+			<p:commandButton value="Ejecutar" update="panel"
+					action="#{agregarAccionesBean.ejecutar}"/>
 			</p:panel>
 		</h:form>
 	</ui:define>

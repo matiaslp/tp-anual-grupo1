@@ -49,6 +49,8 @@ public class LoginBean {
 			// Iniciamos sesion
 			FacesContext.getCurrentInstance().getExternalContext().
 			getSessionMap().put("username", user.getUsername());	
+			FacesContext.getCurrentInstance().getExternalContext().
+			getSessionMap().put("token", token);	
 			return "success";
 			// error de logueo
 		} else {
