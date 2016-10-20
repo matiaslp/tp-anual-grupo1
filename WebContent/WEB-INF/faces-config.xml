@@ -80,10 +80,10 @@
 	<navigation-rule>
 		<display-name>configuracionAcciones.xhtml</display-name>
 		<from-view-id>/configuracionAcciones.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>cancel</from-outcome>
-			<to-view-id>/welcome.xhtml</to-view-id>
-		</navigation-case>
+				<navigation-case>
+        			<from-outcome>cancel</from-outcome>
+        			<to-view-id>/welcome.xhtml</to-view-id>
+    			</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<display-name>actualizarlocales.xhtml</display-name>

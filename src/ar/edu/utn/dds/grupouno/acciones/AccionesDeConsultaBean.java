@@ -15,6 +15,11 @@ public class AccionesDeConsultaBean {
 	private List<Accion> accionesSeleccionadas = new ArrayList<Accion>();
 	private Accion accion = null;
 	
+	@PostConstruct
+    public void init() {
+        cars = service.createCars(10);
+    }
+	
 	public List<Accion> getAccionesParaSeleccionar() {
 		return accionesParaSeleccionar;
 	}
