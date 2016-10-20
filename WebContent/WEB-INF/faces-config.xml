@@ -24,6 +24,11 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.AgregarAccionesBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>accionesDeConsultaBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.acciones.AccionesDeConsultaBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
