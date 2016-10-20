@@ -13,14 +13,15 @@
 <h:form>
     <p:growl id="msgs" showDetail="true" />
  
-    <p:panel header="Select a Location" style="margin-bottom:10px;">
+    <p:panel header="Acciones ante la busqueda" style="margin-bottom:10px;">
         <h:panelGrid columns="2" cellpadding="5">
             <p:selectOneMenu id="city" value="#{dropdownView.city}" style="width:150px">
-                <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true" />
+                <f:selectItem itemLabel="Generar log" itemValue="" noSelectionOption="true" />
                 <f:selectItems value="#{dropdownView.cities}" />
             </p:selectOneMenu>
+            <p:commandButton value="Agregar" update="msgs" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" />
         </h:panelGrid>
-  <p:commandButton value="Submit" update="msgs" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" />
+  
   
   <p:separator />
   
@@ -29,12 +30,14 @@
         <h:outputText value="#{car.color}" />
     </p:column>
     <p:column style="width:32px;text-align: center">
-             <p:commandButton update=":form:carDetail" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search" title="View">
-                <f:setPropertyActionListener value="#{car}" target="#{dtSelectionView.selectedCar}" />
-            </p:commandButton>
+             <p:commandButton value="Agregar" update="msgs" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" />
     </p:column>
 </p:dataTable>
 
+<p:separator />
+
+<p:commandButton value="OK" update="msgs" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" />
+<p:commandButton value="Cancelar" update="msgs" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" />
     </p:panel>
 
 </h:form>
