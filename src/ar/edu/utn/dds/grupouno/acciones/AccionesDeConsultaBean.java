@@ -43,8 +43,8 @@ public class AccionesDeConsultaBean {
 		this.accionesSeleccionadas.remove(accion);
 	}
 	
-	public void cancelar(){
-		
+	public String cancelar(){
+		return "cancel";
 	}
 	
 	public void agregar(Accion accion){

@@ -2,18 +2,13 @@ package ar.edu.utn.dds.grupouno.busqueda;
 
 
  
-import java.io.IOException;
-
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.mail.MessagingException;
+
 import ar.edu.utn.dds.grupouno.db.poi.POI;
-import org.json.JSONException;
 
 
  
@@ -31,10 +26,10 @@ public class BusquedaBean  {
     @ManagedProperty("#{poiService}")
     private PoiService service;
  
-    @PostConstruct
+    /*@PostConstruct
     public void init() throws JSONException, MalformedURLException, IOException, MessagingException {
         pois = service.busquedaPois(textoLibre,usuario);
-    }
+    }*/
      
    
  

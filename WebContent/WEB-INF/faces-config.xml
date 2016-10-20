@@ -82,7 +82,14 @@
 			<to-view-id>/welcome.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+	<navigation-rule>
+		<display-name>configuracionAcciones.xhtml</display-name>
+		<from-view-id>/configuracionAcciones.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<lifecycle>
 		<phase-listener>ar.edu.utn.dds.grupouno.security.AuthorizationListener</phase-listener>
 	</lifecycle>
