@@ -12,19 +12,34 @@
 	<ui:define name="content">
 <h:form>
 <p:panel id="panel" header="Busqueda">
-    <h:panelGrid columns="4" cellpadding="5">
-    
-        <h:outputLabel for="name" value="" style="font-weight:bold" />
+
+<h:form>
+    <p:outputPanel deferred="true">
+        <h3>Criterio de busqueda</h3>
+        <p>Nombre</p>
+    </p:outputPanel>
+ </h:form>
+
+    <h:panelGrid columns="1" cellpadding="5">
+     <h:outputLabel for="name" value="" style="font-weight:bold" />
         <p:inputText id="name" value="#{basicView.text}" />
         <h:outputLabel for="apellido" value="" style="font-weight:bold" />
         <p:inputText id="apellido" value="#{basicView.text1}" />
-        
+     </h:panelGrid>
+     <h:panelGrid columns="2" cellpadding="5">   
         <p:commandButton value="Agregar" update="display" icon="ui-icon-check" />
         
         <p:commandButton value="Buscar" update="display" icon="ui-icon-check" />
         
         <h:outputText id="display" value="#{basicView.text}" />
     </h:panelGrid>
+    
+    <h:form>
+    <p:outputPanel deferred="true">
+        <h3>Resultado</h3>
+        
+    </p:outputPanel>
+ </h:form>
     
 <p:dataTable var="poi" value="#{dtBasicView.poi}">
     <p:column headerText="Nombre">
