@@ -22,15 +22,13 @@
 
     <h:panelGrid columns="1" cellpadding="5">
      <h:outputLabel for="textoLibre" value="" style="font-weight:bold" />
-        <p:inputText id="textoLibre" value="#{BusquedaBean.textoLibre}" />
+        <p:inputText id="textoLibre" value="#{basicView.text}" />
      
      </h:panelGrid>
      <h:panelGrid columns="2" cellpadding="5">   
         <p:commandButton value="Agregar" update="display" icon="ui-icon-check" />
         
-        <p:commandButton value="Buscar" update="display"
-         actionListener="#{BusquedaBean.init}"  icon="ui-icon-check" 
-       />
+        <p:commandButton value="Buscar" update="display" icon="ui-icon-check" />
         
         <h:outputText id="display" value="#{basicView.text}" />
     </h:panelGrid>
