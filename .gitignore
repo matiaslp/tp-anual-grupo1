@@ -3,3 +3,7 @@ build/
 .metadata/
 .settings/
 META-INF/
+.settings/*
+.metadata/*
+target/*
+build/*
