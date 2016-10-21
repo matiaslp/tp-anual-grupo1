@@ -14,21 +14,21 @@
 			<p:growl id="msgs" showDetail="true" />
 		    <p:panel header="Acciones ante la busqueda" style="margin-bottom:10px;">
 		    	<h:panelGrid columns="2" cellpadding="5">
-		        	<p:selectOneMenu id="AccionSeleccionar" value="#{AccionesDeConsultaBean.accion}" style="width:150px">
-		            	<f:selectItems value="#{AccionesDeConsultaBean.accionesParaSeleccionar}" />
+		        	<p:selectOneMenu id="AccionSeleccionar" value="#{accionesDeConsultaBean.accion}" style="width:150px">
+		            	<f:selectItems value="#{accionesDeConsultaBean.accionesParaSeleccionar}" />
 		            </p:selectOneMenu>
-		            <p:commandButton value="Agregar" update="msgs" actionListener="#{AccionesDeConsultaBean.agregar}" icon="ui-icon-check">
-		            	<f:param name="accionElegida" value="AccionesDeConsultaBean.accion"></f:param>
+		            <p:commandButton value="Agregar" update="msgs" actionListener="#{accionesDeConsultaBean.agregar}" icon="ui-icon-check">
+		            	<f:param name="accionElegida" value="accionesDeConsultaBean.accion"></f:param>
 		            </p:commandButton>
 		        </h:panelGrid>
 		  		<p:separator />
 		
-		  		<p:dataTable var="acciones" value="#{AccionesDeConsultaBean.accionesSeleccionadas}">
+		  		<p:dataTable var="acciones" value="#{accionesDeConsultaBean.accionesSeleccionadas}">
 					<p:column headerText="Acciones">
 		    			<h:outputText value="#{acciones.nombre}" />
 		   			</p:column>
 		    		<p:column style="width:32px;text-align: center">
-		    			<p:commandButton value="Agregar" update="msgs" actionListener="#{AccionesDeConsultaBean.eliminar}" icon="ui-icon-check" >
+		    			<p:commandButton value="Agregar" update="msgs" actionListener="#{accionesDeConsultaBean.eliminar}" icon="ui-icon-check" >
 		    				<f:param name="accionesElegidas" value="acciones"></f:param>
 		    			</p:commandButton>
 		    		</p:column>
