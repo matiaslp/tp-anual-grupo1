@@ -33,17 +33,17 @@ public class UsuariosFactory {
 			Map<String, Accion> funcionalidades = new HashMap <String, Accion>();
 			AuthAPI.getInstance();
 			if(rol.equals(Rol.ADMIN)){
-				funcionalidades .put("bajaPOIs", AuthAPI.Acciones.get("bajaPOIs"));
-				funcionalidades.put("actualizacionLocalesComerciales", AuthAPI.Acciones.get("actualizacionLocalesComerciales"));
-				funcionalidades.put("procesoMultiple", AuthAPI.Acciones.get("procesoMultiple"));
-				funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
-				funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
-				funcionalidades.put("cambiarEstadoMail", AuthAPI.Acciones.get("cambiarEstadoMail"));
+				funcionalidades .put("bajaPOIs", AuthAPI.getInstance().getAcciones().get("bajaPOIs"));
+				funcionalidades.put("actualizacionLocalesComerciales", AuthAPI.getInstance().getAcciones().get("actualizacionLocalesComerciales"));
+				funcionalidades.put("procesoMultiple", AuthAPI.getInstance().getAcciones().get("procesoMultiple"));
+				funcionalidades.put("busquedaPOI", AuthAPI.getInstance().getAcciones().get("busquedaPOI"));
+				funcionalidades.put("obtenerInfoPOI", AuthAPI.getInstance().getAcciones().get("obtenerInfoPOI"));
+				funcionalidades.put("cambiarEstadoMail", AuthAPI.getInstance().getAcciones().get("cambiarEstadoMail"));
 			}else{
-				funcionalidades.put("busquedaPOI", AuthAPI.Acciones.get("busquedaPOI"));
-				funcionalidades.put("obtenerInfoPOI", AuthAPI.Acciones.get("obtenerInfoPOI"));
-				funcionalidades.put("notificacionBusquedaLarga", AuthAPI.Acciones.get("notificarBusquedaLarga"));
-				funcionalidades.put("auditoria", AuthAPI.Acciones.get("auditoria"));
+				funcionalidades.put("busquedaPOI", AuthAPI.getInstance().getAcciones().get("busquedaPOI"));
+				funcionalidades.put("obtenerInfoPOI", AuthAPI.getInstance().getAcciones().get("obtenerInfoPOI"));
+				funcionalidades.put("notificacionBusquedaLarga", AuthAPI.getInstance().getAcciones().get("notificarBusquedaLarga"));
+				funcionalidades.put("auditoria", AuthAPI.getInstance().getAcciones().get("auditoria"));
 			}
 			
 			DB_Usuarios.getInstance().agregarUsuarioALista(nuevoUsuario);
