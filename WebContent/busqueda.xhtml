@@ -20,17 +20,17 @@
     </p:outputPanel>
  </h:form>
 
-    <h:panelGrid columns="1" cellpadding="5">
-     <h:outputLabel for="textoLibre" value="" style="font-weight:bold" />
-        <p:inputText id="textoLibre" value="#{basicView.text}" />
-     
-     </h:panelGrid>
+
+					
+	<h:dataTable value="#{busquedaBean.items}" var="item">
+        <h:column><h:inputText value="#{item.value}" /></h:column>
+	</h:dataTable>
      <h:panelGrid columns="2" cellpadding="5">   
-        <p:commandButton value="Agregar" update="display" icon="ui-icon-check" />
+        <p:commandButton value="Agregar" update="panel" icon="ui-icon-check" 
+        action="#{busquedaBean.add}"/>
         
-        <p:commandButton value="Buscar" update="display" icon="ui-icon-search" />
+        <p:commandButton value="Buscar" update="panel" icon="ui-icon-search" />
         
-        <h:outputText id="display" value="#{basicView.text}" />
     </h:panelGrid>
     
     <h:form>
