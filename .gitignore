@@ -6,3 +6,5 @@ tp-anual.uml
 tp-anual.umlcd
 Workspace.java
 workspace.java
+bin/
+bin/*
