@@ -25,7 +25,7 @@
 				</h:dataTable>
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:commandButton value="Agregar" update="table" icon="ui-icon-check" action="#{busquedaBean.add}" />
-					<p:commandButton value="Buscar" update="panel" icon="ui-icon-search" />
+					<p:commandButton value="Buscar" update="panel" icon="ui-icon-search" action="#{busquedaBean.buscar}" />
 				</h:panelGrid>
 				<h:form>
 					<p:outputPanel deferred="true">
