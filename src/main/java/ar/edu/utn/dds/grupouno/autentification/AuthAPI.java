@@ -1,7 +1,6 @@
 package ar.edu.utn.dds.grupouno.autentification;
 
 import java.security.MessageDigest;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,8 +34,12 @@ public class AuthAPI {
 		return instance;
 	}
 
-	public static Map<String, Accion> Acciones;
+	private Map<String, Accion> Acciones;
 
+	public Map<String, Accion> getAcciones(){
+		return Acciones;
+	}
+	
 	public AuthAPI() {
 		Acciones = new HashMap<String, Accion>();
 		Acciones.put("reporteBusquedaPorUsuario", new FuncReporteBusquedaPorUsuario());
