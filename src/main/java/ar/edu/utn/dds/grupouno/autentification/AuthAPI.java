@@ -14,6 +14,7 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBusquedaPOI;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoAuditoria;
+import ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoGenerarLog;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoMail;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoNotificarBusquedaLarga;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncMultiple;
@@ -54,6 +55,7 @@ public class AuthAPI {
 		Acciones.put("procesoMultiple", new FuncMultiple());
 		Acciones.put("notificarBusquedaLarga", new FuncCambiarEstadoNotificarBusquedaLarga());
 		Acciones.put("auditoria", new FuncCambiarEstadoAuditoria());
+		Acciones.put("generarLog", new FuncCambiarEstadoGenerarLog());
 	}
 
 	

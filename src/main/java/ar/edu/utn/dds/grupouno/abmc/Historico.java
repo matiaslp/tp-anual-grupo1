@@ -48,11 +48,12 @@ class Historico implements Busqueda {
 				EnviarEmail.MandarCorreoXSegundosUsuarios(texto, segundos);
 			}
 
-		// Registrar busqueda
+		// Registrar busqueda si el log esta activado
 		// Se deja el id seteado en 0 hasta que se implemente hibernate
-		RegistroHistorico registro = new RegistroHistorico(0, now, userID, texto, resultado.size(), timer.getSeconds());
-		DB_HistorialBusquedas.getInstance().agregarHistorialBusqueda(registro);
-
+		if (DB_Usuarios.getInstance().getUsuarioById((int) userID).isLog()){
+			RegistroHistorico registro = new RegistroHistorico(0, now, userID, texto, resultado.size(), timer.getSeconds());
+			DB_HistorialBusquedas.getInstance().agregarHistorialBusqueda(registro);
+		}
 		return resultado;
 	}
 
