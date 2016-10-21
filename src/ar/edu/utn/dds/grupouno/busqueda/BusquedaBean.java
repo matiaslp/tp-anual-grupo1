@@ -3,25 +3,26 @@ package ar.edu.utn.dds.grupouno.busqueda;
 
  
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-
-
- 
 
 @ManagedBean(name="BusquedaBean")
 @ViewScoped
 public class BusquedaBean  {
-	private String usuario;
+	private int dataTableSize =1;
 	private String textoLibre;
-    
+    private List<Item> items;
 
+    public BusquedaBean() {
+    	items = new ArrayList<Item>();
+    	items.add(new Item());
+    }
 
-	private ArrayList<POI> pois;
      
     @ManagedProperty("#{poiService}")
     private PoiService service;
@@ -36,47 +37,30 @@ public class BusquedaBean  {
     public void setService(PoiService service) {
         this.service = service;
     }
-    
-
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-
 
 	public String getTextoLibre() {
 		return textoLibre;
 	}
 
-
-
 	public void setTextoLibre(String textoLibre) {
 		this.textoLibre = textoLibre;
 	}
 
-
-
-	public ArrayList<POI> getPois() {
-		return pois;
+	public List<Item> getItems() {
+		return items;
 	}
 
-
-
-	public void setPois(ArrayList<POI> pois) {
-		this.pois = pois;
+	public void setItems(List<Item> pois) {
+		this.items = pois;
 	}
-
-
 
 	public PoiService getService() {
 		return service;
 	}
 
+	public void add(){
+		items.add(new Item());
+		
+	}
 }
+
