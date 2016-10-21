@@ -7,3 +7,6 @@ META-INF/
 .metadata/*
 target/*
 build/*
+.classpath
+.classpath/
+.classpath/*
