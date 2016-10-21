@@ -10,3 +10,4 @@ build/*
 .classpath
 .classpath/
 .classpath/*
+.project
