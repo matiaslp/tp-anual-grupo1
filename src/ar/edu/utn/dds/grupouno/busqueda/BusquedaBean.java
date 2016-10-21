@@ -11,7 +11,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 
-@ManagedBean(name="BusquedaBean")
+@ManagedBean
 @ViewScoped
 public class BusquedaBean  {
 	private int dataTableSize =1;
