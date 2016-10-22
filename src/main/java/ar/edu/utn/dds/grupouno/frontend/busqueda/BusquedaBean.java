@@ -62,7 +62,5 @@ public class BusquedaBean  {
 		items.add(new Item());
 		
 	}
-	
-	public 
 }
 
