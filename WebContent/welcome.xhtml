@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+	    <h:form>
+			<p:panel id="panel" header="Acciones">
+				<p:messages id="msgs" />
+				<h:panelGrid columns="1" cellpadding="5" style="width:50%" layout="grid">
+					<p:commandButton value="Buscar POIs" style="width:100%" update="panel"
+						action="busqueda" />
+					<p:commandButton value="Obtener Informacion de POI" style="width:100%" update="panel"
+						action="obtenerInfo" />
+					<p:commandButton value="Procesos"  style="width:100% " update="panel"
+						action="processes"/>
+					<p:commandButton value="Reportes" style="width:100%" update="panel"
+						action="reportes" />
+					<p:commandButton value="Historial de Busquedas" style="width:100%" update="panel"
+						action="historial" />
+					<p:commandButton value="Cambiar Email" style="width:100%" update="panel"
+						action="cambiarEmail" />
+					</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
