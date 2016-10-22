@@ -64,7 +64,7 @@ public class DB_HistorialBusquedas {
 		return resumen;
 	}
 
-	// Reporte de busquedas parciales por terminal
+	// Reporte de busquedas parciales por terminal.
 	public Map<Long, Long> reporteCantidadResultadosPorTerminal(long terminal) {
 
 		Map<Long, Long> resumen = new HashMap<Long, Long>();
