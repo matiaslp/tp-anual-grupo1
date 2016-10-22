@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.security;
+package ar.edu.utn.dds.grupouno.frontend.security;
 
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;

@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.processes;
+package ar.edu.utn.dds.grupouno.frontend.processes;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -7,12 +7,12 @@ import javax.faces.context.FacesContext;
 
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones;
+import ar.edu.utn.dds.grupouno.autentification.funciones.FuncActualizacionLocalesComerciales;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 
 @ManagedBean
 @RequestScoped
-public class AgregarAccionesBean {
+public class ActualizarLocalesBean {
 	
 	private int cantidadReintentos;
 	private boolean enviarEmail;
@@ -44,8 +44,8 @@ public class AgregarAccionesBean {
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
 		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
 		
-		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);
+		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");
+		funcion.actualizarLocales(usuario, token, cantidadReintentos, enviarEmail, filePath);
 		return "index";
 	}
 

@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.busqueda;
+package ar.edu.utn.dds.grupouno.frontend.busqueda;
 
 
 

@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.login;
+package ar.edu.utn.dds.grupouno.frontend.login;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
