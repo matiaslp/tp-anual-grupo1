@@ -6,47 +6,47 @@
     version="2.2">
 	<managed-bean>
 		<managed-bean-name>loginBean</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.login.LoginBean</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.login.LoginBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>actualizarLocalesBean</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.ActualizarLocalesBean</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.ActualizarLocalesBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>bajaPoisBean</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.BajaPOIsBean</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.BajaPOIsBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>agregarAccionesBean</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.processes.AgregarAccionesBean</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.AgregarAccionesBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>accionesDeConsultaBean</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.acciones.AccionesDeConsultaBean</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.acciones.AccionesDeConsultaBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>busquedaBean</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.busqueda.BusquedaBean</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.BusquedaBean</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>basicView</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.busqueda.BasicView</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.BasicView</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>poi</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.busqueda.PoiService</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.PoiService</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>item</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.busqueda.Item</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.Item</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
 
@@ -168,6 +168,6 @@
 	</navigation-rule>
 	
 	<lifecycle>
-		<phase-listener>ar.edu.utn.dds.grupouno.security.AuthorizationListener</phase-listener>
+		<phase-listener>ar.edu.utn.dds.grupouno.frontend.security.AuthorizationListener</phase-listener>
 	</lifecycle>
 </faces-config>
