@@ -42,7 +42,7 @@ public class DB_POI {
 	public boolean agregarPOI(POI nuevoPOI) {
 		try {
 			// testear
-			nuevoPOI.setId(listadoPOI.size() + 1);
+		//	nuevoPOI.setId(listadoPOI.size() + 1);
 			listadoPOI.add(nuevoPOI);
 			return true;
 		} catch (Exception ex) {

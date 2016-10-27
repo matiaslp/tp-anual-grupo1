@@ -2,17 +2,23 @@ package ar.edu.utn.dds.grupouno.db.poi;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
+import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
-public abstract class POI {
+@Entity
+@Table(name = "POI")
+public abstract class POI extends Persistible{
 
-	protected long id;
-	protected String nombre;
 	protected String callePrincipal;
 	protected String calleLateral;
 	protected long numeracion;
@@ -75,13 +81,6 @@ public abstract class POI {
 			return true;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 
 	public String getCallePrincipal() {
 		return callePrincipal;
@@ -256,14 +255,6 @@ public abstract class POI {
 			}
 
 		return false;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public DateTime getFechaBaja() {

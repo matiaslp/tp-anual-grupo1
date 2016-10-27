@@ -19,9 +19,9 @@ public class UsuariosFactory {
 			nuevoUsuario = new Usuario();
 			int size = DB_Usuarios.getInstance().getListaUsuarios().size();
 			if (size > 0)
-				nuevoUsuario.setID(DB_Usuarios.getInstance().getListaUsuarios().get(size-1).getID()+1);
+				nuevoUsuario.setId(DB_Usuarios.getInstance().getListaUsuarios().get(size-1).getId()+1);
 			else
-				nuevoUsuario.setID(1);
+				nuevoUsuario.setId(1L);
 			nuevoUsuario.setPassword(password);
 			nuevoUsuario.setUsername(username);
 			nuevoUsuario.setRol(rol);

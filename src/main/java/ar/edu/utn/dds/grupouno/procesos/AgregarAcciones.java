@@ -43,7 +43,7 @@ public class AgregarAcciones extends Proceso {
 		ArrayList<String> listadoAcciones = new ArrayList<String>();
 		FileReader fr = null;
 		// Creamos la Transaccion
-		AgregarAccionesTransaction transaction = new AgregarAccionesTransaction(user.getID());
+		AgregarAccionesTransaction transaction = new AgregarAccionesTransaction(user.getId());
 		// REVISA SI EXISTE O NO Y SI SE PUEDE LEER O NO
 		try {
 
@@ -79,7 +79,7 @@ public class AgregarAcciones extends Proceso {
 			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
 			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
 					"Acciones inexistentes: " + accionesInexistentes + "\n";
-			ResultadoProceso resultado = new ResultadoProceso(start, end, this, user.getID(),
+			ResultadoProceso resultado = new ResultadoProceso(start, end, this, user.getId(),
 					"FileNotFoundException:No existe archivo " + filePath + "\n" + mensaje, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
@@ -92,7 +92,7 @@ public class AgregarAcciones extends Proceso {
 			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
 			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
 					"Acciones inexistentes: " + accionesInexistentes + "\n";
-			ResultadoProceso resultado = new ResultadoProceso(start, end, this, user.getID(),
+			ResultadoProceso resultado = new ResultadoProceso(start, end, this, user.getId(),
 					"IOException:No se puede leer archivo " + filePath + "\n" + mensaje , Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
@@ -105,11 +105,11 @@ public class AgregarAcciones extends Proceso {
 		// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
 		ResultadoProceso resultado;
 		if (usuariosInexistentes == null || accionesInexistentes == null)
-			resultado = new ResultadoProceso(start, end, this, user.getID(), null, Resultado.OK);
+			resultado = new ResultadoProceso(start, end, this, user.getId(), null, Resultado.OK);
 		else {
 			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
 		"Acciones inexistentes: " + accionesInexistentes + "\n";
-			resultado = new ResultadoProceso(start, end, this, user.getID(), mensaje, Resultado.ERROR);
+			resultado = new ResultadoProceso(start, end, this, user.getId(), mensaje, Resultado.ERROR);
 		}
 		DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 		return resultado;
@@ -120,7 +120,7 @@ public class AgregarAcciones extends Proceso {
 
 		// obtenemos la ultima transaccion de este usuario
 		AgregarAccionesTransaction transaction = DB_AgregarAccionesTransaction.getInstance()
-				.getLastTransactionByUser(user.getID());
+				.getLastTransactionByUser(user.getId());
 		// obtenemos la lista de cambios de la transaccion y la recorremos
 		ArrayList<String> listadoCambios = transaction.getListadoCambios();
 		for ( String cambio : listadoCambios) {

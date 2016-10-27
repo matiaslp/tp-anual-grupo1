@@ -3,12 +3,20 @@ package ar.edu.utn.dds.grupouno.autentification;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Usuario {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import ar.edu.utn.dds.grupouno.modelo.Persistible;
+
+@Entity
+@Table(name = "Usuario")
+public class Usuario extends Persistible{
 
 	private Rol rol;
 	private String username;
 	private String password;
-	private long id;
 	private Map<String, Accion> funcionalidades;
 	private String correo;
 	private boolean mailHabilitado;
@@ -53,14 +61,6 @@ public class Usuario {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public long getID() {
-		return id;
-	}
-
-	public void setID(long unId) {
-		id = unId;
 	}
 
 	public Map<String, Accion> getFuncionalidades() {

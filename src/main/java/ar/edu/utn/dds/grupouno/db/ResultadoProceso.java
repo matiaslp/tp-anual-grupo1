@@ -1,11 +1,20 @@
 package ar.edu.utn.dds.grupouno.db;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
 
+@Entity
+@Table(name = "ResultadoProcesos")
 public class ResultadoProceso {
 
+	@Id
+	@GeneratedValue
 	private long id;
 	private DateTime inicioEjecucion;
 	private DateTime finEjecucion;

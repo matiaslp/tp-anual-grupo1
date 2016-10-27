@@ -35,7 +35,7 @@ public class DB_Usuarios extends Accion {
 
 	public boolean agregarUsuarioALista(Usuario user) {
 		for (Usuario usuario : getListaUsuarios()) {
-			if (user.getUsername().equals(usuario.getUsername()) || user.getID() == usuario.getID()) {
+			if (user.getUsername().equals(usuario.getUsername()) || user.getId() == usuario.getId()) {
 				return false;
 			}
 		}
@@ -65,7 +65,7 @@ public class DB_Usuarios extends Accion {
 	
 	public Usuario getUsuarioById(long l){
 		for ( Usuario user : listaUsuarios ) {
-			if (user.getID() == l)
+			if (user.getId() == l)
 				return user;
 		}
 		return null;

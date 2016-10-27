@@ -1,9 +1,18 @@
 package ar.edu.utn.dds.grupouno.db;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.joda.time.DateTime;
 
+@Entity
+@Table(name = "Historial")
 public class RegistroHistorico {
 
+	@Id
+	@GeneratedValue
 	private long id;
 	private DateTime time;
 	private long userID;

@@ -29,7 +29,7 @@ public class FuncBusquedaPOI extends Accion {
 		ArrayList<POI> resultado = null;
 		if (validarsesion(user, Token)) {
 			try {
-				resultado = POI_ABMC.getInstance().buscar(url, texto, user.getID());
+				resultado = POI_ABMC.getInstance().buscar(url, texto, user.getId());
 			} catch (JSONException | IOException | MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

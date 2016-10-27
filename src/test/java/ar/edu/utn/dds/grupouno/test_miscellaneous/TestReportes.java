@@ -31,7 +31,7 @@ public class TestReportes {
 		fact = new UsuariosFactory();
 		fact.crearUsuario("terminal", "123", Rol.TERMINAL);
 		terminal = DB_Usuarios.getInstance().getUsuarioByName("terminal");
-		terminal.setID(10);
+		terminal.setId(10L);
 
 		DateTime time = new DateTime(2016, 1, 1, 1, 1);
 		RegistroHistorico registro = new RegistroHistorico(1, time, 10, "busqueda1", 10, 5);
@@ -92,7 +92,7 @@ public class TestReportes {
 	@Test
 	public void testReporteCantidadResultadosPorUsuario() {
 		fact.crearUsuario("otro", "admin", Rol.ADMIN);
-		DB_Usuarios.getInstance().getUsuarioByName("otro").setID(1);
+		DB_Usuarios.getInstance().getUsuarioByName("otro").setId(1L);
 		Map<Long, Long> resultado = historial.reporteBusquedaPorUsuario();
 
 		// System.out.printf("\nIdUsuario cantidadResultados \n");
