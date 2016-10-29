@@ -17,7 +17,7 @@ public class Usuario extends Persistible{
 	private Rol rol;
 	private String username;
 	private String password;
-	private Map<String, Accion> funcionalidades;
+//	private Map<String, Accion> funcionalidades;
 	private String correo;
 	private boolean mailHabilitado;
 	private boolean notificacionesActivadas;
@@ -63,23 +63,23 @@ public class Usuario extends Persistible{
 		this.password = password;
 	}
 
-	public Map<String, Accion> getFuncionalidades() {
-		return funcionalidades;
-	}
+//	public Map<String, Accion> getFuncionalidades() {
+//		return funcionalidades;
+//	}
 
-	public Map<String, Accion> getProceses() {
-		Map<String, Accion> resultado = new HashMap<String, Accion>();
+//	public Map<String, Accion> getProceses() {
+//		Map<String, Accion> resultado = new HashMap<String, Accion>();
+//
+//		for (Map.Entry<String, Accion> accion : funcionalidades.entrySet()) {
+//			if (accion.getValue().isProcess())
+//				resultado.put(accion.getKey(), accion.getValue());
+//		}
+//		return resultado;
+//	}
 
-		for (Map.Entry<String, Accion> accion : funcionalidades.entrySet()) {
-			if (accion.getValue().isProcess())
-				resultado.put(accion.getKey(), accion.getValue());
-		}
-		return resultado;
-	}
-
-	public void setFuncionalidades(Map<String, Accion> funcionalidades) {
-		this.funcionalidades = funcionalidades;
-	}
+//	public void setFuncionalidades(Map<String, Accion> funcionalidades) {
+//		this.funcionalidades = funcionalidades;
+//	}
 
 	public String getCorreo() {
 		return correo;
@@ -97,13 +97,13 @@ public class Usuario extends Persistible{
 		}
 	}
 	
-	public void agregarFuncionalidad(String funcionalidad, Accion func){
-		funcionalidades.put(funcionalidad, func);
-	}
-
-	public Accion getFuncionalidad(String funcionalidad){
-		return funcionalidades.get(funcionalidad);
-	}
+//	public void agregarFuncionalidad(String funcionalidad, Accion func){
+//		funcionalidades.put(funcionalidad, func);
+//	}
+//
+//	public Accion getFuncionalidad(String funcionalidad){
+//		return funcionalidades.get(funcionalidad);
+//	}
 	
 	public boolean isMailHabilitado() {
 		return mailHabilitado;

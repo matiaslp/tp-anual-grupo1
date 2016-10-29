@@ -79,4 +79,7 @@ public class RegistroHistorico {
 		this.tiempoDeConsulta = tiempoDeConsulta;
 	}
 
+	public RegistroHistorico() {
+		
+	}
 }

@@ -2,9 +2,13 @@ package ar.edu.utn.dds.grupouno.db.poi;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
@@ -17,7 +21,7 @@ import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
 @Entity
 @Table(name = "POI")
-public abstract class POI extends Persistible{
+public class POI extends Persistible{
 
 	protected String callePrincipal;
 	protected String calleLateral;
@@ -30,6 +34,8 @@ public abstract class POI extends Persistible{
 	protected String barrio;
 	protected String provincia;
 	protected String pais;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "georef_id", referencedColumnName = "id")
 	protected GeoLocation ubicacion;
 	protected long comuna;	// define cuando otro punto es cercano.
 	protected long cercania = 500;
@@ -495,7 +501,9 @@ public abstract class POI extends Persistible{
 	public void setEsLocal(boolean esLocal) {
 		this.esLocal = esLocal;
 	}
-
+ public POI() {
+	 
+ }
 
 
 }
