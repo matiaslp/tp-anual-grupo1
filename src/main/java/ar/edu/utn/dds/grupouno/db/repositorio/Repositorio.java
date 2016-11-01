@@ -5,6 +5,8 @@ import javax.persistence.EntityManager;
 public class Repositorio {
 	private Usuarios usuarios;
 	private Pois pois;
+	private ResultadosProcesos resultadosProcesos;
+	private RegistrosHistoricos registroHistorico;
 	protected EntityManager em;
 
 	public Repositorio(EntityManager em) {
@@ -23,6 +25,13 @@ public class Repositorio {
 			pois = new Pois(em);
 		}
 		return pois;
+	}
+	
+	public ResultadosProcesos resultadosProcesos() {
+		if (resultadosProcesos == null) {
+			resultadosProcesos = new ResultadosProcesos(em);
+		}
+		return resultadosProcesos;
 	}
 
 	public void cerrar() {
