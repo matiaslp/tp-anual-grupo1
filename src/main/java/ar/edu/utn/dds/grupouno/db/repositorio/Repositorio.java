@@ -6,7 +6,7 @@ public class Repositorio {
 	private Usuarios usuarios;
 	private Pois pois;
 	private ResultadosProcesos resultadosProcesos;
-//	private RegistrosHistoricos registroHistorico;
+	private RegistrosHistoricos registroHistorico;
 	protected EntityManager em;
 
 	public Repositorio(EntityManager em) {
@@ -32,6 +32,12 @@ public class Repositorio {
 			resultadosProcesos = new ResultadosProcesos(em);
 		}
 		return resultadosProcesos;
+	}
+	public RegistrosHistoricos resultadosRegistrosHistoricos() {
+		if (registroHistorico == null) {
+			registroHistorico = new RegistrosHistoricos(em);
+		}
+		return registroHistorico;
 	}
 
 	public void cerrar() {
