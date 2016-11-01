@@ -11,15 +11,13 @@ import javax.persistence.Table;
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
 
 @Entity
 @Table(name = "Historial")
-public class RegistroHistorico {
+public class RegistroHistorico extends Persistible {
 
-	@Id
-	@GeneratedValue
-	private long id;
 	private DateTime time;
 	private long userID;
 	private String busqueda;

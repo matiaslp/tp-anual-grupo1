@@ -7,18 +7,16 @@ import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
+import ar.edu.utn.dds.grupouno.modelo.Persistible;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
 
 @Entity
-@Table(name = "ResultadoProcesos")
-public class ResultadoProceso {
+@Table(name = "ResultadoProceso")
+public class ResultadoProceso extends Persistible{
 
-	@Id
-	@GeneratedValue
-	private long id;
 	private DateTime inicioEjecucion;
 	private DateTime finEjecucion;
-//	Proceso proc;
+	Proceso proc;
 	private long userID;
 	Resultado resultado;
 	String mensajeError;

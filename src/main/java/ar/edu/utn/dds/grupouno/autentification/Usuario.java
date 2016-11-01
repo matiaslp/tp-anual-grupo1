@@ -8,11 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 
 @Entity
 @Table(name = "Usuario")
-public class Usuario extends Persistible{
+public class Usuario extends PersistibleConNombre{
 
 	private Rol rol;
 	private String username;

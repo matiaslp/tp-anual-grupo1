@@ -27,12 +27,12 @@ import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 
 @Entity
 @Table(name = "POI")
 @Inheritance(strategy=InheritanceType.JOINED)
-public class POI extends Persistible{
+public class POI extends PersistibleConNombre{
 
 	protected String callePrincipal;
 	protected String calleLateral;
@@ -54,7 +54,6 @@ public class POI extends Persistible{
 	// las subclases tienen el nombre del tipo, de por si.
 	protected TiposPOI tipo;
 	@ManyToMany(cascade = {CascadeType.ALL})
-	//@OrderColumn
 	@JoinTable(name="POI_SERVICIO", 
 				joinColumns={@JoinColumn(name="poi_id")}, 
 				inverseJoinColumns={@JoinColumn(name="servicio_id")})
