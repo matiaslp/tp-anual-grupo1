@@ -60,9 +60,9 @@ public class HibernateTest {
 		
 	//	POI poi = poiDTO.converttoPOI();
 		repositorio.pois().persistir(poi_bco);
-//		repositorio.pois().persistir(poi_local);
-//		repositorio.pois().persistir(poi_CGP);
-//		repositorio.pois().persistir(poi_parada);
+		repositorio.pois().persistir(poi_local);
+		repositorio.pois().persistir(poi_CGP);
+		repositorio.pois().persistir(poi_parada);
 	}
 //	@Test
 //	public void buscarPOI() {

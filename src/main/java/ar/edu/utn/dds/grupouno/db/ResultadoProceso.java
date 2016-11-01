@@ -45,13 +45,13 @@ public class ResultadoProceso extends Persistible{
 		this.finEjecucion = finEjecucion;
 	}
 
-//	public Proceso getProc() {
-//		return proc;
-//	}
-//
-//	public void setProc(Proceso proc) {
-//		this.proc = proc;
-//	}
+	public Proceso getProc() {
+		return proc;
+	}
+
+	public void setProc(Proceso proc) {
+		this.proc = proc;
+	}
 
 	public long getUserID() {
 		return userID;
