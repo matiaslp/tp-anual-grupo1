@@ -3,11 +3,11 @@ package ar.edu.utn.dds.grupouno.db.poi;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 
 @Entity
 @Table(name = "RUBRO")
-public class Rubro extends Persistible{
+public class Rubro extends PersistibleConNombre{
 	private int cercania;
 
 	public Rubro(String nombre) {

@@ -63,6 +63,6 @@ public class BusquedaBean  {
 		
 	}
 	
-	public 
+
 }
 

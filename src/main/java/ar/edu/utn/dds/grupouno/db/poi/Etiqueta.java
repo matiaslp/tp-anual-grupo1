@@ -7,25 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 
 @Entity
 @Table(name = "ETIQUETA")
-public class Etiqueta  extends Persistible implements IFlyweightEtiqueta {
+public class Etiqueta  extends PersistibleConNombre implements IFlyweightEtiqueta {
 	@ManyToMany(mappedBy="etiquetas")
 	private Set<POI> pois = new HashSet<POI>();
 	
-	
-	//	public String nombre;
-//
-//	public Etiqueta(String nombre) {
-//		this.nombre = nombre;
-//
-//	}
-//
-//	public String getNombre() {
-//		return this.nombre;
-//	}
 	Etiqueta(String nom){
 		this.setNombre(nom);
 	}

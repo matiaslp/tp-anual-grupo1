@@ -13,12 +13,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 
 
 @Entity
 @Table(name = "SERVICIOS")
-public class NodoServicio  extends Persistible {
+public class NodoServicio  extends PersistibleConNombre {
 
 	@ManyToMany(mappedBy="servicios")
 	private Set<POI> pois = new HashSet<POI>();
