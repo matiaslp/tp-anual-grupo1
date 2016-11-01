@@ -14,7 +14,7 @@ public class FuncReporteBusquedaPorUsuario extends Accion {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
-		nombreFuncion = "reporteBusquedaPorUsuario";
+		nombre = "reporteBusquedaPorUsuario";
 	}
 
 	public Map<Long, Long> obtenerBusquedaPorUsuario(Usuario user, String Token) {

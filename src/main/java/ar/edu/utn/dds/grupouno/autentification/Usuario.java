@@ -3,9 +3,16 @@ package ar.edu.utn.dds.grupouno.autentification;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
@@ -13,11 +20,18 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 @Entity
 @Table(name = "Usuario")
 public class Usuario extends PersistibleConNombre{
-
+	
+	@ManyToOne(cascade = {CascadeType.ALL})
+	@JoinColumn (name = "Rol", referencedColumnName="id")
 	private Rol rol;
 	private String username;
 	private String password;
-//	private Map<String, Accion> funcionalidades;
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name="USUARIO_FUNCIONALIDAD", 
+		joinColumns={@JoinColumn(name="user_id")}, 
+		inverseJoinColumns={@JoinColumn(name="func_id")})
+	@MapKeyColumn(name= "func_nombre")
+	private Map<String, Accion> funcionalidades;
 	private String correo;
 	private boolean mailHabilitado;
 	private boolean notificacionesActivadas;
@@ -63,23 +77,23 @@ public class Usuario extends PersistibleConNombre{
 		this.password = password;
 	}
 
-//	public Map<String, Accion> getFuncionalidades() {
-//		return funcionalidades;
-//	}
+	public Map<String, Accion> getFuncionalidades() {
+		return funcionalidades;
+	}
 
-//	public Map<String, Accion> getProceses() {
-//		Map<String, Accion> resultado = new HashMap<String, Accion>();
-//
-//		for (Map.Entry<String, Accion> accion : funcionalidades.entrySet()) {
-//			if (accion.getValue().isProcess())
-//				resultado.put(accion.getKey(), accion.getValue());
-//		}
-//		return resultado;
-//	}
+	public Map<String, Accion> getProceses() {
+		Map<String, Accion> resultado = new HashMap<String, Accion>();
 
-//	public void setFuncionalidades(Map<String, Accion> funcionalidades) {
-//		this.funcionalidades = funcionalidades;
-//	}
+		for (Map.Entry<String, Accion> accion : funcionalidades.entrySet()) {
+			if (accion.getValue().isProcess())
+				resultado.put(accion.getKey(), accion.getValue());
+		}
+		return resultado;
+	}
+
+	public void setFuncionalidades(Map<String, Accion> funcionalidades) {
+		this.funcionalidades = funcionalidades;
+	}
 
 	public String getCorreo() {
 		return correo;
@@ -97,13 +111,13 @@ public class Usuario extends PersistibleConNombre{
 		}
 	}
 	
-//	public void agregarFuncionalidad(String funcionalidad, Accion func){
-//		funcionalidades.put(funcionalidad, func);
-//	}
-//
-//	public Accion getFuncionalidad(String funcionalidad){
-//		return funcionalidades.get(funcionalidad);
-//	}
+	public void agregarFuncionalidad(String funcionalidad, Accion func){
+		funcionalidades.put(funcionalidad, func);
+	}
+
+	public Accion getFuncionalidad(String funcionalidad){
+		return funcionalidades.get(funcionalidad);
+	}
 	
 	public boolean isMailHabilitado() {
 		return mailHabilitado;

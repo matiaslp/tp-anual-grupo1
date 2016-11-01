@@ -1,18 +1,37 @@
 package ar.edu.utn.dds.grupouno.autentification;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Accion {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-	protected ArrayList<Rol> Roles;
-	protected String nombreFuncion;
+import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
+
+@Entity
+@Table (name = "Accion")
+public abstract class Accion extends Persistible{
+
+	@ManyToMany (cascade = CascadeType.ALL)
+	@JoinTable(name="FUNCIONALIDAD_ROL", 
+		joinColumns={@JoinColumn(name="func_id")}, 
+		inverseJoinColumns={@JoinColumn(name="rol_id")})
+	@Enumerated
+	protected List<Rol> Roles;
+	protected String nombre;
 	protected boolean isProcess = false;
 
 	protected boolean validarsesion(Usuario user, String Token) {
-		return AuthAPI.getInstance().validarToken(Token) && user.getFuncionalidad(nombreFuncion)!=null;
+		return AuthAPI.getInstance().validarToken(Token) && user.getFuncionalidad(nombre)!=null;
 	}
 
-	public ArrayList<Rol> getRoles() {
+	public List<Rol> getRoles() {
 		return Roles;
 	}
 
@@ -21,11 +40,11 @@ public abstract class Accion {
 	}
 
 	public String getNombreFuncion() {
-		return nombreFuncion;
+		return nombre;
 	}
 
 	public void setNombreFuncion(String nombreFuncion) {
-		this.nombreFuncion = nombreFuncion;
+		this.nombre = nombreFuncion;
 	}
 
 	public boolean isProcess() {

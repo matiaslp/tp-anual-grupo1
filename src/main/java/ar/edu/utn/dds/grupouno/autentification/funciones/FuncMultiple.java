@@ -14,7 +14,7 @@ public class FuncMultiple extends Accion {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
-		nombreFuncion = "procesoMultiple";
+		nombre = "procesoMultiple";
 	}
 
 	public void procesoMultiple(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,

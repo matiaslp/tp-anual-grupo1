@@ -14,7 +14,7 @@ public class FuncReporteBusquedasPorFecha extends Accion {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
-		nombreFuncion = "reporteBusquedasPorFecha";
+		nombre = "reporteBusquedasPorFecha";
 	}
 
 	public Map<String, Long> obtenerBusquedasPorFecha(Usuario user, String Token) {

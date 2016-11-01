@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
@@ -67,7 +68,7 @@ public class AuthAPI {
 				if(accion ==null){
 					return false; //la accion no existe
 				}else{
-					ArrayList<Rol> roles = accion.getRoles();
+					List<Rol> roles = accion.getRoles();
 					for(Rol rol : roles){
 						if(rol.equals(user.getRol())){
 							user.agregarFuncionalidad(funcionalidad,accion);

@@ -14,7 +14,7 @@ public class FuncReporteCantidadResultadosPorTerminal extends Accion {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
-		nombreFuncion = "reportecantidadResultadosPorTerminal";
+		nombre = "reportecantidadResultadosPorTerminal";
 	}
 
 	public Map<Long, Long> obtenerCantidadResultadosPorTerminal(Usuario user, String Token, long terminal) {

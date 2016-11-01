@@ -14,7 +14,7 @@ public class FuncBajaPOIs extends Accion {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
-		nombreFuncion = "bajaPOIs";
+		nombre = "bajaPOIs";
 		isProcess = true;
 	}
 

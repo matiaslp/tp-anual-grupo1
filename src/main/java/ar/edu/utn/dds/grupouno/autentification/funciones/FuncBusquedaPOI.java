@@ -21,7 +21,7 @@ public class FuncBusquedaPOI extends Accion {
 		// Agregar Roles para esta funcionalidad
 		this.Roles.add(Rol.ADMIN);
 		this.Roles.add(Rol.TERMINAL);
-		nombreFuncion = "busquedaPOI";
+		nombre = "busquedaPOI";
 	}
 
 	public ArrayList<POI> busquedaPOI(Usuario user, String Token, String texto) {

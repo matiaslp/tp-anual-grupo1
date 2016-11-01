@@ -12,7 +12,7 @@ public class FuncCambiarEstadoAuditoria extends Accion {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.TERMINAL);
-		nombreFuncion = "auditoria";
+		nombre = "auditoria";
 	}
 	
 	public boolean CambiarEstadoNotificarBusquedaLarga(Usuario user, String Token, boolean Estado) {

@@ -3,7 +3,13 @@ package ar.edu.utn.dds.grupouno.db;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DB_Sesiones {
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import ar.edu.utn.dds.grupouno.modelo.Persistible;
+
+public class DB_Sesiones extends Persistible {
 
 	private Map<String, String> listaSesiones;
 
