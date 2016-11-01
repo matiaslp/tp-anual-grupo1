@@ -53,12 +53,12 @@ public class POI extends Persistible{
 	// este atributo hay que ver si nos sirve porque
 	// las subclases tienen el nombre del tipo, de por si.
 	protected TiposPOI tipo;
-//	@ManyToMany(cascade = {CascadeType.ALL})
-//	@OrderColumn
-//	@JoinTable(name="POI_SERVICIO", 
-//				joinColumns={@JoinColumn(name="poi_id")}, 
-//				inverseJoinColumns={@JoinColumn(name="servicio_id")})
-	protected ArrayList<NodoServicio> servicios;
+	@ManyToMany(cascade = {CascadeType.ALL})
+	//@OrderColumn
+	@JoinTable(name="POI_SERVICIO", 
+				joinColumns={@JoinColumn(name="poi_id")}, 
+				inverseJoinColumns={@JoinColumn(name="servicio_id")})
+	protected List<NodoServicio> servicios;
 	// pueden ser varias y se crean a travez de
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
 	@ManyToMany(cascade = {CascadeType.ALL})
@@ -372,7 +372,7 @@ public class POI extends Persistible{
 					long filtroNumerico = Long.parseLong(filtro);
 					if (servicio.horaInicio < filtroNumerico && filtroNumerico < servicio.horaFin) {
 						return true;
-					} else if (servicio.listaDias.contains(filtroNumerico)) {
+					} else if (servicio.getListaDias().contains(filtroNumerico)) {
 						return true;
 					}
 				}

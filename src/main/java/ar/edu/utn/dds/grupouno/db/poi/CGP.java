@@ -3,6 +3,7 @@ package ar.edu.utn.dds.grupouno.db.poi;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -40,7 +41,7 @@ public class CGP extends POI {
 		this.servicios = servicios;
 	}
 
-	public void agregarServicio(String nombre, ArrayList<Integer> dias, int horaInicio, int horaFin) {
+	public void agregarServicio(String nombre, List<Integer> dias, int horaInicio, int horaFin) {
 		NodoServicio nuevoNodo = new NodoServicio();
 		nuevoNodo.setNombre(nombre);
 		nuevoNodo.listaDias = dias;
@@ -152,7 +153,7 @@ public class CGP extends POI {
 		}
 	}
 
-	public ArrayList<NodoServicio> getServicios() {
+	public List<NodoServicio> getServicios() {
 		return servicios;
 	}
 
