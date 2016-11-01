@@ -9,8 +9,6 @@ import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
-@Entity
-@Table(name="Sesiones")
 public class DB_Sesiones extends Persistible {
 
 	private Map<String, String> listaSesiones;
