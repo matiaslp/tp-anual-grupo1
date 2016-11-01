@@ -14,7 +14,6 @@ public class Persistible implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected long id;
-	protected String nombre;
 
 	protected Persistible() {
 	}
@@ -28,16 +27,4 @@ public class Persistible implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "nombre")
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String toString() {
-		return getId() + "-" + getNombre();
-	}
 }

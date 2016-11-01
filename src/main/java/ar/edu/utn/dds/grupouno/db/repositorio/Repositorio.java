@@ -6,7 +6,7 @@ public class Repositorio {
 	private Usuarios usuarios;
 	private Pois pois;
 	private ResultadosProcesos resultadosProcesos;
-	private RegistrosHistoricos registroHistorico;
+//	private RegistrosHistoricos registroHistorico;
 	protected EntityManager em;
 
 	public Repositorio(EntityManager em) {
