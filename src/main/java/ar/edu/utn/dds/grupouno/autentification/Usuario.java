@@ -3,9 +3,13 @@ package ar.edu.utn.dds.grupouno.autentification;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.modelo.Persistible;
@@ -17,7 +21,11 @@ public class Usuario extends Persistible{
 	private Rol rol;
 	private String username;
 	private String password;
-//	private Map<String, Accion> funcionalidades;
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name="USUARIO_FUNCIONALIDAD", 
+		joinColumns={@JoinColumn(name="user_id")}, 
+		inverseJoinColumns={@JoinColumn(name="func_id")})
+	private Map<String, Accion> funcionalidades;
 	private String correo;
 	private boolean mailHabilitado;
 	private boolean notificacionesActivadas;
@@ -97,13 +105,13 @@ public class Usuario extends Persistible{
 		}
 	}
 	
-//	public void agregarFuncionalidad(String funcionalidad, Accion func){
-//		funcionalidades.put(funcionalidad, func);
-//	}
-//
-//	public Accion getFuncionalidad(String funcionalidad){
-//		return funcionalidades.get(funcionalidad);
-//	}
+	public void agregarFuncionalidad(String funcionalidad, Accion func){
+		funcionalidades.put(funcionalidad, func);
+	}
+
+	public Accion getFuncionalidad(String funcionalidad){
+		return funcionalidades.get(funcionalidad);
+	}
 	
 	public boolean isMailHabilitado() {
 		return mailHabilitado;

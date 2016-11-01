@@ -1,10 +1,20 @@
 package ar.edu.utn.dds.grupouno.autentification;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 public abstract class Accion {
 
-	protected ArrayList<Rol> Roles;
+	@ManyToMany (cascade = CascadeType.ALL)
+	@JoinTable(name="FUNCIONALIDAD_ROL", 
+		joinColumns={@JoinColumn(name="func_id")}, 
+		inverseJoinColumns={@JoinColumn(name="rol_id")})
+	protected List<Rol> Roles;
 	protected String nombreFuncion;
 	protected boolean isProcess = false;
 
@@ -12,7 +22,7 @@ public abstract class Accion {
 		return AuthAPI.getInstance().validarToken(Token) && user.getFuncionalidad(nombreFuncion)!=null;
 	}
 
-	public ArrayList<Rol> getRoles() {
+	public List<Rol> getRoles() {
 		return Roles;
 	}
 
