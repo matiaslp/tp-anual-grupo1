@@ -3,9 +3,16 @@ package ar.edu.utn.dds.grupouno.db.poi;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
 import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 
+@Entity
+@Table(name = "BANCO")
+@PrimaryKeyJoinColumn(name="id")
 public class Banco extends POI {
 
 	String sucursal;
@@ -29,7 +36,7 @@ public class Banco extends POI {
 
 	public void agregarServicio(String nombre, ArrayList<Integer> dias, int horaInicio, int horaFin) {
 		NodoServicio nuevoNodo = new NodoServicio();
-		nuevoNodo.nombre = nombre;
+		nuevoNodo.setName(nombre);
 		nuevoNodo.listaDias = dias;
 		nuevoNodo.horaInicio = horaInicio;
 		nuevoNodo.horaFin = horaFin;

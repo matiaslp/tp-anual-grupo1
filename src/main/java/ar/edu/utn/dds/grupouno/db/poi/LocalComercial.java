@@ -4,13 +4,26 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 
+
+@Entity
+@Table(name = "LOCAL")
+@PrimaryKeyJoinColumn(name="id")
 public class LocalComercial extends POI {
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "rubro_id", referencedColumnName = "id")
 	Rubro rubro;
 	public ArrayList<Long> dias = new ArrayList<Long>();
 	public ArrayList<Long> horas = new ArrayList<Long>();

@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 
+@Entity
+@Table(name = "CGP")
+@PrimaryKeyJoinColumn(name="id")
 public class CGP extends POI {
 
 	String director;// 3
@@ -35,7 +42,7 @@ public class CGP extends POI {
 
 	public void agregarServicio(String nombre, ArrayList<Integer> dias, int horaInicio, int horaFin) {
 		NodoServicio nuevoNodo = new NodoServicio();
-		nuevoNodo.nombre = nombre;
+		nuevoNodo.setNombre(nombre);
 		nuevoNodo.listaDias = dias;
 		nuevoNodo.horaInicio = horaInicio;
 		nuevoNodo.horaFin = horaFin;
@@ -90,6 +97,10 @@ public class CGP extends POI {
 		this.setNombre(nombre);
 		this.setTipo(TiposPOI.CGP);
 		this.servicios = new ArrayList<NodoServicio>();
+	}
+	
+	public CGP() {
+		
 	}
 
 	@Override

@@ -1,14 +1,24 @@
 package ar.edu.utn.dds.grupouno.db.poi;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
@@ -21,6 +31,7 @@ import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
 @Entity
 @Table(name = "POI")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class POI extends Persistible{
 
 	protected String callePrincipal;
@@ -42,9 +53,19 @@ public class POI extends Persistible{
 	// este atributo hay que ver si nos sirve porque
 	// las subclases tienen el nombre del tipo, de por si.
 	protected TiposPOI tipo;
+//	@ManyToMany(cascade = {CascadeType.ALL})
+//	@OrderColumn
+//	@JoinTable(name="POI_SERVICIO", 
+//				joinColumns={@JoinColumn(name="poi_id")}, 
+//				inverseJoinColumns={@JoinColumn(name="servicio_id")})
 	protected ArrayList<NodoServicio> servicios;
 	// pueden ser varias y se crean a travez de
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@OrderColumn
+	@JoinTable(name="POI_ETIQUETA", 
+				joinColumns={@JoinColumn(name="poi_id")}, 
+				inverseJoinColumns={@JoinColumn(name="etiqueta_id")})
 	protected Etiqueta[] etiquetas;
 	protected DateTime fechaBaja = null;
 	protected boolean esLocal = true;
@@ -220,6 +241,7 @@ public class POI extends Persistible{
 		ubicacion = ubic;
 	}
 
+	@Enumerated(EnumType.ORDINAL)
 	public TiposPOI getTipo() {
 		return tipo;
 	}
@@ -242,14 +264,14 @@ public class POI extends Persistible{
 	public String[] getEtiquetas() {
 		String[] nombres = new String[etiquetas.length];
 		for (int i = 0; i < etiquetas.length; i++) {
-			nombres[i] = etiquetas[i].nombre;
+			nombres[i] = etiquetas[i].getNombre();
 		}
 		return nombres;
 	}
 
 	public String getEtiqueta(int num) {
 
-		return etiquetas[num].nombre;
+		return etiquetas[num].getNombre();
 	}
 
 	public Boolean buscarEtiqueta(String etiquetaNombre) {
@@ -344,7 +366,7 @@ public class POI extends Persistible{
 	public boolean buscarServicios(String filtro) {
 		if(servicios!=null){
 			for (NodoServicio servicio : servicios) {
-				if (LevDist.calcularDistancia(filtro, servicio.nombre)) {
+				if (LevDist.calcularDistancia(filtro, servicio.getNombre())) {
 					return true;
 				} else if (MetodosComunes.isNumeric(filtro)) {
 					long filtroNumerico = Long.parseLong(filtro);
@@ -427,7 +449,7 @@ public class POI extends Persistible{
 
 		return true;
 	}
-
+	
 	public boolean compararEtiquetas(POI poi){
 		if(this.etiquetas == null && poi.etiquetas == null){
 			return true;
@@ -447,6 +469,8 @@ public class POI extends Persistible{
 		}
 
 	}
+
+
 
 	public boolean compararServicios(POI poi){
 		if(this.servicios == null && poi.servicios == null){

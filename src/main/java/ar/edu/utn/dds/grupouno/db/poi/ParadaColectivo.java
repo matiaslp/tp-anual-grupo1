@@ -1,13 +1,19 @@
 package ar.edu.utn.dds.grupouno.db.poi;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
 import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 
+@Entity
+@Table(name = "PARADA")
+@PrimaryKeyJoinColumn(name="id")
 public class ParadaColectivo extends POI {
 
-	// esta distancia es en referencia a qué?
-	int cercania = 100;
+	long cercania = 100;
 
-	public int getDistancia() {
+	public long getDistancia() {
 		return cercania;
 	}
 
@@ -24,6 +30,10 @@ public class ParadaColectivo extends POI {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
 		this.setTipo(TiposPOI.PARADA_COLECTIVO);
+	}
+	
+	public ParadaColectivo(){
+		
 	}
 
 }
