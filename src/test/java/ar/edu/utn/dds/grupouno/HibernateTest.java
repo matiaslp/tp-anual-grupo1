@@ -59,17 +59,38 @@ public class HibernateTest {
 	public void aPersistir() {
 		
 	//	POI poi = poiDTO.converttoPOI();
-		repositorio.pois().persistir(poi_bco);
-		repositorio.pois().persistir(poi_local);
-		repositorio.pois().persistir(poi_CGP);
-		repositorio.pois().persistir(poi_parada);
+		repositorio.pois().agregarPOI(poi_bco);
+		repositorio.pois().agregarPOI(poi_local);
+		repositorio.pois().agregarPOI(poi_CGP);
+		repositorio.pois().agregarPOI(poi_parada);
+		List<POI> poilst;
+//		poilst = repositorio.pois().getPOIbyNombre("Banco");
+//		POI poi = poilst.get(0);
+//		System.out.println(poi.getNombre());
+//		repositorio.pois().eliminarPOI(1L);
+//		poilst = repositorio.pois().getPOIbyNombre("Banco");
+//		poi = poilst.get(0);
+//		System.out.println(poi.getNombre());
+		
+		
+		poilst = repositorio.pois().getPOIbyNombre("local");
+		POI poi_loc = poilst.get(0);
+		System.out.println(poi_loc.getNombre());
+		poi_loc.setNombre("loal");
+		repositorio.pois().actualizarPOI(poi_loc);
+		poilst = repositorio.pois().getPOIbyNombre("loal");
+		POI poi_loc2 = poilst.get(0);
+		System.out.println(poi_loc2.getNombre());
+		
+		
+		
 	}
 //	@Test
 //	public void buscarPOI() {
-//		List<POI> poilst = repositorio.pois().getPOIbyNombre("text");
+//		List<POI> poilst = repositorio.pois().getPOIbyNombre("banco");
 //		POI poi = poilst.get(0);
 //		System.out.println(poi.getNombre());
 //	}
-	
+//	
 	
 }

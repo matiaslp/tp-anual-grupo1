@@ -3,6 +3,7 @@ package ar.edu.utn.dds.grupouno.db.repositorio;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 
@@ -31,26 +32,25 @@ public class Pois extends Repositorio {
 			return false;
 		}
 	}
-	
-	// Persistent objects are updated by the framework automatically????
+	@Transactional
 	public boolean actualizarPOI(POI poi) {
-//		boolean result;
-//		POI old_poi;
-//		old_poi = (POI) em.createNamedQuery("actualizarPOI").setParameter("pid", "%" + poi.getId() + "%").;
-//		if (poi != null)
-			
+		em.flush();
+//		if(eliminarPOI(poi.getId()))
+//			return agregarPOI(poi);
+		em.getTransaction().commit();
+//		else
+			return false;
+	}
+	
+	public boolean eliminarPOI(long id) {
+		em.getTransaction().begin();
+		em.remove(getPOIbyId(id));
+		em.getTransaction().commit();
 		return true;
 	}
 	
-//	public boolean eliminarPOI(long id) {
-//		boolean result;
-//		em.g
-//		result = em.createNamedQuery("eliminarPOI").setParameter("pnombre", "%" + nombre + "%").getResultList();
-//		return result;
-//	}
-	
 
-	public void persistir(POI poi) {
+	private void persistir(POI poi) {
 		em.getTransaction().begin();
 		em.persist(poi);
 		em.getTransaction().commit();

@@ -80,6 +80,8 @@ public class Proceso extends Persistible {
 		this.user = user;
 	}
 
-	
+	public Proceso(){
+		
+	}
 	
 }
