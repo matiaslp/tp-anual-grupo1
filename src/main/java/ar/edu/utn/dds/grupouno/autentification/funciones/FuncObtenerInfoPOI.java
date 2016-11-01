@@ -14,7 +14,7 @@ public class FuncObtenerInfoPOI extends Accion {
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
 		Roles.add(Rol.TERMINAL);
-		nombreFuncion = "obtenerInfoPOI";
+		nombre = "obtenerInfoPOI";
 	}
 
 	public POI obtenerInfoPOI(Usuario user, String Token, long id) {

@@ -13,7 +13,7 @@ public class FuncCambiarEstadoGenerarLog extends Accion {
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.ADMIN);
 		Roles.add(Rol.TERMINAL);
-		nombreFuncion = "generarLog";
+		nombre = "generarLog";
 	}
 
 	public boolean cambiarEstadoMail(Usuario user, String Token, boolean estado) {

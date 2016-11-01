@@ -12,7 +12,7 @@ public class FuncCambiarEstadoNotificarBusquedaLarga extends Accion {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
 		Roles.add(Rol.TERMINAL);
-		nombreFuncion = "notificarBusquedaLarga";
+		nombre = "notificarBusquedaLarga";
 	}
 	
 	public boolean CambiarEstadoNotificarBusquedaLarga(Usuario user, String Token, boolean Estado) {

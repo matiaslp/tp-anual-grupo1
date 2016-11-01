@@ -8,7 +8,8 @@
 		<description>
             Persistence unit for JPA with Hibernate
         </description>
-
+		
+		<class>ar.edu.utn.dds.grupouno.autentificacion.Accion</class>
 		<class>ar.edu.utn.dds.grupouno.autentification.Usuario</class>
 		<class>ar.edu.utn.dds.grupouno.db.poi.POI</class>
 		<class>ar.edu.utn.dds.grupouno.db.RegistroHistorico</class>
