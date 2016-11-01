@@ -42,18 +42,28 @@ public class RegistrosHistoricos extends Repositorio {
 		return true;
 	}
 	
-//	public boolean eliminarPOI(long id) {
-//		boolean result;
-//		em.g
-//		result = em.createNamedQuery("eliminarPOI").setParameter("pnombre", "%" + nombre + "%").getResultList();
-//		return result;
-//	}
-	
+/*	public boolean eliminarRegistroHistorico(long id) {
+		boolean result;
+		em.g
+	result = em.createNamedQuery("eliminarPOI").setParameter("pnombre", "%" + nombre + "%").getResultList();
+		return result;
+	}
+	*/
 
 	public void persistir(RegistroHistorico unRegistroHistorico) {
 		em.getTransaction().begin();
 		em.persist(unRegistroHistorico);
 		em.getTransaction().commit();
+	}
+	
+	private void remove(RegistroHistorico unRegistroHistorico) {
+		em.getTransaction().begin();
+
+		em.remove(unRegistroHistorico);
+
+		em.getTransaction().commit();
+
+		em.close();
 	}
 
 }
