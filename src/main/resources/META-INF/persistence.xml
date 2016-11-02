@@ -13,6 +13,7 @@
         <class>ar.edu.utn.dds.grupouno.modelo.Persistible</class>
 		<class>ar.edu.utn.dds.grupouno.db.ResultadoProceso</class>
 		<class>ar.edu.utn.dds.grupouno.autentification.Usuario</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.Rol</class>
 		<class>ar.edu.utn.dds.grupouno.db.poi.POI</class>
 		<class>ar.edu.utn.dds.grupouno.db.poi.Banco</class>
 		<class>ar.edu.utn.dds.grupouno.db.poi.CGP</class>
