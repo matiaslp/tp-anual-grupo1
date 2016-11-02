@@ -1,18 +1,18 @@
 package ar.edu.utn.dds.grupouno.abmc;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+
 import javax.mail.MessagingException;
+import javax.transaction.Transactional;
 
 import org.joda.time.DateTime;
 import org.json.JSONException;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
 
 // Esta clase funciona como Facade para ocultar el subsistema de
 // busqueda/consulta y sus multiples clases de las que se podrian
@@ -28,7 +28,7 @@ public class POI_ABMC implements Busqueda {
 			instance = new POI_ABMC();
 		return instance;
 	}
-
+	@Transactional
 	public boolean alta(POI_DTO dto) {
 
 		POI nuevoPOI = dto.converttoPOI();
@@ -39,7 +39,7 @@ public class POI_ABMC implements Busqueda {
 			return true;
 		}
 	}
-
+	@Transactional
 	public boolean delete(long l) {
 		Repositorio.getInstance().getEm().getTransaction().begin();
 		POI poi = Repositorio.getInstance().pois().getPOIbyId(l);
@@ -54,7 +54,7 @@ public class POI_ABMC implements Busqueda {
 			return false;
 		}
 	}
-
+	@Transactional
 	public boolean modificar(POI_DTO dto) {
 		POI poi = null;
 		poi = Repositorio.getInstance().pois().getPOIbyId(dto.getId());

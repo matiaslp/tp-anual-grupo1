@@ -34,6 +34,7 @@
 			<property name="javax.persistence.jdbc.password" value="mysqlMY2#" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.connection.autocommit" value="true" /> 
 			
 	<!-- "validate" para velocidad y mantener el esquema creado "create-drop" para eliminar todas las tablas y recrearlas-->
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />

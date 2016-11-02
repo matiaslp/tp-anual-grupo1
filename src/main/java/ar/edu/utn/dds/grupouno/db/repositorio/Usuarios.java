@@ -1,7 +1,5 @@
 package ar.edu.utn.dds.grupouno.db.repositorio;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
 import ar.edu.utn.dds.grupouno.autentification.Usuario;

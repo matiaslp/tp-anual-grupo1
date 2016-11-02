@@ -28,7 +28,7 @@ public class TestABMC_Baja {
 	static POI_ABMC abmc = new POI_ABMC();
 	static POI_ABMC poi_abmc;
 	static POI_DTO poiDTOBanco, poiDTOCGP, poiDTOComercial, poiDTOColectivo;
-	static POI banco, cgp, local, parada;
+	static POI banco, cgp, local, parada, parada2;
 	static Rubro rubro;
 	static DB_POI instancia;
 
@@ -68,83 +68,70 @@ public class TestABMC_Baja {
 		poiDTOColectivo.setLongitud(-34.5664823);
 		parada = poiDTOColectivo.converttoPOI();
 		
+		
+		poiDTOColectivo.setNombre("unaParadaDeColectivo2");
+		parada2 = poiDTOColectivo.converttoPOI();
+		
 		// Se crean 4 POIs (uno por cada tipo)
 		instancia.agregarPOI(banco);
-//		instancia.agregarPOI(cgp);
-//		instancia.agregarPOI(local);
-//		instancia.agregarPOI(parada);
+		instancia.agregarPOI(cgp);
+		instancia.agregarPOI(local);
+		instancia.agregarPOI(parada);
 	}
 
 	// Se realizan 4 test de borrado, uno por cada POI
 	@Test
 	public void bajaBanco() {
 		List<POI> lstPoi = instancia.getPOIbyNombre("unBanco");
-		POI poi = lstPoi.get(0);
-		int id = (int) poi.getId();
-		boolean respuesta = poi_abmc.delete(id);
-		Assert.assertTrue(instancia.getPOIbyNombre("unBanco").get(0).dadoDeBaja());
+		int id = (int) lstPoi.get(0).getId();
+		poi_abmc.delete(id);
+		Assert.assertTrue(instancia.getPOIbyNombre("unBanco").size() == 0);
 	}
-//
-//	@Test
-//	public void bajaCGP() {
-//		//Este falla porque como es singleton se corre un test antes que lo modifica
-//		//y queda modificado
-//		boolean respuesta = poi_abmc.delete(instancia.getPOIbyNombre("unCGP").get(0).getId());
-//		Assert.assertTrue(respuesta);
-//	}
-//
-//	@Test
-//	public void bajaLocalComercial() {
-//		boolean respuesta = poi_abmc.delete(repositorio.pois().getPOIbyNombre("unLocalComercial").get(0).getId());
-//		Assert.assertTrue(respuesta);
-//	}
-//
-//	@Test
-//	public void bajaParadaColectivo() {
-//		boolean respuesta = poi_abmc.delete(repositorio.pois().getPOIbyNombre("unaParadaDeColectivo").get(0).getId());
-//		Assert.assertTrue(respuesta);
-//	}
-//
-//	// Comprobamos que no se puede borrar un POI al ingresar un ID inexistente
-//	@Test
-//	public void borrarInexistente() {
-//		boolean respuesta = poi_abmc.delete(100);
-//		Assert.assertFalse(respuesta);
-//	}
-//
-//	// Comprobamos que efectivamente se elimina el POI
-//	@Test
-//	public void comprobarInexistencia() {
-//		instancia.agregarPOI(poiDTOColectivo.converttoPOI());
-//		poi_abmc.delete(17);
-//		boolean respuesta = poi_abmc.delete(17);
-//		Assert.assertFalse(respuesta);
-//	}
-//	
-//	@Test
-//	public void darDeBajaUnPOI() {
-//		DateTime hoy = new DateTime();
-//		DB_POI.getListado().get(1).darDeBaja(hoy);
-//		Assert.assertTrue(DB_POI.getListado().get(1).getFechaBaja()!=null);
-//		Assert.assertTrue(DB_POI.getListado().get(1).dadoDeBaja());
-//	}
-//	
-//	@Test
-//	public void darDeBajaPoiDadoDeBaja() {
-//		DateTime hoy = new DateTime();
-//		DB_POI.getListado().get(1).darDeBaja(hoy);
-//		Assert.assertTrue(DB_POI.getListado().get(1).getFechaBaja()!=null);
-//		Assert.assertFalse(DB_POI.getListado().get(1).darDeBaja(hoy));
-//		
-//	}
+
+	@Test
+	public void bajaCGP() {
+		poi_abmc.delete(instancia.getPOIbyNombre("unCGP").get(0).getId());
+		Assert.assertTrue(instancia.getPOIbyNombre("unCGP").size() == 0);
+	}
+
+	@Test
+	public void bajaLocalComercial() {
+		poi_abmc.delete(repositorio.pois().getPOIbyNombre("unLocalComercial").get(0).getId());
+		Assert.assertTrue(instancia.getPOIbyNombre("unLocalComercial").size() == 0);
+	}
+
+	@Test
+	public void bajaParadaColectivo() {
+		poi_abmc.delete(repositorio.pois().getPOIbyNombre("unaParadaDeColectivo").get(0).getId());
+		Assert.assertTrue(instancia.getPOIbyNombre("unaParadaDeColectivo").size() == 0);
+	}
+
+	// Comprobamos que no se puede borrar un POI al ingresar un ID inexistente
+	@Test
+	public void borrarInexistente() {
+		boolean respuesta = poi_abmc.delete(100);
+		Assert.assertFalse(respuesta);
+	}
+
+	// Comprobamos que efectivamente se elimina el POI
+	@Test
+	public void comprobarInexistencia() {
+		instancia.agregarPOI(parada2);
+		List<POI> lstPoi = instancia.getPOIbyNombre("unaParadaDeColectivo2");
+		int id = (int) lstPoi.get(0).getId();
+		poi_abmc.delete(id);
+		boolean respuesta = poi_abmc.delete(id);
+		Assert.assertFalse(respuesta);
+	}
 	
-//	@AfterClass
-//	public static void  outtro() {
-//		
-//		repositorio.remove(banco);
-//		repositorio.remove(cgp);
-//		repositorio.remove(local);
-//		repositorio.remove(parada);
-//		
-//	}
+	@AfterClass
+	public static void  outtro() {
+		
+		repositorio.remove(banco);
+		repositorio.remove(cgp);
+		repositorio.remove(local);
+		repositorio.remove(parada);
+		repositorio.remove(parada2);
+		
+	}
 }

@@ -1,7 +1,5 @@
 package ar.edu.utn.dds.grupouno.db;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +36,7 @@ public class DB_POI extends Repositorio {
 		pois = em.createNamedQuery("getPOIbyNombre").setParameter("pnombre", "%" + nombre + "%").getResultList();
 		return pois;
 	}
-	
+	@Transactional
 	public boolean agregarPOI(POI nuevoPOI) {
 		try {
 			em.getTransaction().begin();
@@ -58,6 +56,7 @@ public class DB_POI extends Repositorio {
 		return true;
 	}
 	
+	@Transactional
 	public boolean eliminarPOI(long id) {
 		em.getTransaction().begin();
 		POI poi = getPOIbyId(id);
@@ -72,6 +71,7 @@ public class DB_POI extends Repositorio {
 		}
 	}
 	
+	@Transactional
 	private void persistir(POI poi) {
 		em.getTransaction().begin();
 		em.persist(poi);
