@@ -2,25 +2,23 @@ package ar.edu.utn.dds.grupouno.autentification;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table (name = "Rol")
-public enum Rol {
-	ADMIN, TERMINAL;
+public enum Rol{
+	ADMIN("ADMIN"),
+	TERMINAL("TERMINAL");
+	public String value;
+	
+	Rol (String value){
+		this.value=value;
+	}
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected long id;
-
-	@Column(name = "id")
-	public long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 }
