@@ -78,8 +78,8 @@ public class POI_DTO {
 
 	}
 
-	public double getId() {
-		return id;
+	public int getId() {
+		return (int) id;
 	}
 
 	public void setId(Long id) {

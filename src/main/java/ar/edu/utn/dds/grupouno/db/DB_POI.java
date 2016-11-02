@@ -5,16 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
-public class DB_POI {
+public class DB_POI extends Repositorio {
 
 	private static ArrayList<POI> listadoPOI;
 	private static DB_POI instance = null;
 
-	public DB_POI() {
+	public DB_POI(EntityManager em) {
+		super(em);
 		listadoPOI = new ArrayList<POI>();
 	}
 
@@ -22,57 +27,56 @@ public class DB_POI {
 		return DB_POI.listadoPOI;
 	}
 
-	public static DB_POI getInstance() {
-		if (instance == null)
-			instance = new DB_POI();
-		return instance;
+	public POI getPOIbyId(long id) {
+		return em.find(POI.class, id);
 	}
-
-	public boolean eliminarPOI(long d) {
-
-		for (POI poi : listadoPOI) {
-			if (Long.compare(poi.getId(), d) == 0) {
-				listadoPOI.remove(poi);
-				return true;
-			}
-		}
-		return false;
+	
+	public List<POI> getPOIbyNombre(String nombre) {
+		List<POI> pois = null;
+		pois = em.createNamedQuery("getPOIbyNombre").setParameter("pnombre", "%" + nombre + "%").getResultList();
+		return pois;
 	}
-
+	
 	public boolean agregarPOI(POI nuevoPOI) {
 		try {
-			// testear
-		//	nuevoPOI.setId(listadoPOI.size() + 1);
-			listadoPOI.add(nuevoPOI);
+			em.getTransaction().begin();
+			em.persist(nuevoPOI);
+			em.getTransaction().commit();
 			return true;
 		} catch (Exception ex) {
-			return false;
+			return true;
 		}
 	}
-
-	public POI getPOIbyId(double d) {
-		for (POI poi : listadoPOI) {
-			if (Long.compare(poi.getId(), (int) d) == 0)
-				return poi;
-		}
-		return null;
-	}
-
-	public POI getPOIbyNombre(String nombre) {
-		for (POI poi : listadoPOI) {
-			if (poi.getNombre().equals(nombre))
-				return poi;
-		}
-		return null;
-	}
-
+	@Transactional
 	public boolean actualizarPOI(POI poi) {
-		if(eliminarPOI(poi.getId()))
-			return agregarPOI(poi);
-		else
+		em.getTransaction().begin();
+		em.remove(getPOIbyId(poi.getId()));
+		em.persist(poi);
+		em.getTransaction().commit();
+		return true;
+	}
+	
+	public boolean eliminarPOI(long id) {
+		em.getTransaction().begin();
+		POI poi = getPOIbyId(id);
+		if (poi != null && poi.getFechaBaja() == null) {
+			DateTime now = new DateTime();
+			poi.setFechaBaja(now);
+			em.getTransaction().commit();;
+			return true;
+		} else {
+			em.getTransaction().commit();;
 			return false;
+		}
+	}
+	
+	private void persistir(POI poi) {
+		em.getTransaction().begin();
+		em.persist(poi);
+		em.getTransaction().commit();
 	}
 
+	// TODO falta convertirlo a hibernate pero como debemos rehacer la entrega4 de procesos se hara en dicho momento
 	public Map<Long, Boolean> bajaPoi(String[] valoresBusqueda, List<DateTime> fechasBaja) {
 		Map<Long, Boolean> resumen = new HashMap<Long, Boolean>();
 		for (int i = listadoPOI.size(); i > 1 || i == 1; i--) {

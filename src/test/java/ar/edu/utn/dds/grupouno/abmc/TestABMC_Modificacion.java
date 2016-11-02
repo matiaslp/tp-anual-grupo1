@@ -9,6 +9,7 @@ import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.poi.Rubro;
 import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class TestABMC_Modificacion {
 	POI_ABMC abmc = new POI_ABMC();
@@ -25,7 +26,7 @@ public class TestABMC_Modificacion {
 	public void init() {
 
 		poi_abmc = new POI_ABMC();
-		instancia = DB_POI.getInstance();
+		instancia = Repositorio.getInstance().pois();
 
 		poiDTOBanco = new POI_DTO();
 		poiDTOBanco.setTipo(TiposPOI.BANCO);

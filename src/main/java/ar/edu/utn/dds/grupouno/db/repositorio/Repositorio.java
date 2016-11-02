@@ -1,18 +1,38 @@
 package ar.edu.utn.dds.grupouno.db.repositorio;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.transaction.Transactional;
+
+import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
+import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
 
 public class Repositorio {
 	private Usuarios usuarios;
-	private Pois pois;
+	private DB_POI pois;
 	private ResultadosProcesos resultadosProcesos;
 	private RegistrosHistoricos registroHistorico;
 	protected EntityManager em;
+	private static Repositorio instance = null;
 
-	public Repositorio(EntityManager em) {
-		this.em = em;
+	public static Repositorio getInstance() {
+		if (instance == null) {
+			final String PERSISTENCE_UNIT_NAME = "tp-anual";
+			EntityManagerFactory emFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+			instance = new Repositorio(emFactory.createEntityManager());
+		}
+		return instance;
 	}
-
+	
+//	public Repositorio() {
+//	}
+	
+	public Repositorio(EntityManager emanager) {
+		this.em = emanager;
+	}
+	
 	public Usuarios usuarios() {
 		if (usuarios == null) {
 			usuarios = new Usuarios(em);
@@ -20,9 +40,9 @@ public class Repositorio {
 		return usuarios;
 	}
 	
-	public Pois pois() {
+	public DB_POI pois() {
 		if (pois == null) {
-			pois = new Pois(em);
+			pois = new DB_POI(em);
 		}
 		return pois;
 	}
@@ -39,8 +59,25 @@ public class Repositorio {
 		}
 		return registroHistorico;
 	}
+	
+	@Transactional
+	public void remove(Object obj) {
+		em.getTransaction().begin();
+		em.remove(obj);
+		em.getTransaction().commit();
+	}
 
 	public void cerrar() {
 		em.close();
 	}
+
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
+	
+	
 }

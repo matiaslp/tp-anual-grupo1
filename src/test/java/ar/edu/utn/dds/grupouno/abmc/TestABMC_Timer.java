@@ -16,6 +16,7 @@ import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.CGP;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class TestABMC_Timer {
 	POI_ABMC abmc;
@@ -29,7 +30,7 @@ public class TestABMC_Timer {
 	@Before
 	public void inicializar() {
 		abmc = new POI_ABMC();
-		DB_POI.getInstance();
+		Repositorio.getInstance().pois();
 		DB_POI.getListado().clear();
 
 		banco.setBarrio("Mataderos");
@@ -41,10 +42,10 @@ public class TestABMC_Timer {
 
 	@Test
 	public void testTimer() throws JSONException, MalformedURLException, IOException, MessagingException {
-		DB_POI.getInstance().agregarPOI(cgp);
-		DB_POI.getInstance().agregarPOI(parada);
-		DB_POI.getInstance().agregarPOI(local);
-		DB_POI.getInstance().agregarPOI(banco);
+		Repositorio.getInstance().pois().agregarPOI(cgp);
+		Repositorio.getInstance().pois().agregarPOI(parada);
+		Repositorio.getInstance().pois().agregarPOI(local);
+		Repositorio.getInstance().pois().agregarPOI(banco);
 
 		// new timer
 		// El test verifica contra un tiempo prefijado, si la maquina que lo corre es muy veloz puede dar error, pero no significa que este mal el test.

@@ -22,6 +22,7 @@ import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
 
 public class TestProcesoMultiple {
@@ -112,8 +113,8 @@ public class TestProcesoMultiple {
 		banco1.setNombre("banco1");
 		banco1.setFechaBaja(new DateTime(2016,10,18,0,0));
 
-		DB_POI.getInstance().agregarPOI(local1);
-		DB_POI.getInstance().agregarPOI(banco1);
+		Repositorio.getInstance().pois().agregarPOI(local1);
+		Repositorio.getInstance().pois().agregarPOI(banco1);
 		
 		//---------------------------
 		//Init ActualizacionLocalesComerciales
@@ -136,8 +137,8 @@ public class TestProcesoMultiple {
 		String[] etiquetas4 = {"mataderos", "heladeria"};
 		local4.setEtiquetas(etiquetas4);
 				
-		DB_POI.getInstance().agregarPOI(local3);
-		DB_POI.getInstance().agregarPOI(local4);
+		Repositorio.getInstance().pois().agregarPOI(local3);
+		Repositorio.getInstance().pois().agregarPOI(local4);
 				
 		// iniciamos sesion con usuario admin
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
@@ -176,13 +177,13 @@ public class TestProcesoMultiple {
 
 		// Validaciones Proceso BajaPOIs
 		// Se valida que los elementos ya no existan en la lista
-		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("local1"));
-		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("banco1"));
+		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("local1"));
+		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("banco1"));
 		
 		// validaciones Proceso ActualizarLocalesComerciales
 		// Se valida que los elementos se agreguen o actualizen
-		POI local2Actualizado = DB_POI.getInstance().getPOIbyNombre("local2");
-		POI local3Actualizado = DB_POI.getInstance().getPOIbyNombre("local3");
+		POI local2Actualizado = Repositorio.getInstance().pois().getPOIbyNombre("local2").get(0);
+		POI local3Actualizado = Repositorio.getInstance().pois().getPOIbyNombre("local3").get(0);
 		
 		Assert.assertTrue(local2Actualizado.compararEtiquetas(local2));
 		Assert.assertTrue(local3Actualizado.compararEtiquetas(local3));

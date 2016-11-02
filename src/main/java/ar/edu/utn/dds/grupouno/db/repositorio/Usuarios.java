@@ -6,9 +6,12 @@ import javax.persistence.EntityManager;
 
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 
-public class Usuarios extends Repositorio {
-	Usuarios(EntityManager em) {
-		super(em);
+public class Usuarios {
+	
+	protected EntityManager em;
+	
+	Usuarios(EntityManager emanager) {
+		this.em = emanager;
 	}
 
 	public Usuario buscarPorId(Long id) {

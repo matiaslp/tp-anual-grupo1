@@ -6,9 +6,11 @@ import javax.persistence.EntityManager;
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 
 
-public class RegistrosHistoricos extends Repositorio {
-	RegistrosHistoricos(EntityManager em) {
-		super(em);
+public class RegistrosHistoricos {
+	protected EntityManager em;
+	
+	RegistrosHistoricos(EntityManager emanager) {
+		this.em = emanager;
 	}
 
 	public RegistroHistorico getRegistroHistoricobyId(Long id) {

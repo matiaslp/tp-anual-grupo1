@@ -15,6 +15,7 @@ import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class TestBajaPOI {
 	Usuario unUsuarioAdmin;
@@ -32,7 +33,7 @@ public class TestBajaPOI {
 	
 	@Before
 	public void init() {
-		DB_POI.getInstance();
+		Repositorio.getInstance().pois();
 		DB_POI.getListado().clear();
 		Autenticador = AuthAPI.getInstance();
 		fact.crearUsuario("admin", "123", Rol.ADMIN);
@@ -50,8 +51,8 @@ public class TestBajaPOI {
 		banco1.setNombre("banco1");
 		banco1.setFechaBaja(fecha);
 
-		DB_POI.getInstance().agregarPOI(local1);
-		DB_POI.getInstance().agregarPOI(banco1);
+		Repositorio.getInstance().pois().agregarPOI(local1);
+		Repositorio.getInstance().pois().agregarPOI(banco1);
 
 		admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
@@ -65,18 +66,18 @@ public class TestBajaPOI {
 		
 		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
 		
-		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("local1"));
-		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("banco1"));
+		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("local1"));
+		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("banco1"));
 	}
 	
 	@Test
 	public void testBorrarFechasDistintas(){
-		DB_POI.getInstance().getPOIbyNombre("local1").setFechaBaja(new DateTime(1900,1,1,0,0));
+		Repositorio.getInstance().pois().getPOIbyNombre("local1").get(0).setFechaBaja(new DateTime(1900,1,1,0,0));
 		
 		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
 		
-		Assert.assertNotNull(DB_POI.getInstance().getPOIbyNombre("local1"));
-		Assert.assertNull(DB_POI.getInstance().getPOIbyNombre("banco1"));
+		Assert.assertNotNull(Repositorio.getInstance().pois().getPOIbyNombre("local1"));
+		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("banco1"));
 		
 	}
 }

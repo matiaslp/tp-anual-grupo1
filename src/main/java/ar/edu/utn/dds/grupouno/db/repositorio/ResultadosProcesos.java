@@ -4,9 +4,11 @@ import javax.persistence.EntityManager;
 
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 
-public class ResultadosProcesos extends Repositorio {
-	ResultadosProcesos(EntityManager em) {
-		super(em);
+public class ResultadosProcesos {
+	protected EntityManager em;
+	
+	ResultadosProcesos(EntityManager emanager) {
+		this.em = emanager;
 	}
 
 	public ResultadoProceso resultadoProcesoPorId(Long id) {

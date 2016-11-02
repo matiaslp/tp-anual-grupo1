@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class Persistible implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected long id;
 
 	protected Persistible() {

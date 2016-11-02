@@ -25,10 +25,11 @@ import ar.edu.utn.dds.grupouno.db.DB_ResultadosProcesos;
 import ar.edu.utn.dds.grupouno.db.Resultado;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.poi.Item_Borrar;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class BajaPOIs extends Proceso {
 
-	private DB_POI dbPOI = DB_POI.getInstance();
+	private DB_POI dbPOI = Repositorio.getInstance().pois();
 	private String filePath;
 
 	@Override

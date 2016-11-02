@@ -15,6 +15,7 @@ import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class TestActualizarLocalComercial {
 	
@@ -25,7 +26,7 @@ public class TestActualizarLocalComercial {
 	
 	@Before
 	public void init(){
-		dbPOI = DB_POI.getInstance();
+		dbPOI = Repositorio.getInstance().pois();
 		Autenticador = AuthAPI.getInstance();
 		fact.crearUsuario("admin", "123", Rol.ADMIN);
 	}
@@ -66,9 +67,9 @@ public class TestActualizarLocalComercial {
 		funcion.actualizarLocales(admin, tokenAdmin, 0, false, filePath);
 
 		//Busco las modificaciones para corroborar que se corrio correctamente
-		POI local2Actualizado = dbPOI.getPOIbyNombre("local2");
-		POI local3Actualizado = dbPOI.getPOIbyNombre("local3");
-		POI local4Actualizado = dbPOI.getPOIbyNombre("local4");
+		POI local2Actualizado = dbPOI.getPOIbyNombre("local2").get(0);
+		POI local3Actualizado = dbPOI.getPOIbyNombre("local3").get(0);
+		POI local4Actualizado = dbPOI.getPOIbyNombre("local4").get(0);
 		
 		//Compruebo que el local 2 y 3 hayan sido creados:
 		Assert.assertNotNull(local2Actualizado);

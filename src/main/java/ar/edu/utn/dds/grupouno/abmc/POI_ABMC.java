@@ -9,6 +9,7 @@ import org.json.JSONException;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -34,25 +35,29 @@ public class POI_ABMC implements Busqueda {
 		if (nuevoPOI.equals(null)) {
 			return false;
 		} else {
-			DB_POI.getInstance().agregarPOI(nuevoPOI);
+			Repositorio.getInstance().pois().agregarPOI(nuevoPOI);
 			return true;
 		}
 	}
 
-	public boolean delete(int ID) {
-		POI poi = DB_POI.getInstance().getPOIbyId(ID);
+	public boolean delete(long l) {
+		Repositorio.getInstance().getEm().getTransaction().begin();
+		POI poi = Repositorio.getInstance().pois().getPOIbyId(l);
 		//Si existe el poi y no tiene una fecha de baja
 		if (poi != null && poi.getFechaBaja() == null) {
 			DateTime now = new DateTime();
 			poi.setFechaBaja(now);
+			Repositorio.getInstance().getEm().getTransaction().commit();
 			return true;
-		} else
+		} else {
+			Repositorio.getInstance().getEm().getTransaction().commit();
 			return false;
+		}
 	}
 
 	public boolean modificar(POI_DTO dto) {
 		POI poi = null;
-		poi = DB_POI.getInstance().getPOIbyId(dto.getId());
+		poi = Repositorio.getInstance().pois().getPOIbyId(dto.getId());
 		if (poi != null) {
 			poi.setDatos(dto);
 			return true;

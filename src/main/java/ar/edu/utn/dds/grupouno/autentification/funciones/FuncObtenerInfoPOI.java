@@ -7,6 +7,7 @@ import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class FuncObtenerInfoPOI extends Accion {
 	public FuncObtenerInfoPOI() {
@@ -19,7 +20,7 @@ public class FuncObtenerInfoPOI extends Accion {
 
 	public POI obtenerInfoPOI(Usuario user, String Token, long id) {
 		if (validarsesion(user, Token))
-			return DB_POI.getInstance().getPOIbyId(id);
+			return Repositorio.getInstance().pois().getPOIbyId(id);
 		else
 			return null;
 	}

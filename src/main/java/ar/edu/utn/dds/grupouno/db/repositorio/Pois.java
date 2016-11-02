@@ -7,9 +7,11 @@ import javax.transaction.Transactional;
 
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 
-public class Pois extends Repositorio {
-	Pois(EntityManager em) {
-		super(em);
+public class Pois {
+protected EntityManager em;
+	
+	Pois(EntityManager emanager) {
+		this.em = emanager;
 	}
 
 	public POI getPOIbyId(Long id) {
@@ -34,12 +36,11 @@ public class Pois extends Repositorio {
 	}
 	@Transactional
 	public boolean actualizarPOI(POI poi) {
-		em.flush();
-//		if(eliminarPOI(poi.getId()))
-//			return agregarPOI(poi);
+		em.getTransaction().begin();
+		em.remove(getPOIbyId(poi.getId()));
+		em.persist(poi);
 		em.getTransaction().commit();
-//		else
-			return false;
+		return true;
 	}
 	
 	public boolean eliminarPOI(long id) {

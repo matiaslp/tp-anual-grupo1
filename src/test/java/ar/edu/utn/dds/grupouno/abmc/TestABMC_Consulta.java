@@ -18,6 +18,7 @@ import ar.edu.utn.dds.grupouno.db.poi.CGP;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class TestABMC_Consulta {
 	POI_ABMC abmc;
@@ -31,7 +32,7 @@ public class TestABMC_Consulta {
 	@Before
 	public void inicializar() {
 		abmc = new POI_ABMC();
-		instance = DB_POI.getInstance();
+		instance = Repositorio.getInstance().pois();
 		DB_POI.getListado().clear();
 		banco = new Banco("Santander", 0, 0);
 		banco.setBarrio("Mataderos");
