@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;

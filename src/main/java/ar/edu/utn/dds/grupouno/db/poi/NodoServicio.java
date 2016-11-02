@@ -22,7 +22,6 @@ public class NodoServicio  extends PersistibleConNombre {
 
 	@ManyToMany(mappedBy="servicios")
 	private Set<POI> pois = new HashSet<POI>();
-//	String nombre;
 	@ElementCollection
 	@CollectionTable(name="SERVICIOS_DIAS")
     @Column(name="dia")

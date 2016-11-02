@@ -1,11 +1,14 @@
 package ar.edu.utn.dds.grupouno.db.poi;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,6 +25,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+//import org.joda.time.DateTime;
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
@@ -68,7 +73,10 @@ public class POI extends PersistibleConNombre{
 				joinColumns={@JoinColumn(name="poi_id")}, 
 				inverseJoinColumns={@JoinColumn(name="etiqueta_id")})
 	protected Etiqueta[] etiquetas;
-	protected DateTime fechaBaja = null;
+	@Column
+	@Type(type="org.hibernate.type.ZonedDateTimeType")
+	protected ZonedDateTime fechaBaja = null;
+	//protected DateTime fechaBaja = null;
 	protected boolean esLocal = true;
 
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
@@ -287,11 +295,13 @@ public class POI extends PersistibleConNombre{
 	}
 
 	public DateTime getFechaBaja() {
-		return fechaBaja;
+		DateTime tm = MetodosComunes.convertJavatoJoda(fechaBaja);
+		return tm;
 	}
 
-	public void setFechaBaja(DateTime fechaBaja) {
-		this.fechaBaja = fechaBaja;
+	public void setFechaBaja(DateTime fb) {
+		ZonedDateTime tm = MetodosComunes.convertJodatoJava(fb);
+		this.fechaBaja = tm;
 	}
 
 	public boolean determinarCercaniaPOI(GeoLocation ubicacion) {
@@ -499,7 +509,7 @@ public class POI extends PersistibleConNombre{
 		//Si retorna false significa que ya estaba dado de baja
 		if (fechaBaja != null)
 			return false;
-		fechaBaja = fecha;
+		fechaBaja = MetodosComunes.convertJodatoJava(fecha);
 		return true;
 	}
 
@@ -513,7 +523,8 @@ public class POI extends PersistibleConNombre{
 
 	public boolean dadoDeBaja(DateTime fecha) {
 		if(this.fechaBaja != null && fecha != null){
-			return this.fechaBaja.withTimeAtStartOfDay().equals(fecha.withTimeAtStartOfDay());
+			DateTime fb = MetodosComunes.convertJavatoJoda(fechaBaja);
+			return fb.withTimeAtStartOfDay().equals(fecha.withTimeAtStartOfDay());
 		}
 		else 
 			return false;
