@@ -25,15 +25,6 @@ public class MetodosComunes {
 					DateTimeZone.forTimeZone(TimeZone.getTimeZone(input.getZone())));
 		else
 			return null;
-
-		// DateTime tm;
-		// if (input != null) {
-		// tm = new DateTime(input.getYear(), input.getMonthValue(),
-		// input.getDayOfMonth(), input.getHour(),
-		// input.getMinute());
-		// return tm;
-		// } else
-		// return null;
 	}
 
 	public static ZonedDateTime convertJodatoJava(DateTime input) {
