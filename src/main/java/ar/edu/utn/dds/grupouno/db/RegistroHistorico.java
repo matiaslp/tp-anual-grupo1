@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.grupouno.db;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 
@@ -11,14 +12,14 @@ import javax.persistence.Table;
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 import ar.edu.utn.dds.grupouno.modelo.Persistible;
-
 
 @Entity
 @Table(name = "Historial")
 public class RegistroHistorico extends Persistible {
 
-	private DateTime time;
+	private ZonedDateTime time;
 	private long userID;
 	private String busqueda;
 	private long cantResultados;
@@ -30,11 +31,13 @@ public class RegistroHistorico extends Persistible {
 	
 
 	public DateTime getTime() {
-		return time;
+		
+		return MetodosComunes.convertJavatoJoda(this.time);
 	}
 
 	public void setTime(DateTime time) {
-		this.time = time;
+		
+		this.time = MetodosComunes.convertJodatoJava(time);
 	}
 
 	public long getUserID() {
@@ -88,7 +91,7 @@ public class RegistroHistorico extends Persistible {
 			double tiempoDeConsulta,ArrayList<POI> listaDePOIs) {
 		super();
 		this.id = id;
-		this.time = time;
+		this.time = MetodosComunes.convertJodatoJava(time);
 		this.userID = userID;
 		this.busqueda = busqueda;
 		this.cantResultados = cantResultados;
