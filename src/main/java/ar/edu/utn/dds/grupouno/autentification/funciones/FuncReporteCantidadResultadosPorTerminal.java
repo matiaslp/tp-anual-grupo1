@@ -13,7 +13,7 @@ public class FuncReporteCantidadResultadosPorTerminal extends Accion {
 	public FuncReporteCantidadResultadosPorTerminal() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
+		Roles.add(new Rol("ADMIN"));
 		nombre = "reportecantidadResultadosPorTerminal";
 	}
 

@@ -19,8 +19,8 @@ public class FuncBusquedaPOI extends Accion {
 	public FuncBusquedaPOI() {
 		this.setRoles(new ArrayList<Rol>());
 		// Agregar Roles para esta funcionalidad
-		this.Roles.add(Rol.ADMIN);
-		this.Roles.add(Rol.TERMINAL);
+		this.Roles.add(new Rol("ADMIN"));
+		this.Roles.add(new Rol("TERMINAL"));
 		nombre = "busquedaPOI";
 	}
 

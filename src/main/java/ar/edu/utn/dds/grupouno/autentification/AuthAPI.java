@@ -25,6 +25,7 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedasPor
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
 import ar.edu.utn.dds.grupouno.db.DB_Sesiones;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class AuthAPI {
 
@@ -36,63 +37,60 @@ public class AuthAPI {
 		return instance;
 	}
 
-	private Map<String, Accion> Acciones;
+	private List<Accion> Acciones;
 
-	public Map<String, Accion> getAcciones(){
+	public List<Accion> getAcciones(){
 		return Acciones;
 	}
-	
+
 	public AuthAPI() {
-		Acciones = new HashMap<String, Accion>();
-		Acciones.put("reporteBusquedaPorUsuario", new FuncReporteBusquedaPorUsuario());
-		Acciones.put("reporteBusquedasPorFecha", new FuncReporteBusquedasPorFecha());
-		Acciones.put("reportecantidadResultadosPorTerminal", new FuncReporteCantidadResultadosPorTerminal());
-		Acciones.put("cambiarEstadoMail", new FuncCambiarEstadoMail());
-		Acciones.put("actualizacionLocalesComerciales", new FuncActualizacionLocalesComerciales());
-		Acciones.put("agregarAcciones", new FuncAgregarAcciones());
-		Acciones.put("bajaPOIs", new FuncBajaPOIs());
-		Acciones.put("obtenerInfoPOI", new FuncObtenerInfoPOI());
-		Acciones.put("busquedaPOI", new FuncBusquedaPOI());
-		Acciones.put("procesoMultiple", new FuncMultiple());
-		Acciones.put("notificarBusquedaLarga", new FuncCambiarEstadoNotificarBusquedaLarga());
-		Acciones.put("auditoria", new FuncCambiarEstadoAuditoria());
-		Acciones.put("generarLog", new FuncCambiarEstadoGenerarLog());
+		Acciones = new ArrayList<Accion>();
+		Acciones.add(new FuncReporteBusquedaPorUsuario());
+		Acciones.add(new FuncReporteBusquedasPorFecha());
+		Acciones.add(new FuncReporteCantidadResultadosPorTerminal());
+		Acciones.add(new FuncCambiarEstadoMail());
+		Acciones.add(new FuncActualizacionLocalesComerciales());
+		Acciones.add(new FuncAgregarAcciones());
+		Acciones.add(new FuncBajaPOIs());
+		Acciones.add(new FuncObtenerInfoPOI());
+		Acciones.add(new FuncBusquedaPOI());
+		Acciones.add(new FuncMultiple());
+		Acciones.add(new FuncCambiarEstadoNotificarBusquedaLarga());
+		Acciones.add(new FuncCambiarEstadoAuditoria());
+		Acciones.add(new FuncCambiarEstadoGenerarLog());
 	}
 
-	
+
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
-			if (user.getFuncionalidad(funcionalidad)!=null) {
-				return false; // ya existe en el usuario
-			} else {
-				Accion accion = Acciones.get(funcionalidad);
-				if(accion ==null){
-					return false; //la accion no existe
-				}else{
+		if (user.getFuncionalidad(funcionalidad)!=null) {
+			return false; // ya existe en el usuario
+		} else {
+			for(Accion accion : this.getAcciones())
+				if(accion.getNombreFuncion().equals(funcionalidad)){
 					List<Rol> roles = accion.getRoles();
 					for(Rol rol : roles){
 						if(rol.equals(user.getRol())){
-							user.agregarFuncionalidad(funcionalidad,accion);
+							user.agregarFuncionalidad(accion);
 							return true;
 						}
 					}
 				}
-				return false; //no tiene permiso
-			}
+
+			return false; //no tiene permiso
+		}
 	}
-	
+
 	public boolean sacarFuncionalidad(String funcionalidad, Usuario user) {
-			if (user.getFuncionalidades().remove(funcionalidad) != null) {
-				return true;
-			} else {
-				return false; // No existe la funcionalidad
-			}
+		if(user != null){
+		return user.getFuncionalidades().remove(user.getFuncionalidad(funcionalidad));}
+		return false;
 	}
 
 	public String iniciarSesion(String user, String pass) {
 
 		// LA PASS YA DEBERIA LLEGAR HASHEADA AL ENTRAR A ESTA FUNCION
 
-		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios()) {
+		for (Usuario usuario : Repositorio.getInstance().usuarios().getAllUsers()) {
 			if (usuario.validarUsuarioYPass(user, pass)) {
 				String token = null;
 				try {
@@ -109,12 +107,12 @@ public class AuthAPI {
 
 		return null;
 	}
-	
+
 	public void cerrarSesion(String user, String token) {
-		
+
 		DB_Sesiones.getInstance().removerTokenUser(token, user);
 	}
-	
+
 
 	public String hashear(String string) throws NoSuchAlgorithmException {
 		// Esta funcion en una de esas quizas va en las comunes
@@ -141,10 +139,6 @@ public class AuthAPI {
 		}
 
 		return false;
-	}
-
-	public Accion getAccion(String funcionalidad) {
-		return Acciones.get(funcionalidad);
 	}
 
 }

@@ -1,7 +1,9 @@
 package ar.edu.utn.dds.grupouno.autentification;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,12 +20,11 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 @Table (name = "Accion")
 public abstract class Accion extends Persistible{
 
-	@ManyToMany (cascade = CascadeType.ALL)
-	@JoinTable(name="FUNCIONALIDAD_ROL", 
-		joinColumns={@JoinColumn(name="func_id")}, 
-		inverseJoinColumns={@JoinColumn(name="rol_id")})
-	@Enumerated
-	protected List<Rol> Roles;
+	@ManyToMany (mappedBy="Acciones")
+	protected List<Rol> Roles = new ArrayList<Rol>();
+	@ManyToMany (mappedBy="funcionalidades")
+	protected Set<Usuario> listaUsuarios = new HashSet<Usuario>();
+	
 	protected String nombre;
 	protected boolean isProcess = false;
 

@@ -13,8 +13,8 @@ public class FuncObtenerInfoPOI extends Accion {
 	public FuncObtenerInfoPOI() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
-		Roles.add(Rol.TERMINAL);
+		Roles.add(new Rol("ADMIN"));
+		Roles.add(new Rol("TERMINAL"));
 		nombre = "obtenerInfoPOI";
 	}
 
