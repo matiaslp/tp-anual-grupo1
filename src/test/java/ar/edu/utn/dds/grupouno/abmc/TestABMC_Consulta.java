@@ -33,7 +33,7 @@ public class TestABMC_Consulta {
 	public void inicializar() {
 		abmc = new POI_ABMC();
 		instance = Repositorio.getInstance().pois();
-		DB_POI.getListado().clear();
+	//	DB_POI.getListado().clear();
 		banco = new Banco("Santander", 0, 0);
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");

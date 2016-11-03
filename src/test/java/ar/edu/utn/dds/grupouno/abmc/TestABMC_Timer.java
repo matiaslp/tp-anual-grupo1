@@ -31,7 +31,7 @@ public class TestABMC_Timer {
 	public void inicializar() {
 		abmc = new POI_ABMC();
 		Repositorio.getInstance().pois();
-		DB_POI.getListado().clear();
+	//	DB_POI.getListado().clear();
 
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");

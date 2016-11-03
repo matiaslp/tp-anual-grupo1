@@ -23,46 +23,51 @@ public class Repositorio {
 		}
 		return instance;
 	}
-	
-//	public Repositorio() {
-//	}
-	
+
+	// public Repositorio() {
+	// }
+
 	public Repositorio(EntityManager emanager) {
 		this.em = emanager;
 	}
-	
+
 	public Usuarios usuarios() {
 		if (usuarios == null) {
 			usuarios = new Usuarios(em);
 		}
 		return usuarios;
 	}
-	
+
 	public DB_POI pois() {
 		if (pois == null) {
 			pois = new DB_POI(em);
 		}
 		return pois;
 	}
-	
+
 	public ResultadosProcesos resultadosProcesos() {
 		if (resultadosProcesos == null) {
 			resultadosProcesos = new ResultadosProcesos(em);
 		}
 		return resultadosProcesos;
 	}
+
 	public RegistrosHistoricos resultadosRegistrosHistoricos() {
 		if (registroHistorico == null) {
 			registroHistorico = new RegistrosHistoricos(em);
 		}
 		return registroHistorico;
 	}
-	
-	@Transactional
+
+//	@Transactional
 	public void remove(Object obj) {
-		em.getTransaction().begin();
-		em.remove(obj);
-		em.getTransaction().commit();
+		try {
+			em.getTransaction().begin();
+			em.remove(obj);
+			em.getTransaction().commit();
+		} catch (Exception ex) {
+			em.getTransaction().rollback();
+		}
 	}
 
 	public void cerrar() {
@@ -76,6 +81,5 @@ public class Repositorio {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
-	
-	
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,6 +17,7 @@ import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.hibernate.HibernateUtil;
 
 public class test1_entrega6 {
 	//--------------------------------------------------------------------------
@@ -77,7 +79,6 @@ public class test1_entrega6 {
 		
 		@Test
 		public void modificarPersistirRecuperarCoordenadas() {
-			
 			//Buscamos el poi por su nombre, en este caso sabemos que hay uno solo con dicho nombre
 			List<POI> poilst;
 			poilst = repositorio.pois().getPOIbyNombre("banco");

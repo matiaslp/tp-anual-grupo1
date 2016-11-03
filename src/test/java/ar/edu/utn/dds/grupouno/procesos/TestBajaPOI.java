@@ -34,7 +34,7 @@ public class TestBajaPOI {
 	@Before
 	public void init() {
 		Repositorio.getInstance().pois();
-		DB_POI.getListado().clear();
+	//	DB_POI.getListado().clear();
 		Autenticador = AuthAPI.getInstance();
 		fact.crearUsuario("admin", "123", Rol.ADMIN);
 		filePath = (new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json";

@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
@@ -31,7 +32,9 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 @Entity
 @Table(name = "POI")
 @Inheritance(strategy=InheritanceType.JOINED)
-@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL")
+@NamedQueries({
+@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
+@NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p")})
 public class POI extends PersistibleConNombre{
 
 	protected String callePrincipal;

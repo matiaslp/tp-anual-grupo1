@@ -31,14 +31,14 @@ public class test2_entrega6 {
 		private POI_DTO poiDTO_Bco;
 
 		@Before
-		public void setUp() throws Exception {
+		public void setUp_test2() throws Exception {
 			emFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 			repositorio = new Repositorio(emFactory.createEntityManager());
 
 			// Creamos un nuevo POI
 			// BANCO
 			
-			String nombres[] = new String[2];
+		//	String nombres[] = new String[2];
 			poiDTO_Bco = new POI_DTO();
 			poiDTO_Bco.setTipo(TiposPOI.BANCO);
 			poi_bco = poiDTO_Bco.converttoPOI();
@@ -51,9 +51,9 @@ public class test2_entrega6 {
 			poi_bco.setComuna(12);
 			poi_bco.setDepartamento("b");
 			poi_bco.setEsLocal(true);
-			nombres[0] = "etiqueta1";
-			nombres[1] = "etiqueta4";
-			poi_bco.setEtiquetas(nombres);
+//			nombres[0] = "etiqueta1";
+//			nombres[1] = "etiqueta4";
+//			poi_bco.setEtiquetas(nombres);
 			poi_bco.setLocalidad("nuñez");
 			poi_bco.setNumeracion(1405);
 			poi_bco.setPais("Argentina");
