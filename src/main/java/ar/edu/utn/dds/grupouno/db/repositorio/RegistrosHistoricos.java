@@ -26,11 +26,6 @@ public class RegistrosHistoricos {
 		lista.add(em.find(RegistroHistorico.class, id));
 		return lista;
 	}
-	public List<RegistroHistorico> getRegistroHistoricobyNombre(String nombre) {
-		List<RegistroHistorico> unRegistroHistorico = null;
-		unRegistroHistorico = em.createNamedQuery("getPOIbyNombre").setParameter("pnombre", "%" + nombre + "%").getResultList();
-		return unRegistroHistorico;
-	}
 	
 	
 	public boolean agregarRegistroHistorico(RegistroHistorico nuevoRegistroHistorico) {

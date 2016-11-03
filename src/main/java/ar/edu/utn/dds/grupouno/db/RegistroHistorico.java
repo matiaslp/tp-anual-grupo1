@@ -28,11 +28,11 @@ public class RegistroHistorico extends Persistible {
 	private String busqueda;
 	private long cantResultados;
 	private double tiempoDeConsulta;
-	@ManyToMany
+	/*@ManyToMany
 	@OrderColumn
 	@JoinTable(name="listaDePOIs", 
 				joinColumns={@JoinColumn(name="registroHistorico_id")}, 
-				inverseJoinColumns={@JoinColumn(name="poi_id")})
+				inverseJoinColumns={@JoinColumn(name="poi_id")})*/
 	private ArrayList<POI> listaDePOIs= new ArrayList<POI>();
 	
 	

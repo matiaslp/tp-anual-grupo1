@@ -1,7 +1,9 @@
 package ar.edu.utn.dds.grupouno.db.poi;
 
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +25,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
+import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
@@ -72,6 +75,11 @@ public class POI extends PersistibleConNombre{
 	//protected DateTime fechaBaja = null;
 	protected boolean esLocal = true;
 
+	/*@ManyToMany(mappedBy="pois")
+	private Set<RegistroHistorico> registrosHistoricos = new HashSet<RegistroHistorico>();
+	*/
+	
+	
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
 		return (distanciaCoordDosPOIs(this, unPOI) * 1000 < x);
 	}
