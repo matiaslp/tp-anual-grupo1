@@ -43,9 +43,9 @@ public class testRegistroHistorico {
 	@Test
 	public void testDeRegistroHistorico(){
 		
-		unRegistroHistorico=new RegistroHistorico(1, fecha, 1, "unaStringDeBusqueda",2,12,listaDePOIs);
+		unRegistroHistorico=new RegistroHistorico(fecha, 1, "unaStringDeBusqueda",2,12,listaDePOIs);
 		
-				Assert.assertEquals(1,unRegistroHistorico.getId());
+				Assert.assertEquals(0,unRegistroHistorico.getId());
 				Assert.assertEquals(fecha,unRegistroHistorico.getTime());
 				Assert.assertEquals(2, unRegistroHistorico.getListaDePOIs().size());
 				
