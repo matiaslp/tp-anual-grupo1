@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 import org.joda.time.DateTime;
 
+import ar.edu.utn.dds.grupouno.db.poi.Item_Borrar;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
@@ -49,6 +50,7 @@ public class DB_POI extends Repositorio {
 			return true;
 		}
 	}
+
 	@Transactional
 	public boolean actualizarPOI(POI poi) {
 		em.getTransaction().begin();
@@ -79,34 +81,23 @@ public class DB_POI extends Repositorio {
 	}
 
 	// TODO falta convertirlo a hibernate pero como debemos rehacer la entrega4 de procesos se hara en dicho momento
-	public Map<Long, Boolean> bajaPoi(String[] valoresBusqueda, List<DateTime> fechasBaja) {
+	public Map<Long, Boolean> bajaPoi(List<Item_Borrar> itemsABorrar) {
 		Map<Long, Boolean> resumen = new HashMap<Long, Boolean>();
-		for (int i = listadoPOI.size(); i > 1 || i == 1; i--) {
-			//Si el POI coincide con la busqueda.
-			POI poi = listadoPOI.get(i-1);
-			int indexFechas=0;
-			for(String valor : valoresBusqueda){
+		if(itemsABorrar.size() > 0){
+			for(Item_Borrar itemABorrar : itemsABorrar) {
 				String[] arrayValor = new String[1];
-				arrayValor[0] = valor;
-				if(poi.busquedaEstandar(arrayValor) && poi.dadoDeBaja(fechasBaja.get(indexFechas))){
-					resumen.put(poi.getId(), eliminarPOI(poi.getId()));
-					break;
+				arrayValor[0] = itemABorrar.getParametro();
+				
+				for (int i = listadoPOI.size() -1; i > 1 || i == 1; i--) {
+					POI poi = listadoPOI.get(i);
+					//En caso de ser el item que estaba buscando, lo elimino y salgo del ciclo.
+					if(poi.busquedaEstandar(arrayValor)){
+						resumen.put(poi.getId(), eliminarPOI(poi.getId()));
+						break;
+					}
 				}
-				indexFechas++;
 			}
-			
-			
-			
-			//if (poi.busquedaEstandar(valoresBusqueda)) {
-			//	for(DateTime fecha : fechasBaja){
-			//		if(poi.dadoDeBaja(fecha)){
-			//			resumen.put(poi.getId(), eliminarPOI(poi.getId()));
-			//			break;
-			//		}
-			//	}
-			//}
-		}
-		
+		}		
 		return resumen;
 	}
 }

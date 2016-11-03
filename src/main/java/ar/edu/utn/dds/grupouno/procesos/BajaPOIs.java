@@ -48,15 +48,14 @@ public class BajaPOIs extends Proceso {
 		ResultadoProceso resultado = null;
 		try {
 			List<Item_Borrar> listadoItems = new ArrayList<Item_Borrar>();
-
+			
 			Gson gson = generarGson();
-
+			
 			listadoItems = leerJson(gson,filePath);
 
 			Map<Long, Boolean> resumen = darDeBaja(listadoItems);
 			end = new DateTime();
-			
-			
+						
 			// Si el listado de resumen tiene algun elemento con value false
 			// significa que ese elemento no se pudo borrar
 			if (!resumen.containsValue(false)) {
@@ -109,14 +108,6 @@ public class BajaPOIs extends Proceso {
 	}
 
 	private Map<Long,Boolean> darDeBaja(List<Item_Borrar> listadoItems){
-		String[] valoresBusqueda = new String[listadoItems.size()];
-		List<String> valores = new ArrayList<String>();
-		List<DateTime> fechas = new ArrayList<DateTime>();
-		for (Item_Borrar item : listadoItems) {
-			valores.add(item.getParametro());
-			fechas.add(new DateTime(item.getFechaBorrado()));
-		}
-		valores.toArray(valoresBusqueda);
-		return dbPOI.bajaPoi(valoresBusqueda, fechas);	
+		return dbPOI.bajaPoi(listadoItems);	
 	}
 }

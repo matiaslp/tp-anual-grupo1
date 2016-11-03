@@ -3,33 +3,29 @@ package ar.edu.utn.dds.grupouno.db;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
 public class DB_Sesiones extends Persistible {
 
 	private Map<String, String> listaSesiones;
-
+	
 	private static DB_Sesiones instance = null;
-
+	
 	public DB_Sesiones() {
 		setDiccionarioTokenUser(new HashMap<String, String>());
 	}
-
+	
 	public static DB_Sesiones getInstance() {
 		if (instance == null) {
 			instance = new DB_Sesiones();
 		}
 		return instance;
 	}
-
+	
 	public Map<String, String> getDiccionarioTokenUser() {
 		return listaSesiones;
 	}
-
+	
 	public void setDiccionarioTokenUser(Map<String, String> diccionarioTokenUser) {
 		this.listaSesiones = diccionarioTokenUser;
 	}
@@ -49,5 +45,5 @@ public class DB_Sesiones extends Persistible {
 	public String validarToken(String token){
 		return listaSesiones.get(token);
 	}
-
+	
 }
