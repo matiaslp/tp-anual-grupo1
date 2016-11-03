@@ -1,9 +1,13 @@
 package ar.edu.utn.dds.grupouno.db.repositorio;
 
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
+
 
 
 public class RegistrosHistoricos {
@@ -13,20 +17,21 @@ public class RegistrosHistoricos {
 		this.em = emanager;
 	}
 
+
 	public RegistroHistorico getRegistroHistoricobyId(Long id) {
 		return em.find(RegistroHistorico.class, id);
 	}
-	
-	/*public List<RegistroHistorico> getRegistroHistoricobyNombre(String nombre) {
-		List<RegistroHistorico> RegistrosHistoricos = null;
-		RegistrosHistoricos = em.createNamedQuery("getRegistroHistoricobyNombre").setParameter("pnombre", "%" + nombre + "%").getResultList();
-		return RegistrosHistoricos;
+	public List<RegistroHistorico> getRegistroHistoricobyNombre(String nombre) {
+		List<RegistroHistorico> unRegistroHistorico = null;
+		unRegistroHistorico = em.createNamedQuery("getPOIbyNombre").setParameter("pnombre", "%" + nombre + "%").getResultList();
+		return unRegistroHistorico;
 	}
-	*/
+	
+	
 	public boolean agregarRegistroHistorico(RegistroHistorico nuevoRegistroHistorico) {
 		try {
-			// testear
-		//	nuevoPOI.setId(listadoPOI.size() + 1);
+	    
+		//	nuevoPOI.setId(listadonuevoRegistroHistorico.size() + 1);
 			persistir(nuevoRegistroHistorico);
 			return true;
 		} catch (Exception ex) {
@@ -34,38 +39,28 @@ public class RegistrosHistoricos {
 		}
 	}
 	
-	// Persistent objects are updated by the framework automatically????
+
+	@Transactional
 	public boolean actualizarRegistroHistorico(RegistroHistorico unRegistroHistorico) {
-//		boolean result;
-//		POI old_poi;
-//		old_poi = (POI) em.createNamedQuery("actualizarPOI").setParameter("pid", "%" + poi.getId() + "%").;
-//		if (poi != null)
-			
+		em.getTransaction().begin();
+		em.remove(getRegistroHistoricobyId(unRegistroHistorico.getId()));
+		em.persist(unRegistroHistorico);
+		em.getTransaction().commit();
 		return true;
 	}
 	
-/*	public boolean eliminarRegistroHistorico(long id) {
-		boolean result;
-		em.g
-	result = em.createNamedQuery("eliminarPOI").setParameter("pnombre", "%" + nombre + "%").getResultList();
-		return result;
+	public boolean eliminarRegistroHistorico(long id) {
+		em.getTransaction().begin();
+		em.remove(getRegistroHistoricobyId(id));
+		em.getTransaction().commit();
+		return true;
 	}
-	*/
-
 	public void persistir(RegistroHistorico unRegistroHistorico) {
 		em.getTransaction().begin();
 		em.persist(unRegistroHistorico);
 		em.getTransaction().commit();
 	}
 	
-	private void remove(RegistroHistorico unRegistroHistorico) {
-		em.getTransaction().begin();
-
-		em.remove(unRegistroHistorico);
-
-		em.getTransaction().commit();
-
-		em.close();
-	}
+	
 
 }
