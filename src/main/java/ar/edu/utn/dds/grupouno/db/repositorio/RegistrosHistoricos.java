@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.grupouno.db.repositorio;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,8 +19,12 @@ public class RegistrosHistoricos {
 	}
 
 
-	public RegistroHistorico getRegistroHistoricobyId(Long id) {
-		return em.find(RegistroHistorico.class, id);
+	@SuppressWarnings("null")
+	public List<RegistroHistorico> getRegistroHistoricobyId(long id) {
+		List<RegistroHistorico> lista=new ArrayList<RegistroHistorico>();
+		lista=null;
+		lista.add(em.find(RegistroHistorico.class, id));
+		return lista;
 	}
 	public List<RegistroHistorico> getRegistroHistoricobyNombre(String nombre) {
 		List<RegistroHistorico> unRegistroHistorico = null;
