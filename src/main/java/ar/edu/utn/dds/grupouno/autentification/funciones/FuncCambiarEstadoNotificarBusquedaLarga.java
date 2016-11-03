@@ -11,7 +11,7 @@ public class FuncCambiarEstadoNotificarBusquedaLarga extends Accion {
 	public FuncCambiarEstadoNotificarBusquedaLarga() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.TERMINAL);
+		Roles.add(new Rol("TERMINAL"));
 		nombre = "notificarBusquedaLarga";
 	}
 	

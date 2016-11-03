@@ -13,7 +13,7 @@ public class FuncReporteBusquedaPorUsuario extends Accion {
 	public FuncReporteBusquedaPorUsuario() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
+		Roles.add(new Rol("ADMIN"));
 		nombre = "reporteBusquedaPorUsuario";
 	}
 

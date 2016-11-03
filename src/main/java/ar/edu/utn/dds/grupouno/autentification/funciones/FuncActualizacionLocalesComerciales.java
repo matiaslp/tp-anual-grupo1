@@ -13,7 +13,7 @@ public class FuncActualizacionLocalesComerciales extends Accion {
 	public FuncActualizacionLocalesComerciales() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
+		Roles.add(new Rol("ADMIN"));
 		nombre = "actualizacionLocalesComerciales";
 		isProcess = true;
 	}

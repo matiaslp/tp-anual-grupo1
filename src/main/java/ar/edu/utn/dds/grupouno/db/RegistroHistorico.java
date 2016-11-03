@@ -1,40 +1,53 @@
 package ar.edu.utn.dds.grupouno.db;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
-
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "Historial")
 public class RegistroHistorico extends Persistible {
 
-	private DateTime time;
+	
+	private ZonedDateTime time;
 	private long userID;
 	private String busqueda;
 	private long cantResultados;
 	private double tiempoDeConsulta;
+	/*@ManyToMany
+	@OrderColumn
+	@JoinTable(name="listaDePOIs", 
+				joinColumns={@JoinColumn(name="registroHistorico_id")}, 
+				inverseJoinColumns={@JoinColumn(name="poi_id")})*/
 	private ArrayList<POI> listaDePOIs= new ArrayList<POI>();
+	
 	
 
 
 	
 
 	public DateTime getTime() {
-		return time;
+		
+		return MetodosComunes.convertJavatoJoda(this.time);
 	}
 
 	public void setTime(DateTime time) {
-		this.time = time;
+		
+		this.time = MetodosComunes.convertJodatoJava(time);
 	}
 
 	public long getUserID() {
@@ -69,13 +82,7 @@ public class RegistroHistorico extends Persistible {
 		this.tiempoDeConsulta = tiempoDeConsulta;
 	}
 
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 	public ArrayList<POI> getListaDePOIs() {
 		return listaDePOIs;
 	}
@@ -84,11 +91,11 @@ public class RegistroHistorico extends Persistible {
 		this.listaDePOIs = listaDePOIs;
 	}
 
-	public RegistroHistorico(long id, DateTime time, long userID, String busqueda, long cantResultados,
+	public RegistroHistorico(DateTime time, long userID, String busqueda, long cantResultados,
 			double tiempoDeConsulta,ArrayList<POI> listaDePOIs) {
 		super();
-		this.id = id;
-		this.time = time;
+		
+		this.time = MetodosComunes.convertJodatoJava(time);
 		this.userID = userID;
 		this.busqueda = busqueda;
 		this.cantResultados = cantResultados;

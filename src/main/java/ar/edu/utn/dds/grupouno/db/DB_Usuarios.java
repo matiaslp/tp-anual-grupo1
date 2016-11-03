@@ -1,25 +1,70 @@
 package ar.edu.utn.dds.grupouno.db;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import ar.edu.utn.dds.grupouno.autentification.Accion;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+
+import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
-public class DB_Usuarios extends Accion {
+public class DB_Usuarios extends Repositorio {
 
 	private ArrayList<Usuario> listaUsuarios;
-
 	private static DB_Usuarios instance = null;
 
-	public DB_Usuarios() {
-		setListaUsuarios(new ArrayList<Usuario>());
+	public DB_Usuarios(EntityManager em) {
+		super (em);
+		listaUsuarios = new ArrayList<Usuario>();
+	}
+	
+	public Long getRolId(String nombre){
+			Long id;
+			List<Long> lista = em.createNamedQuery("getRolId").setParameter("valor", nombre).getResultList();
+			return lista.get(0);
+	}
+	
+	public Rol getRolById(Long id){
+		List<Rol> lista = em.createNamedQuery("getRolById").setParameter("id", id).getResultList();
+		return lista.get(0);
 	}
 
-	public static DB_Usuarios getInstance() {
-		if (instance == null) {
-			instance = new DB_Usuarios();
+	@Transactional
+	public void persistirUsuario(Usuario usuario) {
+		em.getTransaction().begin();
+		em.persist(usuario);
+		em.getTransaction().commit();
+	}
+
+	public List<Usuario> getAllUsers() {
+		return (ArrayList<Usuario>) Repositorio.getInstance().getEm()
+				.createNamedQuery("getAllUsers").getResultList();
+	}
+	
+	public Usuario getUsuarioByName(String username){
+		List<Usuario> lista= Repositorio.getInstance().usuarios().getEm()
+				.createNamedQuery("getUsuarioByName")
+				.setParameter("unombre", username)
+				.getResultList();
+		if(lista.size()>0){
+			return lista.get(0);
 		}
-		return instance;
+		
+		return null;
+	}
+	
+	@Transactional
+	public void updateUsername(Long id, String username){
+		
+		em = Repositorio.getInstance().usuarios().getEm();
+		em.getTransaction().begin();
+		em.createNamedQuery("updateUsername")
+		.setParameter("username", username)
+		.setParameter("id",id)
+		.executeUpdate();
+		em.getTransaction().commit();
 	}
 	
 	public boolean deleteUsuario( long l) {
@@ -30,37 +75,6 @@ public class DB_Usuarios extends Accion {
 			return true;
 		}
 		return false;
-	}
-	
-
-	public boolean agregarUsuarioALista(Usuario user) {
-		for (Usuario usuario : getListaUsuarios()) {
-			if (user.getUsername().equals(usuario.getUsername()) || user.getId() == usuario.getId()) {
-				return false;
-			}
-		}
-		getListaUsuarios().add(user);
-		return true;
-	}
-
-	public ArrayList<Usuario> getListaUsuarios() {
-		return listaUsuarios;
-	}
-
-	public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
-		this.listaUsuarios = listaUsuarios;
-	}
-
-	public Usuario getUsuarioByName(String username) {
-		
-		Usuario usuarioNoEncontrado = null;
-		for (Usuario unUsuario : this.getListaUsuarios()) {
-			if (unUsuario.getUsername().equals(username)) {
-			return unUsuario;
-			}
-		}
-		return usuarioNoEncontrado;
-
 	}
 	
 	public Usuario getUsuarioById(long l){

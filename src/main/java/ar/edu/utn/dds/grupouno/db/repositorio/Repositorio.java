@@ -6,9 +6,10 @@ import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 
 import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 
 public class Repositorio {
-	private Usuarios usuarios;
+	private DB_Usuarios usuarios;
 	private DB_POI pois;
 	private ResultadosProcesos resultadosProcesos;
 	private RegistrosHistoricos registroHistorico;
@@ -30,10 +31,10 @@ public class Repositorio {
 	public Repositorio(EntityManager emanager) {
 		this.em = emanager;
 	}
-
-	public Usuarios usuarios() {
+	
+	public DB_Usuarios usuarios() {
 		if (usuarios == null) {
-			usuarios = new Usuarios(em);
+			usuarios = new DB_Usuarios(em);
 		}
 		return usuarios;
 	}

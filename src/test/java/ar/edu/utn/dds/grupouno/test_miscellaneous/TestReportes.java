@@ -56,23 +56,23 @@ public class TestReportes {
 		terminal.setId(10L);
 
 		DateTime time = new DateTime(2016, 1, 1, 1, 1);
-		RegistroHistorico registro = new RegistroHistorico(1, time, 10, "busqueda1", 10, 5,listaDePOIs);
+		RegistroHistorico registro = new RegistroHistorico( time, 10, "busqueda1", 10, 5,listaDePOIs);
 		historial.agregarHistorialBusqueda(registro);
 
 		time = new DateTime(2016, 2, 2, 2, 2);
-		registro = new RegistroHistorico(2, time, 10, "busqueda2", 20, 10,listaDePOIs);
+		registro = new RegistroHistorico(time, 10, "busqueda2", 20, 10,listaDePOIs);
 		historial.agregarHistorialBusqueda(registro);
 
 		time = new DateTime(2016, 3, 3, 3, 3);
-		registro = new RegistroHistorico(3, time, 10, "busqueda3", 30, 15,listaDePOIs);
+		registro = new RegistroHistorico(time, 10, "busqueda3", 30, 15,listaDePOIs);
 		historial.agregarHistorialBusqueda(registro);
 
 		time = new DateTime(2016, 4, 4, 4, 4);
-		registro = new RegistroHistorico(4, time, 10, "busqueda4", 40, 20,listaDePOIs);
+		registro = new RegistroHistorico(time, 10, "busqueda4", 40, 20,listaDePOIs);
 		historial.agregarHistorialBusqueda(registro);
 
 		time = new DateTime(2016, 4, 4, 4, 4);
-		registro = new RegistroHistorico(5, time, 1, "busqueda5", 400, 20,listaDePOIs);
+		registro = new RegistroHistorico(time, 1, "busqueda5", 400, 20,listaDePOIs);
 		historial.agregarHistorialBusqueda(registro);
 
 	}

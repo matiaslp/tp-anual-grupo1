@@ -11,7 +11,7 @@ public class FuncCambiarEstadoAuditoria extends Accion {
 	public FuncCambiarEstadoAuditoria() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.TERMINAL);
+		Roles.add(new Rol("TERMINAL"));
 		nombre = "auditoria";
 	}
 	

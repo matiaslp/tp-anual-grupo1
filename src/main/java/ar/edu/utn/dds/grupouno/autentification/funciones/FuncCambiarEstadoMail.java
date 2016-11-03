@@ -11,7 +11,7 @@ public class FuncCambiarEstadoMail extends Accion {
 	public FuncCambiarEstadoMail() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
+		Roles.add(new Rol("ADMIN"));
 		nombre = "cambiarEstadoMail";
 	}
 

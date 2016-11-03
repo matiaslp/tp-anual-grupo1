@@ -13,7 +13,7 @@ public class FuncAgregarAcciones extends Accion {
 	public FuncAgregarAcciones() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
+		Roles.add(new Rol("ADMIN"));
 		nombre = "agregarAcciones";
 		isProcess = true;
 	}

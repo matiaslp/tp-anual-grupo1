@@ -11,8 +11,8 @@ public class FuncCambiarEstadoGenerarLog extends Accion {
 	public FuncCambiarEstadoGenerarLog() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
-		Roles.add(Rol.TERMINAL);
+		Roles.add(new Rol("ADMIN"));
+		Roles.add(new Rol("TERMINAL"));
 		nombre = "generarLog";
 	}
 
