@@ -59,6 +59,15 @@ public class AuthAPI {
 		Acciones.add(new FuncCambiarEstadoAuditoria());
 		Acciones.add(new FuncCambiarEstadoGenerarLog());
 	}
+	
+	public Accion getAccion(String nombre) {
+		
+		for (Accion accion : this.getAcciones()) {
+			if (accion.getNombreFuncion().equals(nombre))
+				return accion;
+		}
+		return null;
+	}
 
 
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {

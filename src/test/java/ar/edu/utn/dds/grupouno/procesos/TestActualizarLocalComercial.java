@@ -28,7 +28,7 @@ public class TestActualizarLocalComercial {
 	public void init(){
 		dbPOI = Repositorio.getInstance().pois();
 		Autenticador = AuthAPI.getInstance();
-		fact.crearUsuario("admin", "123", Rol.ADMIN);
+		fact.crearUsuario("admin", "123", "ADMIN");
 	}
 	
 	@Test
@@ -60,7 +60,7 @@ public class TestActualizarLocalComercial {
 		localEsperado4.setEtiquetas(etiquetas4);
 		
 		//Ejecucion del proceso:
-		Usuario admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
+		Usuario admin = Repositorio.getInstance().usuarios().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("actualizacionLocalesComerciales", admin);
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");

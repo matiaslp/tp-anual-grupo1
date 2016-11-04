@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,7 @@ public class TestUsuario {
 	Repositorio repositorio;
 	Usuario usuario;
 	UsuariosFactory ufactory = new UsuariosFactory();
+	Usuario recuperado;
 	
 	@Before
 	public void init (){
@@ -35,19 +37,27 @@ public class TestUsuario {
 		
 		repositorio.usuarios().persistirUsuario(usuario);
 		
-		Usuario recuperado = repositorio.usuarios().getUsuarioByName("admin");
+		recuperado = repositorio.usuarios().getUsuarioByName("admin");
 		
 		Assert.assertTrue(recuperado.getUsername().equals("admin"));
 		
 		repositorio.usuarios().updateUsername(recuperado.getId(), "prueba");
 		
 		Repositorio.getInstance().getEm().clear();
-		Usuario recuperado2 = repositorio.usuarios().getUsuarioByName("prueba");
+		recuperado = repositorio.usuarios().getUsuarioByName("prueba");
 		
-		Assert.assertTrue(recuperado2.getUsername().equals("prueba"));
+		Assert.assertTrue(recuperado.getUsername().equals("prueba"));
 
 		
 	}
+	
+//	@After
+//	public void outtro() {
+//		
+//		repositorio.remove(recuperado);
+//		//repositorio.remove(usuario);
+//		
+//	}
 
 }
 

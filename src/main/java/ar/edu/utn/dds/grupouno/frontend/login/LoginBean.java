@@ -11,6 +11,7 @@ import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 @ManagedBean
 @SessionScoped
 public class LoginBean {
@@ -38,13 +39,13 @@ public class LoginBean {
 		Severity severity = FacesMessage.SEVERITY_INFO;
 		//testTTTTTTTTTTTTTTTTTTT
 		UsuariosFactory fact = new UsuariosFactory();
-		fact.crearUsuario("admin", "pass", Rol.ADMIN);
-		fact.crearUsuario("terminal", "pass", Rol.TERMINAL);
+		fact.crearUsuario("admin", "pass", "ADMIN");
+		fact.crearUsuario("terminal", "pass", "TERMINAL");
 		//-------------------------
 		//obtenemos usuario
 		String token = AuthAPI.getInstance().iniciarSesion(usuario, contrasena);
 		if ( token != null) {
-			Usuario user = DB_Usuarios.getInstance().getUsuarioByName(usuario);
+			Usuario user = Repositorio.getInstance().usuarios().getUsuarioByName(usuario);
 			msg = "Usuario " + usuario + " autorizado";
 			// Iniciamos sesion
 			FacesContext.getCurrentInstance().getExternalContext().

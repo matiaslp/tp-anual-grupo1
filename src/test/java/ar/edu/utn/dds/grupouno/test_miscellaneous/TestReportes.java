@@ -18,6 +18,7 @@ import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class TestReportes {
 
@@ -51,8 +52,8 @@ public class TestReportes {
 		DB_Usuarios.getInstance();
 		
 		fact = new UsuariosFactory();
-		fact.crearUsuario("terminal", "123", Rol.TERMINAL);
-		terminal = DB_Usuarios.getInstance().getUsuarioByName("terminal");
+		fact.crearUsuario("terminal", "123", "TERMINAL");
+		terminal = Repositorio.getInstance().usuarios().getUsuarioByName("terminal");
 		terminal.setId(10L);
 
 		DateTime time = new DateTime(2016, 1, 1, 1, 1);
@@ -113,8 +114,8 @@ public class TestReportes {
 
 	@Test
 	public void testReporteCantidadResultadosPorUsuario() {
-		fact.crearUsuario("otro", "admin", Rol.ADMIN);
-		DB_Usuarios.getInstance().getUsuarioByName("otro").setId(1L);
+		fact.crearUsuario("otro", "admin", "ADMIN");
+		Repositorio.getInstance().usuarios().getUsuarioByName("otro").setId(1L);
 		Map<Long, Long> resultado = historial.reporteBusquedaPorUsuario();
 
 		// System.out.printf("\nIdUsuario cantidadResultados \n");

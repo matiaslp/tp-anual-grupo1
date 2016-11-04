@@ -16,6 +16,7 @@ import ar.edu.utn.dds.grupouno.db.DB_ResultadosProcesos;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.Resultado;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
 
 public class AgregarAcciones extends Proceso {
@@ -55,7 +56,7 @@ public class AgregarAcciones extends Proceso {
 
 					palabras = linea.split(" ");
 					unUsername = palabras[0];
-					if (DB_Usuarios.getInstance().getUsuarioByName(unUsername) == null)
+					if (Repositorio.getInstance().usuarios().getUsuarioByName(unUsername) == null)
 						usuariosInexistentes = usuariosInexistentes + unUsername;
 					// arma la lista de acciones para un usuario
 					for (int i = 1; i < palabras.length; i++) {
@@ -129,8 +130,8 @@ public class AgregarAcciones extends Proceso {
 			acciones = Arrays.copyOfRange(acciones, 1, acciones.length);
 
 			// Si el usuario existe
-			if (DB_Usuarios.getInstance().getUsuarioByName(unUsername) != null) {
-				Usuario unUsuario = DB_Usuarios.getInstance().getUsuarioByName(unUsername);
+			if (Repositorio.getInstance().usuarios().getUsuarioByName(unUsername) != null) {
+				Usuario unUsuario = Repositorio.getInstance().usuarios().getUsuarioByName(unUsername);
 
 				// Remover todas las funcionalidades que fueron agregadas
 				for (int i = 0; i < acciones.length; i++)

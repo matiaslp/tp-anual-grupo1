@@ -8,6 +8,8 @@ import java.util.Map;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+
 public class DB_HistorialBusquedas {
 
 	private Map<Long, RegistroHistorico> listadoRegistros;
@@ -70,7 +72,7 @@ public class DB_HistorialBusquedas {
 		Map<Long, Long> resumen = new HashMap<Long, Long>();
 
 		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-			if (Long.compare(terminal, registro.getValue().getUserID()) == 0 && DB_Usuarios.getInstance().getUsuarioById(terminal).isAuditoriaActivada())
+			if (Long.compare(terminal, registro.getValue().getUserID()) == 0 && Repositorio.getInstance().usuarios().getUsuarioById(terminal).isAuditoriaActivada())
 				resumen.put(registro.getValue().getId(), registro.getValue().getCantResultados());
 		}
 		return resumen;
@@ -96,7 +98,7 @@ public class DB_HistorialBusquedas {
 			// Saco la cantidad de busquedas del usuario
 			for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
 
-				if (Long.compare(userId, registro.getValue().getUserID()) == 0 && DB_Usuarios.getInstance().getUsuarioById(userId).isAuditoriaActivada())
+				if (Long.compare(userId, registro.getValue().getUserID()) == 0 && Repositorio.getInstance().usuarios().getUsuarioById(userId).isAuditoriaActivada())
 					sumaParcial += registro.getValue().getCantResultados();
 			}
 			resumen.put(userId, sumaParcial);

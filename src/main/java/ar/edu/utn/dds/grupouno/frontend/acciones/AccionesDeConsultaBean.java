@@ -11,6 +11,7 @@ import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 @ManagedBean(name="AccionesDeConsultaBean")
 @RequestScoped
@@ -23,7 +24,7 @@ public class AccionesDeConsultaBean {
 	public AccionesDeConsultaBean() {
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		accionesParaSeleccionar = (List<String>) AuthAPI.getInstance().getAcciones().keySet();
     }
 	

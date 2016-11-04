@@ -22,7 +22,7 @@ import ar.edu.utn.dds.grupouno.hibernate.HibernateUtil;
 public class test1_entrega6 {
 	//--------------------------------------------------------------------------
 	// Parametros a modificar
-		private static final double LATITUD = 100;
+		private static final double LATITUD = 101;
 		private static final double LONGITUD = 200;
 	//--------------------------------------------------------------------------
 	
@@ -94,10 +94,10 @@ public class test1_entrega6 {
 			Assert.assertTrue(poi_recuperado.getLongitud() == LONGITUD);
 		}
 		
-		@After
-		public void outtro() {
-			
-			repositorio.remove(poi_recuperado);
-			
-		}
+//		@After
+//		public void outtro() {
+//			
+//			repositorio.remove(poi_recuperado);
+//			
+//		}
 }

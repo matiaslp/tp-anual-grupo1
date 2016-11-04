@@ -62,13 +62,13 @@ public class Repositorio {
 
 //	@Transactional
 	public void remove(Object obj) {
-		try {
+//		try {
 			em.getTransaction().begin();
 			em.remove(obj);
 			em.getTransaction().commit();
-		} catch (Exception ex) {
-			em.getTransaction().rollback();
-		}
+//		} catch (Exception ex) {
+//			em.getTransaction().rollback();
+//		}
 	}
 
 	public void cerrar() {

@@ -47,7 +47,7 @@ public class TestEMailProcesoError {
 		unUsuario.setUsername("Pablo");
 		unUsuario.setCorreo("lag21392@gmail.com");
 		unUsuario.setPassword("123");
-		unUsuario.setRol(Rol.TERMINAL);
+		unUsuario.setRol("TERMINAL");
 		
 		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
 		listadoAccionesQueEstanEnAdmin.add("obtenerInfoPOI");
