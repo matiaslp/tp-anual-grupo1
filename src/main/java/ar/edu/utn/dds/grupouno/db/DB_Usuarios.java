@@ -38,7 +38,7 @@ public class DB_Usuarios extends Repositorio {
 		em.getTransaction().commit();
 	}
 
-	public List<Usuario> getAllUsers() {
+	public List<Usuario> getListaUsuarios() {
 		return (ArrayList<Usuario>) Repositorio.getInstance().getEm()
 				.createNamedQuery("getAllUsers").getResultList();
 	}

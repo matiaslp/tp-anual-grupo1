@@ -99,7 +99,7 @@ public class AuthAPI {
 
 		// LA PASS YA DEBERIA LLEGAR HASHEADA AL ENTRAR A ESTA FUNCION
 
-		for (Usuario usuario : Repositorio.getInstance().usuarios().getAllUsers()) {
+		for (Usuario usuario : Repositorio.getInstance().usuarios().getListaUsuarios()) {
 			if (usuario.validarUsuarioYPass(user, pass)) {
 				String token = null;
 				try {

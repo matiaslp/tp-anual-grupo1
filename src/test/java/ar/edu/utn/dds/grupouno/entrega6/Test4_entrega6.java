@@ -16,7 +16,7 @@ import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
-public class TestUsuario {
+public class Test4_entrega6 {
 	
 	private static final String PERSISTENCE_UNIT_NAME = "tp-anual";
 	private EntityManagerFactory emFactory;
@@ -42,7 +42,7 @@ public class TestUsuario {
 		Assert.assertTrue(recuperado.getUsername().equals("admin"));
 		
 		repositorio.usuarios().updateUsername(recuperado.getId(), "prueba");
-		
+
 		Repositorio.getInstance().getEm().clear();
 		recuperado = repositorio.usuarios().getUsuarioByName("prueba");
 		

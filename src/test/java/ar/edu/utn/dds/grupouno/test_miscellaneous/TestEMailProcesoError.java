@@ -30,6 +30,7 @@ public class TestEMailProcesoError {
 	ResultadoProceso primerResultadoDeProceso;
 	ResultadoProceso segundoResultadoDeProceso;
  	ResultadoProceso tercerResultadoDeProceso;
+ 	Rol terminal = new Rol();
 	
 	private ArrayList<String> listadoAccionesQueEstanEnAdmin;
 	AgregarAccionesTransaction transaction;
@@ -40,14 +41,15 @@ public class TestEMailProcesoError {
 	public void init() {
 
 		instance = new LeerProperties();
-		
 		transaction = new AgregarAccionesTransaction(0);
 		
+		
+		terminal.setValue("TERMINAL");
 		unUsuario= new Usuario();
 		unUsuario.setUsername("Pablo");
 		unUsuario.setCorreo("lag21392@gmail.com");
 		unUsuario.setPassword("123");
-		unUsuario.setRol("TERMINAL");
+		unUsuario.setRol(terminal);
 		
 		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
 		listadoAccionesQueEstanEnAdmin.add("obtenerInfoPOI");

@@ -95,9 +95,9 @@ public class TestLogin {
 
 	@Test
 	public void testAgregarUsuarioTrue() {
-		Long tamanio = (long) DBU.usuarios().getAllUsers().size();
+		Long tamanio = (long) DBU.usuarios().getListaUsuarios().size();
 		fact.crearUsuario("nuevo", "password", "ADMIN");
-		Assert.assertTrue(DBU.usuarios().getAllUsers().size() == (tamanio+1));
+		Assert.assertTrue(DBU.usuarios().getListaUsuarios().size() == (tamanio+1));
 	}
 
 	@Test

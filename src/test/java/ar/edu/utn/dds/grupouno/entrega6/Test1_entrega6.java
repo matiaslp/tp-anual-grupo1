@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,9 +16,8 @@ import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
-import ar.edu.utn.dds.grupouno.hibernate.HibernateUtil;
 
-public class test1_entrega6 {
+public class Test1_entrega6 {
 	//--------------------------------------------------------------------------
 	// Parametros a modificar
 		private static final double LATITUD = 101;
@@ -94,10 +92,10 @@ public class test1_entrega6 {
 			Assert.assertTrue(poi_recuperado.getLongitud() == LONGITUD);
 		}
 		
-//		@After
-//		public void outtro() {
-//			
-//			repositorio.remove(poi_recuperado);
-//			
-//		}
+		@After
+		public void outtro() {
+			
+			repositorio.remove(poi_recuperado);
+			
+		}
 }

@@ -37,7 +37,7 @@ public class TestAgregarAcciones {
 	public void init() {
 		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
 		listadoAccionesQueEstanEnTerminal = new ArrayList<String>();
-		DB_Usuarios.getInstance().getListaUsuarios().clear();
+		Repositorio.getInstance().usuarios().getListaUsuarios().clear();
 		unAuthAPI = AuthAPI.getInstance();
 		transaction = new AgregarAccionesTransaction(0);
 

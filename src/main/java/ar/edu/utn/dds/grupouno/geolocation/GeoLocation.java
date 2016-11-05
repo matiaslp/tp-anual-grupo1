@@ -22,7 +22,7 @@ import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
 @Entity
-@Table(name = "geolocalizacion")
+@Table(name = "GEOLOCALIZACION")
 public class GeoLocation extends Persistible{
 
 	public static double RADIUS = 6371010;

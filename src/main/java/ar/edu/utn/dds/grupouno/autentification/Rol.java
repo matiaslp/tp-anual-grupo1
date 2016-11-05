@@ -17,8 +17,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "ROL")
 @NamedQueries({
 @NamedQuery(name = "getRolId", query = "SELECT id FROM Rol r WHERE r.value = :valor"),
 @NamedQuery(name = "getRolById", query = "SELECT r FROM Rol r WHERE r.id = :id")})
@@ -40,4 +42,18 @@ public class Rol{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected long id;
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}
+	public List<Accion> getAcciones() {
+		return Acciones;
+	}
+	public void setAcciones(List<Accion> acciones) {
+		Acciones = acciones;
+	}
+	
+	
 }

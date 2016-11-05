@@ -14,7 +14,7 @@ import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 
 
-public class testRegistroHistorico {
+public class TestRegistroHistorico {
 	RegistroHistorico unRegistroHistorico;
 	ArrayList<POI> listaDePOIs;
 	LocalComercial local1;

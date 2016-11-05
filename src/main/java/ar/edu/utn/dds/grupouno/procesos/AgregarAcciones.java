@@ -148,7 +148,7 @@ public class AgregarAcciones extends Proceso {
 		boolean agregoAccion = false;
 		String transac = null;
 		Usuario unUsuario;
-		DB_Usuarios db_usuario = DB_Usuarios.getInstance();
+		DB_Usuarios db_usuario = Repositorio.getInstance().usuarios();
 
 		if (db_usuario.getUsuarioByName(unUsername) != null) {
 			transac = unUsername;

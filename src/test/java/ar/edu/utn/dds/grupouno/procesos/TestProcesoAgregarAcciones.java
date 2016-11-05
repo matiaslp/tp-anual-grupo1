@@ -25,7 +25,7 @@ public class TestProcesoAgregarAcciones {
 
 	@Before
 	public void init() {
-		DB_Usuarios.getInstance().getListaUsuarios().clear();
+		Repositorio.getInstance().usuarios().getListaUsuarios().clear();
 		AuthAPI.getInstance();
 		
 		fact.crearUsuario("admin", "123", "ADMIN");

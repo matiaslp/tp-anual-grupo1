@@ -8,43 +8,49 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
 
 
 
-public class RegistrosHistoricos {
-	protected EntityManager em;
+public class RegistrosHistoricos extends Repositorio {
 	
-	RegistrosHistoricos(EntityManager emanager) {
-		this.em = emanager;
+	RegistrosHistoricos(EntityManager em) {
+		super (em);
 	}
 
 
-	@SuppressWarnings("null")
-	public List<RegistroHistorico> getRegistroHistoricobyId(long id) {
-		List<RegistroHistorico> lista=new ArrayList<RegistroHistorico>();
-		lista=null;
-		lista.add(em.find(RegistroHistorico.class, id));
-		return lista;
+	public RegistroHistorico getRegistroHistoricobyId(long id) {
+		return em.find(RegistroHistorico.class, id);
 	}
+	
+public List<RegistroHistorico> getHistoricobyUserId(Long userID) {
+		
+		List<RegistroHistorico> resultado = null;
+		resultado = em.createNamedQuery("getHistoricobyUserId").setParameter("ruserid",userID).getResultList();
+		return resultado;
+	}
+	
+
 	
 	
 	public boolean agregarRegistroHistorico(RegistroHistorico nuevoRegistroHistorico) {
-		try {
+//		try {
 	    
 		//	nuevoPOI.setId(listadonuevoRegistroHistorico.size() + 1);
 			persistir(nuevoRegistroHistorico);
 			return true;
-		} catch (Exception ex) {
-			return false;
-		}
+//		} catch (Exception ex) {
+//			return false;
+//		}
 	}
 	
 
 	@Transactional
 	public boolean actualizarRegistroHistorico(RegistroHistorico unRegistroHistorico) {
 		em.getTransaction().begin();
-		em.remove(getRegistroHistoricobyId(unRegistroHistorico.getId()));
-		em.persist(unRegistroHistorico);
+//		em.remove(getRegistroHistoricobyId(unRegistroHistorico.getId()));
+//		em.persist(unRegistroHistorico);
+		em.flush();
 		em.getTransaction().commit();
 		return true;
 	}

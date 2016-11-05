@@ -78,9 +78,9 @@ public class POI extends PersistibleConNombre{
 	//protected DateTime fechaBaja = null;
 	protected boolean esLocal = true;
 
-	/*@ManyToMany(mappedBy="pois")
+	@ManyToMany(mappedBy="pois")
 	private Set<RegistroHistorico> registrosHistoricos = new HashSet<RegistroHistorico>();
-	*/
+	
 	
 	
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
