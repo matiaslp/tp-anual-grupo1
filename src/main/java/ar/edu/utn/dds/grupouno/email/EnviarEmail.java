@@ -33,7 +33,7 @@ public abstract class EnviarEmail {
 		
 		for (ResultadoProceso resultado : listaResultados) {
 			String res = "";
-			String clase = resultado.getProc().getClass().toString();
+			String clase = resultado.getProc().nombre();
 			if (resultado.getResultado().equals(Resultado.ERROR))
 				res = "con errores";
 			else if (resultado.getResultado().equals(Resultado.OK))
