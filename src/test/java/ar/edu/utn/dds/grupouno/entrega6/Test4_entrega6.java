@@ -29,6 +29,7 @@ public class Test4_entrega6 {
 	public void init (){
 		emFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		repositorio = new Repositorio(emFactory.createEntityManager());
+//		repositorio = Repositorio.getInstance();
 	}
 	
 	@Test

@@ -32,9 +32,7 @@ public class Test1_entrega6 {
 
 		@Before
 		public void setUp() throws Exception {
-			emFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-			repositorio = new Repositorio(emFactory.createEntityManager());
-
+			repositorio = Repositorio.getInstance();
 			
 			// BANCO
 			

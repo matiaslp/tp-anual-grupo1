@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.grupouno.db.poi;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,7 +72,7 @@ public class POI extends PersistibleConNombre{
 	@JoinTable(name="POI_ETIQUETA", 
 				joinColumns={@JoinColumn(name="poi_id")}, 
 				inverseJoinColumns={@JoinColumn(name="etiqueta_id")})
-	protected Etiqueta[] etiquetas;
+	protected List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();;
 	@Column
 	@Type(type="org.hibernate.type.ZonedDateTimeType")
 	protected ZonedDateTime fechaBaja = null;
@@ -268,29 +269,29 @@ public class POI extends PersistibleConNombre{
 	}
 
 	public void setEtiquetas(String nombres[]) {
-		this.etiquetas = new Etiqueta[nombres.length];
+		this.etiquetas.clear();
 		for (int i = 0; i < nombres.length; i++) {
-			this.etiquetas[i] = FlyweightFactoryEtiqueta.getEtiqueta(nombres[i]);
+			this.etiquetas.add(FlyweightFactoryEtiqueta.getEtiqueta(nombres[i]));
 		}
 	}
 
 	public String[] getEtiquetas() {
-		String[] nombres = new String[etiquetas.length];
-		for (int i = 0; i < etiquetas.length; i++) {
-			nombres[i] = etiquetas[i].getNombre();
+		String[] nombres = new String[etiquetas.size()];
+		for (int i = 0; i < etiquetas.size(); i++) {
+			nombres[i] = etiquetas.get(i).getNombre();
 		}
 		return nombres;
 	}
 
 	public String getEtiqueta(int num) {
 
-		return etiquetas[num].getNombre();
+		return etiquetas.get(num).getNombre();
 	}
 
 	public Boolean buscarEtiqueta(String etiquetaNombre) {
 		if (etiquetas != null)
-			for (int i = 0; i < etiquetas.length; i++) {
-				if (LevDist.calcularDistancia(etiquetaNombre, this.etiquetas[i].getNombre())) {
+			for (Etiqueta e : etiquetas) {
+				if (LevDist.calcularDistancia(etiquetaNombre, e.getNombre())) {
 					return true;
 				}
 			}
@@ -473,7 +474,7 @@ public class POI extends PersistibleConNombre{
 		}else if(this.etiquetas == null && poi.etiquetas !=null){
 			return false;
 		}else{
-			if(this.etiquetas.length == poi.getEtiquetas().length){
+			if(this.etiquetas.size() == poi.getEtiquetas().length){
 				for(Etiqueta etiqueta : this.etiquetas){
 					if(!poi.buscarEtiqueta(etiqueta.getNombre()))
 						return false;

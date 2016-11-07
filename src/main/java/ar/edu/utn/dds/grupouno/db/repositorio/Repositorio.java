@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 
+import ar.edu.utn.dds.grupouno.db.DB_Etiqueta;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 
@@ -13,6 +14,7 @@ public class Repositorio {
 	private DB_POI pois;
 	private ResultadosProcesos resultadosProcesos;
 	private RegistrosHistoricos registroHistorico;
+	private DB_Etiqueta etiquetas;
 	protected EntityManager em;
 	private static Repositorio instance = null;
 
@@ -58,6 +60,13 @@ public class Repositorio {
 			registroHistorico = new RegistrosHistoricos(em);
 		}
 		return registroHistorico;
+	}
+	
+	public DB_Etiqueta etiquetas() {
+		if (etiquetas == null) {
+			etiquetas = new DB_Etiqueta(em);
+		}
+		return etiquetas;
 	}
 
 //	@Transactional

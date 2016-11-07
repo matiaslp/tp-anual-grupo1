@@ -8,14 +8,26 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
+
 
 
 
 public class RegistrosHistoricos extends Repositorio {
 	
+	private static ArrayList<RegistroHistorico> listadoRegistroHistorico;
+	
 	RegistrosHistoricos(EntityManager em) {
 		super (em);
+		listadoRegistroHistorico = new ArrayList<RegistroHistorico>();
+	}
+	
+	
+	public ArrayList<RegistroHistorico> getListado() {
+		listadoRegistroHistorico.clear();
+
+		listadoRegistroHistorico = (ArrayList<RegistroHistorico>) em.createNamedQuery("RegistroHistorico.findAll").getResultList();
+
+		return listadoRegistroHistorico;
 	}
 
 

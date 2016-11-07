@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
@@ -23,7 +24,9 @@ import ar.edu.utn.dds.grupouno.modelo.Persistible;
 //@SuppressWarnings("serial")
 @Entity
 @Table(name = "HISTORICO")
-@NamedQuery(name = "getHistoricobyUserId", query = "SELECT r FROM RegistroHistorico r WHERE r.userID = :ruserid")
+@NamedQueries({
+@NamedQuery(name = "getHistoricobyUserId", query = "SELECT r FROM RegistroHistorico r WHERE r.userID = :ruserid"),
+@NamedQuery(name = "RegistroHistorico.findAll", query = "SELECT r FROM RegistroHistorico r")})
 public class RegistroHistorico extends Persistible {
 
 	private ZonedDateTime time;

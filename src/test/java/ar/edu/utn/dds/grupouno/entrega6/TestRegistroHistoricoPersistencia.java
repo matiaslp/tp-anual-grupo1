@@ -35,9 +35,8 @@ public class TestRegistroHistoricoPersistencia {
 
 	@Before
 	public void setUp() throws Exception {
-		emFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		repositorio = new Repositorio(emFactory.createEntityManager());
 
+		repositorio = Repositorio.getInstance();
 		listaDePOIs = new ArrayList<POI>();
 		local_dto = new POI_DTO();
 		banco_dto = new POI_DTO();
@@ -65,13 +64,13 @@ public class TestRegistroHistoricoPersistencia {
 
 	@Test
 	public void modificarPersistirRecuperarCoordenadas() {
-		// Buscamos el RegistroHistorico por su nombre, en este caso sabemos que
-		// hay uno solo con dicho nombre
+		// Buscamos el RegistroHistorico por su userid, en este caso sabemos que
+		// hay uno solo con dicho id
 		List<RegistroHistorico> registroHistoricolist;
 		registroHistoricolist = repositorio.resultadosRegistrosHistoricos().getHistoricobyUserId(1L);
 		unRH = registroHistoricolist.get(0);
 
-		// Modificamos sus coordenadas geograficas
+		// Modificamos su lista de pois, fecha, userID y tiempo de consulta
 
 		listaDePOIs.clear();
 		local_dto.setNombre("local2");
@@ -96,8 +95,9 @@ public class TestRegistroHistoricoPersistencia {
 		repositorio.resultadosRegistrosHistoricos().actualizarRegistroHistorico(unRH);
 		// Lo recuperamos de la DB
 
-		registroHistoricoRecuperado = (RegistroHistorico) repositorio.resultadosRegistrosHistoricos()
-				.getRegistroHistoricobyId(1);
+		registroHistoricoRecuperado = (RegistroHistorico) repositorio.resultadosRegistrosHistoricos().getListado().get(0);
+		
+		//comprobamos que las modificaciones se hayan realizado
 		Assert.assertTrue(registroHistoricoRecuperado.getListaDePOIs().get(0).equals(local2));
 		Assert.assertTrue(registroHistoricoRecuperado.getListaDePOIs().get(1).equals(banco2));
 		Assert.assertTrue(registroHistoricoRecuperado.getUserID() == 11);
@@ -107,7 +107,6 @@ public class TestRegistroHistoricoPersistencia {
 
 	 @After
 	 public void outtro() {
-	
 	 repositorio.remove(registroHistoricoRecuperado);
 	 repositorio.remove(banco1);
 	 repositorio.remove(banco2);
