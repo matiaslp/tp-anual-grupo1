@@ -23,12 +23,14 @@ public class TestActualizarLocalComercial {
 	Usuario unUsuarioAdmin;
 	AuthAPI Autenticador;
 	UsuariosFactory fact = new UsuariosFactory();
+	Repositorio repositorio;
 	
 	@Before
 	public void init(){
-		dbPOI = Repositorio.getInstance().pois();
 		Autenticador = AuthAPI.getInstance();
-		fact.crearUsuario("admin", "123", "ADMIN");
+		repositorio = Repositorio.getInstance();
+		repositorio.usuarios().persistirUsuario(fact.crearUsuario("admin", "123", "ADMIN"));
+		
 	}
 	
 	@Test
@@ -41,7 +43,7 @@ public class TestActualizarLocalComercial {
 		local1.setNombre("local1");
 		String[] etiquetas = {"mataderos", "heladeria"};
 		local1.setEtiquetas(etiquetas);
-		dbPOI.agregarPOI(local1);
+		repositorio.pois().agregarPOI(local1);
 		
 		//Creo los locales que espero obtener despues de ejecutar el proceso:
 		LocalComercial localEsperado2 = new LocalComercial();
@@ -65,11 +67,14 @@ public class TestActualizarLocalComercial {
 		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");
 		funcion.actualizarLocales(admin, tokenAdmin, 0, false, filePath);
-
+		
+		repositorio.usuarios().updateUsuario(); //ESTO DEBERIA SER UN UPDATE GENERAL
+		//FALLA POR LA PARTE DE PROCESOS
+		
 		//Busco las modificaciones para corroborar que se corrio correctamente
-		POI local2Actualizado = dbPOI.getPOIbyNombre("local2").get(0);
-		POI local3Actualizado = dbPOI.getPOIbyNombre("local3").get(0);
-		POI local4Actualizado = dbPOI.getPOIbyNombre("local4").get(0);
+		POI local2Actualizado = repositorio.pois().getPOIbyNombre("local2").get(0);
+		POI local3Actualizado = repositorio.pois().getPOIbyNombre("local3").get(0);
+		POI local4Actualizado = repositorio.pois().getPOIbyNombre("local4").get(0);
 		
 		//Compruebo que el local 2 y 3 hayan sido creados:
 		Assert.assertNotNull(local2Actualizado);

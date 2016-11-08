@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.transaction.Transactional;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -27,14 +28,19 @@ public class Test4_entrega6 {
 	
 	@Before
 	public void init (){
-		emFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		repositorio = new Repositorio(emFactory.createEntityManager());
-//		repositorio = Repositorio.getInstance();
+		usuario = ufactory.crearUsuario("admin", "password","ADMIN");
+		repositorio = Repositorio.getInstance();
 	}
 	
 	@Test
 	public void persistirUsuarios() throws InterruptedException{
-		usuario = ufactory.crearUsuario("admin", "password","ADMIN");
+		
+		usuario.setAuditoriaActivada(true);
+		usuario.setCorreo("uncorreo@correoloco.com");
+		usuario.setLog(true);
+		usuario.setMailHabilitado(true);
+		usuario.setNombre("Shaggy");
+		usuario.setNotificacionesActivadas(true);
 		
 		repositorio.usuarios().persistirUsuario(usuario);
 		
@@ -42,23 +48,23 @@ public class Test4_entrega6 {
 		
 		Assert.assertTrue(recuperado.getUsername().equals("admin"));
 		
-		repositorio.usuarios().updateUsername(recuperado.getId(), "prueba");
+		recuperado.setUsername("prueba");
+		
+		repositorio.usuarios().updateUsuario();
 
-		Repositorio.getInstance().getEm().clear();
 		recuperado = repositorio.usuarios().getUsuarioByName("prueba");
-		
-		Assert.assertTrue(recuperado.getUsername().equals("prueba"));
 
-		
+		Assert.assertTrue(recuperado.getUsername().equals("prueba"));
 	}
 	
-//	@After
-//	public void outtro() {
-//		
-//		repositorio.remove(recuperado);
-//		//repositorio.remove(usuario);
-//		
-//	}
+	@After
+	@Transactional
+	public void outtro() {
+			repositorio.getEm().getTransaction().begin();
+			repositorio.getEm().remove(recuperado);
+			repositorio.getEm().getTransaction().commit();
+	}
 
+	
 }
 

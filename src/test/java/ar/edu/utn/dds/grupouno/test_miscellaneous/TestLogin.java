@@ -3,12 +3,16 @@ package ar.edu.utn.dds.grupouno.test_miscellaneous;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
+import javax.transaction.Transactional;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
@@ -17,16 +21,18 @@ public class TestLogin {
 	private Repositorio DBU;
 	private AuthAPI Autenticador;
 	UsuariosFactory fact = new UsuariosFactory();
+	Usuario admintest, term;
 
 	@Before
 	public void init() {
 		DBU = Repositorio.getInstance();
 		Autenticador = AuthAPI.getInstance();
 
-		
-		fact.crearUsuario("adminTestLogin", "password", "ADMIN");
-		
-		fact.crearUsuario("terminal", "password", "ADMIN");
+		admintest = fact.crearUsuario("adminTestLogin", "password", "ADMIN");
+		DBU.getEm().clear();
+		term = fact.crearUsuario("terminal", "password", "TERMINAL");
+		DBU.usuarios().persistirUsuario(admintest);
+		DBU.usuarios().persistirUsuario(term);
 
 
 	}
@@ -114,6 +120,7 @@ public class TestLogin {
 	public void sacarFuncionalidadtest(){
 		Autenticador.sacarFuncionalidad("busquedaPOI", DBU.usuarios().getUsuarioByName("terminal"));
 		Assert.assertTrue(DBU.usuarios().getUsuarioByName("terminal").getFuncionalidad("busquedaPOI")==null);
+	
 	}
 	
 	@Test

@@ -50,21 +50,18 @@ public class DB_Usuarios extends Repositorio {
 				.getResultList();
 		if(lista.size()>0){
 			return lista.get(0);
+		}else{
+			return null;
 		}
-		
-		return null;
 	}
 	
 	@Transactional
-	public void updateUsername(Long id, String username){
+	public boolean updateUsuario(){
 		
-		em = Repositorio.getInstance().usuarios().getEm();
 		em.getTransaction().begin();
-		em.createNamedQuery("updateUsername")
-		.setParameter("username", username)
-		.setParameter("id",id)
-		.executeUpdate();
+		em.flush();
 		em.getTransaction().commit();
+		return true;
 	}
 	
 	public boolean deleteUsuario( long l) {
