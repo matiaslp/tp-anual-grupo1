@@ -1,10 +1,13 @@
 package ar.edu.utn.dds.grupouno.test_miscellaneous;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import org.joda.time.DateTime;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,10 +29,10 @@ public class TestReportes {
 	Usuario terminal;
 	UsuariosFactory fact;
 
-
 	ArrayList<POI> listaDePOIs;
 	LocalComercial local1;
 	Banco banco1;
+	RegistroHistorico registro1,registro2,registro3,registro4,registro5;
 
 	@Before
 	public void init() {
@@ -39,42 +42,42 @@ public class TestReportes {
 		
 		
 		local1.setNombre("local1");
-		local1.setId((long) 11);
 		banco1.setNombre("banco1");
-		banco1.setId((long) 22);
+
 		
 		
 		listaDePOIs.add(local1);
 		listaDePOIs.add(banco1);
 		
-		historial = Repositorio.getInstance().resultadosRegistrosHistoricos();
+		Repositorio.getInstance().pois().agregarPOI(local1);
+		Repositorio.getInstance().pois().agregarPOI(banco1);
 		
-		DB_Usuarios.getInstance();
+		historial = Repositorio.getInstance().resultadosRegistrosHistoricos();
 		
 		fact = new UsuariosFactory();
 		fact.crearUsuario("terminal", "123", "TERMINAL");
 		terminal = Repositorio.getInstance().usuarios().getUsuarioByName("terminal");
-		terminal.setId(10L);
 
+		
 		DateTime time = new DateTime(2016, 1, 1, 1, 1);
-		RegistroHistorico registro = new RegistroHistorico( time, 10, "busqueda1", 10, 5,listaDePOIs);
-		historial.agregarHistorialBusqueda(registro);
+		registro1 = new RegistroHistorico( time, 10, "busqueda1", 10, 5,listaDePOIs);
+		historial.agregarHistorialBusqueda(registro1);
 
 		time = new DateTime(2016, 2, 2, 2, 2);
-		registro = new RegistroHistorico(time, 10, "busqueda2", 20, 10,listaDePOIs);
-		historial.agregarHistorialBusqueda(registro);
+		registro2 = new RegistroHistorico(time, 10, "busqueda2", 20, 10,listaDePOIs);
+		historial.agregarHistorialBusqueda(registro2);
 
 		time = new DateTime(2016, 3, 3, 3, 3);
-		registro = new RegistroHistorico(time, 10, "busqueda3", 30, 15,listaDePOIs);
-		historial.agregarHistorialBusqueda(registro);
+		registro3 = new RegistroHistorico(time, 10, "busqueda3", 30, 15,listaDePOIs);
+		historial.agregarHistorialBusqueda(registro3);
 
 		time = new DateTime(2016, 4, 4, 4, 4);
-		registro = new RegistroHistorico(time, 10, "busqueda4", 40, 20,listaDePOIs);
-		historial.agregarHistorialBusqueda(registro);
+		registro4 = new RegistroHistorico(time, 10, "busqueda4", 40, 20,listaDePOIs);
+		historial.agregarHistorialBusqueda(registro4);
 
 		time = new DateTime(2016, 4, 4, 4, 4);
-		registro = new RegistroHistorico(time, 1, "busqueda5", 400, 20,listaDePOIs);
-		historial.agregarHistorialBusqueda(registro);
+		registro5 = new RegistroHistorico(time, 1, "busqueda5", 400, 20,listaDePOIs);
+		historial.agregarHistorialBusqueda(registro5);
 
 	}
 
@@ -92,19 +95,25 @@ public class TestReportes {
 	public void testReporteBusquedaPorFecha() {
 		ArrayList<Object[]> resultado = historial.reporteBusquedasPorFecha();
 		
+		Map<String, Long> resumen = new HashMap<String, Long>();
+		for (Object obj[] : resultado){
+			resumen.put(((Date)obj[0]).toString(),((Long)obj[1]));
+		//	System.out.printf("%s %d \n", ((Date)obj[0]).toString(), ((Long)obj[1]));
+		}
+		
 		Locale lenguaje = Locale.getDefault();
 		if(lenguaje.equals(Locale.US)||lenguaje.equals(Locale.ENGLISH)||lenguaje.equals(Locale.UK)){
 			// Computadoras en ingles
-			Assert.assertTrue(resultado.get("4/4/16") == 440);
-			Assert.assertTrue(resultado.get("3/3/16") == 30);
-			Assert.assertTrue(resultado.get("2/2/16") == 20);
-			Assert.assertTrue(resultado.get("1/1/16") == 10);
+			Assert.assertTrue(resumen.get("2016-04-04") == 2);
+			Assert.assertTrue(resumen.get("2016-03-03") == 1);
+			Assert.assertTrue(resumen.get("2016-02-02") == 1);
+			Assert.assertTrue(resumen.get("2016-01-01") == 1);
 		}else{
 			// Computadoras en espa�ol
-			Assert.assertTrue(resultado.get("04/04/16") == 440);
-			Assert.assertTrue(resultado.get("03/03/16") == 30);
-			Assert.assertTrue(resultado.get("02/02/16") == 20);
-			Assert.assertTrue(resultado.get("01/01/16") == 10);
+			Assert.assertTrue(resumen.get("04/04/16") == 440);
+			Assert.assertTrue(resumen.get("03/03/16") == 30);
+			Assert.assertTrue(resumen.get("02/02/16") == 20);
+			Assert.assertTrue(resumen.get("01/01/16") == 10);
 
 		}
 
@@ -114,15 +123,31 @@ public class TestReportes {
 
 	@Test
 	public void testReporteCantidadResultadosPorUsuario() {
-		fact.crearUsuario("otro", "admin", "ADMIN");
-		Repositorio.getInstance().usuarios().getUsuarioByName("otro").setId(1L);
 		ArrayList<Object[]> resultado = historial.reporteBusquedaPorUsuario();
 
-		// System.out.printf("\nIdUsuario cantidadResultados \n");
-		// for (Map.Entry<Long, Long> registro : resultado.entrySet())
-		// System.out.printf("%s \t\t %s \n",
-		// registro.getKey().toString(),registro.getValue().toString());
+		
+//		Map<Long, Long> resumen = new HashMap<Long, Long>();
+//		for (Object obj[] : resultado){
+//			resumen.put(((Long)obj[0]),((Long)obj[1]));
+//		}
+//		 System.out.printf("\nIdUsuario cantidadResultados \n");
+//		 for (Map.Entry<Long, Long> registro : resumen.entrySet())
+//		 System.out.printf("%s \t\t %s \n",
+//		 registro.getKey().toString(),registro.getValue().toString());
 
 		Assert.assertTrue(resultado.size() == 2);
+	}
+	
+	@After
+	public void outtro() {
+		
+		Repositorio.getInstance().remove(registro1);
+		Repositorio.getInstance().remove(registro2);
+		Repositorio.getInstance().remove(registro3);
+		Repositorio.getInstance().remove(registro4);
+		Repositorio.getInstance().remove(registro5);
+		Repositorio.getInstance().remove(local1);
+		Repositorio.getInstance().remove(banco1);
+		
 	}
 }

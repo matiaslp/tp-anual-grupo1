@@ -24,8 +24,6 @@ public class Test1_entrega6 {
 		private static final double LONGITUD = 200;
 	//--------------------------------------------------------------------------
 	
-		private static final String PERSISTENCE_UNIT_NAME = "tp-anual";
-		private EntityManagerFactory emFactory;
 		Repositorio repositorio;
 		private POI poi_bco, poi, poi_recuperado;
 		private POI_DTO poiDTO_Bco;
