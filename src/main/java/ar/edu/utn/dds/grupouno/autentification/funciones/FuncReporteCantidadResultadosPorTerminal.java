@@ -7,6 +7,7 @@ import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class FuncReporteCantidadResultadosPorTerminal extends Accion {
 
@@ -17,9 +18,9 @@ public class FuncReporteCantidadResultadosPorTerminal extends Accion {
 		nombre = "reportecantidadResultadosPorTerminal";
 	}
 
-	public Map<Long, Long> obtenerCantidadResultadosPorTerminal(Usuario user, String Token, long terminal) {
+	public ArrayList<Object[]> obtenerCantidadResultadosPorTerminal(Usuario user, String Token, long terminal) {
 		if (validarsesion(user, Token))
-			return DB_HistorialBusquedas.getInstance().reporteCantidadResultadosPorTerminal(terminal);
+			return Repositorio.getInstance().resultadosRegistrosHistoricos().reporteCantidadResultadosPorTerminal(terminal);
 		else
 			return null;
 	}

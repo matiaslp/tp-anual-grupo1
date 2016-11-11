@@ -47,7 +47,7 @@ public class TestReportes {
 		listaDePOIs.add(local1);
 		listaDePOIs.add(banco1);
 		
-		historial = DB_HistorialBusquedas.getInstance();
+		historial = Repositorio.getInstance().resultadosRegistrosHistoricos();
 		
 		DB_Usuarios.getInstance();
 		
@@ -80,7 +80,7 @@ public class TestReportes {
 
 	@Test
 	public void testreporteCantidadResultadosPorTerminal() {
-		Map<Long, Long> resultado = historial.reporteCantidadResultadosPorTerminal(10);
+		ArrayList<Object[]> resultado = historial.reporteCantidadResultadosPorTerminal((long) 10);
 		// System.out.printf("Usuario:10\nIdBusqueda cantidadResultados \n");
 		// for (Map.Entry<Long, Long> registro : resultado.entrySet())
 		// System.out.printf("%s \t\t %s \n",
@@ -90,7 +90,7 @@ public class TestReportes {
 
 	@Test
 	public void testReporteBusquedaPorFecha() {
-		Map<String, Long> resultado = historial.reporteBusquedasPorFecha();
+		ArrayList<Object[]> resultado = historial.reporteBusquedasPorFecha();
 		
 		Locale lenguaje = Locale.getDefault();
 		if(lenguaje.equals(Locale.US)||lenguaje.equals(Locale.ENGLISH)||lenguaje.equals(Locale.UK)){
@@ -116,7 +116,7 @@ public class TestReportes {
 	public void testReporteCantidadResultadosPorUsuario() {
 		fact.crearUsuario("otro", "admin", "ADMIN");
 		Repositorio.getInstance().usuarios().getUsuarioByName("otro").setId(1L);
-		Map<Long, Long> resultado = historial.reporteBusquedaPorUsuario();
+		ArrayList<Object[]> resultado = historial.reporteBusquedaPorUsuario();
 
 		// System.out.printf("\nIdUsuario cantidadResultados \n");
 		// for (Map.Entry<Long, Long> registro : resultado.entrySet())

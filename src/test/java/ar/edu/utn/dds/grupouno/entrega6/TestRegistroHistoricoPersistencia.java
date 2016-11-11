@@ -59,7 +59,7 @@ public class TestRegistroHistoricoPersistencia {
 		unRegistroHistorico = new RegistroHistorico(fecha, 1, "unaStringDeBusqueda", 2, 12, listaDePOIs);
 
 		// Persistimos el POI para tener uno en la DB
-		repositorio.resultadosRegistrosHistoricos().agregarRegistroHistorico(unRegistroHistorico);
+		Repositorio.getInstance().resultadosRegistrosHistoricos().agregarHistorialBusqueda(unRegistroHistorico);
 	}
 
 	@Test

@@ -7,6 +7,7 @@ import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class FuncReporteBusquedaPorUsuario extends Accion {
 
@@ -17,9 +18,9 @@ public class FuncReporteBusquedaPorUsuario extends Accion {
 		nombre = "reporteBusquedaPorUsuario";
 	}
 
-	public Map<Long, Long> obtenerBusquedaPorUsuario(Usuario user, String Token) {
+	public ArrayList<Object[]> obtenerBusquedaPorUsuario(Usuario user, String Token) {
 		if (validarsesion(user, Token))
-			return DB_HistorialBusquedas.getInstance().reporteBusquedaPorUsuario();
+			return Repositorio.getInstance().resultadosRegistrosHistoricos().reporteBusquedaPorUsuario();
 		else
 			return null;
 	}
