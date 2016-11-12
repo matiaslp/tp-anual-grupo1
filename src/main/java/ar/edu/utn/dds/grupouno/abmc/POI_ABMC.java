@@ -55,14 +55,12 @@ public class POI_ABMC implements Busqueda {
 		}
 	}
 	@Transactional
-	public boolean modificar(POI_DTO dto) {
-		POI poi = null;
-		poi = Repositorio.getInstance().pois().getPOIbyId(dto.getId());
-		if (poi != null) {
-			poi.setDatos(dto);
-			return true;
+	public boolean modificar(POI poi) {
+		if (poi == null) {
+			return false;
+		} else {
+			return Repositorio.getInstance().pois().actualizarPOI(poi);
 		}
-		return false;
 	}
 
 	// Busqueda por texto libre ABIERTA (busca todos los pois que contengan al

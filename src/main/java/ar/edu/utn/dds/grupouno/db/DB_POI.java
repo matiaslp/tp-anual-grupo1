@@ -36,7 +36,7 @@ public class DB_POI extends Repositorio {
 	}
 
 	public List<POI> getPOIbyNombre(String nombre) {
-		
+
 		List<POI> pois = null;
 		pois = em.createNamedQuery("getPOIbyNombre").setParameter("pnombre", "%" + nombre + "%").getResultList();
 		return pois;
@@ -44,27 +44,32 @@ public class DB_POI extends Repositorio {
 
 	// @Transactional
 	public boolean agregarPOI(POI nuevoPOI) {
-//		try {
-			em.getTransaction().begin();
-			em.persist(nuevoPOI);
-			em.getTransaction().commit();
-			return true;
-//		} catch (Exception ex) {
-//			em.getTransaction().rollback();
-//			return false;
-//		}
+		// try {
+		em.getTransaction().begin();
+		em.persist(nuevoPOI);
+		em.getTransaction().commit();
+		return true;
+		// } catch (Exception ex) {
+		// em.getTransaction().rollback();
+		// return false;
+		// }
 	}
 
 	// @Transactional
 	public boolean actualizarPOI(POI poi) {
-		try {
-			em.getTransaction().begin();
-			em.remove(getPOIbyId(poi.getId()));
-			em.persist(poi);
-			em.getTransaction().commit();
-			return true;
-		} catch (Exception ex) {
-			em.getTransaction().rollback();
+		if (em.contains(poi)) {
+			try {
+				em.getTransaction().begin();
+				// em.remove(getPOIbyId(poi.getId()));
+				// em.persist(poi);
+				em.flush();
+				em.getTransaction().commit();
+				return true;
+			} catch (Exception ex) {
+				em.getTransaction().rollback();
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}
