@@ -44,15 +44,15 @@ public class DB_POI extends Repositorio {
 
 	// @Transactional
 	public boolean agregarPOI(POI nuevoPOI) {
-		// try {
+		 try {
 		em.getTransaction().begin();
 		em.persist(nuevoPOI);
 		em.getTransaction().commit();
 		return true;
-		// } catch (Exception ex) {
-		// em.getTransaction().rollback();
-		// return false;
-		// }
+		 } catch (Exception ex) {
+		 em.getTransaction().rollback();
+		 return false;
+		 }
 	}
 
 	// @Transactional
@@ -60,8 +60,6 @@ public class DB_POI extends Repositorio {
 		if (em.contains(poi)) {
 			try {
 				em.getTransaction().begin();
-				// em.remove(getPOIbyId(poi.getId()));
-				// em.persist(poi);
 				em.flush();
 				em.getTransaction().commit();
 				return true;

@@ -68,7 +68,7 @@ public class TestActualizarLocalComercial {
 		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");
 		funcion.actualizarLocales(admin, tokenAdmin, 0, false, filePath);
 		
-		repositorio.usuarios().updateUsuario(); //ESTO DEBERIA SER UN UPDATE GENERAL
+		repositorio.usuarios().actualizarUsuario(); //ESTO DEBERIA SER UN UPDATE GENERAL
 		//FALLA POR LA PARTE DE PROCESOS
 		
 		//Busco las modificaciones para corroborar que se corrio correctamente

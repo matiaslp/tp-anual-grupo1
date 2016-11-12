@@ -36,7 +36,7 @@ public class Usuario extends PersistibleConNombre{
 	private Rol rol;
 	private String username;
 	private String password;
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
 	@JoinTable(name="USUARIO_FUNCIONALIDAD", 
 		joinColumns={@JoinColumn(name="user_id")}, 
 		inverseJoinColumns={@JoinColumn(name="func_id")})

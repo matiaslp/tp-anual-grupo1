@@ -21,7 +21,7 @@ public class TestLogin {
 	private Repositorio DBU;
 	private AuthAPI Autenticador;
 	UsuariosFactory fact = new UsuariosFactory();
-	Usuario admintest, term;
+	Usuario admintest, term, user;
 
 	@Before
 	public void init() {
@@ -29,7 +29,6 @@ public class TestLogin {
 		Autenticador = AuthAPI.getInstance();
 
 		admintest = fact.crearUsuario("adminTestLogin", "password", "ADMIN");
-		DBU.getEm().clear();
 		term = fact.crearUsuario("terminal", "password", "TERMINAL");
 		DBU.usuarios().persistirUsuario(admintest);
 		DBU.usuarios().persistirUsuario(term);
@@ -102,7 +101,8 @@ public class TestLogin {
 	@Test
 	public void testAgregarUsuarioTrue() {
 		Long tamanio = (long) DBU.usuarios().getListaUsuarios().size();
-		fact.crearUsuario("nuevo", "password", "ADMIN");
+		user = fact.crearUsuario("nuevo", "password", "ADMIN");
+		DBU.usuarios().persistirUsuario(user);
 		Assert.assertTrue(DBU.usuarios().getListaUsuarios().size() == (tamanio+1));
 	}
 
@@ -128,6 +128,15 @@ public class TestLogin {
 		Autenticador.sacarFuncionalidad("busquedaPOI", DBU.usuarios().getUsuarioByName("terminal"));
 		Autenticador.agregarFuncionalidad("busquedaPOI", DBU.usuarios().getUsuarioByName("terminal"));
 		Assert.assertTrue(DBU.usuarios().getUsuarioByName("terminal").getFuncionalidad("busquedaPOI")!=null);
+	}
+	
+	@After
+	public void outtro() {
+		
+		DBU.remove(admintest);
+		DBU.remove(term);
+		DBU.remove(user);
+		
 	}
 
 }

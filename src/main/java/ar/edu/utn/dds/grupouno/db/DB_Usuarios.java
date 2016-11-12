@@ -56,12 +56,21 @@ public class DB_Usuarios extends Repositorio {
 	}
 	
 	@Transactional
-	public boolean updateUsuario(){
+	public boolean actualizarUsuario(Usuario user){
 		
-		em.getTransaction().begin();
-		em.flush();
-		em.getTransaction().commit();
-		return true;
+		if (user != null && em.contains(user)) {
+			try {
+				em.getTransaction().begin();
+				em.flush();
+				em.getTransaction().commit();
+				return true;
+			} catch (Exception ex) {
+				em.getTransaction().rollback();
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 	
 	public boolean deleteUsuario( long l) {

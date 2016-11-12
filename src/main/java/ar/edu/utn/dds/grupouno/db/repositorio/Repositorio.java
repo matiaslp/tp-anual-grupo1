@@ -34,7 +34,7 @@ public class Repositorio {
 	public Repositorio(EntityManager emanager) {
 		this.em = emanager;
 	}
-	
+
 	public DB_Usuarios usuarios() {
 		if (usuarios == null) {
 			usuarios = new DB_Usuarios(em);
@@ -62,7 +62,7 @@ public class Repositorio {
 		}
 		return registroHistorico;
 	}
-	
+
 	public DB_Etiqueta etiquetas() {
 		if (etiquetas == null) {
 			etiquetas = new DB_Etiqueta(em);
@@ -70,15 +70,17 @@ public class Repositorio {
 		return etiquetas;
 	}
 
-//	@Transactional
+	// @Transactional
 	public void remove(Object obj) {
-//		try {
+		if (obj != null) {
+			// try {
 			em.getTransaction().begin();
 			em.remove(obj);
 			em.getTransaction().commit();
-//		} catch (Exception ex) {
-//			em.getTransaction().rollback();
-//		}
+			// } catch (Exception ex) {
+			// em.getTransaction().rollback();
+			// }
+		}
 	}
 
 	public void cerrar() {
