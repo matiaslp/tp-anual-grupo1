@@ -3,12 +3,19 @@ package ar.edu.utn.dds.grupouno.frontend.busqueda;
 
  
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+
+import ar.edu.utn.dds.grupouno.abmc.Busqueda;
+import ar.edu.utn.dds.grupouno.abmc.consultaExterna.BusquedaDePOIsExternos;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
+
+
 
 
 @ManagedBean
@@ -60,6 +67,13 @@ public class BusquedaBean  {
 
 	public void add(){
 		items.add(new Item());
+		
+	}
+	public ArrayList<POI> buscar(){
+	ArrayList<Item> unaLista= new ArrayList<Item>();
+	unaLista=BusquedaDePOIsExternos.buscarPOIsExternos(url, this.getItems().get(1), this.getItems().get(2));
+	
+		
 		
 	}
 }
