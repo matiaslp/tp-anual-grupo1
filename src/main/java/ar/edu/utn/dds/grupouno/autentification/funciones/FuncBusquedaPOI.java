@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.mail.MessagingException;
+import javax.persistence.Entity;
 
 import org.json.JSONException;
 
@@ -13,7 +14,7 @@ import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
-
+@Entity
 public class FuncBusquedaPOI extends Accion {
 
 	public FuncBusquedaPOI() {

@@ -2,10 +2,12 @@ package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-
+@Entity
 public class FuncCambiarEstadoGenerarLog extends Accion {
 
 	public FuncCambiarEstadoGenerarLog() {

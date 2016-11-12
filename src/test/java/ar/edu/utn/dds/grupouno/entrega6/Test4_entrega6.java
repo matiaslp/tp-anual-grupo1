@@ -50,7 +50,7 @@ public class Test4_entrega6 {
 		
 		recuperado.setUsername("prueba");
 		
-		repositorio.usuarios().actualizarUsuario();
+		repositorio.usuarios().actualizarUsuario(recuperado);
 
 		recuperado = repositorio.usuarios().getUsuarioByName("prueba");
 

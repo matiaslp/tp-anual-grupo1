@@ -2,13 +2,15 @@ package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
-
+@Entity
 public class FuncObtenerInfoPOI extends Accion {
 	public FuncObtenerInfoPOI() {
 		Roles = new ArrayList<Rol>();

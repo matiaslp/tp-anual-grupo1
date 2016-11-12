@@ -6,8 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class DB_Usuarios extends Repositorio {
@@ -41,6 +43,13 @@ public class DB_Usuarios extends Repositorio {
 	public List<Usuario> getListaUsuarios() {
 		return (ArrayList<Usuario>) Repositorio.getInstance().getEm()
 				.createNamedQuery("getAllUsers").getResultList();
+	}
+	
+	public ArrayList<Accion> getListadoAcciones() {
+
+		ArrayList<Accion> listadoAcciones = (ArrayList<Accion>) em.createNamedQuery("Accion.findAll").getResultList();
+
+		return listadoAcciones;
 	}
 	
 	public Usuario getUsuarioByName(String username){

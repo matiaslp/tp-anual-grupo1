@@ -9,6 +9,7 @@ import ar.edu.utn.dds.grupouno.db.DB_Etiqueta;
 import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
 
 public class Repositorio {
 	private DB_Usuarios usuarios;
@@ -81,6 +82,12 @@ public class Repositorio {
 			// em.getTransaction().rollback();
 			// }
 		}
+	}
+	
+	public void persistir(Object obj) {
+		em.getTransaction().begin();
+		em.persist(obj);
+		em.getTransaction().commit();
 	}
 
 	public void cerrar() {

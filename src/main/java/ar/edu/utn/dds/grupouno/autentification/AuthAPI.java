@@ -37,31 +37,73 @@ public class AuthAPI {
 		return instance;
 	}
 
-	private List<Accion> Acciones;
+	private List<Accion> acciones;
 
-	public List<Accion> getAcciones(){
-		return Acciones;
+	public List<Accion> getAcciones() {
+		return acciones;
 	}
 
 	public AuthAPI() {
-		Acciones = new ArrayList<Accion>();
-		Acciones.add(new FuncReporteBusquedaPorUsuario());
-		Acciones.add(new FuncReporteBusquedasPorFecha());
-		Acciones.add(new FuncReporteCantidadResultadosPorTerminal());
-		Acciones.add(new FuncCambiarEstadoMail());
-		Acciones.add(new FuncActualizacionLocalesComerciales());
-		Acciones.add(new FuncAgregarAcciones());
-		Acciones.add(new FuncBajaPOIs());
-		Acciones.add(new FuncObtenerInfoPOI());
-		Acciones.add(new FuncBusquedaPOI());
-		Acciones.add(new FuncMultiple());
-		Acciones.add(new FuncCambiarEstadoNotificarBusquedaLarga());
-		Acciones.add(new FuncCambiarEstadoAuditoria());
-		Acciones.add(new FuncCambiarEstadoGenerarLog());
+
+		ArrayList<Accion> listAcciones = Repositorio.getInstance().usuarios().getListadoAcciones();
+
+		if (listAcciones == null || listAcciones.size() == 0) {
+			Accion funcReporteBusquedaPorUsuario, funcReporteBusquedasPorFecha,
+					funcReporteCantidadResultadosPorTerminal, funcCambiarEstadoMail,
+					funcActualizacionLocalesComerciales, funcAgregarAcciones, funcBajaPOIs, funcObtenerInfoPOI,
+					funcBusquedaPOI, funcMultiple, funcCambiarEstadoNotificarBusquedaLarga, funcCambiarEstadoAuditoria,
+					funcCambiarEstadoGenerarLog;
+			funcReporteBusquedaPorUsuario = new FuncReporteBusquedaPorUsuario();
+			funcReporteBusquedasPorFecha = new FuncReporteBusquedasPorFecha();
+			funcReporteCantidadResultadosPorTerminal = new FuncReporteCantidadResultadosPorTerminal();
+			funcCambiarEstadoMail = new FuncCambiarEstadoMail();
+			funcActualizacionLocalesComerciales = new FuncActualizacionLocalesComerciales();
+			funcAgregarAcciones = new FuncAgregarAcciones();
+			funcBajaPOIs = new FuncBajaPOIs();
+			funcObtenerInfoPOI = new FuncObtenerInfoPOI();
+			funcBusquedaPOI = new FuncBusquedaPOI();
+			funcMultiple = new FuncMultiple();
+			funcCambiarEstadoNotificarBusquedaLarga = new FuncCambiarEstadoNotificarBusquedaLarga();
+			funcCambiarEstadoAuditoria = new FuncCambiarEstadoAuditoria();
+			funcCambiarEstadoGenerarLog = new FuncCambiarEstadoGenerarLog();
+
+			Repositorio.getInstance().persistir((Accion)funcReporteBusquedaPorUsuario);
+			Repositorio.getInstance().persistir((Accion)funcReporteBusquedasPorFecha);
+			Repositorio.getInstance().persistir((Accion)funcReporteCantidadResultadosPorTerminal);
+			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoMail);
+			Repositorio.getInstance().persistir((Accion)funcActualizacionLocalesComerciales);
+			Repositorio.getInstance().persistir((Accion)funcAgregarAcciones);
+			Repositorio.getInstance().persistir((Accion)funcBajaPOIs);
+			Repositorio.getInstance().persistir((Accion)funcObtenerInfoPOI);
+			Repositorio.getInstance().persistir((Accion)funcBusquedaPOI);
+			Repositorio.getInstance().persistir((Accion)funcMultiple);
+			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoNotificarBusquedaLarga);
+			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoAuditoria);
+			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoGenerarLog);
+
+			acciones = new ArrayList<Accion>();
+			acciones.add(funcReporteBusquedaPorUsuario);
+			acciones.add(funcReporteBusquedasPorFecha);
+			acciones.add(funcReporteCantidadResultadosPorTerminal);
+			acciones.add(funcCambiarEstadoMail);
+			acciones.add(funcActualizacionLocalesComerciales);
+			acciones.add(funcAgregarAcciones);
+			acciones.add(funcBajaPOIs);
+			acciones.add(funcObtenerInfoPOI);
+			acciones.add(funcBusquedaPOI);
+			acciones.add(funcMultiple);
+			acciones.add(funcCambiarEstadoNotificarBusquedaLarga);
+			acciones.add(funcCambiarEstadoAuditoria);
+			acciones.add(funcCambiarEstadoGenerarLog);
+		} else {
+			acciones = new ArrayList<Accion>();
+			for (Accion accion : listAcciones)
+				acciones.add(accion);
+		}
 	}
-	
+
 	public Accion getAccion(String nombre) {
-		
+
 		for (Accion accion : this.getAcciones()) {
 			if (accion.getNombreFuncion().equals(nombre))
 				return accion;
@@ -69,29 +111,29 @@ public class AuthAPI {
 		return null;
 	}
 
-
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
-		if (user.getFuncionalidad(funcionalidad)!=null) {
+		if (user.getFuncionalidad(funcionalidad) != null) {
 			return false; // ya existe en el usuario
 		} else {
-			for(Accion accion : this.getAcciones())
-				if(accion.getNombreFuncion().equals(funcionalidad)){
+			for (Accion accion : this.getAcciones())
+				if (accion.getNombreFuncion().equals(funcionalidad)) {
 					List<Rol> roles = accion.getRoles();
-					for(Rol rol : roles){
-						if(rol.equals(user.getRol())){
+					for (Rol rol : roles) {
+						if (rol.equals(user.getRol())) {
 							user.agregarFuncionalidad(accion);
 							return true;
 						}
 					}
 				}
 
-			return false; //no tiene permiso
+			return false; // no tiene permiso
 		}
 	}
 
 	public boolean sacarFuncionalidad(String funcionalidad, Usuario user) {
-		if(user != null){
-		return user.getFuncionalidades().remove(user.getFuncionalidad(funcionalidad));}
+		if (user != null) {
+			return user.getFuncionalidades().remove(user.getFuncionalidad(funcionalidad));
+		}
 		return false;
 	}
 
@@ -105,7 +147,7 @@ public class AuthAPI {
 				try {
 					token = generarToken(user, pass);
 				} catch (NoSuchAlgorithmException e) {
-					//No pudo hashear en SHA-256, no pudo iniciar sesion.
+					// No pudo hashear en SHA-256, no pudo iniciar sesion.
 					e.printStackTrace();
 					return null;
 				}
@@ -121,7 +163,6 @@ public class AuthAPI {
 
 		DB_Sesiones.getInstance().removerTokenUser(token, user);
 	}
-
 
 	public String hashear(String string) throws NoSuchAlgorithmException {
 		// Esta funcion en una de esas quizas va en las comunes

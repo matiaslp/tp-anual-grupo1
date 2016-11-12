@@ -2,12 +2,14 @@ package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.procesos.AgregarAcciones;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
-
+@Entity
 public class FuncAgregarAcciones extends Accion {
 
 	public FuncAgregarAcciones() {

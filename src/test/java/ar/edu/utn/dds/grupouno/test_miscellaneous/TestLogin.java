@@ -21,7 +21,7 @@ public class TestLogin {
 	private Repositorio DBU;
 	private AuthAPI Autenticador;
 	UsuariosFactory fact = new UsuariosFactory();
-	Usuario admintest, term, user;
+	Usuario admintest, term, user, user2, user3, user4;
 
 	@Before
 	public void init() {
@@ -93,9 +93,12 @@ public class TestLogin {
 
 	@Test
 	public void testCrearUsuario() {
-		fact.crearUsuario("username", "password", "TERMINAL");
-		Assert.assertTrue(DBU.usuarios().getUsuarioByName("username") != null && DBU.usuarios().getUsuarioByName("username").getPassword().equals("password")
-				&& DBU.usuarios().getUsuarioByName("username").getRol().equals("TERMINAL"));
+		user2 = fact.crearUsuario("username", "password", "TERMINAL");
+		DBU.usuarios().persistir(user2);
+		user4 = DBU.usuarios().getUsuarioByName("username");
+		Assert.assertTrue(user4 != null);
+		Assert.assertTrue(user4.getPassword().equals("password"));
+		Assert.assertTrue(user4.getRol().getValue().equals("TERMINAL"));
 	}
 
 	@Test
@@ -125,8 +128,11 @@ public class TestLogin {
 	
 	@Test
 	public void testAgregarFuncionalidadConPermiso(){
-		Autenticador.sacarFuncionalidad("busquedaPOI", DBU.usuarios().getUsuarioByName("terminal"));
-		Autenticador.agregarFuncionalidad("busquedaPOI", DBU.usuarios().getUsuarioByName("terminal"));
+		user3 =DBU.usuarios().getUsuarioByName("terminal");
+		Autenticador.sacarFuncionalidad("busquedaPOI", user3);
+		DBU.usuarios().actualizarUsuario(user3);
+		Autenticador.agregarFuncionalidad("busquedaPOI", user3);
+		DBU.usuarios().actualizarUsuario(user3);
 		Assert.assertTrue(DBU.usuarios().getUsuarioByName("terminal").getFuncionalidad("busquedaPOI")!=null);
 	}
 	
@@ -136,6 +142,7 @@ public class TestLogin {
 		DBU.remove(admintest);
 		DBU.remove(term);
 		DBU.remove(user);
+		DBU.remove(user2);
 		
 	}
 
