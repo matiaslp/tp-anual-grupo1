@@ -147,7 +147,7 @@ public class AuthAPI {
 				if (accion.getNombreFuncion().equals(funcionalidad)) {
 					List<Rol> rols = accion.getRoles();
 					for (Rol rol : rols) {
-						if (rol.equals(user.getRol())) {
+						if (rol.getValue().equals(user.getRol().getValue())) {
 							user.agregarFuncionalidad(accion);
 							return true;
 						}
