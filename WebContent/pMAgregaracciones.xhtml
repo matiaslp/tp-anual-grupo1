@@ -12,24 +12,24 @@
 
 	<ui:define name="content">
 	    <h:form>
-			<p:panel id="panel" header="Actualizacion de Locales Comerciales">
+			<p:panel id="panel" header="Agregar Acciones Para Todos Los Usuarios">
 			
 			<p/>
-			<p:inputText id="cantReintentos" value="#{actualizarLocalesBean.cantidadReintentos}" >Cantidad de Reintentos: 
+			<p:inputText id="cantReintentos" value="#{agregarAccionesBean.cantidadReintentos}" >Cantidad de Reintentos: 
        		</p:inputText>
 			
 			<p/>
-			<p:selectBooleanButton id="enviarEmail" value="#{actualizarLocalesBean.enviarEmail}" onLabel="Yes" offLabel="No" style="width:60px">Enviar eMail: 
+			<p:selectBooleanButton id="enviarEmail" value="#{agregarAccionesBean.enviarEmail}" onLabel="Yes" offLabel="No" style="width:60px">Enviar eMail: 
 			</p:selectBooleanButton>
 
 			<p/>
-			<p:inputText id="filePath" value="#{actualizarLocalesBean.filePath}" >FilePath: 
+			<p:inputText id="filePath" value="#{agregarAccionesBean.filePath}" >FilePath: 
         	</p:inputText>
         	<p/>
-			<p:commandButton value="Ejecutar" update="panel"
-					action="#{actualizarLocalesBean.ejecutar}"/>
+			<p:commandButton value="Agregar" update="panel"
+					action="#{agregarAccionesBean.preparar}"/>
 			<p:commandButton value="Volver atràs" update="panel"
-					action="processes"/>
+					action="pMProcesses"/>
 			</p:panel>
 		</h:form>
 	</ui:define>
