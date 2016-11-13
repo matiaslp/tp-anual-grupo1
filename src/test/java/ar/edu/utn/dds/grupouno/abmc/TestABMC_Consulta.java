@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import javax.mail.MessagingException;
 
 import org.json.JSONException;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.CGP;
@@ -28,6 +31,8 @@ public class TestABMC_Consulta {
 	LocalComercial local;
 	ParadaColectivo parada ;
 	CGP cgp;
+	Usuario usuario;
+	UsuariosFactory ufactory = new UsuariosFactory();
 
 	@Before
 	public void inicializar() {
@@ -47,34 +52,47 @@ public class TestABMC_Consulta {
 		instance.agregarPOI(parada);
 		instance.agregarPOI(local);
 		instance.agregarPOI(banco);
+		
+		usuario = ufactory.crearUsuario("admin", "password","ADMIN");
+		
+		usuario.setAuditoriaActivada(true);
+		usuario.setCorreo("uncorreo@correoloco.com");
+		usuario.setLog(true);
+		usuario.setMailHabilitado(true);
+		usuario.setNombre("Shaggy");
+		usuario.setNotificacionesActivadas(true);
+		
+		Repositorio.getInstance().usuarios().persistirUsuario(usuario);
+		
+		
 
 	}
 
 	@Test
 	public void testConsultaVacia() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		lista = abmc.buscar(ServicioAPI, "", 1);
+		lista = abmc.buscar(ServicioAPI, "", usuario.getId());
 		Assert.assertTrue(lista.isEmpty());
 	}
 
 	@Test
 	public void testConsultaLocal() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		lista = abmc.buscar("", "Alberdi", 1);
+		lista = abmc.buscar("", "Alberdi", usuario.getId());
 		Assert.assertTrue(lista.size() == 1);
 	}
 
 	@Test
 	public void testConsultaLocal2() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		lista = abmc.buscar("", "Mataderos", 1);
+		lista = abmc.buscar("", "Mataderos", usuario.getId());
 		Assert.assertTrue(lista.size() == 2);
 	}
 
 	@Test
 	public void testConsultaRemota() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		lista = abmc.buscar(ServicioAPI, "Mataderos", 1);
+		lista = abmc.buscar(ServicioAPI, "Mataderos", usuario.getId());
 		Assert.assertTrue(lista.size() == 17); //2 POI locales Mataderos, 16 externos pero 1 repetido.
 	}
 
@@ -84,7 +102,7 @@ public class TestABMC_Consulta {
 	@Test
 	public void testConsultaRemota2() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		lista = abmc.buscar(ServicioAPI, "Galicia", 1);
+		lista = abmc.buscar(ServicioAPI, "Galicia", usuario.getId());
 		Assert.assertTrue(lista.size() == 16);
 	}
 
@@ -92,14 +110,14 @@ public class TestABMC_Consulta {
 	public void testConsultaRemotaVariasPalabras()
 			throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", 1);
+		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", usuario.getId());
 		Assert.assertTrue(lista.size() == 18);//2 POI locales, 15 POI ext de CGP porque funciona mal y 1 Banco galicia externo
 	}
 
 	@Test
 	public void testConsulta() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		lista = abmc.buscar(ServicioAPI, "Galicia", 1);
+		lista = abmc.buscar(ServicioAPI, "Galicia", usuario.getId());
 		Assert.assertTrue(!(lista.isEmpty()));
 	}
 
@@ -107,7 +125,18 @@ public class TestABMC_Consulta {
 	public void testConsultavariasPalabras()
 			throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
-		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", 1);
+		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", usuario.getId());
 		Assert.assertTrue(lista.size() == 18);
+	}
+	
+	@After
+	public void outtro() {
+		
+		instance.remove(cgp);
+		instance.remove(parada);
+		instance.remove(local);
+		instance.remove(banco);
+		instance.remove(usuario);
+		
 	}
 }
