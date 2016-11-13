@@ -34,7 +34,10 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 @DiscriminatorValue("A")
 public abstract class Accion extends Persistible{
 
-	@ManyToMany (mappedBy="Acciones")
+	@ManyToMany (cascade = { CascadeType.ALL})
+	@JoinTable(name="FUNCIONALIDAD_ROL", 
+		joinColumns={@JoinColumn(name="func_id")}, 
+		inverseJoinColumns={@JoinColumn(name="rol_id")})
 	protected List<Rol> Roles = new ArrayList<Rol>();
 	@ManyToMany (mappedBy="funcionalidades")
 	protected Set<Usuario> listaUsuarios = new HashSet<Usuario>();

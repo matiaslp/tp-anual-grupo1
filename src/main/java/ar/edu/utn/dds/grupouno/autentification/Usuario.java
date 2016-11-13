@@ -31,12 +31,12 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 @NamedQuery(name = "updateUsername", query = "UPDATE Usuario SET username = :username where id = :id")})
 public class Usuario extends PersistibleConNombre{
 	
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	@JoinColumn (name = "Rol", nullable = false)
 	private Rol rol;
 	private String username;
 	private String password;
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	@JoinTable(name="USUARIO_FUNCIONALIDAD", 
 		joinColumns={@JoinColumn(name="user_id")}, 
 		inverseJoinColumns={@JoinColumn(name="func_id")})

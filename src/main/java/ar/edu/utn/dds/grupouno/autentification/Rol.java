@@ -29,10 +29,7 @@ public class Rol{
 
 	@Column (name="value")
 	protected String value;
-	@ManyToMany (cascade = { CascadeType.MERGE, CascadeType.REFRESH })
-	@JoinTable(name="FUNCIONALIDAD_ROL", 
-		joinColumns={@JoinColumn(name="rol_id")}, 
-		inverseJoinColumns={@JoinColumn(name="func_id")})
+	@ManyToMany (mappedBy="Roles")
 	protected List<Accion> Acciones;
 	public Rol(){
 		
