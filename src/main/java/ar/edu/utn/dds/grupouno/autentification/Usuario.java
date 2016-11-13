@@ -31,7 +31,7 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 @NamedQuery(name = "updateUsername", query = "UPDATE Usuario SET username = :username where id = :id")})
 public class Usuario extends PersistibleConNombre{
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn (name = "Rol", nullable = false)
 	private Rol rol;
 	private String username;
@@ -67,8 +67,7 @@ public class Usuario extends PersistibleConNombre{
 	}
 
 	public void setRol(Rol rol) {
-		
-		this.rol = rol;
+		this.rol = AuthAPI.getInstance().getRol(rol.getValue());
 	}
 
 	public String getUsername() {

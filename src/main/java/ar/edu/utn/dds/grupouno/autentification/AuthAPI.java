@@ -38,15 +38,20 @@ public class AuthAPI {
 	}
 
 	private List<Accion> acciones;
+	private List<Rol> roles;
 
 	public List<Accion> getAcciones() {
 		return acciones;
+	}
+	
+	public List<Rol> getRoles() {
+		return roles;
 	}
 
 	public AuthAPI() {
 
 		ArrayList<Accion> listAcciones = Repositorio.getInstance().usuarios().getListadoAcciones();
-
+		acciones = new ArrayList<Accion>();
 		if (listAcciones == null || listAcciones.size() == 0) {
 			Accion funcReporteBusquedaPorUsuario, funcReporteBusquedasPorFecha,
 					funcReporteCantidadResultadosPorTerminal, funcCambiarEstadoMail,
@@ -81,7 +86,6 @@ public class AuthAPI {
 			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoAuditoria);
 			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoGenerarLog);
 
-			acciones = new ArrayList<Accion>();
 			acciones.add(funcReporteBusquedaPorUsuario);
 			acciones.add(funcReporteBusquedasPorFecha);
 			acciones.add(funcReporteCantidadResultadosPorTerminal);
@@ -96,9 +100,24 @@ public class AuthAPI {
 			acciones.add(funcCambiarEstadoAuditoria);
 			acciones.add(funcCambiarEstadoGenerarLog);
 		} else {
-			acciones = new ArrayList<Accion>();
 			for (Accion accion : listAcciones)
 				acciones.add(accion);
+		}
+		
+		ArrayList<Rol> listRoles = Repositorio.getInstance().usuarios().getListadoRoles();
+		roles = new ArrayList<Rol>();
+		if (listRoles == null || listRoles.size() == 0) {
+			Rol terminal = new Rol();
+			terminal.setValue("TERMINAL");
+			Repositorio.getInstance().persistir(terminal);
+			Rol admin = new Rol();
+			admin.setValue("ADMIN");
+			Repositorio.getInstance().persistir(admin);
+			roles.add(terminal);
+			roles.add(admin);
+		} else {
+			for (Rol rol : listRoles)
+				roles.add(rol);
 		}
 	}
 
@@ -110,6 +129,15 @@ public class AuthAPI {
 		}
 		return null;
 	}
+	
+	public Rol getRol(String nombre) {
+
+		for (Rol rol : this.getRoles()) {
+			if (rol.getValue().equals(nombre))
+				return rol;
+		}
+		return null;
+	}
 
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
 		if (user.getFuncionalidad(funcionalidad) != null) {
@@ -117,8 +145,8 @@ public class AuthAPI {
 		} else {
 			for (Accion accion : this.getAcciones())
 				if (accion.getNombreFuncion().equals(funcionalidad)) {
-					List<Rol> roles = accion.getRoles();
-					for (Rol rol : roles) {
+					List<Rol> rols = accion.getRoles();
+					for (Rol rol : rols) {
 						if (rol.equals(user.getRol())) {
 							user.agregarFuncionalidad(accion);
 							return true;

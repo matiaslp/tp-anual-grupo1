@@ -97,8 +97,8 @@ public class TestLogin {
 		DBU.usuarios().persistir(user2);
 		user4 = DBU.usuarios().getUsuarioByName("username");
 		Assert.assertTrue(user4 != null);
-		Assert.assertTrue(user4.getPassword().equals("password"));
-		Assert.assertTrue(user4.getRol().getValue().equals("TERMINAL"));
+		Assert.assertTrue(user4.getPassword().equals("password"));	
+		Assert.assertTrue(user4.getRol().getValue().equals(AuthAPI.getInstance().getRol("TERMINAL").getValue()));
 	}
 
 	@Test

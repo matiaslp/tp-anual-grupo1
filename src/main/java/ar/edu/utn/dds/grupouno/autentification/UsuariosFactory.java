@@ -22,7 +22,7 @@ public class UsuariosFactory {
 			nuevoUsuario = new Usuario();
 			nuevoUsuario.setPassword(password);
 			nuevoUsuario.setUsername(username);
-			nuevoUsuario.setRol(new Rol("ADMIN"));
+			nuevoUsuario.setRol(new Rol(rol));
 			nuevoUsuario.setFuncionalidades(new ArrayList<Accion>());
 			nuevoUsuario.setMailHabilitado(true);
 			nuevoUsuario.setNotificacionesActivadas(true);

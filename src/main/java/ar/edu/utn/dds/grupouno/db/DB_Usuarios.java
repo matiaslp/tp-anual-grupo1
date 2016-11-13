@@ -52,6 +52,13 @@ public class DB_Usuarios extends Repositorio {
 		return listadoAcciones;
 	}
 	
+	public ArrayList<Rol> getListadoRoles() {
+
+		ArrayList<Rol> listadoRoles = (ArrayList<Rol>) em.createNamedQuery("Rol.findAll").getResultList();
+
+		return listadoRoles;
+	}
+	
 	public Usuario getUsuarioByName(String username){
 		List<Usuario> lista= Repositorio.getInstance().usuarios().getEm()
 				.createNamedQuery("getUsuarioByName")

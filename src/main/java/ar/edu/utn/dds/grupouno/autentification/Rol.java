@@ -23,11 +23,13 @@ import javax.persistence.Table;
 @Table(name = "ROL")
 @NamedQueries({
 @NamedQuery(name = "getRolId", query = "SELECT id FROM Rol r WHERE r.value = :valor"),
-@NamedQuery(name = "getRolById", query = "SELECT r FROM Rol r WHERE r.id = :id")})
+@NamedQuery(name = "getRolById", query = "SELECT r FROM Rol r WHERE r.id = :id"),
+@NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")})
 public class Rol{
 
+	@Column (name="value")
 	protected String value;
-	@ManyToMany (cascade = CascadeType.ALL)
+	@ManyToMany (cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinTable(name="FUNCIONALIDAD_ROL", 
 		joinColumns={@JoinColumn(name="rol_id")}, 
 		inverseJoinColumns={@JoinColumn(name="func_id")})
