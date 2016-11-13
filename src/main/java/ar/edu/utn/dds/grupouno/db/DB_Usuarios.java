@@ -32,6 +32,18 @@ public class DB_Usuarios extends Repositorio {
 		List<Rol> lista = em.createNamedQuery("getRolById").setParameter("id", id).getResultList();
 		return lista.get(0);
 	}
+	
+	public Rol getRolByName(String nombre){
+		List<Rol> lista= Repositorio.getInstance().usuarios().getEm()
+				.createNamedQuery("Rol.getRolByName")
+				.setParameter("rnombre", nombre)
+				.getResultList();
+		if(lista.size()>0){
+			return lista.get(0);
+		}else{
+			return null;
+		}
+	}
 
 	@Transactional
 	public void persistirUsuario(Usuario usuario) {
@@ -109,5 +121,22 @@ public class DB_Usuarios extends Repositorio {
 		}else{
 			return null;
 		}
+	}
+	
+	public void persistirAccion(Accion accion)
+	{
+		 List<Rol> roles = accion.getRoles();
+		 accion.setRoles(new ArrayList<Rol>());
+	  //Adding manually (using your cascade ALL)
+		for (Rol rol : roles){
+			for (Rol rolDB : this.getListadoRoles())
+			if(rol != null && rol.getValue().equals(rolDB.getValue())) 
+				accion.setRol(this.getRolByName(rol.getValue())); // already exists
+			else {		 
+				this.persistir(rol);//I don't exist persist
+				accion.setRol(rol);
+			}
+		}
+		em.persist(accion);//using a similar "don't duplicate me" approach.
 	}
 }
