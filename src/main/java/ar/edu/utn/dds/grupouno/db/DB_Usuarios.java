@@ -100,10 +100,14 @@ public class DB_Usuarios extends Repositorio {
 	}
 	
 	public Usuario getUsuarioById(long l){
-		for ( Usuario user : listaUsuarios ) {
-			if (user.getId() == l)
-				return user;
+		List<Usuario> lista= Repositorio.getInstance().usuarios().getEm()
+				.createNamedQuery("getUsuarioById")
+				.setParameter("unId", l)
+				.getResultList();
+		if(lista.size()>0){
+			return lista.get(0);
+		}else{
+			return null;
 		}
-		return null;
 	}
 }

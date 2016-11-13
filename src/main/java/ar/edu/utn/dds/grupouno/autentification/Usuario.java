@@ -27,6 +27,7 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 @Table(name = "Usuario")
 @NamedQueries({
 @NamedQuery(name = "getUsuarioByName", query = "SELECT u FROM Usuario u WHERE u.username LIKE :unombre"),
+@NamedQuery(name = "getUsuarioById", query = "SELECT u FROM Usuario u WHERE u.id LIKE :unId"),
 @NamedQuery(name = "getAllUsers", query = "SELECT u FROM Usuario u"),
 @NamedQuery(name = "updateUsername", query = "UPDATE Usuario SET username = :username where id = :id")})
 public class Usuario extends PersistibleConNombre{
