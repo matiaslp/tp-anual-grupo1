@@ -57,6 +57,11 @@ public abstract class Accion extends Persistible{
 	public void setRoles(ArrayList<Rol> roles) {
 		Roles = roles;
 	}
+	
+	public void setRol (Rol rol){
+		this.Roles.add(rol);
+	}
+	
 
 	public String getNombreFuncion() {
 		return nombre;

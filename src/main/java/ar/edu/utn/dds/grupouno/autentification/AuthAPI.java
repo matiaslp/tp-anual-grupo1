@@ -72,19 +72,19 @@ public class AuthAPI {
 			funcCambiarEstadoAuditoria = new FuncCambiarEstadoAuditoria();
 			funcCambiarEstadoGenerarLog = new FuncCambiarEstadoGenerarLog();
 
-			Repositorio.getInstance().persistir((Accion)funcReporteBusquedaPorUsuario);
-			Repositorio.getInstance().persistir((Accion)funcReporteBusquedasPorFecha);
-			Repositorio.getInstance().persistir((Accion)funcReporteCantidadResultadosPorTerminal);
-			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoMail);
-			Repositorio.getInstance().persistir((Accion)funcActualizacionLocalesComerciales);
-			Repositorio.getInstance().persistir((Accion)funcAgregarAcciones);
-			Repositorio.getInstance().persistir((Accion)funcBajaPOIs);
-			Repositorio.getInstance().persistir((Accion)funcObtenerInfoPOI);
-			Repositorio.getInstance().persistir((Accion)funcBusquedaPOI);
-			Repositorio.getInstance().persistir((Accion)funcMultiple);
-			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoNotificarBusquedaLarga);
-			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoAuditoria);
-			Repositorio.getInstance().persistir((Accion)funcCambiarEstadoGenerarLog);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteBusquedaPorUsuario);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteBusquedasPorFecha);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteCantidadResultadosPorTerminal);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoMail);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcActualizacionLocalesComerciales);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcAgregarAcciones);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcBajaPOIs);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcObtenerInfoPOI);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcBusquedaPOI);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcMultiple);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoNotificarBusquedaLarga);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoAuditoria);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoGenerarLog);
 
 			acciones.add(funcReporteBusquedaPorUsuario);
 			acciones.add(funcReporteBusquedasPorFecha);

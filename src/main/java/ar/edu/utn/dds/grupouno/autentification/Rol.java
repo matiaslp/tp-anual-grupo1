@@ -24,6 +24,7 @@ import javax.persistence.Table;
 @NamedQueries({
 @NamedQuery(name = "getRolId", query = "SELECT id FROM Rol r WHERE r.value = :valor"),
 @NamedQuery(name = "getRolById", query = "SELECT r FROM Rol r WHERE r.id = :id"),
+@NamedQuery(name = "Rol.getRolByName", query = "SELECT r FROM Rol r WHERE r.value LIKE :rnombre"),
 @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")})
 public class Rol{
 
