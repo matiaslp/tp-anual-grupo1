@@ -12,9 +12,7 @@ import ar.edu.utn.dds.grupouno.email.EnviarEmail;
 import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
 
-@Entity
-@Table(name = "Proceso")
-public class Proceso extends Persistible {
+public abstract class Proceso {
 
 	protected int cantidadReintentos = 1;
 	protected boolean enviarEmail;

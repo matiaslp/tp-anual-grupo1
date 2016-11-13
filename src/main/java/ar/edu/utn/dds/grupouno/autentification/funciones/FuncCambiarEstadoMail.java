@@ -2,16 +2,18 @@ package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-
+@Entity
 public class FuncCambiarEstadoMail extends Accion {
 
 	public FuncCambiarEstadoMail() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
+		Roles.add(new Rol("ADMIN"));
 		nombre = "cambiarEstadoMail";
 	}
 

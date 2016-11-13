@@ -34,9 +34,9 @@ public class TestBajaPOI {
 	@Before
 	public void init() {
 		Repositorio.getInstance().pois();
-		DB_POI.getListado().clear();
+	//	DB_POI.getListado().clear();
 		Autenticador = AuthAPI.getInstance();
-		fact.crearUsuario("admin", "123", Rol.ADMIN);
+		fact.crearUsuario("admin", "123", "ADMIN");
 		filePath = (new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json";
 		local1 = new LocalComercial();
 		banco1 = new Banco();
@@ -54,7 +54,7 @@ public class TestBajaPOI {
 		Repositorio.getInstance().pois().agregarPOI(local1);
 		Repositorio.getInstance().pois().agregarPOI(banco1);
 
-		admin = DB_Usuarios.getInstance().getUsuarioByName("admin");
+		admin = Repositorio.getInstance().usuarios().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
 		tokenAdmin=AuthAPI.getInstance().iniciarSesion("admin", "123");
 		funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");

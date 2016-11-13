@@ -1,10 +1,14 @@
 package ar.edu.utn.dds.grupouno.autentification;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,25 +17,31 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 
 @Entity
 @Table(name = "Usuario")
+@NamedQueries({
+@NamedQuery(name = "getUsuarioByName", query = "SELECT u FROM Usuario u WHERE u.username LIKE :unombre"),
+@NamedQuery(name = "getUsuarioById", query = "SELECT u FROM Usuario u WHERE u.id LIKE :unId"),
+@NamedQuery(name = "getAllUsers", query = "SELECT u FROM Usuario u"),
+@NamedQuery(name = "updateUsername", query = "UPDATE Usuario SET username = :username where id = :id")})
 public class Usuario extends PersistibleConNombre{
 	
-	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn (name = "Rol", referencedColumnName="id")
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH})
+	@JoinColumn (name = "Rol", nullable = false)
 	private Rol rol;
 	private String username;
 	private String password;
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinTable(name="USUARIO_FUNCIONALIDAD", 
 		joinColumns={@JoinColumn(name="user_id")}, 
 		inverseJoinColumns={@JoinColumn(name="func_id")})
-	@MapKeyColumn(name= "func_nombre")
-	private Map<String, Accion> funcionalidades;
+	private List<Accion> funcionalidades;
 	private String correo;
 	private boolean mailHabilitado;
 	private boolean notificacionesActivadas;
@@ -58,7 +68,7 @@ public class Usuario extends PersistibleConNombre{
 	}
 
 	public void setRol(Rol rol) {
-		this.rol = rol;
+		this.rol = AuthAPI.getInstance().getRol(rol.getValue());
 	}
 
 	public String getUsername() {
@@ -77,21 +87,21 @@ public class Usuario extends PersistibleConNombre{
 		this.password = password;
 	}
 
-	public Map<String, Accion> getFuncionalidades() {
+	public List<Accion> getFuncionalidades() {
 		return funcionalidades;
 	}
 
-	public Map<String, Accion> getProceses() {
-		Map<String, Accion> resultado = new HashMap<String, Accion>();
+	public List<Accion> getProceses() {
+		List<Accion> resultado = new ArrayList<Accion>();
 
-		for (Map.Entry<String, Accion> accion : funcionalidades.entrySet()) {
-			if (accion.getValue().isProcess())
-				resultado.put(accion.getKey(), accion.getValue());
+		for (Accion accion : funcionalidades) {
+			if (accion.isProcess())
+				resultado.add(accion);
 		}
 		return resultado;
 	}
 
-	public void setFuncionalidades(Map<String, Accion> funcionalidades) {
+	public void setFuncionalidades(List<Accion> funcionalidades) {
 		this.funcionalidades = funcionalidades;
 	}
 
@@ -111,12 +121,8 @@ public class Usuario extends PersistibleConNombre{
 		}
 	}
 	
-	public void agregarFuncionalidad(String funcionalidad, Accion func){
-		funcionalidades.put(funcionalidad, func);
-	}
-
-	public Accion getFuncionalidad(String funcionalidad){
-		return funcionalidades.get(funcionalidad);
+	public void agregarFuncionalidad(Accion func){
+		funcionalidades.add(func);
 	}
 	
 	public boolean isMailHabilitado() {
@@ -147,6 +153,16 @@ public class Usuario extends PersistibleConNombre{
 
 	public void setAuditoriaActivada(boolean auditoriaActivada) {
 		this.auditoriaActivada = auditoriaActivada;
+	}
+
+
+	public Object getFuncionalidad(String funcionalidad) {
+		for(Accion accion : this.funcionalidades){
+			if(accion.getNombreFuncion().equals(funcionalidad)){
+				return accion;
+			}
+		}
+		return null;
 	}
 
 

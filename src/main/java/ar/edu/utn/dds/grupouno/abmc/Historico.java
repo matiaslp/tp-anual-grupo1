@@ -13,6 +13,7 @@ import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.email.EnviarEmail;
 import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 
@@ -37,12 +38,18 @@ class Historico implements Busqueda {
 		// Se inicia el Timer
 		Timer timer = new Timer();
 		ArrayList<POI> resultado = timer.buscar(url, texto, userID);
+		ArrayList<POI> resAPersistir=new ArrayList<POI>();
+		for(POI poi :resultado){
+			if(poi.isEsLocal()){
+				resAPersistir.add(poi);
+			}
+		}
 
 		// Se evalua si el Timer tardo mas de los segundos estipulados por
 		// archivo de configuracion
 		if (timer.getSeconds() > segundos)
 				//Se chequea que el usuario tenga las notificaciones activadas.
-			if(DB_Usuarios.getInstance().getUsuarioById((int) userID).isNotificacionesActivadas()){
+			if(Repositorio.getInstance().usuarios().getUsuarioById((int) userID).isNotificacionesActivadas()){
 				// Se envia Email a todos los usuarios que tenga la funcion de
 				// recibir emails habilitada
 				EnviarEmail.MandarCorreoXSegundosUsuarios(texto, segundos);
@@ -50,9 +57,9 @@ class Historico implements Busqueda {
 
 		// Registrar busqueda si el log esta activado
 		// Se deja el id seteado en 0 hasta que se implemente hibernate
-		if (DB_Usuarios.getInstance().getUsuarioById((int) userID).isLog()){
-			RegistroHistorico registro = new RegistroHistorico(0, now, userID, texto, resultado.size(), timer.getSeconds(),resultado);
-			DB_HistorialBusquedas.getInstance().agregarHistorialBusqueda(registro);
+		if (Repositorio.getInstance().usuarios().getUsuarioById((int) userID).isLog()){
+			RegistroHistorico registro = new RegistroHistorico(now, userID, texto, resAPersistir.size(), timer.getSeconds(),resAPersistir);
+			Repositorio.getInstance().resultadosRegistrosHistoricos().agregarHistorialBusqueda(registro);
 		}
 		return resultado;
 	}

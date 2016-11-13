@@ -60,16 +60,16 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			boolean resultadoActualizar = actualizar(locales);
 			end = new DateTime();
 			if (resultadoActualizar)
-				resultado = new ResultadoProceso(start, end, this, user.getId(),
+				resultado = new ResultadoProceso(start, end, TiposProceso.ACTUALIZACIONLOCALESCOMERCIALES, user.getId(),
 						"Los elementos se actualizaron correctamente", Resultado.OK);
 			else
-				resultado = new ResultadoProceso(start, end, this, user.getId(),
+				resultado = new ResultadoProceso(start, end, TiposProceso.ACTUALIZACIONLOCALESCOMERCIALES, user.getId(),
 						"No se pudieron actualizar todos los locales", Resultado.ERROR);
 		} catch (IOException e) {
 			e.printStackTrace();
 			end = new DateTime();
-			resultado = new ResultadoProceso(start, end, this, user.getId(), "No existe el archio " + filePath,
-					Resultado.ERROR);
+//			resultado = new ResultadoProceso(start, end, TiposProceso.ACTUALIZACIONLOCALESCOMERCIALES, user.getId(), "No existe el archio " + filePath,
+//					Resultado.ERROR);
 		}
 		return resultado;
 	}

@@ -1,6 +1,5 @@
 package ar.edu.utn.dds.grupouno.db.poi;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,15 +11,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
@@ -30,6 +27,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
+import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
@@ -38,7 +36,9 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 @Entity
 @Table(name = "POI")
 @Inheritance(strategy=InheritanceType.JOINED)
-@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre")
+@NamedQueries({
+@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
+@NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p")})
 public class POI extends PersistibleConNombre{
 
 	protected String callePrincipal;
@@ -72,13 +72,18 @@ public class POI extends PersistibleConNombre{
 	@JoinTable(name="POI_ETIQUETA", 
 				joinColumns={@JoinColumn(name="poi_id")}, 
 				inverseJoinColumns={@JoinColumn(name="etiqueta_id")})
-	protected Etiqueta[] etiquetas;
+	protected List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();;
 	@Column
 	@Type(type="org.hibernate.type.ZonedDateTimeType")
 	protected ZonedDateTime fechaBaja = null;
 	//protected DateTime fechaBaja = null;
 	protected boolean esLocal = true;
 
+	@ManyToMany(mappedBy="pois")
+	private Set<RegistroHistorico> registrosHistoricos = new HashSet<RegistroHistorico>();
+	
+	
+	
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
 		return (distanciaCoordDosPOIs(this, unPOI) * 1000 < x);
 	}
@@ -264,29 +269,29 @@ public class POI extends PersistibleConNombre{
 	}
 
 	public void setEtiquetas(String nombres[]) {
-		this.etiquetas = new Etiqueta[nombres.length];
+		this.etiquetas.clear();
 		for (int i = 0; i < nombres.length; i++) {
-			this.etiquetas[i] = FlyweightFactoryEtiqueta.getEtiqueta(nombres[i]);
+			this.etiquetas.add(FlyweightFactoryEtiqueta.getEtiqueta(nombres[i]));
 		}
 	}
 
 	public String[] getEtiquetas() {
-		String[] nombres = new String[etiquetas.length];
-		for (int i = 0; i < etiquetas.length; i++) {
-			nombres[i] = etiquetas[i].getNombre();
+		String[] nombres = new String[etiquetas.size()];
+		for (int i = 0; i < etiquetas.size(); i++) {
+			nombres[i] = etiquetas.get(i).getNombre();
 		}
 		return nombres;
 	}
 
 	public String getEtiqueta(int num) {
 
-		return etiquetas[num].getNombre();
+		return etiquetas.get(num).getNombre();
 	}
 
 	public Boolean buscarEtiqueta(String etiquetaNombre) {
 		if (etiquetas != null)
-			for (int i = 0; i < etiquetas.length; i++) {
-				if (LevDist.calcularDistancia(etiquetaNombre, this.etiquetas[i].getNombre())) {
+			for (Etiqueta e : etiquetas) {
+				if (LevDist.calcularDistancia(etiquetaNombre, e.getNombre())) {
 					return true;
 				}
 			}
@@ -469,7 +474,7 @@ public class POI extends PersistibleConNombre{
 		}else if(this.etiquetas == null && poi.etiquetas !=null){
 			return false;
 		}else{
-			if(this.etiquetas.length == poi.getEtiquetas().length){
+			if(this.etiquetas.size() == poi.getEtiquetas().length){
 				for(Etiqueta etiqueta : this.etiquetas){
 					if(!poi.buscarEtiqueta(etiqueta.getNombre()))
 						return false;

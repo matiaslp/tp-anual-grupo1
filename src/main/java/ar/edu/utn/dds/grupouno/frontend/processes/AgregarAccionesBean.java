@@ -9,6 +9,7 @@ import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 @ManagedBean
 @RequestScoped
@@ -42,7 +43,7 @@ public class AgregarAccionesBean {
 	public String ejecutar(){
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
 		funcion.agregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);

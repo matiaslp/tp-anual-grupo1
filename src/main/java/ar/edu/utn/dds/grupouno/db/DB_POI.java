@@ -1,7 +1,5 @@
 package ar.edu.utn.dds.grupouno.db;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +14,7 @@ import ar.edu.utn.dds.grupouno.db.poi.Item_Borrar;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
+@SuppressWarnings({ "unchecked", "unchecked" })
 public class DB_POI extends Repositorio {
 
 	private static ArrayList<POI> listadoPOI;
@@ -26,20 +25,25 @@ public class DB_POI extends Repositorio {
 		listadoPOI = new ArrayList<POI>();
 	}
 
-	public static ArrayList<POI> getListado() {
+	public ArrayList<POI> getListado() {
+		listadoPOI.clear();
+
+		listadoPOI = (ArrayList<POI>) em.createNamedQuery("POI.findAll").getResultList();
+
 		return DB_POI.listadoPOI;
 	}
 
 	public POI getPOIbyId(long id) {
 		return em.find(POI.class, id);
 	}
-	
+
 	public List<POI> getPOIbyNombre(String nombre) {
 		List<POI> pois = null;
 		pois = em.createNamedQuery("getPOIbyNombre").setParameter("pnombre", "%" + nombre + "%").getResultList();
 		return pois;
 	}
-	
+
+	// @Transactional
 	public boolean agregarPOI(POI nuevoPOI) {
 		try {
 			em.getTransaction().begin();
@@ -53,27 +57,42 @@ public class DB_POI extends Repositorio {
 
 	@Transactional
 	public boolean actualizarPOI(POI poi) {
-		em.getTransaction().begin();
-		em.remove(getPOIbyId(poi.getId()));
-		em.persist(poi);
-		em.getTransaction().commit();
-		return true;
-	}
-	
-	public boolean eliminarPOI(long id) {
-		em.getTransaction().begin();
-		POI poi = getPOIbyId(id);
-		if (poi != null && poi.getFechaBaja() == null) {
-			DateTime now = new DateTime();
-			poi.setFechaBaja(now);
-			em.getTransaction().commit();;
-			return true;
+		if (em.contains(poi)) {
+			try {
+				em.getTransaction().begin();
+				em.flush();
+				em.getTransaction().commit();
+				return true;
+			} catch (Exception ex) {
+				em.getTransaction().rollback();
+				return false;
+			}
 		} else {
-			em.getTransaction().commit();;
 			return false;
 		}
 	}
-	
+
+	// @Transactional
+	public boolean eliminarPOI(long id) {
+		try {
+			em.getTransaction().begin();
+			POI poi = getPOIbyId(id);
+			if (poi != null && poi.getFechaBaja() == null) {
+				DateTime now = new DateTime();
+				poi.setFechaBaja(now);
+				em.getTransaction().commit();
+				return true;
+			} else {
+				em.getTransaction().commit();
+				return false;
+			}
+		} catch (Exception ex) {
+			em.getTransaction().rollback();
+			return false;
+		}
+	}
+
+	// @Transactional
 	private void persistir(POI poi) {
 		em.getTransaction().begin();
 		em.persist(poi);
@@ -97,7 +116,7 @@ public class DB_POI extends Repositorio {
 					}
 				}
 			}
-		}		
-		return resumen;
+		}
+		return resumen;	
 	}
 }

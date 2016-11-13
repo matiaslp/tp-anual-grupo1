@@ -2,16 +2,20 @@ package ar.edu.utn.dds.grupouno.abmc;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 import javax.mail.MessagingException;
 
 import org.json.JSONException;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.abmc.Historico;
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
@@ -31,6 +35,8 @@ public class TestABMC_Historico {
 	ParadaColectivo parada = new ParadaColectivo("47", 0, 0);
 	CGP cgp = new CGP("Mataderos", 0, 0);
 	Historico historico;
+	Usuario usuario;
+	UsuariosFactory ufactory = new UsuariosFactory();
 
 	@Before
 	public void inicializar() {
@@ -43,6 +49,18 @@ public class TestABMC_Historico {
 		banco.setCalleLateral("Escalada");
 		ServicioAPI = "http://trimatek.org/Consultas/";
 		historico = new Historico();
+		
+		
+		usuario = ufactory.crearUsuario("admin", "password","ADMIN");
+		
+		usuario.setAuditoriaActivada(true);
+		usuario.setCorreo("uncorreo@correoloco.com");
+		usuario.setLog(true);
+		usuario.setMailHabilitado(true);
+		usuario.setNombre("Shaggy");
+		usuario.setNotificacionesActivadas(true);
+		
+		Repositorio.getInstance().usuarios().persistirUsuario(usuario);
 
 	}
 
@@ -54,12 +72,25 @@ public class TestABMC_Historico {
 		instance.agregarPOI(local);
 		instance.agregarPOI(banco);
 
-		historico.buscar(ServicioAPI, "Mataderos", 1);
-		Assert.assertTrue(DB_HistorialBusquedas.getInstance().cantidadRegistros() == 1);
-		RegistroHistorico reg = DB_HistorialBusquedas.getInstance().registroHistoricoPorId(1);
-		Assert.assertTrue(reg.getUserID() == 1);
-		Assert.assertTrue(reg.getCantResultados() == 17);
+		historico.buscar(ServicioAPI, "Mataderos", usuario.getId() );
+	//	Assert.assertTrue(DB_HistorialBusquedas.getInstance().cantidadRegistros() == 1);
+		RegistroHistorico reg = Repositorio.getInstance().resultadosRegistrosHistoricos().getHistoricobyUserId(usuario.getId()).get(0);
+		Assert.assertTrue(reg.getCantResultados() == 2);
 		Assert.assertTrue(reg.getTime().isBeforeNow());
 		Assert.assertEquals(reg.getBusqueda(), "Mataderos");
+	}
+	
+	@After
+	public void outtro() {
+		
+		
+		instance.remove(usuario);
+		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
+		for (RegistroHistorico reg : list)
+			instance.remove(reg);
+		instance.remove(cgp);
+		instance.remove(parada);
+		instance.remove(local);
+		instance.remove(banco);
 	}
 }

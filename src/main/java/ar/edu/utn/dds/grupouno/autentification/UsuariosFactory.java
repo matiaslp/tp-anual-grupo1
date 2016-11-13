@@ -1,54 +1,68 @@
 package ar.edu.utn.dds.grupouno.autentification;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class UsuariosFactory {
-	
+
 	public UsuariosFactory(){
-		
+
 	}
-	
-	public Usuario crearUsuario(String username, String password, Rol rol){
+
+	public Usuario crearUsuario(String username, String password, String rol){
 		Usuario nuevoUsuario = null;
-		if(DB_Usuarios.getInstance().getUsuarioByName(username) != null){
+		if(cantidadConMismoNombre(username)>1){
 			return null;
 		}else{
 			nuevoUsuario = new Usuario();
-			int size = DB_Usuarios.getInstance().getListaUsuarios().size();
-			if (size > 0)
-				nuevoUsuario.setId(DB_Usuarios.getInstance().getListaUsuarios().get(size-1).getId()+1);
-			else
-				nuevoUsuario.setId(1L);
 			nuevoUsuario.setPassword(password);
 			nuevoUsuario.setUsername(username);
-			nuevoUsuario.setRol(rol);
-			nuevoUsuario.setFuncionalidades(new HashMap<String,Accion>());
+			nuevoUsuario.setRol(new Rol(rol));
+			nuevoUsuario.setFuncionalidades(new ArrayList<Accion>());
 			nuevoUsuario.setMailHabilitado(true);
 			nuevoUsuario.setNotificacionesActivadas(true);
 			nuevoUsuario.setAuditoriaActivada(true);
-			
-			Map<String, Accion> funcionalidades = new HashMap <String, Accion>();
+
+			List<Accion> funcionalidades = new ArrayList<Accion>();
 			AuthAPI.getInstance();
-			if(rol.equals(Rol.ADMIN)){
-				funcionalidades .put("bajaPOIs", AuthAPI.getInstance().getAcciones().get("bajaPOIs"));
-				funcionalidades.put("actualizacionLocalesComerciales", AuthAPI.getInstance().getAcciones().get("actualizacionLocalesComerciales"));
-				funcionalidades.put("procesoMultiple", AuthAPI.getInstance().getAcciones().get("procesoMultiple"));
-				funcionalidades.put("busquedaPOI", AuthAPI.getInstance().getAcciones().get("busquedaPOI"));
-				funcionalidades.put("obtenerInfoPOI", AuthAPI.getInstance().getAcciones().get("obtenerInfoPOI"));
-				funcionalidades.put("cambiarEstadoMail", AuthAPI.getInstance().getAcciones().get("cambiarEstadoMail"));
+			if(rol.equals("ADMIN")){
+				for(Accion accion : AuthAPI.getInstance().getAcciones()){
+					if(accion.getNombreFuncion().equals("bajaPOIs")
+							|| accion.getNombreFuncion().equals("actualizacionLocalesComerciales")
+							|| accion.getNombreFuncion().equals("procesoMultiple")
+							|| accion.getNombreFuncion().equals("busquedaPOI")
+							|| accion.getNombreFuncion().equals("obtenerInfoPOI")
+							|| accion.getNombreFuncion().equals("cambiarEstadoMail")){
+						funcionalidades.add(accion);
+					}
+				}
 			}else{
-				funcionalidades.put("busquedaPOI", AuthAPI.getInstance().getAcciones().get("busquedaPOI"));
-				funcionalidades.put("obtenerInfoPOI", AuthAPI.getInstance().getAcciones().get("obtenerInfoPOI"));
-				funcionalidades.put("notificacionBusquedaLarga", AuthAPI.getInstance().getAcciones().get("notificarBusquedaLarga"));
-				funcionalidades.put("auditoria", AuthAPI.getInstance().getAcciones().get("auditoria"));
+				for(Accion accion : AuthAPI.getInstance().getAcciones()){
+					if(accion.getNombreFuncion().equals("busquedaPOI")
+							|| accion.getNombreFuncion().equals("obtenerInfoPOI")
+							|| accion.getNombreFuncion().equals("notificacionBusquedaLarga")
+							|| accion.getNombreFuncion().equals("auditoria")){
+						funcionalidades.add(accion);
+					}
+				}
 			}
-			
-			DB_Usuarios.getInstance().agregarUsuarioALista(nuevoUsuario);
+			nuevoUsuario.setFuncionalidades(funcionalidades);
+
 			return nuevoUsuario;
 		}
+	}
+
+	public int cantidadConMismoNombre(String username){
+		return Repositorio.getInstance().usuarios().getEm()
+				.createNamedQuery("getUsuarioByName")
+				.setParameter("unombre", username)
+				.getResultList()
+				.size();
 	}
 
 }

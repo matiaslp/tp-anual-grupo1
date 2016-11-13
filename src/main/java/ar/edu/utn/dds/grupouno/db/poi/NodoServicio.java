@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;

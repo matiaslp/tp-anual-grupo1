@@ -19,6 +19,7 @@ import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.Resultado;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 
 public abstract class EnviarEmail {
@@ -32,7 +33,7 @@ public abstract class EnviarEmail {
 		
 		for (ResultadoProceso resultado : listaResultados) {
 			String res = "";
-			String clase = resultado.getProc().getClass().toString();
+			String clase = resultado.getProc().nombre();
 			if (resultado.getResultado().equals(Resultado.ERROR))
 				res = "con errores";
 			else if (resultado.getResultado().equals(Resultado.OK))
@@ -123,7 +124,7 @@ public abstract class EnviarEmail {
 	// Se envia email a todos los usuarios que tenga la funcionalidad de
 	// recibirEmails activada
 	public static void MandarCorreoXSegundosUsuarios(String texto, int segundos) throws MessagingException {
-		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios())
+		for (Usuario usuario : Repositorio.getInstance().usuarios().getListaUsuarios())
 			if (usuario.isMailHabilitado() && usuario.getCorreo() != null)
 				EnviarEmail.mandarCorreoXSegundos(texto, segundos, usuario.getCorreo());
 	}

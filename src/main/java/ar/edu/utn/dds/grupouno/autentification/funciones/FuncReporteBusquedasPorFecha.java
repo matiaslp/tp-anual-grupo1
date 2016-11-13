@@ -3,23 +3,26 @@ package ar.edu.utn.dds.grupouno.autentification.funciones;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.persistence.Entity;
+
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
-
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+@Entity
 public class FuncReporteBusquedasPorFecha extends Accion {
 
 	public FuncReporteBusquedasPorFecha() {
 		Roles = new ArrayList<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
+		Roles.add(new Rol("ADMIN"));
 		nombre = "reporteBusquedasPorFecha";
 	}
 
-	public Map<String, Long> obtenerBusquedasPorFecha(Usuario user, String Token) {
+	public ArrayList<Object[]> obtenerBusquedasPorFecha(Usuario user, String Token) {
 		if (validarsesion(user, Token))
-			return DB_HistorialBusquedas.getInstance().reporteBusquedasPorFecha();
+			return Repositorio.getInstance().resultadosRegistrosHistoricos().reporteBusquedasPorFecha();
 		else
 			return null;
 	}

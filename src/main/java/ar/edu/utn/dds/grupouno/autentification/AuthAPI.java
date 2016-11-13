@@ -25,6 +25,7 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedasPor
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
 import ar.edu.utn.dds.grupouno.db.DB_Sesiones;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class AuthAPI {
 
@@ -36,69 +37,145 @@ public class AuthAPI {
 		return instance;
 	}
 
-	private Map<String, Accion> Acciones;
+	private List<Accion> acciones;
+	private List<Rol> roles;
 
-	public Map<String, Accion> getAcciones(){
-		return Acciones;
+	public List<Accion> getAcciones() {
+		return acciones;
 	}
 	
+	public List<Rol> getRoles() {
+		return roles;
+	}
+
 	public AuthAPI() {
-		Acciones = new HashMap<String, Accion>();
-		Acciones.put("reporteBusquedaPorUsuario", new FuncReporteBusquedaPorUsuario());
-		Acciones.put("reporteBusquedasPorFecha", new FuncReporteBusquedasPorFecha());
-		Acciones.put("reportecantidadResultadosPorTerminal", new FuncReporteCantidadResultadosPorTerminal());
-		Acciones.put("cambiarEstadoMail", new FuncCambiarEstadoMail());
-		Acciones.put("actualizacionLocalesComerciales", new FuncActualizacionLocalesComerciales());
-		Acciones.put("agregarAcciones", new FuncAgregarAcciones());
-		Acciones.put("bajaPOIs", new FuncBajaPOIs());
-		Acciones.put("obtenerInfoPOI", new FuncObtenerInfoPOI());
-		Acciones.put("busquedaPOI", new FuncBusquedaPOI());
-		Acciones.put("procesoMultiple", new FuncMultiple());
-		Acciones.put("notificarBusquedaLarga", new FuncCambiarEstadoNotificarBusquedaLarga());
-		Acciones.put("auditoria", new FuncCambiarEstadoAuditoria());
-		Acciones.put("generarLog", new FuncCambiarEstadoGenerarLog());
+
+		ArrayList<Accion> listAcciones = Repositorio.getInstance().usuarios().getListadoAcciones();
+		acciones = new ArrayList<Accion>();
+		if (listAcciones == null || listAcciones.size() == 0) {
+			Accion funcReporteBusquedaPorUsuario, funcReporteBusquedasPorFecha,
+					funcReporteCantidadResultadosPorTerminal, funcCambiarEstadoMail,
+					funcActualizacionLocalesComerciales, funcAgregarAcciones, funcBajaPOIs, funcObtenerInfoPOI,
+					funcBusquedaPOI, funcMultiple, funcCambiarEstadoNotificarBusquedaLarga, funcCambiarEstadoAuditoria,
+					funcCambiarEstadoGenerarLog;
+			funcReporteBusquedaPorUsuario = new FuncReporteBusquedaPorUsuario();
+			funcReporteBusquedasPorFecha = new FuncReporteBusquedasPorFecha();
+			funcReporteCantidadResultadosPorTerminal = new FuncReporteCantidadResultadosPorTerminal();
+			funcCambiarEstadoMail = new FuncCambiarEstadoMail();
+			funcActualizacionLocalesComerciales = new FuncActualizacionLocalesComerciales();
+			funcAgregarAcciones = new FuncAgregarAcciones();
+			funcBajaPOIs = new FuncBajaPOIs();
+			funcObtenerInfoPOI = new FuncObtenerInfoPOI();
+			funcBusquedaPOI = new FuncBusquedaPOI();
+			funcMultiple = new FuncMultiple();
+			funcCambiarEstadoNotificarBusquedaLarga = new FuncCambiarEstadoNotificarBusquedaLarga();
+			funcCambiarEstadoAuditoria = new FuncCambiarEstadoAuditoria();
+			funcCambiarEstadoGenerarLog = new FuncCambiarEstadoGenerarLog();
+
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteBusquedaPorUsuario);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteBusquedasPorFecha);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteCantidadResultadosPorTerminal);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoMail);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcActualizacionLocalesComerciales);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcAgregarAcciones);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcBajaPOIs);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcObtenerInfoPOI);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcBusquedaPOI);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcMultiple);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoNotificarBusquedaLarga);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoAuditoria);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoGenerarLog);
+
+			acciones.add(funcReporteBusquedaPorUsuario);
+			acciones.add(funcReporteBusquedasPorFecha);
+			acciones.add(funcReporteCantidadResultadosPorTerminal);
+			acciones.add(funcCambiarEstadoMail);
+			acciones.add(funcActualizacionLocalesComerciales);
+			acciones.add(funcAgregarAcciones);
+			acciones.add(funcBajaPOIs);
+			acciones.add(funcObtenerInfoPOI);
+			acciones.add(funcBusquedaPOI);
+			acciones.add(funcMultiple);
+			acciones.add(funcCambiarEstadoNotificarBusquedaLarga);
+			acciones.add(funcCambiarEstadoAuditoria);
+			acciones.add(funcCambiarEstadoGenerarLog);
+		} else {
+			for (Accion accion : listAcciones)
+				acciones.add(accion);
+		}
+		
+		ArrayList<Rol> listRoles = Repositorio.getInstance().usuarios().getListadoRoles();
+		roles = new ArrayList<Rol>();
+		if (listRoles == null || listRoles.size() == 0) {
+			Rol terminal = new Rol();
+			terminal.setValue("TERMINAL");
+			Repositorio.getInstance().persistir(terminal);
+			Rol admin = new Rol();
+			admin.setValue("ADMIN");
+			Repositorio.getInstance().persistir(admin);
+			roles.add(terminal);
+			roles.add(admin);
+		} else {
+			for (Rol rol : listRoles)
+				roles.add(rol);
+		}
 	}
 
+	public Accion getAccion(String nombre) {
+
+		for (Accion accion : this.getAcciones()) {
+			if (accion.getNombreFuncion().equals(nombre))
+				return accion;
+		}
+		return null;
+	}
 	
+	public Rol getRol(String nombre) {
+
+		for (Rol rol : this.getRoles()) {
+			if (rol.getValue().equals(nombre))
+				return rol;
+		}
+		return null;
+	}
+
 	public boolean agregarFuncionalidad(String funcionalidad, Usuario user) {
-			if (user.getFuncionalidad(funcionalidad)!=null) {
-				return false; // ya existe en el usuario
-			} else {
-				Accion accion = Acciones.get(funcionalidad);
-				if(accion ==null){
-					return false; //la accion no existe
-				}else{
-					List<Rol> roles = accion.getRoles();
-					for(Rol rol : roles){
-						if(rol.equals(user.getRol())){
-							user.agregarFuncionalidad(funcionalidad,accion);
+		if (user.getFuncionalidad(funcionalidad) != null) {
+			return false; // ya existe en el usuario
+		} else {
+			for (Accion accion : this.getAcciones())
+				if (accion.getNombreFuncion().equals(funcionalidad)) {
+					List<Rol> rols = accion.getRoles();
+					for (Rol rol : rols) {
+						if (rol.getValue().equals(user.getRol().getValue())) {
+							user.agregarFuncionalidad(accion);
 							return true;
 						}
 					}
 				}
-				return false; //no tiene permiso
-			}
+
+			return false; // no tiene permiso
+		}
 	}
-	
+
 	public boolean sacarFuncionalidad(String funcionalidad, Usuario user) {
-			if (user.getFuncionalidades().remove(funcionalidad) != null) {
-				return true;
-			} else {
-				return false; // No existe la funcionalidad
-			}
+		if (user != null) {
+			return user.getFuncionalidades().remove(user.getFuncionalidad(funcionalidad));
+		}
+		return false;
 	}
 
 	public String iniciarSesion(String user, String pass) {
 
 		// LA PASS YA DEBERIA LLEGAR HASHEADA AL ENTRAR A ESTA FUNCION
 
-		for (Usuario usuario : DB_Usuarios.getInstance().getListaUsuarios()) {
+		for (Usuario usuario : Repositorio.getInstance().usuarios().getListaUsuarios()) {
 			if (usuario.validarUsuarioYPass(user, pass)) {
 				String token = null;
 				try {
 					token = generarToken(user, pass);
 				} catch (NoSuchAlgorithmException e) {
-					//No pudo hashear en SHA-256, no pudo iniciar sesion.
+					// No pudo hashear en SHA-256, no pudo iniciar sesion.
 					e.printStackTrace();
 					return null;
 				}
@@ -109,12 +186,11 @@ public class AuthAPI {
 
 		return null;
 	}
-	
+
 	public void cerrarSesion(String user, String token) {
-		
+
 		DB_Sesiones.getInstance().removerTokenUser(token, user);
 	}
-	
 
 	public String hashear(String string) throws NoSuchAlgorithmException {
 		// Esta funcion en una de esas quizas va en las comunes
@@ -141,10 +217,6 @@ public class AuthAPI {
 		}
 
 		return false;
-	}
-
-	public Accion getAccion(String funcionalidad) {
-		return Acciones.get(funcionalidad);
 	}
 
 }

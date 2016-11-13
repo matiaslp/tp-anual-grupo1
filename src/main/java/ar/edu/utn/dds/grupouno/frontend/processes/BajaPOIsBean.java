@@ -10,6 +10,7 @@ import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncActualizacionLocalesComerciales;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 @ManagedBean
 @RequestScoped
@@ -43,7 +44,7 @@ public class BajaPOIsBean {
 	public String ejecutar(){
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
 		funcion.darDeBajaPOI(usuario, token, cantidadReintentos, enviarEmail, filePath);

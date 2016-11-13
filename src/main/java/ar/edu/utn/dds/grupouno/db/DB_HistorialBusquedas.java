@@ -1,110 +1,104 @@
 package ar.edu.utn.dds.grupouno.db;
 
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
-public class DB_HistorialBusquedas {
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
-	private Map<Long, RegistroHistorico> listadoRegistros;
 
-	private static DB_HistorialBusquedas instance = null;
 
-	public DB_HistorialBusquedas() {
-		listadoRegistros = new HashMap<Long, RegistroHistorico>();
+
+public class DB_HistorialBusquedas extends Repositorio {
+	
+	private static ArrayList<RegistroHistorico> listadoRegistroHistorico;
+	
+	public DB_HistorialBusquedas(EntityManager em) {
+		super (em);
+		listadoRegistroHistorico = new ArrayList<RegistroHistorico>();
+	}
+	
+	
+	public ArrayList<RegistroHistorico> getListado() {
+		listadoRegistroHistorico.clear();
+
+		listadoRegistroHistorico = (ArrayList<RegistroHistorico>) em.createNamedQuery("RegistroHistorico.findAll").getResultList();
+
+		return listadoRegistroHistorico;
 	}
 
-	public static DB_HistorialBusquedas getInstance() {
-		if (instance == null)
-			instance = new DB_HistorialBusquedas();
-		return instance;
+
+	public RegistroHistorico getRegistroHistoricobyId(long id) {
+		return em.find(RegistroHistorico.class, id);
+	}
+	
+public List<RegistroHistorico> getHistoricobyUserId(Long userID) {
+		
+		List<RegistroHistorico> resultado = null;
+		resultado = em.createNamedQuery("getHistoricobyUserId").setParameter("ruserid",userID).getResultList();
+		return resultado;
+	}
+	
+
+	
+	
+	public boolean agregarHistorialBusqueda(RegistroHistorico nuevoRegistroHistorico) {
+//		try {
+	    
+		//	nuevoPOI.setId(listadonuevoRegistroHistorico.size() + 1);
+			persistir(nuevoRegistroHistorico);
+			return true;
+//		} catch (Exception ex) {
+//			return false;
+//		}
+	}
+	
+
+	@Transactional
+	public boolean actualizarRegistroHistorico(RegistroHistorico unRegistroHistorico) {
+		em.getTransaction().begin();
+//		em.remove(getRegistroHistoricobyId(unRegistroHistorico.getId()));
+//		em.persist(unRegistroHistorico);
+		em.flush();
+		em.getTransaction().commit();
+		return true;
+	}
+	
+	public boolean eliminarRegistroHistorico(long id) {
+		em.getTransaction().begin();
+		em.remove(getRegistroHistoricobyId(id));
+		em.getTransaction().commit();
+		return true;
+	}
+	public void persistir(RegistroHistorico unRegistroHistorico) {
+		em.getTransaction().begin();
+		em.persist(unRegistroHistorico);
+		em.getTransaction().commit();
 	}
 
-	public int cantidadRegistros() {
-		return listadoRegistros.size();
+	
+	public ArrayList<Object[]> reporteBusquedasPorFecha() {
+
+		ArrayList<Object[]> resultado = (ArrayList<Object[]>) em.createNamedQuery("RegistroHistorico.reporteBusquedasPorFecha").getResultList();
+
+		return resultado;
 	}
+	
+	public ArrayList<Object[]> reporteCantidadResultadosPorTerminal(Long userID) {
 
-	public RegistroHistorico registroHistoricoPorId(long id) {
-		return listadoRegistros.get(id - 1);
+		ArrayList<Object[]> resultado = (ArrayList<Object[]>) em.createNamedQuery("RegistroHistorico.reporteCantidadResultadosPorTerminal").setParameter("ruserid",userID).getResultList();
+
+		return resultado;
 	}
+	
+	public ArrayList<Object[]> reporteBusquedaPorUsuario() {
 
-	public void agregarHistorialBusqueda(RegistroHistorico registro) {
-		// se genera el id (se debe modificar con hibernate)
-		if (registro.getId() == 0)
-			registro.setId(listadoRegistros.size() + 1);
-		String registroStr = Integer.toString(listadoRegistros.size());
-		listadoRegistros.put(Long.parseLong(registroStr), registro);
-	}
+		ArrayList<Object[]> resultado = (ArrayList<Object[]>) em.createNamedQuery("RegistroHistorico.reporteBusquedaPorUsuario").getResultList();
 
-	// Reporte de busquedas por fecha y cantidad de todo el sistema
-	public Map<String, Long> reporteBusquedasPorFecha() {
-		Map<String, Long> resumen = new HashMap<String, Long>();
-		String fechaPrevia = "";
-		Long cantParcial = 0L;
-		DateTimeFormatter fmt = DateTimeFormat.shortDate();
-		String fechaActual = "";
-
-		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-			fechaActual = fmt.print(registro.getValue().getTime());
-
-			if (fechaPrevia.equals(fechaActual)) {
-				cantParcial += registro.getValue().getCantResultados();
-			} else {
-				resumen.put(fechaPrevia, cantParcial);
-				fechaPrevia = fechaActual;
-				cantParcial = registro.getValue().getCantResultados();
-			}
-
-		}
-
-		return resumen;
-	}
-
-	// Reporte de busquedas parciales por terminal
-	public Map<Long, Long> reporteCantidadResultadosPorTerminal(long terminal) {
-
-		Map<Long, Long> resumen = new HashMap<Long, Long>();
-
-		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-			if (Long.compare(terminal, registro.getValue().getUserID()) == 0 && DB_Usuarios.getInstance().getUsuarioById(terminal).isAuditoriaActivada())
-				resumen.put(registro.getValue().getId(), registro.getValue().getCantResultados());
-		}
-		return resumen;
-	}
-
-	public Map<Long, Long> reporteBusquedaPorUsuario() {
-
-		Map<Long, Long> resumen = new HashMap<Long, Long>();
-		List<Long> usuarios = new ArrayList<Long>();
-
-		Long sumaParcial = 0L;
-		Long userId = 0L;
-
-		// Obetengo la lista de usuarios que hicieron las busquedas
-		for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-			if (!usuarios.contains(registro.getValue().getUserID()))
-				usuarios.add(registro.getValue().getUserID());
-		}
-
-		while (usuarios.size() > 0) {
-			// Obtengo el ultimo usuario
-			userId = usuarios.get(usuarios.size() - 1);
-			// Saco la cantidad de busquedas del usuario
-			for (Map.Entry<Long, RegistroHistorico> registro : listadoRegistros.entrySet()) {
-
-				if (Long.compare(userId, registro.getValue().getUserID()) == 0 && DB_Usuarios.getInstance().getUsuarioById(userId).isAuditoriaActivada())
-					sumaParcial += registro.getValue().getCantResultados();
-			}
-			resumen.put(userId, sumaParcial);
-			usuarios.remove(usuarios.size() - 1);
-			sumaParcial = 0L;
-		}
-		return resumen;
-
+		return resultado;
 	}
 
 }
