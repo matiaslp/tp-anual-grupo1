@@ -132,10 +132,10 @@ public class TestABMC_Consulta {
 	@After
 	public void outtro() {
 		
-		instance.remove(cgp);
-		instance.remove(parada);
-		instance.remove(local);
-		instance.remove(banco);
+		//instance.remove(cgp);
+		//instance.remove(parada);
+		//instance.remove(local);
+		//instance.remove(banco);
 		instance.remove(usuario);
 		
 	}

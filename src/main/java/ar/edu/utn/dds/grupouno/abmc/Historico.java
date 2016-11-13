@@ -38,6 +38,12 @@ class Historico implements Busqueda {
 		// Se inicia el Timer
 		Timer timer = new Timer();
 		ArrayList<POI> resultado = timer.buscar(url, texto, userID);
+		ArrayList<POI> resAPersistir=new ArrayList<POI>();
+		for(POI poi :resultado){
+			if(poi.isEsLocal()){
+				resAPersistir.add(poi);
+			}
+		}
 
 		// Se evalua si el Timer tardo mas de los segundos estipulados por
 		// archivo de configuracion
@@ -52,7 +58,7 @@ class Historico implements Busqueda {
 		// Registrar busqueda si el log esta activado
 		// Se deja el id seteado en 0 hasta que se implemente hibernate
 		if (Repositorio.getInstance().usuarios().getUsuarioById((int) userID).isLog()){
-			RegistroHistorico registro = new RegistroHistorico(now, userID, texto, resultado.size(), timer.getSeconds(),resultado);
+			RegistroHistorico registro = new RegistroHistorico(now, userID, texto, resAPersistir.size(), timer.getSeconds(),resAPersistir);
 			Repositorio.getInstance().resultadosRegistrosHistoricos().agregarHistorialBusqueda(registro);
 		}
 		return resultado;
