@@ -21,7 +21,7 @@ import ar.edu.utn.dds.grupouno.db.poi.POI;
 @ManagedBean
 @ViewScoped
 public class BusquedaBean  {
-	private int dataTableSize =1;
+	private int dataTableSize = 1;
 	private String textoLibre;
     private List<Item> items;
 
@@ -69,12 +69,13 @@ public class BusquedaBean  {
 		items.add(new Item());
 		
 	}
-	public ArrayList<POI> buscar(){
-	ArrayList<Item> unaLista= new ArrayList<Item>();
-	unaLista=BusquedaDePOIsExternos.buscarPOIsExternos(url, this.getItems().get(1), this.getItems().get(2));
+	public void buscar(){
+	String textoBusqueda = "";
+	for(int i = 1; i <= this.getItems().size(); i++){
+		textoBusqueda = textoBusqueda + " " + this.getItems().get(i).getValue();
+	}
 	
-		
-		
+	
 	}
 }
 
