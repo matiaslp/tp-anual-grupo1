@@ -1,16 +1,21 @@
 package ar.edu.utn.dds.grupouno.db;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+
+import org.hibernate.Session;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.hibernate.HibernateUtil;
 
 public class DB_Usuarios extends Repositorio {
 
@@ -125,18 +130,28 @@ public class DB_Usuarios extends Repositorio {
 	
 	public void persistirAccion(Accion accion)
 	{
-		 List<Rol> roles = accion.getRoles();
-		 accion.setRoles(new ArrayList<Rol>());
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		
+//		session.saveOrUpdate(accion);
+//		
+//		session.close();
+		
+		 Set<Rol> roles = accion.getRoles();
+		 accion.setRoles(new HashSet<Rol>());
 	  //Adding manually (using your cascade ALL)
 		for (Rol rol : roles){
 			for (Rol rolDB : this.getListadoRoles())
-			if(rol != null && rol.getValue().equals(rolDB.getValue())) 
-				accion.setRol(this.getRolByName(rol.getValue())); // already exists
-			else {		 
+			if(rol != null && rol.getValue().equals(rolDB.getValue())) {
+				//accion.setRol(this.getRolByName(rol.getValue())); // already exists
+				Rol rolPersisted = em.merge(rol);
+				accion.setRol(rolPersisted);
+			} else {		 
 				this.persistir(rol);//I don't exist persist
 				accion.setRol(rol);
 			}
 		}
-		em.persist(accion);//using a similar "don't duplicate me" approach.
+		em.merge(accion);
+		//em.persist(accion);//using a similar "don't duplicate me" approach.
+//		this.persistir(accion);
 	}
 }

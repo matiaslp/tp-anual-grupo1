@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.*;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -38,7 +40,7 @@ public abstract class Accion extends Persistible{
 	@JoinTable(name="FUNCIONALIDAD_ROL", 
 		joinColumns={@JoinColumn(name="func_id")}, 
 		inverseJoinColumns={@JoinColumn(name="rol_id")})
-	protected List<Rol> Roles = new ArrayList<Rol>();
+	protected Set<Rol> Roles = new HashSet<Rol>();
 	@ManyToMany (mappedBy="funcionalidades")
 	protected Set<Usuario> listaUsuarios = new HashSet<Usuario>();
 	
@@ -50,11 +52,11 @@ public abstract class Accion extends Persistible{
 		return AuthAPI.getInstance().validarToken(Token) && user.getFuncionalidad(nombre)!=null;
 	}
 
-	public List<Rol> getRoles() {
+	public Set<Rol> getRoles() {
 		return Roles;
 	}
 
-	public void setRoles(ArrayList<Rol> roles) {
+	public void setRoles(Set<Rol> roles) {
 		Roles = roles;
 	}
 	

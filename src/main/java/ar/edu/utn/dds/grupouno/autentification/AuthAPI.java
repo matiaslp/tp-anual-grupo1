@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -49,6 +50,22 @@ public class AuthAPI {
 	}
 
 	public AuthAPI() {
+		
+		ArrayList<Rol> listRoles = Repositorio.getInstance().usuarios().getListadoRoles();
+		roles = new ArrayList<Rol>();
+		if (listRoles == null || listRoles.size() == 0) {
+			Rol terminal = new Rol();
+			terminal.setValue("TERMINAL");
+			Repositorio.getInstance().persistir(terminal);
+			Rol admin = new Rol();
+			admin.setValue("ADMIN");
+			Repositorio.getInstance().persistir(admin);
+			roles.add(terminal);
+			roles.add(admin);
+		} else {
+			for (Rol rol : listRoles)
+				roles.add(rol);
+		}
 
 		ArrayList<Accion> listAcciones = Repositorio.getInstance().usuarios().getListadoAcciones();
 		acciones = new ArrayList<Accion>();
@@ -58,19 +75,19 @@ public class AuthAPI {
 					funcActualizacionLocalesComerciales, funcAgregarAcciones, funcBajaPOIs, funcObtenerInfoPOI,
 					funcBusquedaPOI, funcMultiple, funcCambiarEstadoNotificarBusquedaLarga, funcCambiarEstadoAuditoria,
 					funcCambiarEstadoGenerarLog;
-			funcReporteBusquedaPorUsuario = new FuncReporteBusquedaPorUsuario();
-			funcReporteBusquedasPorFecha = new FuncReporteBusquedasPorFecha();
-			funcReporteCantidadResultadosPorTerminal = new FuncReporteCantidadResultadosPorTerminal();
-			funcCambiarEstadoMail = new FuncCambiarEstadoMail();
-			funcActualizacionLocalesComerciales = new FuncActualizacionLocalesComerciales();
-			funcAgregarAcciones = new FuncAgregarAcciones();
-			funcBajaPOIs = new FuncBajaPOIs();
-			funcObtenerInfoPOI = new FuncObtenerInfoPOI();
-			funcBusquedaPOI = new FuncBusquedaPOI();
-			funcMultiple = new FuncMultiple();
-			funcCambiarEstadoNotificarBusquedaLarga = new FuncCambiarEstadoNotificarBusquedaLarga();
-			funcCambiarEstadoAuditoria = new FuncCambiarEstadoAuditoria();
-			funcCambiarEstadoGenerarLog = new FuncCambiarEstadoGenerarLog();
+			funcReporteBusquedaPorUsuario = new FuncReporteBusquedaPorUsuario(getRol("ADMIN"));
+			funcReporteBusquedasPorFecha = new FuncReporteBusquedasPorFecha(getRol("ADMIN"));
+			funcReporteCantidadResultadosPorTerminal = new FuncReporteCantidadResultadosPorTerminal(getRol("ADMIN"));
+			funcCambiarEstadoMail = new FuncCambiarEstadoMail(getRol("ADMIN"));
+			funcActualizacionLocalesComerciales = new FuncActualizacionLocalesComerciales(getRol("ADMIN"));
+			funcAgregarAcciones = new FuncAgregarAcciones(getRol("ADMIN"));
+			funcBajaPOIs = new FuncBajaPOIs(getRol("ADMIN"));
+			funcObtenerInfoPOI = new FuncObtenerInfoPOI(getRol("ADMIN"),getRol("TERMINAL"));
+			funcBusquedaPOI = new FuncBusquedaPOI(getRol("ADMIN"),getRol("TERMINAL"));
+			funcMultiple = new FuncMultiple(getRol("ADMIN"));
+			funcCambiarEstadoNotificarBusquedaLarga = new FuncCambiarEstadoNotificarBusquedaLarga(getRol("TERMINAL"));
+			funcCambiarEstadoAuditoria = new FuncCambiarEstadoAuditoria(getRol("TERMINAL"));
+			funcCambiarEstadoGenerarLog = new FuncCambiarEstadoGenerarLog(getRol("ADMIN"),getRol("TERMINAL"));
 
 			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteBusquedaPorUsuario);
 			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteBusquedasPorFecha);
@@ -104,21 +121,7 @@ public class AuthAPI {
 				acciones.add(accion);
 		}
 		
-		ArrayList<Rol> listRoles = Repositorio.getInstance().usuarios().getListadoRoles();
-		roles = new ArrayList<Rol>();
-		if (listRoles == null || listRoles.size() == 0) {
-			Rol terminal = new Rol();
-			terminal.setValue("TERMINAL");
-			Repositorio.getInstance().persistir(terminal);
-			Rol admin = new Rol();
-			admin.setValue("ADMIN");
-			Repositorio.getInstance().persistir(admin);
-			roles.add(terminal);
-			roles.add(admin);
-		} else {
-			for (Rol rol : listRoles)
-				roles.add(rol);
-		}
+
 	}
 
 	public Accion getAccion(String nombre) {
@@ -145,7 +148,7 @@ public class AuthAPI {
 		} else {
 			for (Accion accion : this.getAcciones())
 				if (accion.getNombreFuncion().equals(funcionalidad)) {
-					List<Rol> rols = accion.getRoles();
+					Set<Rol> rols = accion.getRoles();
 					for (Rol rol : rols) {
 						if (rol.getValue().equals(user.getRol().getValue())) {
 							user.agregarFuncionalidad(accion);

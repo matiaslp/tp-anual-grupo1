@@ -53,7 +53,7 @@
 
 			<!-- "validate" para velocidad y mantener el esquema creado "create-drop" 
 				para eliminar todas las tablas y recrearlas -->
-			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 		</properties>
 
 	</persistence-unit>

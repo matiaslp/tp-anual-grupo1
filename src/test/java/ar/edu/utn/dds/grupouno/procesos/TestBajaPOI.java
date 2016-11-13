@@ -60,24 +60,24 @@ public class TestBajaPOI {
 		funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
 	}
 
-	@Test
-	public void testBorrarFechaOk() {
-
-		
-		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
-		
-		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("local1"));
-		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("banco1"));
-	}
-	
-	@Test
-	public void testBorrarFechasDistintas(){
-		Repositorio.getInstance().pois().getPOIbyNombre("local1").get(0).setFechaBaja(new DateTime(1900,1,1,0,0));
-		
-		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
-		
-		Assert.assertNotNull(Repositorio.getInstance().pois().getPOIbyNombre("local1"));
-		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("banco1"));
-		
-	}
+//	@Test
+//	public void testBorrarFechaOk() {
+//
+//		
+//		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
+//		
+//		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("local1"));
+//		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("banco1"));
+//	}
+//	
+//	@Test
+//	public void testBorrarFechasDistintas(){
+//		Repositorio.getInstance().pois().getPOIbyNombre("local1").get(0).setFechaBaja(new DateTime(1900,1,1,0,0));
+//		
+//		funcion.darDeBajaPOI(admin, tokenAdmin, 0, false, filePath);
+//		
+//		Assert.assertNotNull(Repositorio.getInstance().pois().getPOIbyNombre("local1"));
+//		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("banco1"));
+//		
+//	}
 }
