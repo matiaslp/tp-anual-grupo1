@@ -16,6 +16,7 @@ import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.CGP;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
@@ -132,11 +133,14 @@ public class TestABMC_Consulta {
 	@After
 	public void outtro() {
 		
-		//instance.remove(cgp);
-		//instance.remove(parada);
-		//instance.remove(local);
-		//instance.remove(banco);
-		instance.remove(usuario);
 		
+		instance.remove(usuario);
+		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
+		for (RegistroHistorico reg : list)
+			instance.remove(reg);
+		instance.remove(cgp);
+		instance.remove(parada);
+		instance.remove(local);
+		instance.remove(banco);
 	}
 }
