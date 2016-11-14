@@ -22,10 +22,11 @@ public class TestUsuariosPersistencia {
 	
 	@Test
 	public void testearNombre(){
+	//	user = Repositorio.getInstance().usuarios().getUsuarioByName("administrator");
 		user.setNombre("abc");
 		Repositorio.getInstance().usuarios().actualizarUsuario(user);
 		Assert.assertTrue(Repositorio.getInstance()
-				.usuarios().getUsuarioByName("abc")!=null);
+				.usuarios().getUsuarioByName("administrator")!=null);
 	}
 	
 	@Test

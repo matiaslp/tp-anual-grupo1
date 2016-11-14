@@ -15,11 +15,10 @@ import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class DB_Usuarios extends Repositorio {
 
-	private ArrayList<Usuario> listaUsuarios;
+
 
 	public DB_Usuarios(EntityManager em) {
 		super(em);
-		listaUsuarios = new ArrayList<Usuario>();
 	}
 
 	public Long getRolId(String nombre) {
@@ -115,7 +114,7 @@ public class DB_Usuarios extends Repositorio {
 		if (em.contains(user)) {
 			try {
 				em.getTransaction().begin();
-				em.flush();
+				em.merge(user);
 				em.getTransaction().commit();
 				return true;
 			} catch (Exception ex) {
@@ -128,10 +127,13 @@ public class DB_Usuarios extends Repositorio {
 	}
 	
 	public boolean deleteUsuario(long l) {
+		em.getTransaction().begin();
 		Usuario user = getUsuarioById(l);
 		if (user != null) {
-			listaUsuarios.remove(user);
+			em.remove(user);
+			
 			DB_Sesiones.getInstance().removerSesiones(user.getUsername());
+			em.getTransaction().commit();
 			return true;
 		}
 		return false;
