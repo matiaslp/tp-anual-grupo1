@@ -94,7 +94,7 @@ public class TestLogin {
 	@Test
 	public void testCrearUsuario() {
 		user2 = fact.crearUsuario("username", "password", "TERMINAL");
-		DBU.usuarios().persistir(user2);
+		DBU.usuarios().persistirUsuario(user2);
 		user4 = DBU.usuarios().getUsuarioByName("username");
 		Assert.assertTrue(user4 != null);
 		Assert.assertTrue(user4.getPassword().equals("password"));	
@@ -139,10 +139,11 @@ public class TestLogin {
 	@After
 	public void outtro() {
 		
-		DBU.usuarios().removeUsuario(admintest);
-		DBU.usuarios().removeUsuario(term);
+		DBU.remove(DBU.usuarios().getUsuarioById(admintest.getId()));
+		DBU.remove(DBU.usuarios().getUsuarioById(term.getId()));
 		DBU.remove(user);
 		DBU.remove(user2);
+
 		
 	}
 

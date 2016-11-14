@@ -8,19 +8,14 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import org.hibernate.Session;
-
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
-import ar.edu.utn.dds.grupouno.hibernate.HibernateUtil;
 
 public class DB_Usuarios extends Repositorio {
 
 	private ArrayList<Usuario> listaUsuarios;
-	private static DB_Usuarios instance = null;
 
 	public DB_Usuarios(EntityManager em) {
 		super(em);
@@ -57,19 +52,13 @@ public class DB_Usuarios extends Repositorio {
 		for (Accion acc : acciones) {
 			for (Accion accDB : this.getListadoAcciones())
 				if (acc != null && acc.getNombreFuncion().equals(accDB.getNombreFuncion())) {
-					// accion.setRol(this.getRolByName(rol.getValue())); //
-					// already exists
-					//Accion accPersisted = em.merge(acc);
 					usuario.setFuncionalidad(accDB);
 					break;
 				}
-//			if (usuario.getFuncionalidad(acc.getNombreFuncion()) == null){
-//					this.persistir(acc);// I don't exist persist
-//					usuario.setFuncionalidad(acc);
-//				}
+
 		}
 		 
-		 em.merge(usuario);
+		 em.persist(usuario);
 		 em.getTransaction().commit();
 	}
 
@@ -121,26 +110,6 @@ public class DB_Usuarios extends Repositorio {
 		}
 	}
 	
-	@Transactional
-	public boolean removeUsuario(Usuario user) {
-
-		if (user != null && em.contains(user)) {
-//			try {
-				em.getTransaction().begin();
-				for (Accion acc : user.getFuncionalidades())
-					em.refresh(acc);
-				em.remove(user);
-				em.getTransaction().commit();
-				return true;
-//			} catch (Exception ex) {
-//				em.getTransaction().rollback();
-//				return false;
-//			}
-		} else {
-			return false;
-		}
-	}
-
 	public boolean deleteUsuario(long l) {
 		Usuario user = getUsuarioById(l);
 		if (user != null) {
@@ -162,19 +131,12 @@ public class DB_Usuarios extends Repositorio {
 	}
 
 	public void persistirAccion(Accion accion) {
-		// Session session = HibernateUtil.getSessionFactory().openSession();
-		//
-		// session.saveOrUpdate(accion);
-		//
-		// session.close();
-
 		Set<Rol> roles = accion.getRoles();
 		accion.setRoles(new HashSet<Rol>());
 		// Adding manually (using your cascade ALL)
 		for (Rol rol : roles) {
 			for (Rol rolDB : this.getListadoRoles())
 				if (rol != null && rol.getValue().equals(rolDB.getValue())) {
-					// accion.setRol(this.getRolByName(rol.getValue())); //
 					// already exists
 					Rol rolPersisted = em.merge(rol);
 					accion.setRol(rolPersisted);
@@ -184,7 +146,5 @@ public class DB_Usuarios extends Repositorio {
 				}
 		}
 		em.merge(accion);
-		// em.persist(accion);//using a similar "don't duplicate me" approach.
-		// this.persistir(accion);
 	}
 }
