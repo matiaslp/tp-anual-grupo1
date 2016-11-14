@@ -45,7 +45,7 @@ public class Usuario extends PersistibleConNombre{
 	@JoinTable(name="USUARIO_FUNCIONALIDAD", 
 		joinColumns={@JoinColumn(name="user_id")}, 
 		inverseJoinColumns={@JoinColumn(name="func_id")})
-	private Set<Accion> funcionalidades  = new HashSet<Accion>();;
+	private Set<Accion> funcionalidades  = new HashSet<Accion>();
 	private String correo;
 	private boolean mailHabilitado;
 	private boolean notificacionesActivadas;

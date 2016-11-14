@@ -59,8 +59,8 @@ public class DB_Usuarios extends Repositorio {
 				if (acc != null && acc.getNombreFuncion().equals(accDB.getNombreFuncion())) {
 					// accion.setRol(this.getRolByName(rol.getValue())); //
 					// already exists
-					Accion accPersisted = em.merge(acc);
-					usuario.setFuncionalidad(accPersisted);
+					//Accion accPersisted = em.merge(acc);
+					usuario.setFuncionalidad(accDB);
 					break;
 				}
 //			if (usuario.getFuncionalidad(acc.getNombreFuncion()) == null){
@@ -107,13 +107,35 @@ public class DB_Usuarios extends Repositorio {
 		if (user != null && em.contains(user)) {
 			try {
 				em.getTransaction().begin();
-				em.flush();
+				for (Accion acc : user.getFuncionalidades())
+					em.refresh(acc);
+				em.merge(user);
 				em.getTransaction().commit();
 				return true;
 			} catch (Exception ex) {
 				em.getTransaction().rollback();
 				return false;
 			}
+		} else {
+			return false;
+		}
+	}
+	
+	@Transactional
+	public boolean removeUsuario(Usuario user) {
+
+		if (user != null && em.contains(user)) {
+//			try {
+				em.getTransaction().begin();
+				for (Accion acc : user.getFuncionalidades())
+					em.refresh(acc);
+				em.remove(user);
+				em.getTransaction().commit();
+				return true;
+//			} catch (Exception ex) {
+//				em.getTransaction().rollback();
+//				return false;
+//			}
 		} else {
 			return false;
 		}

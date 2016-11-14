@@ -139,8 +139,8 @@ public class TestLogin {
 	@After
 	public void outtro() {
 		
-		DBU.remove(admintest);
-		DBU.remove(term);
+		DBU.usuarios().removeUsuario(admintest);
+		DBU.usuarios().removeUsuario(term);
 		DBU.remove(user);
 		DBU.remove(user2);
 		

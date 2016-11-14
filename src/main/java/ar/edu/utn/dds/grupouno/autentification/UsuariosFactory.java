@@ -25,7 +25,7 @@ public class UsuariosFactory {
 			nuevoUsuario.setPassword(password);
 			nuevoUsuario.setUsername(username);
 			nuevoUsuario.setRol(AuthAPI.getInstance().getRol(rol));
-			nuevoUsuario.setFuncionalidades(new HashSet<Accion>());
+			//nuevoUsuario.setFuncionalidades(new HashSet<Accion>());
 			nuevoUsuario.setMailHabilitado(true);
 			nuevoUsuario.setNotificacionesActivadas(true);
 			nuevoUsuario.setAuditoriaActivada(true);
