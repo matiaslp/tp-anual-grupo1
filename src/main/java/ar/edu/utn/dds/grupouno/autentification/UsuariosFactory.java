@@ -2,8 +2,10 @@ package ar.edu.utn.dds.grupouno.autentification;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
@@ -23,12 +25,12 @@ public class UsuariosFactory {
 			nuevoUsuario.setPassword(password);
 			nuevoUsuario.setUsername(username);
 			nuevoUsuario.setRol(AuthAPI.getInstance().getRol(rol));
-			nuevoUsuario.setFuncionalidades(new ArrayList<Accion>());
+			nuevoUsuario.setFuncionalidades(new HashSet<Accion>());
 			nuevoUsuario.setMailHabilitado(true);
 			nuevoUsuario.setNotificacionesActivadas(true);
 			nuevoUsuario.setAuditoriaActivada(true);
 
-			List<Accion> funcionalidades = new ArrayList<Accion>();
+			Set<Accion> funcionalidades = new HashSet<Accion>();
 			AuthAPI.getInstance();
 			if(rol.equals("ADMIN")){
 				for(Accion accion : AuthAPI.getInstance().getAcciones()){
