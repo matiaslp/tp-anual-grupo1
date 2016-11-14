@@ -51,8 +51,13 @@ public class Usuario extends PersistibleConNombre{
 	private boolean notificacionesActivadas;
 	private boolean auditoriaActivada;
 	private boolean log = true;
+	private boolean dirtyListaFuncionalidades = false;
 
 	public Usuario() {
+	}
+	
+	public boolean isDirty(){
+		return this.dirtyListaFuncionalidades;
 	}
 	
 
@@ -77,6 +82,7 @@ public class Usuario extends PersistibleConNombre{
 	
 	public void setFuncionalidad (Accion acc){
 		this.funcionalidades.add(acc);
+		this.dirtyListaFuncionalidades = true;
 	}
 
 	public String getUsername() {

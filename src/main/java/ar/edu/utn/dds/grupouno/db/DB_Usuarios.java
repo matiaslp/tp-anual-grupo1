@@ -91,14 +91,31 @@ public class DB_Usuarios extends Repositorio {
 	}
 
 	@Transactional
-	public boolean actualizarUsuario(Usuario user) {
+	public boolean actualizarUsuarioConAcciones(Usuario user) {
 
 		if (user != null && em.contains(user)) {
 			try {
 				em.getTransaction().begin();
 				for (Accion acc : user.getFuncionalidades())
-					em.refresh(acc);
+						em.refresh(acc);
 				em.merge(user);
+				em.getTransaction().commit();
+				return true;
+			} catch (Exception ex) {
+				em.getTransaction().rollback();
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	@Transactional
+	public boolean actualizarUsuario(Usuario user) {
+		if (em.contains(user)) {
+			try {
+				em.getTransaction().begin();
+				em.flush();
 				em.getTransaction().commit();
 				return true;
 			} catch (Exception ex) {

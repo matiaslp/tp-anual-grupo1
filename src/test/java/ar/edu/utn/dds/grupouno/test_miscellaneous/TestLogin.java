@@ -130,9 +130,9 @@ public class TestLogin {
 	public void testAgregarFuncionalidadConPermiso(){
 		user3 =DBU.usuarios().getUsuarioByName("terminal");
 		Autenticador.sacarFuncionalidad("busquedaPOI", user3);
-		DBU.usuarios().actualizarUsuario(user3);
+		DBU.usuarios().actualizarUsuarioConAcciones(user3);
 		Autenticador.agregarFuncionalidad("busquedaPOI", user3);
-		DBU.usuarios().actualizarUsuario(user3);
+		DBU.usuarios().actualizarUsuarioConAcciones(user3);
 		Assert.assertTrue(DBU.usuarios().getUsuarioByName("terminal").getFuncionalidad("busquedaPOI")!=null);
 	}
 	
