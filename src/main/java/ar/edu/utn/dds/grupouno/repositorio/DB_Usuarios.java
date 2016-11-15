@@ -127,9 +127,8 @@ public class DB_Usuarios extends Repositorio {
 		em.getTransaction().begin();
 		Usuario user = getUsuarioById(l);
 		if (user != null) {
-			em.remove(user);
-
-			DB_Sesiones.getInstance().removerSesiones(user.getUsername());
+			em.remove(user);		
+			Repositorio.getInstance().sesiones().removerSesiones(user.getUsername());
 			em.getTransaction().commit();
 			return true;
 		}

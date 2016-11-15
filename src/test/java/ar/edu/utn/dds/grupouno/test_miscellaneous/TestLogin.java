@@ -140,11 +140,22 @@ public class TestLogin {
 
 	@After
 	public void outtro() {
-
-		DBU.remove(DBU.usuarios().getUsuarioById(admintest.getId()));
-		DBU.remove(DBU.usuarios().getUsuarioById(term.getId()));
-		DBU.remove(user);
-		DBU.remove(user2);
+		if (admintest != null) {
+			Repositorio.getInstance().sesiones().removerSesiones(admintest.getUsername());
+			DBU.remove(DBU.usuarios().getUsuarioById(admintest.getId()));
+		}
+		if (term != null) {
+			Repositorio.getInstance().sesiones().removerSesiones(term.getUsername());
+			DBU.remove(DBU.usuarios().getUsuarioById(term.getId()));
+		}
+		if (user != null) {
+			Repositorio.getInstance().sesiones().removerSesiones(user.getUsername());
+			DBU.remove(user);
+		}
+		if (user2 != null) {
+			Repositorio.getInstance().sesiones().removerSesiones(user2.getUsername());
+			DBU.remove(user2);
+		}
 
 	}
 

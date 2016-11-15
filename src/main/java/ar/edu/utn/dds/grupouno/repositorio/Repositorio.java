@@ -3,6 +3,15 @@ package ar.edu.utn.dds.grupouno.repositorio;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.transaction.Transactional;
+
+import ar.edu.utn.dds.grupouno.repositorio.DB_Etiqueta;
+import ar.edu.utn.dds.grupouno.repositorio.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
+import ar.edu.utn.dds.grupouno.repositorio.DB_Sesiones;
+import ar.edu.utn.dds.grupouno.repositorio.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+
 
 public class Repositorio {
 	private DB_Usuarios usuarios;
@@ -10,6 +19,7 @@ public class Repositorio {
 	private ResultadosProcesos resultadosProcesos;
 	private DB_HistorialBusquedas registroHistorico;
 	private DB_Etiqueta etiquetas;
+	private DB_Sesiones sesiones;
 	protected EntityManager em;
 	private static Repositorio instance = null;
 
@@ -34,6 +44,13 @@ public class Repositorio {
 			usuarios = new DB_Usuarios(em);
 		}
 		return usuarios;
+	}
+	
+	public DB_Sesiones sesiones() {
+		if (sesiones == null) {
+			sesiones = new DB_Sesiones(em);
+		}
+		return sesiones;
 	}
 
 	public DB_POI pois() {
