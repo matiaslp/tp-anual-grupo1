@@ -27,10 +27,10 @@ public class AccionesDeConsultaBean {
 		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 	
-		//accionesParaSeleccionar = (List<String>) AuthAPI.getInstance().getAcciones().keySet();
-//parche para cuando se junte con la entrega 6 sacar y dejar el anterior
-		AuthAPI.getInstance().getAcciones().forEach((nombre,accion)->accionesParaSeleccionar.add(nombre));
-
+		
+		 for (Accion unaAccion:AuthAPI.getInstance().getAcciones()){
+			 accionesParaSeleccionar.add(unaAccion);
+		 }
     }
 	
 	public List<Accion> getAccionesParaSeleccionar() {
