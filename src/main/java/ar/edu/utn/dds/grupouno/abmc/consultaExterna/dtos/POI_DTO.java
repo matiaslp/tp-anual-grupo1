@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
@@ -78,8 +79,8 @@ public class POI_DTO {
 
 	}
 
-	public double getId() {
-		return id;
+	public int getId() {
+		return (int) id;
 	}
 
 	public void setId(Long id) {

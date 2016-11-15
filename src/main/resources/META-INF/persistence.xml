@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="tp-anual">
+		<description>
+            Persistence unit for JPA with Hibernate
+        </description>
+
+		<class>ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre</class>
+		<class>ar.edu.utn.dds.grupouno.modelo.Persistible</class>
+		<class>ar.edu.utn.dds.grupouno.db.ResultadoProceso</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.Usuario</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.Rol</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.Accion</class>
+		<class>ar.edu.utn.dds.grupouno.db.poi.POI</class>
+		<class>ar.edu.utn.dds.grupouno.db.poi.Banco</class>
+		<class>ar.edu.utn.dds.grupouno.db.poi.CGP</class>
+		<class>ar.edu.utn.dds.grupouno.db.poi.LocalComercial</class>
+		<class>ar.edu.utn.dds.grupouno.db.poi.Etiqueta</class>
+		<class>ar.edu.utn.dds.grupouno.db.poi.NodoServicio</class>
+		<class>ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo</class>
+		<class>ar.edu.utn.dds.grupouno.db.poi.Rubro</class>
+		<class>ar.edu.utn.dds.grupouno.geolocation.GeoLocation</class>
+		<class>ar.edu.utn.dds.grupouno.procesos.Proceso</class>
+		<class>ar.edu.utn.dds.grupouno.db.RegistroHistorico</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncActualizacionLocalesComerciales</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncBusquedaPOI</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoAuditoria</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoGenerarLog</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoMail</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoNotificarBusquedaLarga</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncMultiple</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncObtenerInfoPOI</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedaPorUsuario</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedasPorFecha</class>
+		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteCantidadResultadosPorTerminal</class>
+
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/puntosdeinteres" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="mysqlMY2#" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.type" value="trace" />
+			<!-- <property name="hibernate.connection.autocommit" value="true" /> -->
+
+			<!-- "validate" para velocidad y mantener el esquema creado "create-drop" 
+				para eliminar todas las tablas y recrearlas -->
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+		</properties>
+
+	</persistence-unit>
+
+</persistence>

@@ -1,23 +1,30 @@
 package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
+import javax.persistence.Entity;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.procesos.AgregarAcciones;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
-
+@Entity
 public class FuncAgregarAcciones extends Accion {
 
-	public FuncAgregarAcciones() {
-		Roles = new ArrayList<Rol>();
+	public FuncAgregarAcciones(Rol rol) {
+		Roles = new HashSet<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
-		nombreFuncion = "agregarAcciones";
+		Roles.add(rol);
+		nombre = "agregarAcciones";
 		isProcess = true;
 	}
 
+	public FuncAgregarAcciones(){
+		
+	}
 	public void agregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			String filePath) {
 		if (validarsesion(user, Token)) {

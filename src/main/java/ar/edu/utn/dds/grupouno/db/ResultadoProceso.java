@@ -1,15 +1,23 @@
 package ar.edu.utn.dds.grupouno.db;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.joda.time.DateTime;
 
+import ar.edu.utn.dds.grupouno.modelo.Persistible;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
+import ar.edu.utn.dds.grupouno.procesos.TiposProceso;
 
-public class ResultadoProceso {
+@Entity
+@Table(name = "ResultadoProceso")
+public class ResultadoProceso extends Persistible{
 
-	private long id;
 	private DateTime inicioEjecucion;
 	private DateTime finEjecucion;
-	Proceso proc;
+	TiposProceso proc;
 	private long userID;
 	Resultado resultado;
 	String mensajeError;
@@ -20,6 +28,14 @@ public class ResultadoProceso {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public TiposProceso getProc(){
+		return this.proc;
+	}
+	
+	public void setProc(TiposProceso p){
+		this.proc = p;
 	}
 
 	public DateTime getInicioEjecucion() {
@@ -38,13 +54,6 @@ public class ResultadoProceso {
 		this.finEjecucion = finEjecucion;
 	}
 
-	public Proceso getProc() {
-		return proc;
-	}
-
-	public void setProc(Proceso proc) {
-		this.proc = proc;
-	}
 
 	public long getUserID() {
 		return userID;
@@ -72,16 +81,19 @@ public class ResultadoProceso {
 
 	// Si el id no se desea setear, el mismo es generado internamente
 	// al colocar el paramentro en cero
-	public ResultadoProceso(DateTime inicioEjecucion, DateTime finEjecucion, Proceso proc, long userID,
+	public ResultadoProceso(DateTime inicioEjecucion, DateTime finEjecucion, TiposProceso p, long userID,
 			String mensajeError, Resultado unResultado) {
 		super();
-		this.id = 0;
 		this.inicioEjecucion = inicioEjecucion;
 		this.finEjecucion = finEjecucion;
-		this.proc = proc;
+		this.proc = p;
 		this.userID = userID;
 		this.mensajeError = mensajeError;
 		this.resultado = unResultado;
+	}
+
+	public ResultadoProceso(){
+		
 	}
 
 }

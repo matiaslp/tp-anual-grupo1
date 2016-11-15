@@ -20,6 +20,7 @@ import ar.edu.utn.dds.grupouno.db.Resultado;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 
 public class ActualizacionLocalesComerciales extends Proceso {
@@ -59,16 +60,16 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			boolean resultadoActualizar = actualizar(locales);
 			end = new DateTime();
 			if (resultadoActualizar)
-				resultado = new ResultadoProceso(start, end, this, user.getID(),
+				resultado = new ResultadoProceso(start, end, TiposProceso.ACTUALIZACIONLOCALESCOMERCIALES, user.getId(),
 						"Los elementos se actualizaron correctamente", Resultado.OK);
 			else
-				resultado = new ResultadoProceso(start, end, this, user.getID(),
+				resultado = new ResultadoProceso(start, end, TiposProceso.ACTUALIZACIONLOCALESCOMERCIALES, user.getId(),
 						"No se pudieron actualizar todos los locales", Resultado.ERROR);
 		} catch (IOException e) {
 			e.printStackTrace();
 			end = new DateTime();
-			resultado = new ResultadoProceso(start, end, this, user.getID(), "No existe el archio " + filePath,
-					Resultado.ERROR);
+//			resultado = new ResultadoProceso(start, end, TiposProceso.ACTUALIZACIONLOCALESCOMERCIALES, user.getId(), "No existe el archio " + filePath,
+//					Resultado.ERROR);
 		}
 		return resultado;
 	}
@@ -77,15 +78,15 @@ public class ActualizacionLocalesComerciales extends Proceso {
 		try {
 			List<Boolean> resultados = new ArrayList<Boolean>();
 			for (Entry<String, String[]> e : locales.entrySet()) {
-				POI local = (LocalComercial) DB_POI.getInstance().getPOIbyNombre(e.getKey());
+				POI local = (LocalComercial) Repositorio.getInstance().pois().getPOIbyNombre(e.getKey());
 				if (local != null) {
 					local.setEtiquetas(e.getValue());
-					resultados.add(DB_POI.getInstance().actualizarPOI(local));
+					resultados.add(Repositorio.getInstance().pois().actualizarPOI(local));
 				} else {
 					local = new LocalComercial();
 					local.setNombre(e.getKey());
 					local.setEtiquetas(e.getValue());
-					resultados.add(DB_POI.getInstance().agregarPOI(local));
+					resultados.add(Repositorio.getInstance().pois().agregarPOI(local));
 				}
 			}
 			if(!resultados.contains(false))

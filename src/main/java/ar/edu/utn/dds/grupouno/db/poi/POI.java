@@ -1,18 +1,46 @@
 package ar.edu.utn.dds.grupouno.db.poi;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+//import org.joda.time.DateTime;
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
+import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 
-public abstract class POI {
+@Entity
+@Table(name = "POI")
+@Inheritance(strategy=InheritanceType.JOINED)
+@NamedQueries({
+@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
+@NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p")})
+public class POI extends PersistibleConNombre{
 
-	protected long id;
-	protected String nombre;
 	protected String callePrincipal;
 	protected String calleLateral;
 	protected long numeracion;
@@ -24,19 +52,38 @@ public abstract class POI {
 	protected String barrio;
 	protected String provincia;
 	protected String pais;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "georef_id", referencedColumnName = "id")
 	protected GeoLocation ubicacion;
 	protected long comuna;	// define cuando otro punto es cercano.
 	protected long cercania = 500;
 	// este atributo hay que ver si nos sirve porque
 	// las subclases tienen el nombre del tipo, de por si.
 	protected TiposPOI tipo;
-	protected ArrayList<NodoServicio> servicios;
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name="POI_SERVICIO", 
+				joinColumns={@JoinColumn(name="poi_id")}, 
+				inverseJoinColumns={@JoinColumn(name="servicio_id")})
+	protected List<NodoServicio> servicios;
 	// pueden ser varias y se crean a travez de
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
-	protected Etiqueta[] etiquetas;
-	protected DateTime fechaBaja = null;
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@OrderColumn
+	@JoinTable(name="POI_ETIQUETA", 
+				joinColumns={@JoinColumn(name="poi_id")}, 
+				inverseJoinColumns={@JoinColumn(name="etiqueta_id")})
+	protected List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();;
+	@Column
+	@Type(type="org.hibernate.type.ZonedDateTimeType")
+	protected ZonedDateTime fechaBaja = null;
+	//protected DateTime fechaBaja = null;
 	protected boolean esLocal = true;
 
+	@ManyToMany(mappedBy="pois")
+	private Set<RegistroHistorico> registrosHistoricos = new HashSet<RegistroHistorico>();
+	
+	
+	
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
 		return (distanciaCoordDosPOIs(this, unPOI) * 1000 < x);
 	}
@@ -75,13 +122,6 @@ public abstract class POI {
 			return true;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 
 	public String getCallePrincipal() {
 		return callePrincipal;
@@ -215,6 +255,7 @@ public abstract class POI {
 		ubicacion = ubic;
 	}
 
+	@Enumerated(EnumType.ORDINAL)
 	public TiposPOI getTipo() {
 		return tipo;
 	}
@@ -228,29 +269,29 @@ public abstract class POI {
 	}
 
 	public void setEtiquetas(String nombres[]) {
-		this.etiquetas = new Etiqueta[nombres.length];
+		this.etiquetas.clear();
 		for (int i = 0; i < nombres.length; i++) {
-			this.etiquetas[i] = FlyweightFactoryEtiqueta.getEtiqueta(nombres[i]);
+			this.etiquetas.add(FlyweightFactoryEtiqueta.getEtiqueta(nombres[i]));
 		}
 	}
 
 	public String[] getEtiquetas() {
-		String[] nombres = new String[etiquetas.length];
-		for (int i = 0; i < etiquetas.length; i++) {
-			nombres[i] = etiquetas[i].nombre;
+		String[] nombres = new String[etiquetas.size()];
+		for (int i = 0; i < etiquetas.size(); i++) {
+			nombres[i] = etiquetas.get(i).getNombre();
 		}
 		return nombres;
 	}
 
 	public String getEtiqueta(int num) {
 
-		return etiquetas[num].nombre;
+		return etiquetas.get(num).getNombre();
 	}
 
 	public Boolean buscarEtiqueta(String etiquetaNombre) {
 		if (etiquetas != null)
-			for (int i = 0; i < etiquetas.length; i++) {
-				if (LevDist.calcularDistancia(etiquetaNombre, this.etiquetas[i].getNombre())) {
+			for (Etiqueta e : etiquetas) {
+				if (LevDist.calcularDistancia(etiquetaNombre, e.getNombre())) {
 					return true;
 				}
 			}
@@ -258,20 +299,14 @@ public abstract class POI {
 		return false;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public DateTime getFechaBaja() {
-		return fechaBaja;
+		DateTime tm = MetodosComunes.convertJavatoJoda(fechaBaja);
+		return tm;
 	}
 
-	public void setFechaBaja(DateTime fechaBaja) {
-		this.fechaBaja = fechaBaja;
+	public void setFechaBaja(DateTime fb) {
+		ZonedDateTime tm = MetodosComunes.convertJodatoJava(fb);
+		this.fechaBaja = tm;
 	}
 
 	public boolean determinarCercaniaPOI(GeoLocation ubicacion) {
@@ -347,13 +382,13 @@ public abstract class POI {
 	public boolean buscarServicios(String filtro) {
 		if(servicios!=null){
 			for (NodoServicio servicio : servicios) {
-				if (LevDist.calcularDistancia(filtro, servicio.nombre)) {
+				if (LevDist.calcularDistancia(filtro, servicio.getNombre())) {
 					return true;
 				} else if (MetodosComunes.isNumeric(filtro)) {
 					long filtroNumerico = Long.parseLong(filtro);
 					if (servicio.horaInicio < filtroNumerico && filtroNumerico < servicio.horaFin) {
 						return true;
-					} else if (servicio.listaDias.contains(filtroNumerico)) {
+					} else if (servicio.getListaDias().contains(filtroNumerico)) {
 						return true;
 					}
 				}
@@ -430,7 +465,7 @@ public abstract class POI {
 
 		return true;
 	}
-
+	
 	public boolean compararEtiquetas(POI poi){
 		if(this.etiquetas == null && poi.etiquetas == null){
 			return true;
@@ -439,7 +474,7 @@ public abstract class POI {
 		}else if(this.etiquetas == null && poi.etiquetas !=null){
 			return false;
 		}else{
-			if(this.etiquetas.length == poi.getEtiquetas().length){
+			if(this.etiquetas.size() == poi.getEtiquetas().length){
 				for(Etiqueta etiqueta : this.etiquetas){
 					if(!poi.buscarEtiqueta(etiqueta.getNombre()))
 						return false;
@@ -450,6 +485,8 @@ public abstract class POI {
 		}
 
 	}
+
+
 
 	public boolean compararServicios(POI poi){
 		if(this.servicios == null && poi.servicios == null){
@@ -477,7 +514,7 @@ public abstract class POI {
 		//Si retorna false significa que ya estaba dado de baja
 		if (fechaBaja != null)
 			return false;
-		fechaBaja = fecha;
+		fechaBaja = MetodosComunes.convertJodatoJava(fecha);
 		return true;
 	}
 
@@ -491,7 +528,8 @@ public abstract class POI {
 
 	public boolean dadoDeBaja(DateTime fecha) {
 		if(this.fechaBaja != null && fecha != null){
-			return this.fechaBaja.withTimeAtStartOfDay().equals(fecha.withTimeAtStartOfDay());
+			DateTime fb = MetodosComunes.convertJavatoJoda(fechaBaja);
+			return fb.withTimeAtStartOfDay().equals(fecha.withTimeAtStartOfDay());
 		}
 		else 
 			return false;
@@ -504,7 +542,9 @@ public abstract class POI {
 	public void setEsLocal(boolean esLocal) {
 		this.esLocal = esLocal;
 	}
-
+ public POI() {
+	 
+ }
 
 
 }

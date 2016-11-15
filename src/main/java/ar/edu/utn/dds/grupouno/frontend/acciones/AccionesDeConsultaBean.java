@@ -11,36 +11,38 @@ import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 @ManagedBean(name="AccionesDeConsultaBean")
 @RequestScoped
 public class AccionesDeConsultaBean {
-	private List<String> accionesParaSeleccionar = new ArrayList<String>();
-	private List<String> accionesSeleccionadas = new ArrayList<String>();
+	private List<Accion> accionesParaSeleccionar = new ArrayList<Accion>();
+	private List<Accion> accionesSeleccionadas = new ArrayList<Accion>();
 	private String accion = null;
 	
 	@SuppressWarnings("unchecked")
 	public AccionesDeConsultaBean() {
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 	
 		//accionesParaSeleccionar = (List<String>) AuthAPI.getInstance().getAcciones().keySet();
 //parche para cuando se junte con la entrega 6 sacar y dejar el anterior
 		AuthAPI.getInstance().getAcciones().forEach((nombre,accion)->accionesParaSeleccionar.add(nombre));
+
     }
 	
-	public List<String> getAccionesParaSeleccionar() {
+	public List<Accion> getAccionesParaSeleccionar() {
 		return accionesParaSeleccionar;
 	}
-	public void setAccionesParaSeleccionar(List<String> accionesParaSeleccionar) {
+	public void setAccionesParaSeleccionar(List<Accion> accionesParaSeleccionar) {
 		this.accionesParaSeleccionar = accionesParaSeleccionar;
 	}
-	public List<String> getAccionesSeleccionadas() {
+	public List<Accion> getAccionesSeleccionadas() {
 		return accionesSeleccionadas;
 	}
-	public void setAccionesSeleccionadas(List<String> accionesSeleccionadas) {
+	public void setAccionesSeleccionadas(List<Accion> accionesSeleccionadas) {
 		this.accionesSeleccionadas = accionesSeleccionadas;
 	}
 	
@@ -63,7 +65,7 @@ public class AccionesDeConsultaBean {
 		return "cancel";
 	}
 	
-	public void agregar(String accion){
+	public void agregar(Accion accion){
 		this.accionesSeleccionadas.add(accion);
 	}
 }

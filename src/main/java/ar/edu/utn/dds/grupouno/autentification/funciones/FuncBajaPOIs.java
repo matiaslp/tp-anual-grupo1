@@ -1,23 +1,31 @@
 package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
+import javax.persistence.Entity;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.procesos.BajaPOIs;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
-
+@Entity
 public class FuncBajaPOIs extends Accion {
 
-	public FuncBajaPOIs() {
-		Roles = new ArrayList<Rol>();
+	public FuncBajaPOIs(Rol rol) {
+		Roles = new HashSet<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
-		nombreFuncion = "bajaPOIs";
+		Roles.add(rol);
+		nombre = "bajaPOIs";
 		isProcess = true;
 	}
 
+	public FuncBajaPOIs(){
+		
+	}
+	
 	public void darDeBajaPOI(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail, 
 			String filePath) {
 		if (validarsesion(user, Token)) {

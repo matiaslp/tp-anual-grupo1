@@ -1,11 +1,30 @@
 package ar.edu.utn.dds.grupouno.db.poi;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-public class NodoServicio {
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-	String nombre;
-	ArrayList<Integer> listaDias = new ArrayList<Integer>();
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
+
+
+@Entity
+@Table(name = "SERVICIOS")
+public class NodoServicio  extends PersistibleConNombre {
+
+	@ManyToMany(mappedBy="servicios")
+	private Set<POI> pois = new HashSet<POI>();
+	@ElementCollection
+	@CollectionTable(name="SERVICIOS_DIAS")
+    @Column(name="dia")
+	List<Integer> listaDias = new ArrayList<Integer>();
 	int horaInicio;
 	int horaFin;
 
@@ -21,7 +40,7 @@ public class NodoServicio {
 		listaDias.add(numero);
 	}
 
-	public ArrayList<Integer> getListaDias() {
+	public List<Integer> getListaDias() {
 		return this.listaDias;
 	}
 
@@ -36,5 +55,9 @@ public class NodoServicio {
 
 	public int getHoraFin() {
 		return this.horaFin;
+	}
+	
+	public NodoServicio(){
+		
 	}
 }

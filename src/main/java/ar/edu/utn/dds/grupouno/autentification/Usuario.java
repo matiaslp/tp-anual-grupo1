@@ -1,22 +1,63 @@
 package ar.edu.utn.dds.grupouno.autentification;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class Usuario {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
+
+@Entity
+@Table(name = "Usuario")
+@NamedQueries({
+@NamedQuery(name = "getUsuarioByName", query = "SELECT u FROM Usuario u WHERE u.username LIKE :unombre"),
+@NamedQuery(name = "getUsuarioById", query = "SELECT u FROM Usuario u WHERE u.id LIKE :unId"),
+@NamedQuery(name = "getAllUsers", query = "SELECT u FROM Usuario u"),
+@NamedQuery(name = "updateUsername", query = "UPDATE Usuario SET username = :username where id = :id")})
+public class Usuario extends PersistibleConNombre{
+	
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH})
+//	@ManyToOne(cascade = { CascadeType.ALL})
+	@JoinColumn (name = "Rol", nullable = false)
 	private Rol rol;
 	private String username;
 	private String password;
-	private long id;
-	private Map<String, Accion> funcionalidades;
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH})
+//	@ManyToMany(cascade = { CascadeType.ALL})
+	@JoinTable(name="USUARIO_FUNCIONALIDAD", 
+		joinColumns={@JoinColumn(name="user_id")}, 
+		inverseJoinColumns={@JoinColumn(name="func_id")})
+	private Set<Accion> funcionalidades  = new HashSet<Accion>();
 	private String correo;
 	private boolean mailHabilitado;
 	private boolean notificacionesActivadas;
 	private boolean auditoriaActivada;
 	private boolean log = true;
+	private boolean dirtyListaFuncionalidades = false;
 
 	public Usuario() {
+	}
+	
+	public boolean isDirty(){
+		return this.dirtyListaFuncionalidades;
 	}
 	
 
@@ -36,7 +77,12 @@ public class Usuario {
 	}
 
 	public void setRol(Rol rol) {
-		this.rol = rol;
+		this.rol = AuthAPI.getInstance().getRol(rol.getValue());
+	}
+	
+	public void setFuncionalidad (Accion acc){
+		this.funcionalidades.add(acc);
+		this.dirtyListaFuncionalidades = true;
 	}
 
 	public String getUsername() {
@@ -55,29 +101,21 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public long getID() {
-		return id;
-	}
-
-	public void setID(long unId) {
-		id = unId;
-	}
-
-	public Map<String, Accion> getFuncionalidades() {
+	public Set<Accion> getFuncionalidades() {
 		return funcionalidades;
 	}
 
-	public Map<String, Accion> getProceses() {
-		Map<String, Accion> resultado = new HashMap<String, Accion>();
+	public List<Accion> getProceses() {
+		List<Accion> resultado = new ArrayList<Accion>();
 
-		for (Map.Entry<String, Accion> accion : funcionalidades.entrySet()) {
-			if (accion.getValue().isProcess())
-				resultado.put(accion.getKey(), accion.getValue());
+		for (Accion accion : funcionalidades) {
+			if (accion.isProcess())
+				resultado.add(accion);
 		}
 		return resultado;
 	}
 
-	public void setFuncionalidades(Map<String, Accion> funcionalidades) {
+	public void setFuncionalidades(Set<Accion> funcionalidades) {
 		this.funcionalidades = funcionalidades;
 	}
 
@@ -97,12 +135,8 @@ public class Usuario {
 		}
 	}
 	
-	public void agregarFuncionalidad(String funcionalidad, Accion func){
-		funcionalidades.put(funcionalidad, func);
-	}
-
-	public Accion getFuncionalidad(String funcionalidad){
-		return funcionalidades.get(funcionalidad);
+	public void agregarFuncionalidad(Accion func){
+		funcionalidades.add(func);
 	}
 	
 	public boolean isMailHabilitado() {
@@ -133,6 +167,16 @@ public class Usuario {
 
 	public void setAuditoriaActivada(boolean auditoriaActivada) {
 		this.auditoriaActivada = auditoriaActivada;
+	}
+
+
+	public Object getFuncionalidad(String funcionalidad) {
+		for(Accion accion : this.funcionalidades){
+			if(accion.getNombreFuncion().equals(funcionalidad)){
+				return accion;
+			}
+		}
+		return null;
 	}
 
 

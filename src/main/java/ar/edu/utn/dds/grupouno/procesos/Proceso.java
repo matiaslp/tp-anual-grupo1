@@ -2,10 +2,15 @@ package ar.edu.utn.dds.grupouno.procesos;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.Resultado;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.email.EnviarEmail;
+import ar.edu.utn.dds.grupouno.modelo.Persistible;
+
 
 public abstract class Proceso {
 
@@ -73,6 +78,8 @@ public abstract class Proceso {
 		this.user = user;
 	}
 
-	
+	public Proceso(){
+		
+	}
 	
 }

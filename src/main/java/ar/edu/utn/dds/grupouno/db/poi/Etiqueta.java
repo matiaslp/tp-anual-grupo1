@@ -1,14 +1,30 @@
 package ar.edu.utn.dds.grupouno.db.poi;
 
-public class Etiqueta implements IFlyweightEtiqueta {
-	public String nombre;
+import java.util.HashSet;
+import java.util.Set;
 
-	public Etiqueta(String nombre) {
-		this.nombre = nombre;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
+import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
+
+@Entity
+@Table(name = "ETIQUETA")
+@NamedQueries({
+@NamedQuery(name = "getEtiquetabyNombre", query = "SELECT e FROM Etiqueta e WHERE e.nombre LIKE :enombre"),
+@NamedQuery(name = "Etiqueta.findAll", query = "SELECT e FROM Etiqueta e")})
+public class Etiqueta  extends PersistibleConNombre implements IFlyweightEtiqueta {
+	@ManyToMany(mappedBy="etiquetas")
+	private Set<POI> pois = new HashSet<POI>();
+	
+	Etiqueta(String nom){
+		this.setNombre(nom);
 	}
-
-	public String getNombre() {
-		return this.nombre;
+	
+	Etiqueta(){
+		
 	}
 }

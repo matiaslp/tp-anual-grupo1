@@ -14,16 +14,25 @@
  */
 package ar.edu.utn.dds.grupouno.geolocation;
 
-import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public class GeoLocation {
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
+import ar.edu.utn.dds.grupouno.modelo.Persistible;
+
+@Entity
+@Table(name = "GEOLOCALIZACION")
+public class GeoLocation extends Persistible{
 
 	public static double RADIUS = 6371010;
 
 	private double radLat; // latitude in radians
 	private double radLon; // longitude in radians
-
+	
+	@Column(name = "latitud")
 	private double degLat; // latitude in degrees
+	@Column(name = "longitud")
 	private double degLon; // longitude in degrees
 
 	private static final double MIN_LAT = Math.toRadians(-90d); // -PI/2
@@ -31,7 +40,7 @@ public class GeoLocation {
 	private static final double MIN_LON = Math.toRadians(-180d); // -PI
 	private static final double MAX_LON = Math.toRadians(180d); // PI
 
-	private GeoLocation() {
+	public GeoLocation() {
 	}
 
 	/**

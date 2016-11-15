@@ -10,6 +10,7 @@ import org.json.JSONException;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.BusquedaDePOIsExternos;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 //Esta clase funciona se encuentra detras de un Facade y si
 // se realiza una busqueda desde aca la misma no verificara
@@ -32,7 +33,7 @@ class Consulta implements Busqueda {
 			throws JSONException, MalformedURLException, IOException {
 		String filtros[] = texto.split("\\s+");
 		ArrayList<POI> resultado = new ArrayList<POI>();
-		ArrayList<POI> listaLocal = DB_POI.getListado();
+		ArrayList<POI> listaLocal = Repositorio.getInstance().pois().getListado();
 		for (POI nodo : listaLocal) {
 			if (nodo.busquedaEstandar(filtros) && nodo.getFechaBaja() == null) {
 				resultado.add(nodo);

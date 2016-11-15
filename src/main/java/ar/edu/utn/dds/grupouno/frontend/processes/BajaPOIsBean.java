@@ -11,6 +11,7 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncActualizacionLocale
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 @ManagedBean
 @RequestScoped
@@ -44,7 +45,7 @@ public class BajaPOIsBean {
 	public String ejecutar(){
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
 		funcion.darDeBajaPOI(usuario, token, cantidadReintentos, enviarEmail, filePath);
@@ -54,7 +55,7 @@ public class BajaPOIsBean {
 	public String preparar(){
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = DB_Usuarios.getInstance().getUsuarioByName(username);
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
 		funcion.prepDarDeBajaPOI(usuario, token, cantidadReintentos, enviarEmail, filePath);

@@ -1,25 +1,35 @@
 package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 
+import javax.persistence.Entity;
+
 import ar.edu.utn.dds.grupouno.autentification.Accion;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
+@Entity
 public class FuncReporteBusquedaPorUsuario extends Accion {
 
-	public FuncReporteBusquedaPorUsuario() {
-		Roles = new ArrayList<Rol>();
+	public FuncReporteBusquedaPorUsuario(Rol rol) {
+		Roles = new HashSet<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(Rol.ADMIN);
-		nombreFuncion = "reporteBusquedaPorUsuario";
+		Roles.add(rol);
+		nombre = "reporteBusquedaPorUsuario";
+	}
+	
+	public FuncReporteBusquedaPorUsuario(){
+		
 	}
 
-	public Map<Long, Long> obtenerBusquedaPorUsuario(Usuario user, String Token) {
+	public ArrayList<Object[]> obtenerBusquedaPorUsuario(Usuario user, String Token) {
 		if (validarsesion(user, Token))
-			return DB_HistorialBusquedas.getInstance().reporteBusquedaPorUsuario();
+			return Repositorio.getInstance().resultadosRegistrosHistoricos().reporteBusquedaPorUsuario();
 		else
 			return null;
 	}
