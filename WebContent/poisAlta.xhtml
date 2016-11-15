@@ -15,61 +15,61 @@
 				<p:messages id="msgs" />
     <h:panelGrid columns="2" cellpadding="5">
         <p:outputLabel for="Nombre" value="Nombre: " />
-        <p:inputMask id="Nombre" value="#{maskView.Nombre}" />
+        <p:inputMask id="Nombre" value="#{altaPOIsMaskView.nombre}" />
  
         <p:outputLabel for="CallePrincipal" value="CallePrincipal:" />
-        <p:inputMask id="CallePrincipal" value="#{maskView.CallePrincipal}" />
+        <p:inputMask id="CallePrincipal" value="#{altaPOIsMaskView.callePrinsipal}" />
    
         <p:outputLabel for="CalleLateral" value="CalleLateral:" />
-        <p:inputMask id="CalleLateral" value="#{maskView.CalleLateral}" />
+        <p:inputMask id="CalleLateral" value="#{altaPOIsMaskView.calleLateral}" />
   
         <p:outputLabel for="numeracion" value="numeracion:" />
-        <p:inputMask id="numeracion" value="#{maskView.numeracion}" />
+        <p:inputMask id="numeracion" value="#{altaPOIsMaskView.numeracion}" />
   
         <p:outputLabel for="piso" value="piso:" />
-        <p:inputMask id="piso" value="#{maskView.piso}" />
+        <p:inputMask id="piso" value="#{altaPOIsMaskView.piso}" />
   
         <p:outputLabel for="departamento" value="departamento:" />
-        <p:inputMask id="departamento" value="#{maskView.departamento}" />
+        <p:inputMask id="departamento" value="#{altaPOIsMaskView.departamento}" />
   
         <p:outputLabel for="unidad" value="unidad:" />
-        <p:inputMask id="unidad" value="#{maskView.unidad}" />
+        <p:inputMask id="unidad" value="#{altaPOIsMaskView.unidad}" />
   
         <p:outputLabel for="codigoPostal" value="codigoPostal:" />
-        <p:inputMask id="codigoPostal" value="#{maskView.codigoPostal}" />
+        <p:inputMask id="codigoPostal" value="#{altaPOIsMaskView.codigoPostal}" />
   
         <p:outputLabel for="localidad" value="localidad:" />
-        <p:inputMask id="localidad" value="#{maskView.localidad}" />
+        <p:inputMask id="localidad" value="#{altaPOIsMaskView.localidad}" />
   
         <p:outputLabel for="barrio" value="barrio:" />
-        <p:inputMask id="barrio" value="#{maskView.barrio}" />
+        <p:inputMask id="barrio" value="#{altaPOIsMaskView.barrio}" />
   
         <p:outputLabel for="provincia" value="provincia:" />
-        <p:inputMask id="provincia" value="#{maskView.provincia}" />
+        <p:inputMask id="provincia" value="#{altaPOIsMaskView.provincia}" />
   
         <p:outputLabel for="pais" value="pais:" />
-        <p:inputMask id="pais" value="#{maskView.pais}" />
+        <p:inputMask id="pais" value="#{altaPOIsMaskView.pais}" />
   
         <p:outputLabel for="LATITUD" value="LATITUD:" />
-        <p:inputMask id="LATITUD" value="#{maskView.LATITUD}" />
+        <p:inputMask id="LATITUD" value="#{altaPOIsMaskView.latitud}" />
   
         <p:outputLabel for="LONGITUD" value="LONGITUD:" />
-        <p:inputMask id="LONGITUD" value="#{maskView.LONGITUD}" />
+        <p:inputMask id="LONGITUD" value="#{altaPOIsMaskView.longitud}" />
   
         <p:outputLabel for="comuna" value="comuna:" />
-        <p:inputMask id="comuna" value="#{maskView.comuna}" />
+        <p:inputMask id="comuna" value="#{altaPOIsMaskView.comuna}" />
   
         <p:outputLabel for="TIPO" value="TIPO:" />
-        <p:inputMask id="TIPO" value="#{maskView.TIPO}" />
+        <p:inputMask id="TIPO" value="#{altaPOIsMaskView.tipo}" />
         
         <p:outputLabel value="Tipo:" for="dd" />
         <p:autoComplete id="dd" dropdown="true" value="#{autoCompleteView.txt6}" completeMethod="#{autoCompleteView.completeText}" />
  
          <p:outputLabel for="servicios" value="servicios:" />
-        <p:inputMask id="servicios" value="#{maskView.servicios}" />
+        <p:inputMask id="servicios" value="#{altaPOIsMaskView.servicios}" />
 
 		<p:outputLabel for="etiquetas" value="etiquetas:" />
-        <p:inputMask id="etiquetas" value="#{maskView.etiquetas}" />
+        <p:inputMask id="etiquetas" value="#{altaPOIsMaskView.etiquetas}" />
         		
 
     
@@ -77,7 +77,7 @@
 
 
 	    <p:commandButton value="Resetiar" type="reset" />
-        <p:commandButton value="Agregar" />
+        <p:commandButton value="Agregar" update="panel9" action="#{altaPOIsMaskView.altaPOI}"/>
     </h:panelGrid>
 
     			<p:commandButton value="Volver atràs" update="panel9"	action="abmpois"/>
