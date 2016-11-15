@@ -39,14 +39,6 @@ public class PoiService {
 	public void setServicioAPI(String servicioAPI) {
 		ServicioAPI = servicioAPI;
 	}
-
-    public int getRandomPrice() {
-        return (int) (Math.random() * 100000);
-    }
-     
-    public boolean getRandomSoldState() {
-        return (Math.random() > 0.5) ? true: false;
-    }
  
 
 }
