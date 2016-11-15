@@ -33,7 +33,6 @@ public class TestLogin {
 		DBU.usuarios().persistirUsuario(admintest);
 		DBU.usuarios().persistirUsuario(term);
 
-
 	}
 
 	@Test
@@ -52,23 +51,27 @@ public class TestLogin {
 
 	@Test
 	public void probarTokenLongitud() throws NoSuchAlgorithmException {
-		String token = Autenticador.generarToken(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(), DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
+		String token = Autenticador.generarToken(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(),
+				DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
 
 		Assert.assertEquals(64, token.length());
 	}
 
 	@Test
 	public void probarRandomToken() throws NoSuchAlgorithmException, InterruptedException {
-		String token1 = Autenticador.generarToken(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(), DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
+		String token1 = Autenticador.generarToken(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(),
+				DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
 		TimeUnit.SECONDS.sleep(3); // espero a que cambie la hora
-		String token2 = Autenticador.generarToken(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(), DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
+		String token2 = Autenticador.generarToken(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(),
+				DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
 
 		Assert.assertFalse(token1.equals(token2));
 	}
 
 	@Test
 	public void testInicioDeSesionCorrecto() throws NoSuchAlgorithmException {
-		String token = Autenticador.iniciarSesion(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(), DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
+		String token = Autenticador.iniciarSesion(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(),
+				DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
 		Assert.assertFalse(token == null);// esto con equals rompe
 	}
 
@@ -81,7 +84,8 @@ public class TestLogin {
 	@Test
 	public void testvalidarTokenCorrecto() throws NoSuchAlgorithmException {
 
-		String token = Autenticador.iniciarSesion(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(), DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
+		String token = Autenticador.iniciarSesion(DBU.usuarios().getUsuarioByName("adminTestLogin").getUsername(),
+				DBU.usuarios().getUsuarioByName("adminTestLogin").getPassword());
 		Assert.assertTrue(Autenticador.validarToken(token));
 	}
 
@@ -97,7 +101,7 @@ public class TestLogin {
 		DBU.usuarios().persistirUsuario(user2);
 		user4 = DBU.usuarios().getUsuarioByName("username");
 		Assert.assertTrue(user4 != null);
-		Assert.assertTrue(user4.getPassword().equals("password"));	
+		Assert.assertTrue(user4.getPassword().equals("password"));
 		Assert.assertTrue(user4.getRol().getValue().equals(AuthAPI.getInstance().getRol("TERMINAL").getValue()));
 	}
 
@@ -106,45 +110,57 @@ public class TestLogin {
 		Long tamanio = (long) DBU.usuarios().getListaUsuarios().size();
 		user = fact.crearUsuario("nuevo", "password", "ADMIN");
 		DBU.usuarios().persistirUsuario(user);
-		Assert.assertTrue(DBU.usuarios().getListaUsuarios().size() == (tamanio+1));
+		Assert.assertTrue(DBU.usuarios().getListaUsuarios().size() == (tamanio + 1));
 	}
 
 	@Test
 	public void testagregarFuncionalidadTerminalSinPermiso() {
-		Assert.assertFalse(Autenticador.agregarFuncionalidad("cambiarEstadoMail", DBU.usuarios().getUsuarioByName("terminal")));
+		Assert.assertFalse(
+				Autenticador.agregarFuncionalidad("cambiarEstadoMail", DBU.usuarios().getUsuarioByName("terminal")));
 	}
-	
+
 	@Test
-	public void testAgregarFuncionalidadExistente(){
-		Assert.assertFalse(Autenticador.agregarFuncionalidad("busquedaPOI", DBU.usuarios().getUsuarioByName("terminal")));
+	public void testAgregarFuncionalidadExistente() {
+		Assert.assertFalse(
+				Autenticador.agregarFuncionalidad("busquedaPOI", DBU.usuarios().getUsuarioByName("terminal")));
 	}
-	
+
 	@Test
-	public void sacarFuncionalidadtest(){
+	public void sacarFuncionalidadtest() {
 		Autenticador.sacarFuncionalidad("busquedaPOI", DBU.usuarios().getUsuarioByName("terminal"));
-		Assert.assertTrue(DBU.usuarios().getUsuarioByName("terminal").getFuncionalidad("busquedaPOI")==null);
-	
+		Assert.assertTrue(DBU.usuarios().getUsuarioByName("terminal").getFuncionalidad("busquedaPOI") == null);
+
 	}
-	
+
 	@Test
-	public void testAgregarFuncionalidadConPermiso(){
-		user3 =DBU.usuarios().getUsuarioByName("terminal");
+	public void testAgregarFuncionalidadConPermiso() {
+		user3 = DBU.usuarios().getUsuarioByName("terminal");
 		Autenticador.sacarFuncionalidad("busquedaPOI", user3);
 		DBU.usuarios().actualizarUsuarioConAcciones(user3);
 		Autenticador.agregarFuncionalidad("busquedaPOI", user3);
 		DBU.usuarios().actualizarUsuarioConAcciones(user3);
-		Assert.assertTrue(DBU.usuarios().getUsuarioByName("terminal").getFuncionalidad("busquedaPOI")!=null);
+		Assert.assertTrue(DBU.usuarios().getUsuarioByName("terminal").getFuncionalidad("busquedaPOI") != null);
 	}
-	
+
 	@After
 	public void outtro() {
-		
-		DBU.remove(DBU.usuarios().getUsuarioById(admintest.getId()));
-		DBU.remove(DBU.usuarios().getUsuarioById(term.getId()));
-		DBU.remove(user);
-		DBU.remove(user2);
+		if (admintest != null) {
+			Repositorio.getInstance().sesiones().removerSesiones(admintest.getUsername());
+			DBU.remove(DBU.usuarios().getUsuarioById(admintest.getId()));
+		}
+		if (term != null) {
+			Repositorio.getInstance().sesiones().removerSesiones(term.getUsername());
+			DBU.remove(DBU.usuarios().getUsuarioById(term.getId()));
+		}
+		if (user != null) {
+			Repositorio.getInstance().sesiones().removerSesiones(user.getUsername());
+			DBU.remove(user);
+		}
+		if (user2 != null) {
+			Repositorio.getInstance().sesiones().removerSesiones(user2.getUsername());
+			DBU.remove(user2);
+		}
 
-		
 	}
 
 }
