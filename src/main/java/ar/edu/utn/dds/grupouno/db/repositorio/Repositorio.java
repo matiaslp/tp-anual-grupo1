@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import ar.edu.utn.dds.grupouno.db.DB_Etiqueta;
 import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.DB_Sesiones;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 
@@ -17,6 +18,7 @@ public class Repositorio {
 	private ResultadosProcesos resultadosProcesos;
 	private DB_HistorialBusquedas registroHistorico;
 	private DB_Etiqueta etiquetas;
+	private DB_Sesiones sesiones;
 	protected EntityManager em;
 	private static Repositorio instance = null;
 
@@ -41,6 +43,13 @@ public class Repositorio {
 			usuarios = new DB_Usuarios(em);
 		}
 		return usuarios;
+	}
+	
+	public DB_Sesiones sesiones() {
+		if (sesiones == null) {
+			sesiones = new DB_Sesiones(em);
+		}
+		return sesiones;
 	}
 
 	public DB_POI pois() {
