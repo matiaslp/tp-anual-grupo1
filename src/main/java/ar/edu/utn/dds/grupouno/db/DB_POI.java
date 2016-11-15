@@ -18,7 +18,6 @@ import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 public class DB_POI extends Repositorio {
 
 	private static ArrayList<POI> listadoPOI;
-	private static DB_POI instance = null;
 
 	public DB_POI(EntityManager em) {
 		super(em);

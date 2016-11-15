@@ -22,8 +22,6 @@ import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class TestABMC_Baja {
-	private static final String PERSISTENCE_UNIT_NAME = "tp-anual";
-	private EntityManagerFactory emFactory;
 	private static Repositorio repositorio;
 	static POI_ABMC abmc = new POI_ABMC();
 	static POI_ABMC poi_abmc;

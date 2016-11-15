@@ -2,8 +2,10 @@ package ar.edu.utn.dds.grupouno.autentification;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -33,22 +35,29 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 public class Usuario extends PersistibleConNombre{
 	
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH})
+//	@ManyToOne(cascade = { CascadeType.ALL})
 	@JoinColumn (name = "Rol", nullable = false)
 	private Rol rol;
 	private String username;
 	private String password;
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH})
+//	@ManyToMany(cascade = { CascadeType.ALL})
 	@JoinTable(name="USUARIO_FUNCIONALIDAD", 
 		joinColumns={@JoinColumn(name="user_id")}, 
 		inverseJoinColumns={@JoinColumn(name="func_id")})
-	private List<Accion> funcionalidades;
+	private Set<Accion> funcionalidades  = new HashSet<Accion>();
 	private String correo;
 	private boolean mailHabilitado;
 	private boolean notificacionesActivadas;
 	private boolean auditoriaActivada;
 	private boolean log = true;
+	private boolean dirtyListaFuncionalidades = false;
 
 	public Usuario() {
+	}
+	
+	public boolean isDirty(){
+		return this.dirtyListaFuncionalidades;
 	}
 	
 
@@ -70,6 +79,11 @@ public class Usuario extends PersistibleConNombre{
 	public void setRol(Rol rol) {
 		this.rol = AuthAPI.getInstance().getRol(rol.getValue());
 	}
+	
+	public void setFuncionalidad (Accion acc){
+		this.funcionalidades.add(acc);
+		this.dirtyListaFuncionalidades = true;
+	}
 
 	public String getUsername() {
 		return username;
@@ -87,7 +101,7 @@ public class Usuario extends PersistibleConNombre{
 		this.password = password;
 	}
 
-	public List<Accion> getFuncionalidades() {
+	public Set<Accion> getFuncionalidades() {
 		return funcionalidades;
 	}
 
@@ -101,7 +115,7 @@ public class Usuario extends PersistibleConNombre{
 		return resultado;
 	}
 
-	public void setFuncionalidades(List<Accion> funcionalidades) {
+	public void setFuncionalidades(Set<Accion> funcionalidades) {
 		this.funcionalidades = funcionalidades;
 	}
 

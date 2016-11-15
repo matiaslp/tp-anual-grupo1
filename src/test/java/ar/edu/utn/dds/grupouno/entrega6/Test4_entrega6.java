@@ -47,7 +47,10 @@ public class Test4_entrega6 {
 		Assert.assertTrue(recuperado.getUsername().equals("admin"));
 		
 		recuperado.setUsername("prueba");
-		
+//		repositorio.getEm().getTransaction().begin();
+//		repositorio.usuarios().getEm().merge(recuperado);
+//		repositorio.usuarios().getEm().flush();
+//		repositorio.getEm().getTransaction().commit();
 		repositorio.usuarios().actualizarUsuario(recuperado);
 
 		recuperado = repositorio.usuarios().getUsuarioByName("prueba");

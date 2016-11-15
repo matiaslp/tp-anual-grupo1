@@ -1,10 +1,12 @@
 package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.persistence.Entity;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
+import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
@@ -12,12 +14,16 @@ import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 @Entity
 public class FuncObtenerInfoPOI extends Accion {
-	public FuncObtenerInfoPOI() {
-		Roles = new ArrayList<Rol>();
+	public FuncObtenerInfoPOI(Rol rol, Rol rol2) {
+		Roles = new HashSet<Rol>();
 		// Agregar Roles para esta funcionalidad
-		Roles.add(new Rol("ADMIN"));
-		Roles.add(new Rol("TERMINAL"));
+		Roles.add(rol);
+		Roles.add(rol2);
 		nombre = "obtenerInfoPOI";
+	}
+	
+	public FuncObtenerInfoPOI(){
+		
 	}
 
 	public POI obtenerInfoPOI(Usuario user, String Token, long id) {

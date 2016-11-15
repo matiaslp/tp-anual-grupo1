@@ -20,8 +20,6 @@ import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class TestRegistroHistoricoPersistencia {
 
-	private static final String PERSISTENCE_UNIT_NAME = "tp-anual";
-	private EntityManagerFactory emFactory;
 	Repositorio repositorio;
 
 	RegistroHistorico unRegistroHistorico;

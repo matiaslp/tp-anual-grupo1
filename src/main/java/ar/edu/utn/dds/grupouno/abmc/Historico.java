@@ -58,7 +58,7 @@ class Historico implements Busqueda {
 		// Registrar busqueda si el log esta activado
 		// Se deja el id seteado en 0 hasta que se implemente hibernate
 		if (Repositorio.getInstance().usuarios().getUsuarioById((int) userID).isLog()){
-			RegistroHistorico registro = new RegistroHistorico(now, userID, texto, resAPersistir.size(), timer.getSeconds(),resAPersistir);
+			RegistroHistorico registro = new RegistroHistorico(now, userID, texto, resultado.size(), timer.getSeconds(),resAPersistir);
 			Repositorio.getInstance().resultadosRegistrosHistoricos().agregarHistorialBusqueda(registro);
 		}
 		return resultado;

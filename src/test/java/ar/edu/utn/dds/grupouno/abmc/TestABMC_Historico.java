@@ -75,7 +75,7 @@ public class TestABMC_Historico {
 		historico.buscar(ServicioAPI, "Mataderos", usuario.getId() );
 	//	Assert.assertTrue(DB_HistorialBusquedas.getInstance().cantidadRegistros() == 1);
 		RegistroHistorico reg = Repositorio.getInstance().resultadosRegistrosHistoricos().getHistoricobyUserId(usuario.getId()).get(0);
-		Assert.assertTrue(reg.getCantResultados() == 2);
+		Assert.assertTrue(reg.getCantResultados() == 17);
 		Assert.assertTrue(reg.getTime().isBeforeNow());
 		Assert.assertEquals(reg.getBusqueda(), "Mataderos");
 	}

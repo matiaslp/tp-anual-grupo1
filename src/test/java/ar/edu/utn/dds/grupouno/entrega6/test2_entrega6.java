@@ -19,8 +19,6 @@ import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class test2_entrega6 {
 	
-		private static final String PERSISTENCE_UNIT_NAME = "tp-anual";
-		private EntityManagerFactory emFactory;
 		Repositorio repositorio;
 		private POI poi_bco, poi;
 		private POI_DTO poiDTO_Bco;

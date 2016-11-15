@@ -2,6 +2,7 @@ package ar.edu.utn.dds.grupouno.autentification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,10 +29,11 @@ import javax.persistence.Table;
 @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")})
 public class Rol{
 
+
 	@Column (name="value")
 	protected String value;
 	@ManyToMany (mappedBy="Roles")
-	protected List<Accion> Acciones;
+	protected Set<Accion> Acciones;
 	public Rol(){
 		
 	}
@@ -48,10 +50,10 @@ public class Rol{
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public List<Accion> getAcciones() {
+	public Set<Accion> getAcciones() {
 		return Acciones;
 	}
-	public void setAcciones(List<Accion> acciones) {
+	public void setAcciones(Set<Accion> acciones) {
 		Acciones = acciones;
 	}
 	

@@ -94,7 +94,7 @@ public class TestLogin {
 	@Test
 	public void testCrearUsuario() {
 		user2 = fact.crearUsuario("username", "password", "TERMINAL");
-		DBU.usuarios().persistir(user2);
+		DBU.usuarios().persistirUsuario(user2);
 		user4 = DBU.usuarios().getUsuarioByName("username");
 		Assert.assertTrue(user4 != null);
 		Assert.assertTrue(user4.getPassword().equals("password"));	
@@ -130,19 +130,20 @@ public class TestLogin {
 	public void testAgregarFuncionalidadConPermiso(){
 		user3 =DBU.usuarios().getUsuarioByName("terminal");
 		Autenticador.sacarFuncionalidad("busquedaPOI", user3);
-		DBU.usuarios().actualizarUsuario(user3);
+		DBU.usuarios().actualizarUsuarioConAcciones(user3);
 		Autenticador.agregarFuncionalidad("busquedaPOI", user3);
-		DBU.usuarios().actualizarUsuario(user3);
+		DBU.usuarios().actualizarUsuarioConAcciones(user3);
 		Assert.assertTrue(DBU.usuarios().getUsuarioByName("terminal").getFuncionalidad("busquedaPOI")!=null);
 	}
 	
 	@After
 	public void outtro() {
 		
-		DBU.remove(admintest);
-		DBU.remove(term);
+		DBU.remove(DBU.usuarios().getUsuarioById(admintest.getId()));
+		DBU.remove(DBU.usuarios().getUsuarioById(term.getId()));
 		DBU.remove(user);
 		DBU.remove(user2);
+
 		
 	}
 
