@@ -49,8 +49,12 @@ public class LoginBean {
 		Severity severity = FacesMessage.SEVERITY_INFO;
 		//testTTTTTTTTTTTTTTTTTTT
 		UsuariosFactory fact = new UsuariosFactory();
-		fact.crearUsuario("admin", "pass", "ADMIN");
-		fact.crearUsuario("terminal", "pass", "TERMINAL");
+		Usuario admin = fact.crearUsuario("admin", "pass", "ADMIN");
+		Usuario terminal = fact.crearUsuario("terminal", "pass", "TERMINAL");
+		if ((Repositorio.getInstance().usuarios().getUsuarioByName("admin")) == null) {
+	           Repositorio.getInstance().usuarios().persistir(admin);
+	           Repositorio.getInstance().usuarios().persistir(terminal);
+	}
 		//-------------------------
 		
 		//creacion de registros historicos terminal 
