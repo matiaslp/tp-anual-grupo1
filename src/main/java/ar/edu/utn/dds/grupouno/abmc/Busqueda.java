@@ -8,7 +8,7 @@ import javax.mail.MessagingException;
 
 import org.json.JSONException;
 
-import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 
 public interface Busqueda {
 

@@ -8,9 +8,8 @@ import java.util.List;
 import org.json.JSONException;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.BusquedaDePOIsExternos;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 //Esta clase funciona se encuentra detras de un Facade y si
 // se realiza una busqueda desde aca la misma no verificara

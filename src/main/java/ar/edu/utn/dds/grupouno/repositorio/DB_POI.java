@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.db;
+package ar.edu.utn.dds.grupouno.repositorio;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
 import org.joda.time.DateTime;
 
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 
 public class DB_POI extends Repositorio {
 
@@ -43,15 +41,15 @@ public class DB_POI extends Repositorio {
 
 	// @Transactional
 	public boolean agregarPOI(POI nuevoPOI) {
-		 try {
-		em.getTransaction().begin();
-		em.persist(nuevoPOI);
-		em.getTransaction().commit();
-		return true;
-		 } catch (Exception ex) {
-		 em.getTransaction().rollback();
-		 return false;
-		 }
+		try {
+			em.getTransaction().begin();
+			em.persist(nuevoPOI);
+			em.getTransaction().commit();
+			return true;
+		} catch (Exception ex) {
+			em.getTransaction().rollback();
+			return false;
+		}
 	}
 
 	// @Transactional

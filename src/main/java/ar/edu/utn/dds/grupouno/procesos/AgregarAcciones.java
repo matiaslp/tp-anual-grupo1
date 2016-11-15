@@ -6,25 +6,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
-import ar.edu.utn.dds.grupouno.db.DB_AgregarAccionesTransaction;
-import ar.edu.utn.dds.grupouno.db.DB_ResultadosProcesos;
-import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
-import ar.edu.utn.dds.grupouno.db.Resultado;
-import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
-import ar.edu.utn.dds.grupouno.procesos.Proceso;
+import ar.edu.utn.dds.grupouno.repositorio.DB_AgregarAccionesTransaction;
+import ar.edu.utn.dds.grupouno.repositorio.DB_ResultadosProcesos;
+import ar.edu.utn.dds.grupouno.repositorio.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class AgregarAcciones extends Proceso {
 
 	String filePath;
 
-	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, String file,
-			Usuario unUser) {
+	public AgregarAcciones(int cantidadReintentos, boolean enviarEmail, String file, Usuario unUser) {
 		super(cantidadReintentos, enviarEmail, unUser);
 		filePath = file;
 	}
@@ -77,9 +73,10 @@ public class AgregarAcciones extends Proceso {
 		} catch (FileNotFoundException e) {
 			// Obtenemos el tiempo de fin de proceso
 			DateTime end = new DateTime();
-			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
-			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
-					"Acciones inexistentes: " + accionesInexistentes + "\n";
+			// Armamos el Resultado del proceso que es guardado en
+			// DB_ResultadosProcesos
+			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" + "Acciones inexistentes: "
+					+ accionesInexistentes + "\n";
 			ResultadoProceso resultado = new ResultadoProceso(start, end, TiposProceso.AGREGARACIONES, user.getId(),
 					"FileNotFoundException:No existe archivo " + filePath + "\n" + mensaje, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
@@ -90,11 +87,12 @@ public class AgregarAcciones extends Proceso {
 		} catch (IOException e) {
 			// Obtenemos el tiempo de fin de proceso
 			DateTime end = new DateTime();
-			// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
-			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
-					"Acciones inexistentes: " + accionesInexistentes + "\n";
+			// Armamos el Resultado del proceso que es guardado en
+			// DB_ResultadosProcesos
+			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" + "Acciones inexistentes: "
+					+ accionesInexistentes + "\n";
 			ResultadoProceso resultado = new ResultadoProceso(start, end, TiposProceso.AGREGARACIONES, user.getId(),
-					"IOException:No se puede leer archivo " + filePath + "\n" + mensaje , Resultado.ERROR);
+					"IOException:No se puede leer archivo " + filePath + "\n" + mensaje, Resultado.ERROR);
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 			e.printStackTrace();
 			return resultado;
@@ -103,20 +101,23 @@ public class AgregarAcciones extends Proceso {
 		// Ejecucion exitosa
 		// Obtenemos el tiempo de fin de proceso
 		DateTime end = new DateTime();
-		// Armamos el Resultado del proceso que es guardado en DB_ResultadosProcesos
+		// Armamos el Resultado del proceso que es guardado en
+		// DB_ResultadosProcesos
 		ResultadoProceso resultado;
 		if (usuariosInexistentes == null || accionesInexistentes == null)
 			resultado = new ResultadoProceso(start, end, TiposProceso.AGREGARACIONES, user.getId(), null, Resultado.OK);
 		else {
-			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
-		"Acciones inexistentes: " + accionesInexistentes + "\n";
-			resultado = new ResultadoProceso(start, end, TiposProceso.AGREGARACIONES, user.getId(), mensaje, Resultado.ERROR);
+			String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" + "Acciones inexistentes: "
+					+ accionesInexistentes + "\n";
+			resultado = new ResultadoProceso(start, end, TiposProceso.AGREGARACIONES, user.getId(), mensaje,
+					Resultado.ERROR);
 		}
 		DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
 		return resultado;
 	}
-	
-	// Undo del ultimo proceso de AgregarAcciones ejecutado por el usuario que esta realizando el "undo"
+
+	// Undo del ultimo proceso de AgregarAcciones ejecutado por el usuario que
+	// esta realizando el "undo"
 	public void undo() {
 
 		// obtenemos la ultima transaccion de este usuario
@@ -124,7 +125,7 @@ public class AgregarAcciones extends Proceso {
 				.getLastTransactionByUser(user.getId());
 		// obtenemos la lista de cambios de la transaccion y la recorremos
 		ArrayList<String> listadoCambios = transaction.getListadoCambios();
-		for ( String cambio : listadoCambios) {
+		for (String cambio : listadoCambios) {
 			String acciones[] = cambio.split(" ");
 			String unUsername = acciones[0];
 			acciones = Arrays.copyOfRange(acciones, 1, acciones.length);

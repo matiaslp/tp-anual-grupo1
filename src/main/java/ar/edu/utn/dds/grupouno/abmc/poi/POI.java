@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.db.poi;
+package ar.edu.utn.dds.grupouno.abmc.poi;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -26,20 +26,19 @@ import org.hibernate.annotations.Type;
 //import org.joda.time.DateTime;
 import org.joda.time.DateTime;
 
+import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
-import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
-import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
+import ar.edu.utn.dds.grupouno.repositorio.PersistibleConNombre;
 
 @Entity
 @Table(name = "POI")
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
-@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
-@NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p")})
-public class POI extends PersistibleConNombre{
+		@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
+		@NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p") })
+public class POI extends PersistibleConNombre {
 
 	protected String callePrincipal;
 	protected String calleLateral;
@@ -55,35 +54,31 @@ public class POI extends PersistibleConNombre{
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "georef_id", referencedColumnName = "id")
 	protected GeoLocation ubicacion;
-	protected long comuna;	// define cuando otro punto es cercano.
+	protected long comuna; // define cuando otro punto es cercano.
 	protected long cercania = 500;
 	// este atributo hay que ver si nos sirve porque
 	// las subclases tienen el nombre del tipo, de por si.
 	protected TiposPOI tipo;
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name="POI_SERVICIO", 
-				joinColumns={@JoinColumn(name="poi_id")}, 
-				inverseJoinColumns={@JoinColumn(name="servicio_id")})
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "POI_SERVICIO", joinColumns = { @JoinColumn(name = "poi_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "servicio_id") })
 	protected List<NodoServicio> servicios;
 	// pueden ser varias y se crean a travez de
 	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(cascade = { CascadeType.ALL })
 	@OrderColumn
-	@JoinTable(name="POI_ETIQUETA", 
-				joinColumns={@JoinColumn(name="poi_id")}, 
-				inverseJoinColumns={@JoinColumn(name="etiqueta_id")})
+	@JoinTable(name = "POI_ETIQUETA", joinColumns = { @JoinColumn(name = "poi_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "etiqueta_id") })
 	protected List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();;
 	@Column
-	@Type(type="org.hibernate.type.ZonedDateTimeType")
+	@Type(type = "org.hibernate.type.ZonedDateTimeType")
 	protected ZonedDateTime fechaBaja = null;
-	//protected DateTime fechaBaja = null;
+	// protected DateTime fechaBaja = null;
 	protected boolean esLocal = true;
 
-	@ManyToMany(mappedBy="pois")
+	@ManyToMany(mappedBy = "pois")
 	private Set<RegistroHistorico> registrosHistoricos = new HashSet<RegistroHistorico>();
-	
-	
-	
+
 	public boolean estaXMetrosDePOI(double x, POI unPOI) {
 		return (distanciaCoordDosPOIs(this, unPOI) * 1000 < x);
 	}
@@ -121,7 +116,6 @@ public class POI extends PersistibleConNombre{
 		else
 			return true;
 	}
-
 
 	public String getCallePrincipal() {
 		return callePrincipal;
@@ -380,7 +374,7 @@ public class POI extends PersistibleConNombre{
 	}
 
 	public boolean buscarServicios(String filtro) {
-		if(servicios!=null){
+		if (servicios != null) {
 			for (NodoServicio servicio : servicios) {
 				if (LevDist.calcularDistancia(filtro, servicio.getNombre())) {
 					return true;
@@ -456,27 +450,27 @@ public class POI extends PersistibleConNombre{
 				return false;
 		} else if (!unidad.equals(other.unidad))
 			return false;
-		if(!compararEtiquetas(other)){
+		if (!compararEtiquetas(other)) {
 			return false;
 		}
-		if(!compararServicios(other)){
+		if (!compararServicios(other)) {
 			return false;
 		}
 
 		return true;
 	}
-	
-	public boolean compararEtiquetas(POI poi){
-		if(this.etiquetas == null && poi.etiquetas == null){
+
+	public boolean compararEtiquetas(POI poi) {
+		if (this.etiquetas == null && poi.etiquetas == null) {
 			return true;
-		}else if(this.etiquetas != null && poi.etiquetas == null){
+		} else if (this.etiquetas != null && poi.etiquetas == null) {
 			return false;
-		}else if(this.etiquetas == null && poi.etiquetas !=null){
+		} else if (this.etiquetas == null && poi.etiquetas != null) {
 			return false;
-		}else{
-			if(this.etiquetas.size() == poi.getEtiquetas().length){
-				for(Etiqueta etiqueta : this.etiquetas){
-					if(!poi.buscarEtiqueta(etiqueta.getNombre()))
+		} else {
+			if (this.etiquetas.size() == poi.getEtiquetas().length) {
+				for (Etiqueta etiqueta : this.etiquetas) {
+					if (!poi.buscarEtiqueta(etiqueta.getNombre()))
 						return false;
 				}
 				return true;
@@ -486,23 +480,21 @@ public class POI extends PersistibleConNombre{
 
 	}
 
-
-
-	public boolean compararServicios(POI poi){
-		if(this.servicios == null && poi.servicios == null){
+	public boolean compararServicios(POI poi) {
+		if (this.servicios == null && poi.servicios == null) {
 			return true;
-		}else if(this.servicios != null && poi.servicios == null){
+		} else if (this.servicios != null && poi.servicios == null) {
 			return false;
-		}else if(this.servicios == null && poi.servicios != null){
+		} else if (this.servicios == null && poi.servicios != null) {
 			return false;
-		}else if(this.servicios.size() != poi.servicios.size()){
+		} else if (this.servicios.size() != poi.servicios.size()) {
 			return false;
-		}else{
-			for(int i = 0; i<this.servicios.size();i++){
+		} else {
+			for (int i = 0; i < this.servicios.size(); i++) {
 				NodoServicio nodoThisPoi = this.servicios.get(i);
 				NodoServicio nodoOtherPoi = poi.servicios.get(i);
 
-				if(!nodoThisPoi.getName().equals(nodoOtherPoi.getName())){
+				if (!nodoThisPoi.getName().equals(nodoOtherPoi.getName())) {
 					return false;
 				}
 			}
@@ -511,7 +503,7 @@ public class POI extends PersistibleConNombre{
 	}
 
 	public boolean darDeBaja(DateTime fecha) {
-		//Si retorna false significa que ya estaba dado de baja
+		// Si retorna false significa que ya estaba dado de baja
 		if (fechaBaja != null)
 			return false;
 		fechaBaja = MetodosComunes.convertJodatoJava(fecha);
@@ -527,11 +519,10 @@ public class POI extends PersistibleConNombre{
 	}
 
 	public boolean dadoDeBaja(DateTime fecha) {
-		if(this.fechaBaja != null && fecha != null){
+		if (this.fechaBaja != null && fecha != null) {
 			DateTime fb = MetodosComunes.convertJavatoJoda(fechaBaja);
 			return fb.withTimeAtStartOfDay().equals(fecha.withTimeAtStartOfDay());
-		}
-		else 
+		} else
 			return false;
 	}
 
@@ -542,9 +533,9 @@ public class POI extends PersistibleConNombre{
 	public void setEsLocal(boolean esLocal) {
 		this.esLocal = esLocal;
 	}
- public POI() {
-	 
- }
 
+	public POI() {
+
+	}
 
 }

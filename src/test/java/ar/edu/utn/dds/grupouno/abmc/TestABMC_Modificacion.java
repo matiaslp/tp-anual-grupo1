@@ -5,13 +5,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.poi.Rubro;
-import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
+import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestABMC_Modificacion {
 	POI_ABMC abmc = new POI_ABMC();
@@ -62,7 +61,7 @@ public class TestABMC_Modificacion {
 		instancia.agregarPOI(cgp);
 		instancia.agregarPOI(local);
 		instancia.agregarPOI(parada);
-		
+
 		poiDTONoPersistido = new POI_DTO();
 		poiDTONoPersistido.setTipo(TiposPOI.BANCO);
 		poiDTONoPersistido.setNombre("noPersistido");
@@ -109,7 +108,7 @@ public class TestABMC_Modificacion {
 		boolean respuesta = poi_abmc.modificar(poi);
 		Assert.assertFalse(respuesta);
 	}
-	
+
 	// Test modificacion POI no persistido
 	@Test
 	public void modificacionPOINoPersistido() {
@@ -118,14 +117,14 @@ public class TestABMC_Modificacion {
 		boolean respuesta = poi_abmc.modificar(poi);
 		Assert.assertFalse(respuesta);
 	}
-	
+
 	@After
 	public void outtro() {
-		
+
 		instancia.remove(banco);
 		instancia.remove(cgp);
 		instancia.remove(local);
 		instancia.remove(parada);
-		
+
 	}
 }

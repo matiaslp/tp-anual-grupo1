@@ -10,8 +10,8 @@ import org.json.JSONException;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.Banco_Converter;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.CGP_Converter;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 
 public class BusquedaDePOIsExternos {
 

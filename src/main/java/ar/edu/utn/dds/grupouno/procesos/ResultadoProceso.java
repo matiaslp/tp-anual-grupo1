@@ -1,19 +1,15 @@
-package ar.edu.utn.dds.grupouno.db;
+package ar.edu.utn.dds.grupouno.procesos;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
-import ar.edu.utn.dds.grupouno.procesos.Proceso;
-import ar.edu.utn.dds.grupouno.procesos.TiposProceso;
+import ar.edu.utn.dds.grupouno.repositorio.Persistible;
 
 @Entity
 @Table(name = "ResultadoProceso")
-public class ResultadoProceso extends Persistible{
+public class ResultadoProceso extends Persistible {
 
 	private DateTime inicioEjecucion;
 	private DateTime finEjecucion;
@@ -29,12 +25,12 @@ public class ResultadoProceso extends Persistible{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	public TiposProceso getProc(){
+
+	public TiposProceso getProc() {
 		return this.proc;
 	}
-	
-	public void setProc(TiposProceso p){
+
+	public void setProc(TiposProceso p) {
 		this.proc = p;
 	}
 
@@ -53,7 +49,6 @@ public class ResultadoProceso extends Persistible{
 	public void setFinEjecucion(DateTime finEjecucion) {
 		this.finEjecucion = finEjecucion;
 	}
-
 
 	public long getUserID() {
 		return userID;
@@ -92,8 +87,8 @@ public class ResultadoProceso extends Persistible{
 		this.resultado = unResultado;
 	}
 
-	public ResultadoProceso(){
-		
+	public ResultadoProceso() {
+
 	}
 
 }

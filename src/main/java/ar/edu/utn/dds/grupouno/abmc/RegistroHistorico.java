@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.db;
+package ar.edu.utn.dds.grupouno.abmc;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -12,24 +12,23 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
-import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import ar.edu.utn.dds.grupouno.repositorio.Persistible;
 
 //@SuppressWarnings("serial")
 @Entity
 @Table(name = "HISTORICO")
 @NamedQueries({
-@NamedQuery(name = "getHistoricobyUserId", query = "SELECT r FROM RegistroHistorico r WHERE r.userID = :ruserid"),
-@NamedQuery(name = "RegistroHistorico.findAll", query = "SELECT r FROM RegistroHistorico r"),
-@NamedQuery(name = "RegistroHistorico.reporteBusquedasPorFecha", query ="SELECT date(r.time) as fecha,count(r.id) as cantidadBusquedas FROM RegistroHistorico r group by date(r.time)"),
-@NamedQuery(name = "RegistroHistorico.reporteCantidadResultadosPorTerminal", query = "SELECT cantResultados,busqueda FROM RegistroHistorico r WHERE r.userID = :ruserid"),
-@NamedQuery(name = "RegistroHistorico.reporteBusquedaPorUsuario", query = "SELECT r.userID,SUM(r.cantResultados) FROM RegistroHistorico r group by r.userID")})
+		@NamedQuery(name = "getHistoricobyUserId", query = "SELECT r FROM RegistroHistorico r WHERE r.userID = :ruserid"),
+		@NamedQuery(name = "RegistroHistorico.findAll", query = "SELECT r FROM RegistroHistorico r"),
+		@NamedQuery(name = "RegistroHistorico.reporteBusquedasPorFecha", query = "SELECT date(r.time) as fecha,count(r.id) as cantidadBusquedas FROM RegistroHistorico r group by date(r.time)"),
+		@NamedQuery(name = "RegistroHistorico.reporteCantidadResultadosPorTerminal", query = "SELECT cantResultados,busqueda FROM RegistroHistorico r WHERE r.userID = :ruserid"),
+		@NamedQuery(name = "RegistroHistorico.reporteBusquedaPorUsuario", query = "SELECT r.userID,SUM(r.cantResultados) FROM RegistroHistorico r group by r.userID") })
 public class RegistroHistorico extends Persistible {
 
 	private ZonedDateTime time;

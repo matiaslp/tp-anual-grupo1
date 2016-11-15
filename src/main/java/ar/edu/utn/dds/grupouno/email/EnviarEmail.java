@@ -16,21 +16,20 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
-import ar.edu.utn.dds.grupouno.db.Resultado;
-import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
+import ar.edu.utn.dds.grupouno.procesos.Resultado;
+import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public abstract class EnviarEmail {
-	
+
 	public static boolean mandarCorreoProcesoError(Usuario user, ArrayList<ResultadoProceso> listaResultados) {
-		
+
 		String correoEnvia = LeerProperties.getInstance().prop.getProperty("email");
 		String claveCorreo = LeerProperties.getInstance().prop.getProperty("emailPassword");
 
 		String texto = "";
-		
+
 		for (ResultadoProceso resultado : listaResultados) {
 			String res = "";
 			String clase = resultado.getProc().nombre();
@@ -38,14 +37,12 @@ public abstract class EnviarEmail {
 				res = "con errores";
 			else if (resultado.getResultado().equals(Resultado.OK))
 				res = "satisfactoria";
-			texto = texto +  " Proceso " + clase + " ejecucion " + res + "\n" +
-			"Inicio de ejecucion: " + resultado.getInicioEjecucion().toString() + "\n" +
-			"Fin de ejecucion: " + resultado.getFinEjecucion().toString() + "\n" +
-			"Ejecutado por usuario: " + resultado.getUserID() + "\n" +
-			resultado.getMensajeError() + "\n\n";
+			texto = texto + " Proceso " + clase + " ejecucion " + res + "\n" + "Inicio de ejecucion: "
+					+ resultado.getInicioEjecucion().toString() + "\n" + "Fin de ejecucion: "
+					+ resultado.getFinEjecucion().toString() + "\n" + "Ejecutado por usuario: " + resultado.getUserID()
+					+ "\n" + resultado.getMensajeError() + "\n\n";
 		}
-		
-		
+
 		String titulo = "Errores Ejecucion de Proceso";
 
 		boolean enviado = false;
@@ -56,9 +53,8 @@ public abstract class EnviarEmail {
 			e.printStackTrace();
 		}
 		return enviado;
-		
+
 	}
-	
 
 	public static boolean mandarCorreoXSegundos(String nombreDeBusqueda, double segundos, String correoRecibe)
 			throws MessagingException {

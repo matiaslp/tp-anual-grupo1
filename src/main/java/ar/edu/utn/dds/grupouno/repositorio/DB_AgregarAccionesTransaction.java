@@ -1,7 +1,8 @@
-package ar.edu.utn.dds.grupouno.db;
+package ar.edu.utn.dds.grupouno.repositorio;
 
 import java.util.ArrayList;
 
+import ar.edu.utn.dds.grupouno.procesos.AgregarAccionesTransaction;
 
 public class DB_AgregarAccionesTransaction {
 

@@ -12,17 +12,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
+import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
+import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
+import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
-import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
-import ar.edu.utn.dds.grupouno.db.poi.Banco;
-import ar.edu.utn.dds.grupouno.db.poi.CGP;
-import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestABMC_Consulta {
 	POI_ABMC abmc;
@@ -30,7 +28,7 @@ public class TestABMC_Consulta {
 	DB_POI instance;
 	Banco banco;
 	LocalComercial local;
-	ParadaColectivo parada ;
+	ParadaColectivo parada;
 	CGP cgp;
 	Usuario usuario;
 	UsuariosFactory ufactory = new UsuariosFactory();
@@ -39,7 +37,7 @@ public class TestABMC_Consulta {
 	public void inicializar() {
 		abmc = new POI_ABMC();
 		instance = Repositorio.getInstance().pois();
-	//	DB_POI.getListado().clear();
+		// DB_POI.getListado().clear();
 		banco = new Banco("Santander", 0, 0);
 		banco.setBarrio("Mataderos");
 		banco.setPais("Argentina");
@@ -53,19 +51,17 @@ public class TestABMC_Consulta {
 		instance.agregarPOI(parada);
 		instance.agregarPOI(local);
 		instance.agregarPOI(banco);
-		
-		usuario = ufactory.crearUsuario("admin", "password","ADMIN");
-		
+
+		usuario = ufactory.crearUsuario("admin", "password", "ADMIN");
+
 		usuario.setAuditoriaActivada(true);
 		usuario.setCorreo("uncorreo@correoloco.com");
 		usuario.setLog(true);
 		usuario.setMailHabilitado(true);
 		usuario.setNombre("Shaggy");
 		usuario.setNotificacionesActivadas(true);
-		
+
 		Repositorio.getInstance().usuarios().persistirUsuario(usuario);
-		
-		
 
 	}
 
@@ -94,7 +90,8 @@ public class TestABMC_Consulta {
 	public void testConsultaRemota() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 		lista = abmc.buscar(ServicioAPI, "Mataderos", usuario.getId());
-		Assert.assertTrue(lista.size() == 17); //2 POI locales Mataderos, 16 externos pero 1 repetido.
+		Assert.assertTrue(lista.size() == 17); // 2 POI locales Mataderos, 16
+												// externos pero 1 repetido.
 	}
 
 	// deberia devolver 1 solo resultado, pero como el servicio remoto
@@ -112,7 +109,9 @@ public class TestABMC_Consulta {
 			throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", usuario.getId());
-		Assert.assertTrue(lista.size() == 18);//2 POI locales, 15 POI ext de CGP porque funciona mal y 1 Banco galicia externo
+		Assert.assertTrue(lista.size() == 18);// 2 POI locales, 15 POI ext de
+												// CGP porque funciona mal y 1
+												// Banco galicia externo
 	}
 
 	@Test
@@ -129,11 +128,10 @@ public class TestABMC_Consulta {
 		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", usuario.getId());
 		Assert.assertTrue(lista.size() == 18);
 	}
-	
+
 	@After
 	public void outtro() {
-		
-		
+
 		instance.remove(usuario);
 		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
 		for (RegistroHistorico reg : list)

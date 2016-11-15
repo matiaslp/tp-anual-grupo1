@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.json.JSONException;
 
-import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 
 class Timer implements Busqueda {
 

@@ -1,13 +1,11 @@
-package ar.edu.utn.dds.grupouno.db;
+package ar.edu.utn.dds.grupouno.repositorio;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import ar.edu.utn.dds.grupouno.db.poi.Etiqueta;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.abmc.poi.Etiqueta;
 
 public class DB_Etiqueta extends Repositorio {
 
@@ -29,7 +27,8 @@ public class DB_Etiqueta extends Repositorio {
 	public List<Etiqueta> getEtiquetabyNombre(String nombre) {
 
 		List<Etiqueta> etiquetas = null;
-		etiquetas = em.createNamedQuery("getEtiquetabyNombre").setParameter("enombre", "%" + nombre + "%").getResultList();
+		etiquetas = em.createNamedQuery("getEtiquetabyNombre").setParameter("enombre", "%" + nombre + "%")
+				.getResultList();
 		return etiquetas;
 	}
 

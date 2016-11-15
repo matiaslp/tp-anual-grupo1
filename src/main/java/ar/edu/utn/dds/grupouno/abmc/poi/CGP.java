@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.db.poi;
+package ar.edu.utn.dds.grupouno.abmc.poi;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,12 +10,11 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 
 @Entity
 @Table(name = "CGP")
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name = "id")
 public class CGP extends POI {
 
 	String director;// 3
@@ -99,9 +98,9 @@ public class CGP extends POI {
 		this.setTipo(TiposPOI.CGP);
 		this.servicios = new ArrayList<NodoServicio>();
 	}
-	
+
 	public CGP() {
-		
+
 	}
 
 	@Override

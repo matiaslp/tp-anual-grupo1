@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.db;
+package ar.edu.utn.dds.grupouno.repositorio;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,11 +11,8 @@ import javax.transaction.Transactional;
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class DB_Usuarios extends Repositorio {
-
-
 
 	public DB_Usuarios(EntityManager em) {
 		super(em);
@@ -56,9 +53,9 @@ public class DB_Usuarios extends Repositorio {
 				}
 
 		}
-		 
-		 em.persist(usuario);
-		 em.getTransaction().commit();
+
+		em.persist(usuario);
+		em.getTransaction().commit();
 	}
 
 	public List<Usuario> getListaUsuarios() {
@@ -96,7 +93,7 @@ public class DB_Usuarios extends Repositorio {
 			try {
 				em.getTransaction().begin();
 				for (Accion acc : user.getFuncionalidades())
-						em.refresh(acc);
+					em.refresh(acc);
 				em.merge(user);
 				em.getTransaction().commit();
 				return true;
@@ -108,7 +105,7 @@ public class DB_Usuarios extends Repositorio {
 			return false;
 		}
 	}
-	
+
 	@Transactional
 	public boolean actualizarUsuario(Usuario user) {
 		if (em.contains(user)) {
@@ -125,13 +122,13 @@ public class DB_Usuarios extends Repositorio {
 			return false;
 		}
 	}
-	
+
 	public boolean deleteUsuario(long l) {
 		em.getTransaction().begin();
 		Usuario user = getUsuarioById(l);
 		if (user != null) {
 			em.remove(user);
-			
+
 			DB_Sesiones.getInstance().removerSesiones(user.getUsername());
 			em.getTransaction().commit();
 			return true;

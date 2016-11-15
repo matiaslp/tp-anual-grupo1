@@ -1,12 +1,12 @@
-package ar.edu.utn.dds.grupouno.db.repositorio;
+package ar.edu.utn.dds.grupouno.repositorio;
 
 import javax.persistence.EntityManager;
 
-import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
+import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
 
 public class ResultadosProcesos {
 	protected EntityManager em;
-	
+
 	ResultadosProcesos(EntityManager emanager) {
 		this.em = emanager;
 	}

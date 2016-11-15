@@ -11,12 +11,12 @@ import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
-import ar.edu.utn.dds.grupouno.db.Resultado;
-import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.email.EnviarEmail;
 import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 import ar.edu.utn.dds.grupouno.procesos.AgregarAcciones;
+import ar.edu.utn.dds.grupouno.procesos.AgregarAccionesTransaction;
+import ar.edu.utn.dds.grupouno.procesos.Resultado;
+import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.procesos.TiposProceso;
 
 public class TestEMailProcesoError {

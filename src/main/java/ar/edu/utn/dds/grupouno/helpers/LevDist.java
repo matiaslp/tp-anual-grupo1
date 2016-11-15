@@ -1,7 +1,5 @@
 package ar.edu.utn.dds.grupouno.helpers;
 
-import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
-
 public class LevDist {
 
 	private static int minimo(int a, int b, int c) {

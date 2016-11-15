@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.db.poi;
+package ar.edu.utn.dds.grupouno.abmc.poi;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,30 +16,28 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 
-
 @Entity
 @Table(name = "LOCAL")
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name = "id")
 public class LocalComercial extends POI {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "rubro_id", referencedColumnName = "id")
 	Rubro rubro;
 	@ElementCollection
-	@CollectionTable(name="LOCAL_DIAS")
-    @Column(name="dia")
+	@CollectionTable(name = "LOCAL_DIAS")
+	@Column(name = "dia")
 	public List<Long> dias = new ArrayList<Long>();
 	@ElementCollection
-	@CollectionTable(name="LOCAL_HORAS")
-    @Column(name="dia")
+	@CollectionTable(name = "LOCAL_HORAS")
+	@Column(name = "dia")
 	public List<Long> horas = new ArrayList<Long>();
 
 	public int getDistancia() {
-		if(rubro != null)
+		if (rubro != null)
 			return rubro.getCercania();
 		else
 			return 0;
@@ -53,7 +51,7 @@ public class LocalComercial extends POI {
 	}
 
 	public LocalComercial() {
-		
+
 	}
 
 	public Rubro getRubro() {
@@ -152,7 +150,7 @@ public class LocalComercial extends POI {
 		if (rubro == null) {
 			if (other.rubro != null)
 				return false;
-		} else if(rubro.getNombre().equals(other.rubro.getNombre())){
+		} else if (rubro.getNombre().equals(other.rubro.getNombre())) {
 			return true;
 		}
 		return false;

@@ -2,15 +2,8 @@ package ar.edu.utn.dds.grupouno.procesos;
 
 import java.util.ArrayList;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.Resultado;
-import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.email.EnviarEmail;
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
-
 
 public abstract class Proceso {
 
@@ -18,13 +11,12 @@ public abstract class Proceso {
 	protected boolean enviarEmail;
 	protected Usuario user;
 
-	
 	// debe ser implementado en las clases hijo
 	public ResultadoProceso procesado() {
 		return null;
-		
+
 	}
-	
+
 	public void execute() {
 		// ejecutamos el proceso
 		ResultadoProceso resultado = procesado();
@@ -33,7 +25,7 @@ public abstract class Proceso {
 		if (resultado.getResultado().equals(Resultado.ERROR)) {
 			listaResultados.add(resultado);
 			// Se reintenta cantidadReintentos veces
-			for (int i = 1; (this.cantidadReintentos > 0 && this.cantidadReintentos < i 
+			for (int i = 1; (this.cantidadReintentos > 0 && this.cantidadReintentos < i
 					&& resultado.getResultado().equals(Resultado.ERROR)); i++) {
 				resultado = procesado();
 				// acumulamos los resultado en una lista para armar el email
@@ -41,13 +33,12 @@ public abstract class Proceso {
 					listaResultados.add(resultado);
 			}
 			if (this.enviarEmail && user.getCorreo() != null) {
-				EnviarEmail.mandarCorreoProcesoError(user,listaResultados);
+				EnviarEmail.mandarCorreoProcesoError(user, listaResultados);
 			}
 		}
 	}
 
-	public Proceso(int cantidadReintentos, boolean enviarEmail,
-			Usuario unUser) {
+	public Proceso(int cantidadReintentos, boolean enviarEmail, Usuario unUser) {
 		super();
 		this.cantidadReintentos = cantidadReintentos;
 		this.enviarEmail = enviarEmail;
@@ -78,8 +69,8 @@ public abstract class Proceso {
 		this.user = user;
 	}
 
-	public Proceso(){
-		
+	public Proceso() {
+
 	}
-	
+
 }

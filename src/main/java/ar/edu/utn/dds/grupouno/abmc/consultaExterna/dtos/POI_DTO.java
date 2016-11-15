@@ -1,20 +1,19 @@
 package ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
-import ar.edu.utn.dds.grupouno.db.poi.Banco;
-import ar.edu.utn.dds.grupouno.db.poi.CGP;
-import ar.edu.utn.dds.grupouno.db.poi.Etiqueta;
-import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
-import ar.edu.utn.dds.grupouno.db.poi.NodoServicio;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
-import ar.edu.utn.dds.grupouno.db.poi.Rubro;
-import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
-import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
+import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
+import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
+import ar.edu.utn.dds.grupouno.abmc.poi.Etiqueta;
+import ar.edu.utn.dds.grupouno.abmc.poi.GeoLocation;
+import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
+import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 
 public class POI_DTO {
 	double id;
@@ -314,13 +313,13 @@ public class POI_DTO {
 	public void darBaja(DateTime fechaBaja) {
 		this.fechaBaja = fechaBaja;
 	}
-	
+
 	public void darAlta() {
 		this.fechaBaja = null;
 	}
-	
+
 	public DateTime getFechaBaja() {
 		return fechaBaja;
 	}
-	
+
 }

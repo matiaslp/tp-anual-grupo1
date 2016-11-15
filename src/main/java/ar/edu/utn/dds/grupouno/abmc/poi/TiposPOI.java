@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.db.poi;
+package ar.edu.utn.dds.grupouno.abmc.poi;
 
 public enum TiposPOI {
 	BANCO("banco"), CGP("cgp"), LOCAL_COMERCIAL("local comercial"), PARADA_COLECTIVO("parada colectivo");

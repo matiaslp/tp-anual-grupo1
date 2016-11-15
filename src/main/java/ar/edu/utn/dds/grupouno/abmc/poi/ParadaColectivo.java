@@ -1,14 +1,12 @@
-package ar.edu.utn.dds.grupouno.db.poi;
+package ar.edu.utn.dds.grupouno.abmc.poi;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
-
 @Entity
 @Table(name = "PARADA")
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name = "id")
 public class ParadaColectivo extends POI {
 
 	long cercania = 100;
@@ -31,9 +29,9 @@ public class ParadaColectivo extends POI {
 		this.setNombre(nombre);
 		this.setTipo(TiposPOI.PARADA_COLECTIVO);
 	}
-	
-	public ParadaColectivo(){
-		
+
+	public ParadaColectivo() {
+
 	}
 
 }

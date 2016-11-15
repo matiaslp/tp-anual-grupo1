@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.db.poi;
+package ar.edu.utn.dds.grupouno.abmc.poi;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 import ar.edu.utn.dds.grupouno.helpers.LevDist;
 
 @Entity
 @Table(name = "BANCO")
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name = "id")
 public class Banco extends POI {
 
 	String sucursal;
@@ -86,10 +85,10 @@ public class Banco extends POI {
 		}
 	}
 
-	public Banco(){
-		
+	public Banco() {
+
 	}
-	
+
 	public Banco(String nombre, double latitud, double longitud) {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);

@@ -1,20 +1,16 @@
 package ar.edu.utn.dds.grupouno.abmc;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.poi.Rubro;
-import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
+import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestABMC_Alta {
 	private Repositorio repositorio;
@@ -65,8 +61,7 @@ public class TestABMC_Alta {
 	public void altaBanco() {
 		boolean respuesta = instancia.agregarPOI(banco);
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(
-				instancia.getPOIbyNombre(poiDTOBanco.getNombre()).size() >= 1 );
+		Assert.assertTrue(instancia.getPOIbyNombre(poiDTOBanco.getNombre()).size() >= 1);
 
 	}
 
@@ -74,8 +69,7 @@ public class TestABMC_Alta {
 	public void altaCGP() {
 		boolean respuesta = instancia.agregarPOI(cgp);
 		Assert.assertTrue(respuesta);
-		Assert.assertTrue(
-				instancia.getPOIbyNombre(poiDTOCGP.getNombre()).size() >= 1);
+		Assert.assertTrue(instancia.getPOIbyNombre(poiDTOCGP.getNombre()).size() >= 1);
 	}
 
 	@Test
@@ -91,14 +85,14 @@ public class TestABMC_Alta {
 		Assert.assertTrue(respuesta);
 		Assert.assertTrue(instancia.getPOIbyNombre(poiDTOColectivo.getNombre()).size() >= 1);
 	}
-	
+
 	@After
 	public void outtro() {
-		
+
 		repositorio.remove(banco);
 		repositorio.remove(cgp);
 		repositorio.remove(local);
 		repositorio.remove(parada);
-		
+
 	}
 }

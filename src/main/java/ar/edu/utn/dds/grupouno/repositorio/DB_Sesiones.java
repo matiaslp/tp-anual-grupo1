@@ -1,13 +1,7 @@
-package ar.edu.utn.dds.grupouno.db;
+package ar.edu.utn.dds.grupouno.repositorio;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
 
 public class DB_Sesiones extends Persistible {
 
@@ -33,20 +27,21 @@ public class DB_Sesiones extends Persistible {
 	public void setDiccionarioTokenUser(Map<String, String> diccionarioTokenUser) {
 		this.listaSesiones = diccionarioTokenUser;
 	}
-	
-	public void agregarTokenUser(String token, String user){
+
+	public void agregarTokenUser(String token, String user) {
 		listaSesiones.put(token, user);
 	}
-	
+
 	public void removerTokenUser(String token, String user) {
 		listaSesiones.remove(token, user);
 	}
-	
+
 	public void removerSesiones(String user) {
-		while (listaSesiones.values().remove(user));
+		while (listaSesiones.values().remove(user))
+			;
 	}
-	
-	public String validarToken(String token){
+
+	public String validarToken(String token) {
 		return listaSesiones.get(token);
 	}
 

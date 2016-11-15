@@ -19,13 +19,11 @@ import com.google.gson.stream.JsonReader;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.DateDeserializer;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.ItemBorrarConstructor;
+import ar.edu.utn.dds.grupouno.abmc.poi.Item_Borrar;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
-import ar.edu.utn.dds.grupouno.db.DB_ResultadosProcesos;
-import ar.edu.utn.dds.grupouno.db.Resultado;
-import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
-import ar.edu.utn.dds.grupouno.db.poi.Item_Borrar;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
+import ar.edu.utn.dds.grupouno.repositorio.DB_ResultadosProcesos;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class BajaPOIs extends Proceso {
 
@@ -51,12 +49,11 @@ public class BajaPOIs extends Proceso {
 
 			Gson gson = generarGson();
 
-			listadoItems = leerJson(gson,filePath);
+			listadoItems = leerJson(gson, filePath);
 
 			Map<Long, Boolean> resumen = darDeBaja(listadoItems);
 			end = new DateTime();
-			
-			
+
 			// Si el listado de resumen tiene algun elemento con value false
 			// significa que ese elemento no se pudo borrar
 			if (!resumen.containsValue(false)) {
@@ -68,8 +65,8 @@ public class BajaPOIs extends Proceso {
 					if (!e.getValue())
 						pois_fallidos.add(e.getKey());
 				}
-				resultado = new ResultadoProceso(start, end, TiposProceso.BAJAPOIS, user.getId(), generarMensaje(pois_fallidos),
-						Resultado.ERROR);
+				resultado = new ResultadoProceso(start, end, TiposProceso.BAJAPOIS, user.getId(),
+						generarMensaje(pois_fallidos), Resultado.ERROR);
 			}
 
 			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
@@ -94,21 +91,21 @@ public class BajaPOIs extends Proceso {
 		return mensaje;
 	}
 
-	private Gson generarGson(){
+	private Gson generarGson() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
 		gsonBuilder.registerTypeAdapter(Item_Borrar.class, new ItemBorrarConstructor());
 		return gsonBuilder.create();
 	}
 
-	private List<Item_Borrar> leerJson(Gson gson, String filepath) throws FileNotFoundException{
+	private List<Item_Borrar> leerJson(Gson gson, String filepath) throws FileNotFoundException {
 		JsonReader jsonReader = new JsonReader(new FileReader(filePath));
 		Type listType = new TypeToken<ArrayList<Item_Borrar>>() {
 		}.getType();
 		return gson.fromJson(jsonReader, listType);
 	}
 
-	private Map<Long,Boolean> darDeBaja(List<Item_Borrar> listadoItems){
+	private Map<Long, Boolean> darDeBaja(List<Item_Borrar> listadoItems) {
 		String[] valoresBusqueda = new String[listadoItems.size()];
 		List<String> valores = new ArrayList<String>();
 		List<DateTime> fechas = new ArrayList<DateTime>();
@@ -117,6 +114,6 @@ public class BajaPOIs extends Proceso {
 			fechas.add(new DateTime(item.getFechaBorrado()));
 		}
 		valores.toArray(valoresBusqueda);
-		return dbPOI.bajaPoi(valoresBusqueda, fechas);	
+		return dbPOI.bajaPoi(valoresBusqueda, fechas);
 	}
 }

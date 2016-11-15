@@ -1,7 +1,9 @@
-package ar.edu.utn.dds.grupouno.db;
+package ar.edu.utn.dds.grupouno.repositorio;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
 
 public class DB_ResultadosProcesos {
 

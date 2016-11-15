@@ -1,16 +1,15 @@
 package ar.edu.utn.dds.grupouno.autentification.funciones;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.persistence.Entity;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
-import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.procesos.AgregarAcciones;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
+
 @Entity
 public class FuncAgregarAcciones extends Accion {
 
@@ -22,9 +21,10 @@ public class FuncAgregarAcciones extends Accion {
 		isProcess = true;
 	}
 
-	public FuncAgregarAcciones(){
-		
+	public FuncAgregarAcciones() {
+
 	}
+
 	public void agregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			String filePath) {
 		if (validarsesion(user, Token)) {
@@ -32,14 +32,13 @@ public class FuncAgregarAcciones extends Accion {
 			proceso.execute();
 		}
 	}
-	
+
 	public void agregarAccionesUndo(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail) {
 		if (validarsesion(user, Token)) {
 			AgregarAcciones proceso = new AgregarAcciones(cantidadReintentos, enviarEmail, "", user);
 			proceso.undo();
 		}
 	}
-	
 
 	// creacion Proceso para agregar a la lista en Proceso Multiple
 	public Proceso prepAgregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,

@@ -4,9 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.DatatypeConverter;
@@ -24,9 +22,8 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncObtenerInfoPOI;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedaPorUsuario;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedasPorFecha;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
-import ar.edu.utn.dds.grupouno.db.DB_Sesiones;
-import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.repositorio.DB_Sesiones;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class AuthAPI {
 
@@ -44,13 +41,13 @@ public class AuthAPI {
 	public List<Accion> getAcciones() {
 		return acciones;
 	}
-	
+
 	public List<Rol> getRoles() {
 		return roles;
 	}
 
 	public AuthAPI() {
-		
+
 		ArrayList<Rol> listRoles = Repositorio.getInstance().usuarios().getListadoRoles();
 		roles = new ArrayList<Rol>();
 		if (listRoles == null || listRoles.size() == 0) {
@@ -82,26 +79,26 @@ public class AuthAPI {
 			funcActualizacionLocalesComerciales = new FuncActualizacionLocalesComerciales(getRol("ADMIN"));
 			funcAgregarAcciones = new FuncAgregarAcciones(getRol("ADMIN"));
 			funcBajaPOIs = new FuncBajaPOIs(getRol("ADMIN"));
-			funcObtenerInfoPOI = new FuncObtenerInfoPOI(getRol("ADMIN"),getRol("TERMINAL"));
-			funcBusquedaPOI = new FuncBusquedaPOI(getRol("ADMIN"),getRol("TERMINAL"));
+			funcObtenerInfoPOI = new FuncObtenerInfoPOI(getRol("ADMIN"), getRol("TERMINAL"));
+			funcBusquedaPOI = new FuncBusquedaPOI(getRol("ADMIN"), getRol("TERMINAL"));
 			funcMultiple = new FuncMultiple(getRol("ADMIN"));
 			funcCambiarEstadoNotificarBusquedaLarga = new FuncCambiarEstadoNotificarBusquedaLarga(getRol("TERMINAL"));
 			funcCambiarEstadoAuditoria = new FuncCambiarEstadoAuditoria(getRol("TERMINAL"));
-			funcCambiarEstadoGenerarLog = new FuncCambiarEstadoGenerarLog(getRol("ADMIN"),getRol("TERMINAL"));
+			funcCambiarEstadoGenerarLog = new FuncCambiarEstadoGenerarLog(getRol("ADMIN"), getRol("TERMINAL"));
 
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteBusquedaPorUsuario);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteBusquedasPorFecha);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcReporteCantidadResultadosPorTerminal);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoMail);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcActualizacionLocalesComerciales);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcAgregarAcciones);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcBajaPOIs);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcObtenerInfoPOI);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcBusquedaPOI);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcMultiple);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoNotificarBusquedaLarga);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoAuditoria);
-			Repositorio.getInstance().usuarios().persistirAccion((Accion)funcCambiarEstadoGenerarLog);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcReporteBusquedaPorUsuario);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcReporteBusquedasPorFecha);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcReporteCantidadResultadosPorTerminal);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcCambiarEstadoMail);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcActualizacionLocalesComerciales);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcAgregarAcciones);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcBajaPOIs);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcObtenerInfoPOI);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcBusquedaPOI);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcMultiple);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcCambiarEstadoNotificarBusquedaLarga);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcCambiarEstadoAuditoria);
+			Repositorio.getInstance().usuarios().persistirAccion((Accion) funcCambiarEstadoGenerarLog);
 
 			acciones.add(funcReporteBusquedaPorUsuario);
 			acciones.add(funcReporteBusquedasPorFecha);
@@ -120,7 +117,6 @@ public class AuthAPI {
 			for (Accion accion : listAcciones)
 				acciones.add(accion);
 		}
-		
 
 	}
 
@@ -132,7 +128,7 @@ public class AuthAPI {
 		}
 		return null;
 	}
-	
+
 	public Rol getRol(String nombre) {
 
 		for (Rol rol : this.getRoles()) {

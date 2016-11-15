@@ -2,20 +2,12 @@ package ar.edu.utn.dds.grupouno.procesos;
 
 import java.util.ArrayList;
 
-import javax.mail.MessagingException;
-
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
-import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
-import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
-import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
-import ar.edu.utn.dds.grupouno.procesos.AgregarAcciones;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestAgregarAcciones {
 	AuthAPI unAuthAPI;
@@ -63,71 +55,86 @@ public class TestAgregarAcciones {
 		fact.crearUsuario("terminal1", "123", "TERMINAL");
 	}
 
-//	@Test
-//	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnAdmin() throws MessagingException {
-//
-//		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnAdmin, transaction);
-//		// comprobacion si tiene toda la lista a agregar
-//		encontradaTodas = true;
-//		for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
-//			encontrada = Repositorio.getInstance().usuarios().getUsuarioByName("admin").getFuncionalidad(unafuncionabilidad)!=null;
-//			if (encontrada == false) {
-//				encontradaTodas = false;
-//			}
-//		}
-//		Assert.assertTrue(encontradaTodas);
-//
-//	}
-//
-//	@Test
-//	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnAdmin() throws MessagingException {
-//
-//		AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnAdmin, transaction);
-//
-//		// comprobacion si tiene toda la lista a agregar
-//		encontradaTodas = true;
-//		for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
-//			encontrada = Repositorio.getInstance().usuarios().getUsuarioByName("terminal").getFuncionalidad(unafuncionabilidad)!=null;
-//			if (encontrada == false) {
-//				encontradaTodas = false;
-//			}
-//
-//		}
-//		Assert.assertFalse(encontradaTodas);
-//
-//	}
-//
-//	@Test
-//	public void agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnTerminal() throws MessagingException {
-//
-//		agregado = AgregarAcciones.AgregarAccionesAUsuario("terminal", listadoAccionesQueEstanEnTerminal, transaction);
-//		// comprobacion si tiene toda la lista a agregar
-//		encontradaTodas = true;
-//		for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
-//			encontrada = Repositorio.getInstance().usuarios().getUsuarioByName("terminal").getFuncionalidad(unafuncionabilidad)!=null;
-//			if (encontrada == false) {
-//				encontradaTodas = false;
-//			}
-//
-//		}
-//		Assert.assertTrue(encontradaTodas);
-//
-//	}
-//
-//	@Test
-//	public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnTerminal() throws MessagingException {
-//
-//		agregado = AgregarAcciones.AgregarAccionesAUsuario("admin", listadoAccionesQueEstanEnTerminal, transaction);
-//		// comprobacion si tiene toda la lista a agregar
-//		encontradaTodas = true;
-//		for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
-//			encontrada = Repositorio.getInstance().usuarios().getUsuarioByName("admin").getFuncionalidad(unafuncionabilidad)!=null;
-//			if (encontrada == false) {
-//				encontradaTodas = false;
-//			}
-//
-//		}
-//		Assert.assertTrue(encontradaTodas);
-//
-//	}	
+	// @Test
+	// public void agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnAdmin()
+	// throws MessagingException {
+	//
+	// agregado = AgregarAcciones.AgregarAccionesAUsuario("admin",
+	// listadoAccionesQueEstanEnAdmin, transaction);
+	// // comprobacion si tiene toda la lista a agregar
+	// encontradaTodas = true;
+	// for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
+	// encontrada =
+	// Repositorio.getInstance().usuarios().getUsuarioByName("admin").getFuncionalidad(unafuncionabilidad)!=null;
+	// if (encontrada == false) {
+	// encontradaTodas = false;
+	// }
+	// }
+	// Assert.assertTrue(encontradaTodas);
+	//
+	// }
+	//
+	// @Test
+	// public void
+	// agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnAdmin() throws
+	// MessagingException {
+	//
+	// AgregarAcciones.AgregarAccionesAUsuario("terminal",
+	// listadoAccionesQueEstanEnAdmin, transaction);
+	//
+	// // comprobacion si tiene toda la lista a agregar
+	// encontradaTodas = true;
+	// for (String unafuncionabilidad : listadoAccionesQueEstanEnAdmin) {
+	// encontrada =
+	// Repositorio.getInstance().usuarios().getUsuarioByName("terminal").getFuncionalidad(unafuncionabilidad)!=null;
+	// if (encontrada == false) {
+	// encontradaTodas = false;
+	// }
+	//
+	// }
+	// Assert.assertFalse(encontradaTodas);
+	//
+	// }
+	//
+	// @Test
+	// public void
+	// agregarAccionesAUsuarioTerminallistadoAccionesQueEstanEnTerminal() throws
+	// MessagingException {
+	//
+	// agregado = AgregarAcciones.AgregarAccionesAUsuario("terminal",
+	// listadoAccionesQueEstanEnTerminal, transaction);
+	// // comprobacion si tiene toda la lista a agregar
+	// encontradaTodas = true;
+	// for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
+	// encontrada =
+	// Repositorio.getInstance().usuarios().getUsuarioByName("terminal").getFuncionalidad(unafuncionabilidad)!=null;
+	// if (encontrada == false) {
+	// encontradaTodas = false;
+	// }
+	//
+	// }
+	// Assert.assertTrue(encontradaTodas);
+	//
+	// }
+	//
+	// @Test
+	// public void
+	// agregarAccionesAUsuarioAdminlistadoAccionesQueEstanEnTerminal() throws
+	// MessagingException {
+	//
+	// agregado = AgregarAcciones.AgregarAccionesAUsuario("admin",
+	// listadoAccionesQueEstanEnTerminal, transaction);
+	// // comprobacion si tiene toda la lista a agregar
+	// encontradaTodas = true;
+	// for (String unafuncionabilidad : listadoAccionesQueEstanEnTerminal) {
+	// encontrada =
+	// Repositorio.getInstance().usuarios().getUsuarioByName("admin").getFuncionalidad(unafuncionabilidad)!=null;
+	// if (encontrada == false) {
+	// encontradaTodas = false;
+	// }
+	//
+	// }
+	// Assert.assertTrue(encontradaTodas);
+	//
+	// }
 }

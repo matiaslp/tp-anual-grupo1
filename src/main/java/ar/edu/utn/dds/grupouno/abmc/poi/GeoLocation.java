@@ -12,24 +12,24 @@
  * @author Jan Philip Matuschek
  * @version 22 September 2010
  */
-package ar.edu.utn.dds.grupouno.geolocation;
+package ar.edu.utn.dds.grupouno.abmc.poi;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import ar.edu.utn.dds.grupouno.repositorio.Persistible;
 
 @Entity
 @Table(name = "GEOLOCALIZACION")
-public class GeoLocation extends Persistible{
+public class GeoLocation extends Persistible {
 
 	public static double RADIUS = 6371010;
 
 	private double radLat; // latitude in radians
 	private double radLon; // longitude in radians
-	
+
 	@Column(name = "latitud")
 	private double degLat; // latitude in degrees
 	@Column(name = "longitud")

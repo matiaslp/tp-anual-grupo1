@@ -14,14 +14,10 @@ import java.util.Map.Entry;
 
 import org.joda.time.DateTime;
 
+import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
-import ar.edu.utn.dds.grupouno.db.Resultado;
-import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
-import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
-
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class ActualizacionLocalesComerciales extends Proceso {
 
@@ -68,8 +64,10 @@ public class ActualizacionLocalesComerciales extends Proceso {
 		} catch (IOException e) {
 			e.printStackTrace();
 			end = new DateTime();
-//			resultado = new ResultadoProceso(start, end, TiposProceso.ACTUALIZACIONLOCALESCOMERCIALES, user.getId(), "No existe el archio " + filePath,
-//					Resultado.ERROR);
+			// resultado = new ResultadoProceso(start, end,
+			// TiposProceso.ACTUALIZACIONLOCALESCOMERCIALES, user.getId(), "No
+			// existe el archio " + filePath,
+			// Resultado.ERROR);
 		}
 		return resultado;
 	}
@@ -89,7 +87,7 @@ public class ActualizacionLocalesComerciales extends Proceso {
 					resultados.add(Repositorio.getInstance().pois().agregarPOI(local));
 				}
 			}
-			if(!resultados.contains(false))
+			if (!resultados.contains(false))
 				return true;
 		} catch (Exception e) {
 			e.printStackTrace();

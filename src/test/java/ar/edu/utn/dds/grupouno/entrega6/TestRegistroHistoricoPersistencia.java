@@ -3,20 +3,17 @@ package ar.edu.utn.dds.grupouno.entrega6;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestRegistroHistoricoPersistencia {
 
@@ -93,9 +90,10 @@ public class TestRegistroHistoricoPersistencia {
 		repositorio.resultadosRegistrosHistoricos().actualizarRegistroHistorico(unRH);
 		// Lo recuperamos de la DB
 
-		registroHistoricoRecuperado = (RegistroHistorico) repositorio.resultadosRegistrosHistoricos().getListado().get(0);
-		
-		//comprobamos que las modificaciones se hayan realizado
+		registroHistoricoRecuperado = (RegistroHistorico) repositorio.resultadosRegistrosHistoricos().getListado()
+				.get(0);
+
+		// comprobamos que las modificaciones se hayan realizado
 		Assert.assertTrue(registroHistoricoRecuperado.getListaDePOIs().get(0).equals(local2));
 		Assert.assertTrue(registroHistoricoRecuperado.getListaDePOIs().get(1).equals(banco2));
 		Assert.assertTrue(registroHistoricoRecuperado.getUserID() == 11);
@@ -103,13 +101,13 @@ public class TestRegistroHistoricoPersistencia {
 		Assert.assertTrue(registroHistoricoRecuperado.getTime().equals(new DateTime(2016, 12, 19, 0, 0)));
 	}
 
-	 @After
-	 public void outtro() {
-	 repositorio.remove(registroHistoricoRecuperado);
-	 repositorio.remove(banco1);
-	 repositorio.remove(banco2);
-	 repositorio.remove(local1);
-	 repositorio.remove(local2);
-	
-	 }
+	@After
+	public void outtro() {
+		repositorio.remove(registroHistoricoRecuperado);
+		repositorio.remove(banco1);
+		repositorio.remove(banco2);
+		repositorio.remove(local1);
+		repositorio.remove(local2);
+
+	}
 }

@@ -4,8 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.InstanceCreator;
 
-import ar.edu.utn.dds.grupouno.db.poi.Item_Borrar;
-
+import ar.edu.utn.dds.grupouno.abmc.poi.Item_Borrar;
 
 @SuppressWarnings("rawtypes")
 public class ItemBorrarConstructor implements InstanceCreator {
