@@ -42,7 +42,7 @@ public class AuthAPI {
 	private List<Rol> roles;
 
 	public List<Accion> getAcciones() {
-		return acciones;
+		return Repositorio.getInstance().usuarios().getListadoAcciones();
 	}
 	
 	public List<Rol> getRoles() {
@@ -182,7 +182,7 @@ public class AuthAPI {
 					e.printStackTrace();
 					return null;
 				}
-				DB_Sesiones.getInstance().agregarTokenUser(token, user);
+				Repositorio.getInstance().sesiones().agregarSesion(token, user);
 				return token;
 			}
 		}
@@ -192,7 +192,7 @@ public class AuthAPI {
 
 	public void cerrarSesion(String user, String token) {
 
-		DB_Sesiones.getInstance().removerTokenUser(token, user);
+		Repositorio.getInstance().sesiones().removerSesion(token, user);
 	}
 
 	public String hashear(String string) throws NoSuchAlgorithmException {
@@ -215,7 +215,7 @@ public class AuthAPI {
 
 	public Boolean validarToken(String token) {
 
-		if (DB_Sesiones.getInstance().validarToken(token) != null) {
+		if (token != null && Repositorio.getInstance().sesiones().validarToken(token) != null) {
 			return true;
 		}
 
