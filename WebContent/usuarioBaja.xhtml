@@ -14,8 +14,8 @@
 			<p:panel id="panel" header="Busqueda">
 				<h:form>
 					<p:outputPanel deferred="true">
-						<h3>Baja POI</h3>
-						<p>Nombre</p>
+						<h3>Baja Usuario</h3>
+						<p>Nombre de Usuario</p>
 					</p:outputPanel>
 				</h:form>
 				<h:dataTable value="#{busquedaBean.items}" var="item" id="table">
@@ -41,7 +41,7 @@
 					</p:column>
 				</p:dataTable>
 			<p:commandButton value="Volver atràs" update="panel"
-					action="abmpois"/>
+					action="abmusuarios"/>
 			</p:panel>
 		</h:form>
 	</ui:define>
