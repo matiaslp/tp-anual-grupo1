@@ -51,10 +51,11 @@ public class LoginBean {
 		UsuariosFactory fact = new UsuariosFactory();
 		Usuario admin = fact.crearUsuario("admin", "pass", "ADMIN");
 		Usuario terminal = fact.crearUsuario("terminal", "pass", "TERMINAL");
+		
 		if ((Repositorio.getInstance().usuarios().getUsuarioByName("admin")) == null) {
-	           Repositorio.getInstance().usuarios().persistir(admin);
-	           Repositorio.getInstance().usuarios().persistir(terminal);
-	}
+            Repositorio.getInstance().usuarios().persistir(admin);
+            Repositorio.getInstance().usuarios().persistir(terminal);
+		}
 		//-------------------------
 		
 		//creacion de registros historicos terminal 
