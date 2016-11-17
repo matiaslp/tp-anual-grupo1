@@ -44,6 +44,7 @@ public class AuthAPI {
 	private List<Rol> roles;
 
 	public List<Accion> getAcciones() {
+		acciones = Repositorio.getInstance().usuarios().getListadoAcciones();
 		return acciones;
 
 	}
