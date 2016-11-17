@@ -2,6 +2,7 @@ package ar.edu.utn.dds.grupouno.procesos;
 
 import java.io.File;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,6 +12,7 @@ import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncActualizacionLocalesComerciales;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class TestActualizarLocalComercial {
@@ -42,6 +44,22 @@ public class TestActualizarLocalComercial {
 		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance().
 				getAccion("actualizacionLocalesComerciales");
 		funcion.actualizarLocales(admin, tokenAdmin, 0, false, filePath);
+		
+		//Busco las modificaciones para corroborar que se corrio correctamente
+		POI local2Actualizado = repositorio.pois().getPOIbyNombre("local2").get(0);
+		POI local3Actualizado = repositorio.pois().getPOIbyNombre("local3").get(0);
+		POI local4Actualizado = repositorio.pois().getPOIbyNombre("local4").get(0);
+		
+		//Compruebo que el local 2 y 3 hayan sido creados:
+		Assert.assertNotNull(local2Actualizado);
+		Assert.assertNotNull(local3Actualizado);
+		
+		//Compruebo que los locales 2 y 3 se hayan creado correctamente:
+		Assert.assertTrue(local2Actualizado.compararEtiquetas(local2));
+		Assert.assertTrue(local3Actualizado.compararEtiquetas(local3));
+		
+		//Compruebo que el local 4 se actualizo correctamente:
+		Assert.assertTrue(local4Actualizado.compararEtiquetas(local4));
 	}
 	
 	private void initLocales(){

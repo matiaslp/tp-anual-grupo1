@@ -16,7 +16,7 @@ import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 
 public class ProcesoHandler {
 	
-	public void ejecutarProceso(Usuario usuario, Proceso proceso) throws SchedulerException, InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException{
+	public static void ejecutarProceso(Usuario usuario, Proceso proceso) throws SchedulerException, InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException{
 		
 		ResultadoProceso resultadoProceso = new ResultadoProceso();
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
