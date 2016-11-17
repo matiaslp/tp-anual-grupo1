@@ -9,8 +9,8 @@ import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.procesos.Proceso;
 import ar.edu.utn.dds.grupouno.procesos.ProcesoMultiple;
+import ar.edu.utn.dds.grupouno.quartz.Proceso;
 @Entity
 public class FuncMultiple extends Accion {
 

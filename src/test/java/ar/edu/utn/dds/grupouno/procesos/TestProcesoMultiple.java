@@ -23,7 +23,7 @@ import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
-import ar.edu.utn.dds.grupouno.procesos.Proceso;
+import ar.edu.utn.dds.grupouno.quartz.Proceso;
 
 public class TestProcesoMultiple {
 

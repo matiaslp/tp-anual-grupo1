@@ -4,9 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.DatatypeConverter;
@@ -25,7 +23,6 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedaPorU
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedasPorFecha;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
 import ar.edu.utn.dds.grupouno.db.DB_Sesiones;
-import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class AuthAPI {

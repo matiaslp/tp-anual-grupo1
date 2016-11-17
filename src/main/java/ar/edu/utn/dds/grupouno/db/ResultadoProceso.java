@@ -1,22 +1,20 @@
 package ar.edu.utn.dds.grupouno.db;
 
+import java.time.ZonedDateTime;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.joda.time.DateTime;
-
 import ar.edu.utn.dds.grupouno.modelo.Persistible;
-import ar.edu.utn.dds.grupouno.procesos.Proceso;
 import ar.edu.utn.dds.grupouno.procesos.TiposProceso;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "ResultadoProceso")
 public class ResultadoProceso extends Persistible{
 
-	private DateTime inicioEjecucion;
-	private DateTime finEjecucion;
+	private ZonedDateTime inicioEjecucion;
+	private ZonedDateTime finEjecucion;
 	TiposProceso proc;
 	private long userID;
 	Resultado resultado;
@@ -38,22 +36,21 @@ public class ResultadoProceso extends Persistible{
 		this.proc = p;
 	}
 
-	public DateTime getInicioEjecucion() {
+	public ZonedDateTime getInicioEjecucion() {
 		return inicioEjecucion;
 	}
 
-	public void setInicioEjecucion(DateTime inicioEjecucion) {
+	public void setInicioEjecucion(ZonedDateTime inicioEjecucion) {
 		this.inicioEjecucion = inicioEjecucion;
 	}
 
-	public DateTime getFinEjecucion() {
+	public ZonedDateTime getFinEjecucion() {
 		return finEjecucion;
 	}
 
-	public void setFinEjecucion(DateTime finEjecucion) {
+	public void setFinEjecucion(ZonedDateTime finEjecucion) {
 		this.finEjecucion = finEjecucion;
 	}
-
 
 	public long getUserID() {
 		return userID;
@@ -81,7 +78,7 @@ public class ResultadoProceso extends Persistible{
 
 	// Si el id no se desea setear, el mismo es generado internamente
 	// al colocar el paramentro en cero
-	public ResultadoProceso(DateTime inicioEjecucion, DateTime finEjecucion, TiposProceso p, long userID,
+	public ResultadoProceso(ZonedDateTime inicioEjecucion, ZonedDateTime finEjecucion, TiposProceso p, long userID,
 			String mensajeError, Resultado unResultado) {
 		super();
 		this.inicioEjecucion = inicioEjecucion;
@@ -93,7 +90,7 @@ public class ResultadoProceso extends Persistible{
 	}
 
 	public ResultadoProceso(){
-		
+		super();
 	}
 
 }
