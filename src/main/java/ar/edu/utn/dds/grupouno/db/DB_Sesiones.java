@@ -1,49 +1,71 @@
 package ar.edu.utn.dds.grupouno.db;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import javax.persistence.EntityManager;
 
-public class DB_Sesiones extends Persistible {
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
-	private Map<String, String> listaSesiones;
-	
-	private static DB_Sesiones instance = null;
-	
-	public DB_Sesiones() {
-		setDiccionarioTokenUser(new HashMap<String, String>());
+public class DB_Sesiones extends Repositorio {
+
+	public DB_Sesiones(EntityManager em) {
+		super(em);
+	}
+
+
+	public List<Sesion> getDiccionarioTokenUser() {
+		return (ArrayList<Sesion>) em.createNamedQuery("Sesion.findAll").getResultList();
 	}
 	
-	public static DB_Sesiones getInstance() {
-		if (instance == null) {
-			instance = new DB_Sesiones();
-		}
-		return instance;
+	public List<Sesion> getSesionbyUser(String nombre) {
+
+		List<Sesion> sesiones = null;
+		sesiones = em.createNamedQuery("Sesion.getSesionbyUser").setParameter("susername", "%" + nombre + "%").getResultList();
+		return sesiones;
 	}
 	
-	public Map<String, String> getDiccionarioTokenUser() {
-		return listaSesiones;
+	public String validarToken(String nombre) {
+
+		return (String)em.createNamedQuery("Sesion.validarToken").setParameter("stoken", "%" + nombre + "%").getResultList().get(0);
+	}
+
+
+	//per
+	public boolean agregarSesion(String token, String user){
+		Sesion sesion = new Sesion(token,user);
+		 try {
+		em.getTransaction().begin();
+		em.persist(sesion);
+		em.getTransaction().commit();
+		return true;
+		 } catch (Exception ex) {
+		 em.getTransaction().rollback();
+		 return false;
+		 }
+	}
+	//per
+	public void removerSesion(Sesion sesion) {
+		em.getTransaction().begin();
+		em.remove(sesion);
+		em.getTransaction().commit();
 	}
 	
-	public void setDiccionarioTokenUser(Map<String, String> diccionarioTokenUser) {
-		this.listaSesiones = diccionarioTokenUser;
+	public void removerSesion(String token, String user) {
+		em.getTransaction().begin();
+		Sesion sesion = (Sesion)em.createNamedQuery("Sesion.getSesionbyUserAndToken")
+		.setParameter("susername", "%" + user + "%")
+		.setParameter("stoken", token)
+		.getResultList().get(0);
+		em.remove(sesion);
+		em.getTransaction().commit();
 	}
-	
-	public void agregarTokenUser(String token, String user){
-		listaSesiones.put(token, user);
-	}
-	
-	public void removerTokenUser(String token, String user) {
-		listaSesiones.remove(token, user);
-	}
-	
+	//per
 	public void removerSesiones(String user) {
-		while (listaSesiones.values().remove(user));
-	}
-	
-	public String validarToken(String token){
-		return listaSesiones.get(token);
+		List<Sesion> sesiones = this.getSesionbyUser(user);
+		for (Sesion sesion: sesiones)
+			removerSesion(sesion);
+		
 	}
 	
 }
