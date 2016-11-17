@@ -14,6 +14,7 @@ import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.procesos.ActualizacionLocalesComerciales;
 import ar.edu.utn.dds.grupouno.quartz.Proceso;
 import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
+@SuppressWarnings("serial")
 @Entity
 public class FuncActualizacionLocalesComerciales extends Accion {
 
