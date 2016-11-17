@@ -6,14 +6,9 @@ bin/
 bin/*
 target/
 build/
-.metadata/
-.settings/
-.settings/*
-.metadata/*
 target/*
 build/*
 .classpath
 .classpath/
 .classpath/*
-.project
 .tern-project
