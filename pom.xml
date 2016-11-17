@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.2.0.Final</version>
+			<version>5.2.4.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.uqbar-project</groupId>
@@ -77,13 +77,27 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
-			<version>5.0.4.Final</version>
+			<version>5.2.4.Final</version>
 		</dependency>
         <dependency>
               <groupId>org.mongodb.morphia</groupId>
               <artifactId>morphia</artifactId>
               <version>1.2.1</version>
         </dependency>
+		
+		<dependency>
+				<groupId>org.javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>3.22.0-CR1</version>
+		</dependency>
+		
+		<dependency>
+				<groupId>javax.enterprise</groupId>
+				<artifactId>cdi-api</artifactId>
+				<version>2.0-EDR2</version>
+		</dependency>
+		
+<dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-entitymanager</artifactId> <version>5.2.4.Final</version> </dependency>
 	</dependencies>
 </project>
 

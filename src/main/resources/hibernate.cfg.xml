@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_mapping">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/puntosdeinteres</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">mysqlMY2#</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.discriminator.ignore_explicit_for_joined">false</property>
+    <property name="show_sql">false</property>   
+    <property name="connection.pool_size">100</property>
+    
+    
+    	<mapping class="ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.modelo.Persistible"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.ResultadoProceso"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.Usuario"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.Rol"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.Accion"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.poi.POI"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.poi.Banco"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.poi.CGP"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.poi.LocalComercial"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.poi.Etiqueta"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.poi.NodoServicio"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.poi.Rubro"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.geolocation.GeoLocation"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.procesos.Proceso"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.db.RegistroHistorico"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncActualizacionLocalesComerciales"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncBusquedaPOI"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoAuditoria"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoGenerarLog"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoMail"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncCambiarEstadoNotificarBusquedaLarga"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncMultiple"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncObtenerInfoPOI"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedaPorUsuario"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedasPorFecha"></mapping>
+		<mapping class="ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteCantidadResultadosPorTerminal"></mapping>
+
+    
+       
+  </session-factory>
+</hibernate-configuration>

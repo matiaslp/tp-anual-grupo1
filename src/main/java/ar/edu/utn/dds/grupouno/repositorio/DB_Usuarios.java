@@ -146,6 +146,7 @@ public class DB_Usuarios extends Repositorio {
 	}
 
 	public void persistirAccion(Accion accion) {
+		em.getTransaction().begin();
 		Set<Rol> roles = accion.getRoles();
 		accion.setRoles(new HashSet<Rol>());
 		// Adding manually (using your cascade ALL)
@@ -156,10 +157,11 @@ public class DB_Usuarios extends Repositorio {
 					Rol rolPersisted = em.merge(rol);
 					accion.setRol(rolPersisted);
 				} else {
-					this.persistir(rol);// I don't exist persist
+					em.persist(rol);// I don't exist persist
 					accion.setRol(rol);
 				}
 		}
 		em.merge(accion);
+		em.getTransaction().commit();
 	}
 }

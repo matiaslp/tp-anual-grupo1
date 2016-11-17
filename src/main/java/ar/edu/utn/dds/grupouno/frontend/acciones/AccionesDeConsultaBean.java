@@ -25,9 +25,13 @@ public class AccionesDeConsultaBean {
 				.get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
 		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
-		accionesParaSeleccionar = (List<Accion>) AuthAPI.getInstance().getAcciones();
-	}
-
+	
+		
+		 for (Accion unaAccion:AuthAPI.getInstance().getAcciones()){
+			 accionesParaSeleccionar.add(unaAccion);
+		 }
+    }
+	
 	public List<Accion> getAccionesParaSeleccionar() {
 		return accionesParaSeleccionar;
 	}

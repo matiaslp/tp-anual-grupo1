@@ -1,15 +1,23 @@
 package ar.edu.utn.dds.grupouno.frontend.busqueda;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import ar.edu.utn.dds.grupouno.abmc.Busqueda;
+import ar.edu.utn.dds.grupouno.abmc.consultaExterna.BusquedaDePOIsExternos;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+
+
+
+
 @ManagedBean
 @ViewScoped
-public class BusquedaBean {
+public class BusquedaBean  {
 	private int dataTableSize = 1;
 	private String textoLibre;
 	private List<Item> items;
@@ -56,5 +64,15 @@ public class BusquedaBean {
 		items.add(new Item());
 
 	}
+
+	public void buscar(){
+	String textoBusqueda = "";
+	for(int i = 1; i <= this.getItems().size(); i++){
+		textoBusqueda = textoBusqueda + " " + this.getItems().get(i).getValue();
+	}
+	
+	
+	}
+
 
 }

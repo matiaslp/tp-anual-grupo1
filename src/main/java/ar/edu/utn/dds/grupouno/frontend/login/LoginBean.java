@@ -6,17 +6,30 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
+
+import org.joda.time.DateTime;
+
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
+
+
+import ar.edu.utn.dds.grupouno.repositorio.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.repositorio.DB_Usuarios;
+
 
 @ManagedBean
 @SessionScoped
 public class LoginBean {
 	private String usuario;
 	private String contrasena;
-
+	
+	//creacion de registros historicos terminal 
+	private DB_HistorialBusquedas historial;
+	//..
+	
 	public String getUsuario() {
 		return usuario;
 	}
@@ -38,10 +51,27 @@ public class LoginBean {
 		Severity severity = FacesMessage.SEVERITY_INFO;
 		// testTTTTTTTTTTTTTTTTTTT
 		UsuariosFactory fact = new UsuariosFactory();
-		fact.crearUsuario("admin", "pass", "ADMIN");
-		fact.crearUsuario("terminal", "pass", "TERMINAL");
-		// -------------------------
-		// obtenemos usuario
+		Usuario admin = fact.crearUsuario("admin", "pass", "ADMIN");
+		Usuario terminal = fact.crearUsuario("terminal", "pass", "TERMINAL");
+		
+		if ((Repositorio.getInstance().usuarios().getUsuarioByName("admin")) == null) {
+            Repositorio.getInstance().usuarios().persistir(admin);
+            Repositorio.getInstance().usuarios().persistir(terminal);
+		}
+		//-------------------------
+		
+		//creacion de registros historicos terminal 
+		
+		//historial = DB_HistorialBusquedas.getInstance();
+		/*DateTime time = new DateTime(2016, 1, 1, 1, 1);
+		RegistroHistorico registro = new RegistroHistorico(0, time
+		, DB_Usuarios.getInstance().getUsuarioByName("terminal").getID(), "busqueda1", 10, 5);
+		
+		historial.agregarHistorialBusqueda(registro);
+		//..*/
+		
+		//obtenemos usuario
+
 		String token = AuthAPI.getInstance().iniciarSesion(usuario, contrasena);
 		if (token != null) {
 			Usuario user = Repositorio.getInstance().usuarios().getUsuarioByName(usuario);

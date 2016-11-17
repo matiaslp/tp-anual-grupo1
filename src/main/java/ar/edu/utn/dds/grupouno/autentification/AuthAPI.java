@@ -25,13 +25,15 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteCantidadResu
 import ar.edu.utn.dds.grupouno.repositorio.DB_Sesiones;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
+
 public class AuthAPI {
 
 	private static AuthAPI instance = null;
 
 	public static AuthAPI getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new AuthAPI();
+		}
 		return instance;
 	}
 
@@ -39,7 +41,9 @@ public class AuthAPI {
 	private List<Rol> roles;
 
 	public List<Accion> getAcciones() {
+		acciones = Repositorio.getInstance().usuarios().getListadoAcciones();
 		return acciones;
+
 	}
 
 	public List<Rol> getRoles() {
