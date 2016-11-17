@@ -49,6 +49,7 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			
 			// Obtengo del contexto el usuario y el resultado de proceso.
 			usuario = (Usuario)schedulerContext.get("Usuario");
+			
 			resultado = (ResultadoProceso)schedulerContext.get("ResultadoProceso");
 						
 			resultado.setUserID(usuario.getId());
@@ -56,7 +57,7 @@ public class ActualizacionLocalesComerciales extends Proceso {
 		
 		} catch (SchedulerException excepcion) {
 			excepcion.printStackTrace();
-        } 
+        }
 		
 		if((locales = parsearArchivo(filePath)) != null){
 			boolean resultadoActualizar = actualizar(locales);
@@ -71,6 +72,7 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("No existe el archio " + filePath);
 		}
+
 	}
 	
 	public boolean actualizar(Map<String, String[]> locales) {

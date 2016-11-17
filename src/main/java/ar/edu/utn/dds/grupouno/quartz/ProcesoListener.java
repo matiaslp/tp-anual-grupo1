@@ -2,6 +2,7 @@ package ar.edu.utn.dds.grupouno.quartz;
 
 import org.joda.time.DateTime;
 import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -28,8 +29,6 @@ public abstract class ProcesoListener implements JobListener {
 	// Las subclases concretas que hereden de esta clase abstracta deben implementar este método
 	protected abstract void rollback(Usuario usuario);
 	
-	private int reintento = 0;
-	
 	@Override
 	public void jobToBeExecuted(JobExecutionContext context) {
 		// Cargo la fecha de inicio del Job.
@@ -52,6 +51,8 @@ public abstract class ProcesoListener implements JobListener {
 		SchedulerContext contextoScheduler = null;
 		ResultadoProceso resultado = null;
 		
+		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+		
 		try {
 			scheduler = context.getScheduler();
 			contextoScheduler = scheduler.getContext();
@@ -69,16 +70,15 @@ public abstract class ProcesoListener implements JobListener {
 		if (jobException != null) {
 			Usuario usuario = (Usuario) contextoScheduler.get("Usuario");
 			
-			if((boolean)contextoScheduler.get("enviarMail")){
+			if(dataMap.getBoolean("enviarMail")){
 				EnviarEmail.mandarCorreoProcesoError(usuario,resultado);
 			}
 			
-			int cantRepeticiones = (int)contextoScheduler.get("cantRepeticiones");
-			
 			// Mientras que la cant de reitentos no alcanze la cantidad seteada por el usuario
 			// el job se seguira re disparando.
-			if(cantRepeticiones > 0 && cantRepeticiones > reintento){
-				reintento++;
+			int reintento = dataMap.getInt("reintentosCont");
+			if(dataMap.getInt("reintentosMax") > reintento){
+				dataMap.put("reintentosCont", reintento++);
 				jobException.refireImmediately();
 			} else {
 				rollback(usuario);
