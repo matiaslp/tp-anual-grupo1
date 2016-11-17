@@ -12,7 +12,18 @@
 	<ui:define name="content">
 	    <h:form>
 			<p:panel id="panel" header="Proceso Multiple">
+				<p:messages id="msgs" />
+				<h:panelGrid columns="1" cellpadding="5" style="width:50%" layout="grid">
+					
+
+					
+					</h:panelGrid>
+			<p:commandButton value="Agregar Acciones" update="panel"
+					action="pMProcesses"/>
+			<p:commandButton value="Volver atràs" update="panel"
+					action="processes"/>
 			</p:panel>
+			
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+	    <h:form>
+			<p:panel id="panel" header="ABM POIS">
+				<p:messages id="msgs" />
+				<h:panelGrid columns="1" cellpadding="5" style="width:50%" layout="grid">
+					
+					<p:commandButton value="ALTA" style="width:100%" update="panel"
+						action="poisAlta" />
+					<p:commandButton value="BAJA" style="width:100%" update="panel"
+						action="poisBaja" />
+					<p:commandButton value="MODIFICACION"  style="width:100% " update="panel"
+						action="poisModificacionA"/>
+					
+					</h:panelGrid>
+			<p:commandButton value="Volver atràs" update="panel"
+					action="welcome"/>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+<h:form>
+	<p:panel id="panel9" header="Modificacion Usuario">
+				<p:messages id="msgs" />
+    <h:panelGrid columns="2" cellpadding="5">
+        <p:outputLabel for="Nombre" value="Nombre: " />
+        <p:inputMask id="Nombre" value="#{altaUsuariosMaskView.nombre}" />
+
+        <h:outputText value="auditoriaActivada " />
+        <p:selectBooleanButton id="value1" value="#{selectBooleanView.value1}" onLabel="Yes" offLabel="No" style="width:60px" />
+ 
+
+        <p:outputLabel for="correo" value="correo:" />
+        <p:inputMask id="correo" value="#{altaUsuariosMaskView.correo}" />
+  
+        <p:outputLabel for="mailHabilitado" value="mailHabilitado:" />
+        <p:inputMask id="mailHabilitado" value="#{altaUsuariosMaskView.mailHabilitado}" />
+  
+        <p:outputLabel for="notificacionesActivadas" value="notificacionesActivadas:" />
+        <p:inputMask id="notificacionesActivadas" value="#{altaUsuariosMaskView.notificacionesActivadas}" />
+  
+        <p:outputLabel for="password" value="password:" />
+        <p:inputMask id="password" value="#{altaUsuariosMaskView.password}" />
+  
+        <p:outputLabel for="username" value="username:" />
+        <p:inputMask id="username" value="#{altaUsuariosMaskView.username}" />
+  
+        <p:outputLabel for="rol" value="rol:" />
+        <p:inputMask id="rol" value="#{altaUsuariosMaskView.rol}" />
+  
+        		
+
+    
+
+
+
+	    <p:commandButton value="Resetiar" type="reset" />
+        <p:commandButton value="Agregar" update="panel9" action="#{altaUsuariosMaskView.altaUsuario}"/>
+    </h:panelGrid>
+
+    			<p:commandButton value="Volver atràs" update="panel9"	action="abmusuarios"/>
+
+    </p:panel>
+       
+
+</h:form>
+	</ui:define>
+</ui:composition>
+</html>

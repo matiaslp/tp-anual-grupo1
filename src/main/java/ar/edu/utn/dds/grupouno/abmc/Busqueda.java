@@ -10,6 +10,8 @@ import org.json.JSONException;
 
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 
+
+
 public interface Busqueda {
 
 	public ArrayList<POI> buscar(String url, String texto, long userID)

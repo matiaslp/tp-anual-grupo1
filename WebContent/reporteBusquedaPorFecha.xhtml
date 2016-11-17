@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+		
+		
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+
+	<ui:define name="content">
+	    <h:form>
+			<p:panel id="panel" header="Reporte Busqueda Por Fecha">
+			
+			<p:dataTable var="car" value="#{dtBasicView.cars}">
+    		<p:column headerText="ID Terminal">
+        		<h:outputText value="#{car.id}" />
+    		</p:column>
+ 
+    		<p:column headerText="Cantidad De Resultados">
+        		<h:outputText value="#{car.year}" />
+    		</p:column>
+ 
+
+			</p:dataTable>
+			
+			<p:commandButton value="Volver atràs" update="panel"
+					action="reportes"/>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
