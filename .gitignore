@@ -12,3 +12,6 @@ build/*
 .classpath/
 .classpath/*
 .tern-project
+.settings
+.settings/
+.settings/*
