@@ -50,6 +50,7 @@ public class AuthAPI {
 	}
 
 	public List<Rol> getRoles() {
+		roles = Repositorio.getInstance().usuarios().getListadoRoles();
 		return roles;
 	}
 
