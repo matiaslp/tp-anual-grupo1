@@ -26,21 +26,21 @@ public class FuncBajaPOIs extends Accion {
 		
 	}
 	
-	public void darDeBajaPOI(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail, 
-			String filePath) {
-		if (validarsesion(user, Token)) {
-			BajaPOIs proceso = new BajaPOIs(cantidadReintentos, enviarEmail, user, filePath);
-			proceso.execute();
-		}
-	}
-
-	// creacion Proceso para agregar a la lista en Proceso Multiple
-	public Proceso prepDarDeBajaPOI(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail, 
-			String filePath) {
-		if (validarsesion(user, Token)) {
-			return new BajaPOIs(cantidadReintentos, enviarEmail, user, filePath);
-		} else
-			return null;
-	}
+//	public void darDeBajaPOI(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail, 
+//			String filePath) {
+//		if (validarsesion(user, Token)) {
+//			BajaPOIs proceso = new BajaPOIs(cantidadReintentos, enviarEmail, user, filePath);
+//			proceso.execute();
+//		}
+//	}
+//
+//	// creacion Proceso para agregar a la lista en Proceso Multiple
+//	public Proceso prepDarDeBajaPOI(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail, 
+//			String filePath) {
+//		if (validarsesion(user, Token)) {
+//			return new BajaPOIs(cantidadReintentos, enviarEmail, user, filePath);
+//		} else
+//			return null;
+//	}
 
 }

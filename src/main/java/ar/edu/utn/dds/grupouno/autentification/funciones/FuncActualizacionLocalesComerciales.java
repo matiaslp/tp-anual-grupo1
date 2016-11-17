@@ -29,26 +29,26 @@ public class FuncActualizacionLocalesComerciales extends Accion {
 		
 	}
 
-	public void actualizarLocales(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			String filePath) {
-		if (validarsesion(user, Token)) {
-			ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales();
-			try {
-				ProcesoHandler.ejecutarProceso(user, proceso);
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException 
-					| SchedulerException | InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	// creacion Proceso para agregar a la lista en Proceso Multiple
-	public Proceso prepAgregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			String filePath) {
-		if (validarsesion(user, Token)) {
-			return new ActualizacionLocalesComerciales(cantidadReintentos, enviarEmail, filePath, user);
-		} else
-			return null;
-	}
+//	public void actualizarLocales(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
+//			String filePath) {
+//		if (validarsesion(user, Token)) {
+//			ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales();
+//			try {
+//				ProcesoHandler.ejecutarProceso(user, proceso);
+//			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException 
+//					| SchedulerException | InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+//
+//	// creacion Proceso para agregar a la lista en Proceso Multiple
+//	public Proceso prepAgregarAcciones(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
+//			String filePath) {
+//		if (validarsesion(user, Token)) {
+//			return new ActualizacionLocalesComerciales(cantidadReintentos, enviarEmail, filePath, user);
+//		} else
+//			return null;
+//	}
 
 }
