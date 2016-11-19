@@ -16,3 +16,5 @@ build/*
 .settings/
 .settings/*
 .metadata
+WebContent/META-INF/*
+META-INF/

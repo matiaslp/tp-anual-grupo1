@@ -19,6 +19,7 @@ import ar.edu.utn.dds.grupouno.abmc.Busqueda;
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.BusquedaDePOIsExternos;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
@@ -37,10 +38,17 @@ public class BusquedaBean {
 	// }
 
 	// private List<Item> items;
-	private List<POI> pois = null;
+	private List<POI> pois = new ArrayList<POI>();
+	
 	String ServicioAPI = "http://trimatek.org/Consultas/";
 
 	public BusquedaBean() {
+		POI unBanco = new Banco("UnBanco",1,2);
+		unBanco.setBarrio("unBarrio");
+		pois.add(unBanco);
+		POI unBanco1 = new Banco("aaa",1,2);
+		unBanco1.setBarrio("aaa");
+		pois.add(unBanco1);
 		// items = new ArrayList<Item>();
 		// items.add(new Item());
 	}
