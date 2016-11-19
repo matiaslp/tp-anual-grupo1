@@ -25,28 +25,28 @@ import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 @ManagedBean
 @ApplicationScoped
 public class BusquedaBean {
-//	private int dataTableSize = 1;
+	// private int dataTableSize = 1;
 	private String textoLibre;
 	String item;
-//	public String getItem() {
-//		return item;
-//	}
+	// public String getItem() {
+	// return item;
+	// }
 
-//	public void setItem(String item) {
-//		this.item = item;
-//	}
+	// public void setItem(String item) {
+	// this.item = item;
+	// }
 
-//	private List<Item> items;
+	// private List<Item> items;
 	private List<POI> pois = null;
 	String ServicioAPI = "http://trimatek.org/Consultas/";
 
 	public BusquedaBean() {
-//		items = new ArrayList<Item>();
-//		items.add(new Item());
+		// items = new ArrayList<Item>();
+		// items.add(new Item());
 	}
 
-//	@ManagedProperty("#{poiService}")
-//	private PoiService service;
+	// @ManagedProperty("#{poiService}")
+	// private PoiService service;
 
 	/*
 	 * @PostConstruct public void init() throws JSONException,
@@ -54,18 +54,17 @@ public class BusquedaBean {
 	 * service.busquedaPois(textoLibre,usuario); }
 	 */
 
-//	public void setService(PoiService service) {
-//		this.service = service;
-//	}
+	// public void setService(PoiService service) {
+	// this.service = service;
+	// }
 
 	public String getTextoLibre() {
 		return textoLibre;
 	}
-	
-	
 
 	public List<POI> getPois() {
 		return pois;
+
 	}
 
 	public void setPois(List<POI> pois) {
@@ -76,47 +75,52 @@ public class BusquedaBean {
 		this.textoLibre = textoLibre;
 	}
 
-//	public List<Item> getItems() {
-//		
-//		
-//		
-//		return items;
-//	}
-//
-//	public void setItems(List<Item> pois) {
-//		this.items = pois;
-//	}
-//
-//	public PoiService getService() {
-//		return service;
-//	}
+	// public List<Item> getItems() {
+	//
+	//
+	//
+	// return items;
+	// }
+	//
+	// public void setItems(List<Item> pois) {
+	// this.items = pois;
+	// }
+	//
+	// public PoiService getService() {
+	// return service;
+	// }
 
-//	public void add() {
-//		items.add(new Item());
-//
-//	}
-	
-	
+	// public void add() {
+	// items.add(new Item());
+	//
+	// }
 
 	public void buscar() {
-//		String textoBusqueda = "";
-//		for (int i = 1; i <= this.getItems().size(); i++) {
-//			textoBusqueda = textoBusqueda + " " + this.getItems().get(i - 1).getValue();
-//		}
-//		textoBusqueda= item;
-		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
+		// String textoBusqueda = "";
+		// for (int i = 1; i <= this.getItems().size(); i++) {
+		// textoBusqueda = textoBusqueda + " " + this.getItems().get(i -
+		// 1).getValue();
+		// }
+		// textoBusqueda= item;
+
+		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
 		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		ArrayList<POI> lstPOI = null;
 		try {
 			lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoLibre, usuario.getId());
+
 		} catch (JSONException | IOException | MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (lstPOI != null && lstPOI.size() > 0){
-			pois.clear();;
+		if (lstPOI != null && lstPOI.size() > 0) {
+
+			pois.clear();
+			;
 			pois.addAll(lstPOI);
+
 		}
 
 	}
