@@ -18,13 +18,17 @@
 						<p>Nombre</p>
 					</p:outputPanel>
 				</h:form>
-				<h:dataTable value="#{busquedaBean.items}" var="item" id="table">
-					<h:column>
-						<h:inputText value="#{item.value}" />
-					</h:column>
-				</h:dataTable>
 				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Modificar" update="table" icon="ui-icon-check" action="poisModificacionB" />
+				<p>Nombre</p>
+				<p:inputText id="textoLibre" value="#{busquedaBean.textoLibre}"
+					required="true">
+					<f:validateLength minimum="3" />
+				</p:inputText>
+				</h:panelGrid>
+
+				
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:commandButton value="Modificar" update="panel" icon="ui-icon-check" action="poisModificacionB" />
 	
 				</h:panelGrid>
 				

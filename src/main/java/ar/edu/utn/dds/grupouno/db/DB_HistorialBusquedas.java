@@ -1,11 +1,14 @@
 package ar.edu.utn.dds.grupouno.db;
 
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+
+import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
@@ -41,7 +44,20 @@ public List<RegistroHistorico> getHistoricobyUserId(Long userID) {
 		resultado = em.createNamedQuery("getHistoricobyUserId").setParameter("ruserid",userID).getResultList();
 		return resultado;
 	}
+
+public List<RegistroHistorico> getHistoricobyEntreFechas(ZonedDateTime desde, ZonedDateTime hasta) {
 	
+	List<RegistroHistorico> resultado = null;
+	resultado = em.createNamedQuery("getHistoricobyEntreFechas").setParameter("desde",desde).setParameter("hasta",hasta).getResultList();
+	return resultado;
+}
+
+public List<RegistroHistorico> getHistoricobyEntreFechasConUserId(ZonedDateTime desde, ZonedDateTime hasta,Long userID) {
+	
+	List<RegistroHistorico> resultado = null;
+	resultado = em.createNamedQuery("getHistoricobyEntreFechasConUserId").setParameter("desde",desde).setParameter("hasta",hasta).setParameter("ruserid",userID).getResultList();
+	return resultado;
+}
 
 	
 	

@@ -38,8 +38,33 @@
         <p:outputLabel for="fechaHasta" value="Fecha Hasta:" />
         <p:calendar id="fechaHasta" value="#{calendarView.date3}" showOn="button" />
      
+     			<h:form>
+     			<p:outputPanel deferred="true">
+						<h3>Resultado</h3>
+				</p:outputPanel>
+				</h:form>
+				<p:dataTable var="USUARIOS" value="#{busquedaBean.pois}">
+					<p:column headerText="FECHA">
+						<h:outputText value="#{POI.nombre}" />
+					</p:column>
+					<p:column headerText="Usuario">
+						<h:outputText value="#{POI.barrio}" />
+					</p:column>
+					<p:column headerText="Parametros">
+						<h:outputText value="#{POI.nombre}" />
+					</p:column>
+					<p:column headerText="POIs">
+						<h:outputText value="#{POI.nombre}" />
+					</p:column>
+				</p:dataTable>
+     
      </h:form>
+     
+     
+     
      <h:panelGrid columns="1" cellpadding="5">   
+             
+             
              
         <p:commandButton value="Buscar" update="display"
          actionListener="#{BusquedaBean.init}"  icon="ui-icon-search" 

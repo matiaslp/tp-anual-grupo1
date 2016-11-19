@@ -26,6 +26,8 @@ import ar.edu.utn.dds.grupouno.modelo.Persistible;
 @Table(name = "HISTORICO")
 @NamedQueries({
 @NamedQuery(name = "getHistoricobyUserId", query = "SELECT r FROM RegistroHistorico r WHERE r.userID = :ruserid"),
+@NamedQuery(name = "getHistoricobyEntreFechas", query = "SELECT r FROM RegistroHistorico r WHERE r.time BETWEEN :desde AND :hasta"),
+@NamedQuery(name = "getHistoricobyEntreFechasConUserId", query = "SELECT r FROM RegistroHistorico r WHERE r.time BETWEEN :desde AND :hasta AND r.userID = :ruserid"),
 @NamedQuery(name = "RegistroHistorico.findAll", query = "SELECT r FROM RegistroHistorico r"),
 @NamedQuery(name = "RegistroHistorico.reporteBusquedasPorFecha", query ="SELECT date(r.time) as fecha,count(r.id) as cantidadBusquedas FROM RegistroHistorico r group by date(r.time)"),
 @NamedQuery(name = "RegistroHistorico.reporteCantidadResultadosPorTerminal", query = "SELECT cantResultados,busqueda FROM RegistroHistorico r WHERE r.userID = :ruserid"),
@@ -38,6 +40,8 @@ public class RegistroHistorico extends Persistible {
 	private String busqueda;
 	private long cantResultados;
 	private double tiempoDeConsulta;
+
+	
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinTable(name = "HISTORICO_POI", joinColumns = { @JoinColumn(name = "historico_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "poi_id") })

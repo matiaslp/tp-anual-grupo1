@@ -26,7 +26,7 @@
 				</h:panelGrid>
 				<h:panelGrid columns="1" cellpadding="5">
 					<p:commandButton value="Buscar"
-						icon="ui-icon-search" action="#{busquedaBean.buscar}" />
+						icon="ui-icon-search" action="#{busquedaBean.buscar}" update="panel" />
 				</h:panelGrid>
 				<h:form>
 					<p:outputPanel deferred="true">
@@ -44,6 +44,9 @@
 				<p:commandButton value="Volver atràs" update="panel"
 					action="welcome" />
 			</p:panel>
+			
+
+			
 		</h:form>
 	</ui:define>
 </ui:composition>
