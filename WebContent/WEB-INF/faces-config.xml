@@ -32,7 +32,7 @@
 	<managed-bean>
 		<managed-bean-name>busquedaBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.BusquedaBean</managed-bean-class>
-		<managed-bean-scope>view</managed-bean-scope>
+		<managed-bean-scope>application</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>basicView</managed-bean-name>

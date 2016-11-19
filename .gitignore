@@ -15,3 +15,4 @@ build/*
 .settings
 .settings/
 .settings/*
+.metadata

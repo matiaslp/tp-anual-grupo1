@@ -18,30 +18,31 @@
 						<p>Nombre</p>
 					</p:outputPanel>
 				</h:form>
-				<h:dataTable value="#{busquedaBean.items}" var="item" id="table">
-					<h:column>
-						<h:inputText value="#{item.value}" />
-					</h:column>
-				</h:dataTable>
-				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Agregar" update="table" icon="ui-icon-check" action="#{busquedaBean.add}" />
-					<p:commandButton value="Buscar" update="panel" icon="ui-icon-search" action="#{busquedaBean.buscar}" />
+				<h:panelGrid columns="1" cellpadding="5">
+				<p:inputText id="textoLibre" value="#{busquedaBean.textoLibre}"
+					required="true">
+					<f:validateLength minimum="3" />
+				</p:inputText>
+				</h:panelGrid>
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:commandButton value="Buscar"
+						icon="ui-icon-search" action="#{busquedaBean.buscar}" />
 				</h:panelGrid>
 				<h:form>
 					<p:outputPanel deferred="true">
 						<h3>Resultado</h3>
 					</p:outputPanel>
 				</h:form>
-				<p:dataTable var="poi" value="#{dtBasicView.poi}">
+				<p:dataTable var="POI" value="#{busquedaBean.pois}">
 					<p:column headerText="Nombre">
-						<h:outputText value="#{poi.nombre}" />
+						<h:outputText value="#{POI.nombre}" />
 					</p:column>
 					<p:column headerText="Direccion">
-						<h:outputText value="#{poi.direccion}" />
+						<h:outputText value="#{POI.barrio}" />
 					</p:column>
 				</p:dataTable>
-			<p:commandButton value="Volver atràs" update="panel"
-					action="welcome"/>
+				<p:commandButton value="Volver atràs" update="panel"
+					action="welcome" />
 			</p:panel>
 		</h:form>
 	</ui:define>
