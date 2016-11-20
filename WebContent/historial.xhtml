@@ -43,18 +43,18 @@
 						<h3>Resultado</h3>
 				</p:outputPanel>
 				</h:form>
-				<p:dataTable var="USUARIOS" value="#{busquedaBean.pois}">
+				<p:dataTable var="RegistroHistorico" value="#{historialBean.listaRH}">
 					<p:column headerText="FECHA">
-						<h:outputText value="#{POI.nombre}" />
+						<h:outputText value="#{RegistroHistorico.time}" />
 					</p:column>
 					<p:column headerText="Usuario">
-						<h:outputText value="#{POI.barrio}" />
+						<h:outputText value="#{RegistroHistorico.userID}" />
 					</p:column>
 					<p:column headerText="Parametros">
-						<h:outputText value="#{POI.nombre}" />
+						<h:outputText value="#{RegistroHistorico.busqueda}" />
 					</p:column>
 					<p:column headerText="POIs">
-						<h:outputText value="#{POI.nombre}" />
+						<h:outputText value="#{RegistroHistorico.cantResultados}" />
 					</p:column>
 				</p:dataTable>
      
@@ -66,44 +66,13 @@
              
              
              
-        <p:commandButton value="Buscar" update="display"
-         actionListener="#{BusquedaBean.init}"  icon="ui-icon-search" 
+        <p:commandButton value="Filtrar" update="display"
+         actionListener="#{HistorialBean.historialBean}"  icon="ui-icon-search" 
        />
         
         <h:outputText id="display" value="#{basicView.text}" />
     </h:panelGrid>
     
-    <h:form>
-    <p:outputPanel deferred="true">
-        <h3>Resultado</h3>
-        
-    </p:outputPanel>
- </h:form>
-    
-<p:dataTable var="poi" value="#{dtBasicView.poi}">
-    <p:column headerText="Fecha">
-        <h:outputText value="#{poi.nombre}" />
-    </p:column>
- 
-    <p:column headerText="Usuario">
-        <h:outputText value="#{poi.direccion}" />
-    </p:column>
-    
-    <p:column headerText="Parametros">
-        <h:outputText value="#{poi.direccion}" />
-    </p:column>
-    
-    <p:column headerText="POIs">
-    <h:outputText value="#{poi.direccion}" />
-    </p:column>
-    
-    <p:column style="width:32px;text-align: center">
-    	<p:commandButton update=":form:poiDetalle" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search" title="View">
-        	<f:setPropertyActionListener value="#{poi}" target="#{dtSelectionView.selectedPOI}" />
-    	</p:commandButton>
-    </p:column>
-    
-</p:dataTable>
     
     <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
         <p:outputPanel id="poiDetalle" style="text-align:center;">
