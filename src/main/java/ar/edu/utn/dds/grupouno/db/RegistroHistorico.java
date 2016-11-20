@@ -4,6 +4,8 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +34,8 @@ import ar.edu.utn.dds.grupouno.modelo.Persistible;
 @NamedQuery(name = "RegistroHistorico.reporteBusquedasPorFecha", query ="SELECT date(r.time) as fecha,count(r.id) as cantidadBusquedas FROM RegistroHistorico r group by date(r.time)"),
 @NamedQuery(name = "RegistroHistorico.reporteCantidadResultadosPorTerminal", query = "SELECT cantResultados,busqueda FROM RegistroHistorico r WHERE r.userID = :ruserid"),
 @NamedQuery(name = "RegistroHistorico.reporteBusquedaPorUsuario", query = "SELECT r.userID,SUM(r.cantResultados) FROM RegistroHistorico r group by r.userID")})
+
+
 public class RegistroHistorico extends Persistible {
 
 	private ZonedDateTime time;

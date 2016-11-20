@@ -3,11 +3,9 @@ package ar.edu.utn.dds.grupouno.frontend.historial;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
-import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;

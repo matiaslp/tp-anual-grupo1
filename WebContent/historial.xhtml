@@ -19,7 +19,7 @@
     </p:outputPanel>
  </h:form>
 	
-    <h:form>
+    <h:form id="formGrid">
      <h:outputLabel for="usuario" value="" style="font-weight:bold" />
      	<p/>
         <p:inputText id="usuario" value="#{BusquedaBean.textoLibre}" >Usuario: 
@@ -38,12 +38,14 @@
         <p:outputLabel for="fechaHasta" value="Fecha Hasta:" />
         <p:calendar id="fechaHasta" value="#{calendarView.date3}" showOn="button" />
      
-     			<h:form>
+     			<h:form >
      			<p:outputPanel deferred="true">
 						<h3>Resultado</h3>
 				</p:outputPanel>
 				</h:form>
-				<p:dataTable var="RegistroHistorico" value="#{historialBean.listaRH}">
+	
+		  	
+				<p:dataTable id="dt" var="RegistroHistorico" value="#{historialBean.listaRH}">
 					<p:column headerText="FECHA">
 						<h:outputText value="#{RegistroHistorico.time}" />
 					</p:column>
@@ -56,9 +58,31 @@
 					<p:column headerText="POIs">
 						<h:outputText value="#{RegistroHistorico.cantResultados}" />
 					</p:column>
+					<p:column headerText="Detalle De Pois">
+                      		<p:dataTable id="detalleDePois" var="POI" value="#{registroHistorico.pois}">
+								<p:column>
+									<h:outputText value="#{POI.nombre}" />
+								</p:column>
+							</p:dataTable>
+        			</p:column>
+					
 				</p:dataTable>
+				
+		
+				
+		  	
+	
+		
      
+		
      </h:form>
+     
+    
+     
+
+     
+     
+     
      
      
      
@@ -90,6 +114,8 @@
 					action="welcome"/>
 			</p:panel> 
 </h:form>
+
+
 
 	</ui:define>
 </ui:composition>
