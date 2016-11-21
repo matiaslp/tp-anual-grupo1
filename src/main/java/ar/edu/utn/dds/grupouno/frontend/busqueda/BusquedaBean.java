@@ -43,14 +43,6 @@ public class BusquedaBean {
 	String ServicioAPI = "http://trimatek.org/Consultas/";
 
 	public BusquedaBean() {
-		POI unBanco = new Banco("UnBanco",1,2);
-		unBanco.setBarrio("unBarrio");
-		pois.add(unBanco);
-		POI unBanco1 = new Banco("aaa",1,2);
-		unBanco1.setBarrio("aaa");
-		pois.add(unBanco1);
-		// items = new ArrayList<Item>();
-		// items.add(new Item());
 	}
 
 	// @ManagedProperty("#{poiService}")
@@ -103,14 +95,7 @@ public class BusquedaBean {
 	//
 	// }
 
-	public void buscar() {
-		// String textoBusqueda = "";
-		// for (int i = 1; i <= this.getItems().size(); i++) {
-		// textoBusqueda = textoBusqueda + " " + this.getItems().get(i -
-		// 1).getValue();
-		// }
-		// textoBusqueda= item;
-		
+	public void buscar() {	
 		pois.clear();
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("username"));
