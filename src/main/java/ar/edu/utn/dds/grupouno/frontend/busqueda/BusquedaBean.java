@@ -110,23 +110,21 @@ public class BusquedaBean {
 		// 1).getValue();
 		// }
 		// textoBusqueda= item;
-
+		
+		pois.clear();
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
 		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		ArrayList<POI> lstPOI = null;
 		try {
-			lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoLibre, usuario.getId());
+			lstPOI = POI_ABMC.getInstance().buscar("", textoLibre, usuario.getId());
 
 		} catch (JSONException | IOException | MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (lstPOI != null && lstPOI.size() > 0) {
-
-			pois.clear();
-			;
 			pois.addAll(lstPOI);
 
 		}
