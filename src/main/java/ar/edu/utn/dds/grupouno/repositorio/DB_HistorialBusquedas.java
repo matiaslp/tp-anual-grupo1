@@ -41,7 +41,8 @@ public class DB_HistorialBusquedas extends Repositorio {
 		// try {
 
 		// nuevoPOI.setId(listadonuevoRegistroHistorico.size() + 1);
-		persistir(nuevoRegistroHistorico);
+		////persistir(nuevoRegistroHistorico);
+		RepoMongo.getInstance().getDatastore().save(nuevoRegistroHistorico);
 		return true;
 		// } catch (Exception ex) {
 		// return false;

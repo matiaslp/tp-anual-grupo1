@@ -49,9 +49,9 @@ public class TestReportes {
 
 		historial = Repositorio.getInstance().resultadosRegistrosHistoricos();
 
-		fact = new UsuariosFactory();
-		fact.crearUsuario("terminal", "123", "TERMINAL");
-		terminal = Repositorio.getInstance().usuarios().getUsuarioByName("terminal");
+//		fact = new UsuariosFactory();
+//		fact.crearUsuario("terminal", "123", "TERMINAL");
+//		terminal = Repositorio.getInstance().usuarios().getUsuarioByName("terminal");
 
 		DateTime time = new DateTime(2016, 1, 1, 1, 1);
 		registro1 = new RegistroHistorico(time, 10, "busqueda1", 10, 5, listaDePOIs);
