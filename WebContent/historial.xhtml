@@ -22,7 +22,7 @@
     <h:form id="formGrid">
      <h:outputLabel for="usuario" value="" style="font-weight:bold" />
      	<p/>
-        <p:inputText id="usuario" value="#{BusquedaBean.textoLibre}" >Usuario: 
+        <p:inputText id="usuario" value="#{historialBean.textBoxUsuarioID}" >Usuario: 
         </p:inputText>
         <p/>
         
@@ -30,13 +30,13 @@
         <p:inputText id="fechaDesde" value="#{HistorialBusqueda.fechaDesde}"> Fecha Desde: 
         </p:inputText> -->
         <p:outputLabel for="fechaDesde" value="Fecha Desde:" />
-        <p:calendar id="fechaDesde" value="#{calendarView.date3}" showOn="button" />
+        <p:calendar id="fechaDesde" value="#{historialBean.textBoxFechaDesde}" showOn="button" />
         
         <!--  De esta forma sin calendario 
         <p:inputText id="fechaHasta" value="#{HistorialBusqueda.fechaHasta}"> Fecha Hasta: 
         </p:inputText> -->
         <p:outputLabel for="fechaHasta" value="Fecha Hasta:" />
-        <p:calendar id="fechaHasta" value="#{calendarView.date3}" showOn="button" />
+        <p:calendar id="fechaHasta" value="#{historialBean.textBoxFechaHasta}" showOn="button" />
      
      			<h:form >
      			<p:outputPanel deferred="true">
@@ -90,8 +90,8 @@
              
              
              
-        <p:commandButton value="Filtrar" update="display"
-         actionListener="#{HistorialBean.historialBean}"  icon="ui-icon-search" 
+        <p:commandButton value="Filtrar" update="panel"
+         actionListener="#{historialBean.buscar}"  icon="ui-icon-search" 
        />
         
         <h:outputText id="display" value="#{basicView.text}" />

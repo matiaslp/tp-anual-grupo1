@@ -103,7 +103,7 @@ public class TestRegistroHistoricoPersistencia {
 		Assert.assertTrue(registroHistoricoRecuperado.getTime().equals(new DateTime(2016, 12, 19, 0, 0)));
 	}
 
-	 @After
+	@After
 	 public void outtro() {
 	 repositorio.remove(registroHistoricoRecuperado);
 	 repositorio.remove(banco1);
