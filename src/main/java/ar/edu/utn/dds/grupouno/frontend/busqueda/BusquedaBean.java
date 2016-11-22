@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -12,9 +13,16 @@ import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
 import org.json.JSONException;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.db.poi.Banco;
+import ar.edu.utn.dds.grupouno.db.poi.CGP;
+import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 @ManagedBean
@@ -22,6 +30,7 @@ import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 public class BusquedaBean {
 	private String textoLibre;
 	private List<POI> pois = new ArrayList<POI>();
+	private POI selectedPoi;
 	String ServicioAPI = "http://trimatek.org/Consultas/";
 
 	public BusquedaBean() {
@@ -42,6 +51,30 @@ public class BusquedaBean {
 
 	public void setTextoLibre(String textoLibre) {
 		this.textoLibre = textoLibre;
+	}
+	
+	public POI getSelectedPoi() {
+		return selectedPoi;
+	}
+	
+	public Banco getSelectedPoiBanco() {
+		return (Banco)selectedPoi;
+	}
+	
+	public CGP getSelectedPoiCGP() {
+		return (CGP)selectedPoi;
+	}
+	
+	public ParadaColectivo getSelectedPoiParadaColectivo() {
+		return (ParadaColectivo)selectedPoi;
+	}
+	
+	public LocalComercial getSelectedPoiLocalComercial() {
+		return (LocalComercial)selectedPoi;
+	}
+
+	public void setSelectedPoi(POI selectedPoi) {
+		this.selectedPoi = selectedPoi;
 	}
 
 	public void buscar() {
@@ -64,5 +97,15 @@ public class BusquedaBean {
 		}
 
 	}
+	
+    public void onRowSelect(SelectEvent event) {
+        FacesMessage msg = new FacesMessage("Poi Selected", Long.toString(((POI) event.getObject()).getId()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+ 
+    public void onRowUnselect(UnselectEvent event) {
+        FacesMessage msg = new FacesMessage("Poi Unselected", Long.toString(((POI) event.getObject()).getId()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 
 }

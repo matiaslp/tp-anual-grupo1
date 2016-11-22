@@ -12,6 +12,7 @@ import ar.edu.utn.dds.grupouno.geolocation.GeoLocation;
 public class ParadaColectivo extends POI {
 
 	long cercania = 100;
+	long linea;
 
 	public long getDistancia() {
 		return cercania;
@@ -19,6 +20,15 @@ public class ParadaColectivo extends POI {
 
 	public void setDistancia(int distancia) {
 		this.cercania = distancia;
+	}
+
+	
+	public long getLinea() {
+		return linea;
+	}
+
+	public void setLinea(long linea) {
+		this.linea = linea;
 	}
 
 	// funcion para saber si la parada de colectivo está disponible
