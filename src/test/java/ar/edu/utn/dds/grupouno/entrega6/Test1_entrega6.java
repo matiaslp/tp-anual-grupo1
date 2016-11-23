@@ -38,7 +38,7 @@ public class Test1_entrega6 {
 			poiDTO_Bco = new POI_DTO();
 			poiDTO_Bco.setTipo(TiposPOI.BANCO);
 			poi_bco = poiDTO_Bco.converttoPOI();
-			poi_bco.setNombre("banco");
+			poi_bco.setNombre("banco2");
 			poi_bco.setBarrio("barrio");
 			poi_bco.setCalleLateral("calleLateral");
 			poi_bco.setCallePrincipal("callePrincipal");
@@ -53,7 +53,7 @@ public class Test1_entrega6 {
 			poi_bco.setLocalidad("nuñez");
 			poi_bco.setNumeracion(1405);
 			poi_bco.setPais("Argentina");
-			poi_bco.setPiso(3);
+			//poi_bco.setPiso(3);
 			poi_bco.setProvincia("CABA");
 			poi_bco.setUnidad("3");
 			poi_bco.setLatitud(-34.5664823);

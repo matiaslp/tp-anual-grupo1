@@ -6,117 +6,85 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	
-  
+
+
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-<h:form>
-<p:panel id="panel" header="Historial de Busquedas Realizadas">
+		<h:form>
+			<p:panel id="panel" header="Historial de Busquedas Realizadas">
 
-<h:form>
-    <p:outputPanel deferred="true">
-        <h3>Criterio de busqueda</h3>
-    </p:outputPanel>
- </h:form>
-	
-    <h:form id="formGrid">
-     <h:outputLabel for="usuario" value="" style="font-weight:bold" />
-     	<p/>
-        <p:inputText id="usuario" value="#{historialBean.textBoxUsuarioID}" >Usuario: 
-        </p:inputText>
-        <p/>
-        
-        <!--  De esta forma sin calendario
+				<h:form>
+					<p:outputPanel deferred="true">
+						<h3>Criterio de busqueda</h3>
+					</p:outputPanel>
+				</h:form>
+				<h:form id="formGrid">
+					<h:outputLabel for="usuario" value="" style="font-weight:bold" />
+					<p />
+					<p:inputText id="usuario" value="#{historialBean.textBoxUsuarioID}">
+					</p:inputText>
+					<p />
+					<!--  De esta forma sin calendario
         <p:inputText id="fechaDesde" value="#{HistorialBusqueda.fechaDesde}"> Fecha Desde: 
         </p:inputText> -->
-        <p:outputLabel for="fechaDesde" value="Fecha Desde:" />
-        <p:calendar id="fechaDesde" value="#{historialBean.textBoxFechaDesde}" showOn="button" />
-        
-        <!--  De esta forma sin calendario 
+					<p:outputLabel for="fechaDesde" value="Fecha Desde:" />
+					<p:calendar id="fechaDesde"
+						value="#{historialBean.textBoxFechaDesde}" showOn="button" />
+					<!--  De esta forma sin calendario 
         <p:inputText id="fechaHasta" value="#{HistorialBusqueda.fechaHasta}"> Fecha Hasta: 
         </p:inputText> -->
-        <p:outputLabel for="fechaHasta" value="Fecha Hasta:" />
-        <p:calendar id="fechaHasta" value="#{historialBean.textBoxFechaHasta}" showOn="button" />
-     
-     			<h:form >
-     			<p:outputPanel deferred="true">
-						<h3>Resultado</h3>
-				</p:outputPanel>
-				</h:form>
-	
-		  	
-				<p:dataTable id="dt" var="RegistroHistorico" value="#{historialBean.listaRH}">
-					<p:column headerText="FECHA">
-						<h:outputText value="#{RegistroHistorico.time}" />
-					</p:column>
-					<p:column headerText="Usuario">
-						<h:outputText value="#{RegistroHistorico.userID}" />
-					</p:column>
-					<p:column headerText="Parametros">
-						<h:outputText value="#{RegistroHistorico.busqueda}" />
-					</p:column>
-					<p:column headerText="POIs">
-						<h:outputText value="#{RegistroHistorico.cantResultados}" />
-					</p:column>
-					<p:column headerText="Detalle De Pois">
-                      		<p:dataTable id="detalleDePois" var="POI" value="#{registroHistorico.pois}">
+					<p:outputLabel for="fechaHasta" value="Fecha Hasta:" />
+					<p:calendar id="fechaHasta"
+						value="#{historialBean.textBoxFechaHasta}" showOn="button" />
+					<h:form>
+						<p:outputPanel deferred="true">
+							<h3>Resultado</h3>
+						</p:outputPanel>
+					</h:form>
+					<p:dataTable id="dt" var="RegistroHistorico"
+						value="#{historialBean.listaRH}">
+						<p:column headerText="FECHA">
+							<h:outputText value="#{RegistroHistorico.time}" />
+						</p:column>
+						<p:column headerText="Usuario">
+							<h:outputText value="#{RegistroHistorico.userID}" />
+						</p:column>
+						<p:column headerText="Parametros">
+							<h:outputText value="#{RegistroHistorico.busqueda}" />
+						</p:column>
+						<p:column headerText="POIs">
+							<h:outputText value="#{RegistroHistorico.cantResultados}" />
+						</p:column>
+						<p:column headerText="Detalle De Pois">
+							<p:dataTable id="detalleDePois" var="POI"
+								value="#{registroHistorico.pois}">
 								<p:column>
 									<h:outputText value="#{POI.nombre}" />
 								</p:column>
 							</p:dataTable>
-        			</p:column>
-					
-				</p:dataTable>
-				
-		
-				
-		  	
-	
-		
-     
-		
-     </h:form>
-     
-    
-     
-
-     
-     
-     
-     
-     
-     
-     <h:panelGrid columns="1" cellpadding="5">   
-             
-             
-             
-        <p:commandButton value="Filtrar" update="panel"
-         actionListener="#{historialBean.buscar}"  icon="ui-icon-search" 
-       />
-        
-        <h:outputText id="display" value="#{basicView.text}" />
-    </h:panelGrid>
-    
-    
-    <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
-        <p:outputPanel id="poiDetalle" style="text-align:center;">
-            <p:panelGrid  columns="2" rendered="#{not empty dtSelectionView.selectedPOI}" columnClasses="label,value">
- 
-                <h:outputText value="POI:" />
-                <h:outputText value="#{dtSelectionView.selectedPOI.id}" />
- 
-            </p:panelGrid>
-        </p:outputPanel>
-    </p:overlayPanel>
-    
-    
-			<p:commandButton value="Volver atràs" update="panel"
-					action="welcome"/>
-			</p:panel> 
-</h:form>
-
-
-
+						</p:column>
+					</p:dataTable>
+				</h:form>
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:commandButton value="Filtrar" update="panel"
+						action="#{historialBean.buscar}" icon="ui-icon-search" />
+					<h:outputText id="display" value="#{basicView.text}" />
+				</h:panelGrid>
+				<p:overlayPanel widgetVar="carOP" showEffect="fade"
+					hideEffect="fade" dismissable="false" showCloseIcon="true">
+					<p:outputPanel id="poiDetalle" style="text-align:center;">
+						<p:panelGrid columns="2"
+							rendered="#{not empty dtSelectionView.selectedPOI}"
+							columnClasses="label,value">
+							<h:outputText value="POI:" />
+							<h:outputText value="#{dtSelectionView.selectedPOI.id}" />
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:overlayPanel>
+				<p:commandButton value="Volver atràs" update="panel"
+					action="welcome" />
+			</p:panel>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

@@ -134,13 +134,13 @@ public class TestABMC_Consulta {
 	public void outtro() {
 		
 		
-		instance.remove(usuario);
-		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
-		for (RegistroHistorico reg : list)
-			instance.remove(reg);
-		instance.remove(cgp);
-		instance.remove(parada);
-		instance.remove(local);
-		instance.remove(banco);
+//		instance.remove(usuario);
+//		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
+//		for (RegistroHistorico reg : list)
+//			instance.remove(reg);
+//		instance.remove(cgp);
+//		instance.remove(parada);
+//		instance.remove(local);
+//		instance.remove(banco);
 	}
 }

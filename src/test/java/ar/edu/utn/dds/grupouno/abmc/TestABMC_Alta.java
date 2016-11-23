@@ -12,6 +12,7 @@ import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.db.poi.Rubro;
 import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
@@ -59,6 +60,7 @@ public class TestABMC_Alta {
 		poiDTOColectivo.setLatitud(-34.5664823);
 		poiDTOColectivo.setLongitud(-34.5664823);
 		parada = poiDTOColectivo.converttoPOI();
+		((ParadaColectivo)parada).setLinea(114);
 	}
 
 	@Test

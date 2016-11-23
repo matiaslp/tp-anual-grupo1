@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 
-import org.joda.time.DateTime;
+
 
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
@@ -117,15 +115,6 @@ public List<RegistroHistorico> getHistoricobyEntreFechasConUserId(ZonedDateTime 
 		ArrayList<Object[]> resultado = (ArrayList<Object[]>) em.createNamedQuery("RegistroHistorico.reporteBusquedaPorUsuario").getResultList();
 
 		return resultado;
-	}
-	
-	public static Repositorio getInstance() {
-		if (instance == null) {
-			final String PERSISTENCE_UNIT_NAME = "tp-anual";
-			EntityManagerFactory emFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-			instance = new DB_HistorialBusquedas(emFactory.createEntityManager());
-		}
-		return instance;
 	}
 
 }

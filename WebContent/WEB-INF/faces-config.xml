@@ -49,6 +49,11 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.Item</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>historialBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.historial.HistorialBean</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
