@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.grupouno.test_miscellaneous;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -13,13 +13,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
+import ar.edu.utn.dds.grupouno.abmc.RegistroHistoricoMorphia;
 import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
 import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 import ar.edu.utn.dds.grupouno.repositorio.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.repositorio.RepoMongo;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.repositorio.cantBusquedas;
 
 public class TestReportes {
 
@@ -49,10 +53,6 @@ public class TestReportes {
 
 		historial = Repositorio.getInstance().resultadosRegistrosHistoricos();
 
-//		fact = new UsuariosFactory();
-//		fact.crearUsuario("terminal", "123", "TERMINAL");
-//		terminal = Repositorio.getInstance().usuarios().getUsuarioByName("terminal");
-
 		DateTime time = new DateTime(2016, 1, 1, 1, 1);
 		registro1 = new RegistroHistorico(time, 10, "busqueda1", 10, 5, listaDePOIs);
 		historial.agregarHistorialBusqueda(registro1);
@@ -78,10 +78,7 @@ public class TestReportes {
 	@Test
 	public void testreporteCantidadResultadosPorTerminal() {
 		ArrayList<Object[]> resultado = historial.reporteCantidadResultadosPorTerminal((long) 10);
-		// System.out.printf("Usuario:10\nIdBusqueda cantidadResultados \n");
-		// for (Map.Entry<Long, Long> registro : resultado.entrySet())
-		// System.out.printf("%s \t\t %s \n",
-		// registro.getKey().toString(),registro.getValue().toString());
+		
 		Assert.assertTrue(resultado.size() == 4);
 	}
 
@@ -89,11 +86,9 @@ public class TestReportes {
 	public void testReporteBusquedaPorFecha() {
 		ArrayList<Object[]> resultado = historial.reporteBusquedasPorFecha();
 
-		Map<String, Long> resumen = new HashMap<String, Long>();
+		Map<String, Integer> resumen = new HashMap<String, Integer>();
 		for (Object obj[] : resultado) {
-			resumen.put(((Date) obj[0]).toString(), ((Long) obj[1]));
-			// System.out.printf("%s %d \n", ((Date)obj[0]).toString(),
-			// ((Long)obj[1]));
+			resumen.put(((Date) obj[0]).toString(), ((Integer) obj[1]));
 		}
 
 		Locale lenguaje = Locale.getDefault();
@@ -118,21 +113,45 @@ public class TestReportes {
 	public void testReporteCantidadResultadosPorUsuario() {
 		ArrayList<Object[]> resultado = historial.reporteBusquedaPorUsuario();
 
-		// Map<Long, Long> resumen = new HashMap<Long, Long>();
-		// for (Object obj[] : resultado){
-		// resumen.put(((Long)obj[0]),((Long)obj[1]));
-		// }
-		// System.out.printf("\nIdUsuario cantidadResultados \n");
-		// for (Map.Entry<Long, Long> registro : resumen.entrySet())
-		// System.out.printf("%s \t\t %s \n",
-		// registro.getKey().toString(),registro.getValue().toString());
-
 		Assert.assertTrue(resultado.size() == 2);
+	}
+	
+	@Test
+	public void testBusquedaHistorial2Fechas(){
+		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10,
+				Date.from(MetodosComunes.convertJodatoJava(registro1.getTime()).toInstant()),
+				Date.from(MetodosComunes.convertJodatoJava(registro4.getTime()).toInstant()));
+		
+		Assert.assertTrue(resultado.size() == 2);
+	}
+	
+	@Test
+	public void testBusquedaHistorialFinalInicial(){
+		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10,
+				Date.from(MetodosComunes.convertJodatoJava(registro1.getTime()).toInstant()),
+				null);
+		
+		Assert.assertTrue(resultado.size() == 3);
+	}
+	@Test
+	public void testBusquedaHistorialFechaFinal(){
+		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10,null,
+				Date.from(MetodosComunes.convertJodatoJava(registro4.getTime()).toInstant()));
+		
+		Assert.assertTrue(resultado.size() == 3);
+	}
+	@Test
+	public void testBusquedaHistorialNull(){
+		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10,null,null);
+		
+		Assert.assertTrue(resultado.size() == 4);
 	}
 
 	@After
 	public void outtro() {
-
+		RepoMongo.getInstance().getDatastore()
+		.delete(RepoMongo.getInstance().getDatastore()
+				.createQuery(RegistroHistoricoMorphia.class));
 		Repositorio.getInstance().remove(registro1);
 		Repositorio.getInstance().remove(registro2);
 		Repositorio.getInstance().remove(registro3);
