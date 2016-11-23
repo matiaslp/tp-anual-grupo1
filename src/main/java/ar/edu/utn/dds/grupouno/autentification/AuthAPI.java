@@ -22,10 +22,6 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncObtenerInfoPOI;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedaPorUsuario;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedasPorFecha;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
-import ar.edu.utn.dds.grupouno.db.DB_Sesiones;
-import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 public class AuthAPI {

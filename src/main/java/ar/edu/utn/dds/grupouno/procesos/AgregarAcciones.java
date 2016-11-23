@@ -129,16 +129,12 @@ public class AgregarAcciones extends Proceso {
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError(mensaje);
 		}
-	
-	}
-	
-	// Undo del ultimo proceso de AgregarAcciones ejecutado por el usuario que esta realizando el "undo"
-	public void undo() {
-
 		
+		schedulerContext.replace("ResultadoProceso", resultado);
+		schedulerContext.replace("ejecutado", true);
 	}
-
-	public static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones,
+	
+	private static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones,
 			AgregarAccionesTransaction transaction) {
 		String transac = null;
 		Usuario unUsuario;

@@ -1,5 +1,8 @@
 package ar.edu.utn.dds.grupouno.quartz;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.DateTime;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
@@ -17,6 +20,7 @@ import org.quartz.impl.matchers.KeyMatcher;
 
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
+import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.email.EnviarEmail;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 
@@ -64,14 +68,17 @@ public abstract class ProcesoListener implements JobListener {
 		// Cargo la fecha de fin de ejecución del job
 		resultado.setFinEjecucion(MetodosComunes.convertJodatoJava(new DateTime()));
 				
-		//TODO: Guardar resultado en la BD
+		//Persiste resultado en la BD
+		Repositorio.getInstance().resultadosProcesos().persistir(resultado);
 		
 		// Se valida si hubo una excepciòn
 		if (jobException != null) {
 			Usuario usuario = (Usuario) contextoScheduler.get("Usuario");
 			
 			if(dataMap.getBoolean("enviarMail")){
-				EnviarEmail.mandarCorreoProcesoError(usuario,resultado);
+				List<ResultadoProceso> resultados = new ArrayList<ResultadoProceso>();
+				resultados.add(resultado);
+				EnviarEmail.mandarCorreoProcesoError(usuario,resultados);
 			}
 			
 			// Mientras que la cant de reitentos no alcanze la cantidad seteada por el usuario

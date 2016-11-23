@@ -85,6 +85,9 @@ public class BajaPOIs extends Proceso {
 			resultado.setMensajeError("FileNotFoundException:No existe archivo " + filePath);
 			e.printStackTrace();
 		}
+		
+		schedulerContext.replace("ResultadoProceso", resultado);
+		schedulerContext.replace("ejecutado", true);
 	}
 
 	private String generarMensaje(List<Long> keys) {

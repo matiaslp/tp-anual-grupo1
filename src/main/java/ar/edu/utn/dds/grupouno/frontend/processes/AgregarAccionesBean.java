@@ -4,11 +4,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.quartz.SchedulerException;
 
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones;
-import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 
 @ManagedBean
@@ -46,19 +46,25 @@ public class AgregarAccionesBean {
 		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.agregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);
+		try {
+			funcion.agregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SchedulerException
+				| InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "index";
 	}
 	
-	public String preparar(){
-		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
-		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
-		
-		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.prepAgregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);
-		return "index";
-	}
+//	public String preparar(){
+//		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
+//		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+//		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
+//		
+//		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
+//		funcion.prepAgregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);
+//		return "index";
+//	}
 
 }
 

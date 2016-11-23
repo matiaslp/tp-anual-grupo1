@@ -1,28 +1,15 @@
 package ar.edu.utn.dds.grupouno.procesos;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
-import org.joda.time.DateTime;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
-import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
-import ar.edu.utn.dds.grupouno.autentification.funciones.FuncActualizacionLocalesComerciales;
-import ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones;
-import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
-import ar.edu.utn.dds.grupouno.autentification.funciones.FuncMultiple;
 import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
-import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
-import ar.edu.utn.dds.grupouno.db.poi.Banco;
-import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.quartz.Proceso;
 
 public class TestProcesoMultiple {
@@ -70,7 +57,23 @@ public class TestProcesoMultiple {
 		fact.crearUsuario("adminPrueba", "123", "ADMIN");
 		fact.crearUsuario("terminal1", "123", "TERMINAL");
 	}
+	
+	@Test
+	public void test1(){
+		List<Proceso> listado = new ArrayList<Proceso>();
 		
+		for(int i = 0; i < listadoAccionesQueEstanEnAdmin.size(); i++){
+			
+			/* 
+				procedimiento normal 
+			*/
+				
+			if(i + 1 < listadoAccionesQueEstanEnAdmin.size()){
+				scheduler.getJobDataMap().add("nextJob", listadoAccionesQueEstanEnAdmin.get(i+1));	
+			}
+		}
+	}
+	
 //	@Test
 //	public void procesoMultipleTest() {
 //

@@ -22,7 +22,6 @@ import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.Resultado;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.quartz.Proceso;
 
@@ -72,14 +71,16 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("No existe el archio " + filePath);
 		}
+		schedulerContext.replace("ResultadoProceso", resultado);
+		schedulerContext.replace("ejecutado", true);
 
 	}
 	
-	public boolean actualizar(Map<String, String[]> locales) {
+	private boolean actualizar(Map<String, String[]> locales) {
 		try {
 			List<Boolean> resultados = new ArrayList<Boolean>();
 			for (Entry<String, String[]> e : locales.entrySet()) {
-				POI local = (LocalComercial) getDbPOI().getPOIbyNombre(e.getKey());
+				LocalComercial local = (LocalComercial) getDbPOI().getPOIbyNombre(e.getKey());
 				
 				// En caso de que el local exista se lo actualiza mientras que 
 				// en caso contrario se crea un local con los datos del archivo.
