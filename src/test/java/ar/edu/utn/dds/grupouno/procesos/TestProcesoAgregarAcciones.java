@@ -2,6 +2,7 @@ package ar.edu.utn.dds.grupouno.procesos;
 
 import java.io.File;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,31 +42,40 @@ public class TestProcesoAgregarAcciones {
 
 	@Before
 	public void init() {
-		Repositorio.getInstance().usuarios().getListaUsuarios().clear();
 		AuthAPI.getInstance();
 		
-		fact.crearUsuario("admin", "123", "ADMIN");
-		fact.crearUsuario("adminPrueba", "123", "ADMIN");
-		fact.crearUsuario("terminal1", "123", "TERMINAL");
+		Usuario user1 = fact.crearUsuario("admin", "123", "ADMIN");
+		Usuario user2 = fact.crearUsuario("adminPrueba", "123", "ADMIN");
+		Usuario user3 = fact.crearUsuario("terminal1", "123", "TERMINAL");
+		Repositorio.getInstance().usuarios().persistir(user1);
+		Repositorio.getInstance().usuarios().persistir(user2);
+		Repositorio.getInstance().usuarios().persistir(user3);
 		
 		// creamos usuario admin y le agregamos la funcionalidad agregarAcciones
 		admin = Repositorio.getInstance().usuarios().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
+		Repositorio.getInstance().usuarios().actualizarUsuarioConAcciones(admin);
 		
 		// creamos usuario adminPrueba y le sacamos las funcionalidad cambiarEstadoMail actualizacionLocalesComerciales
 		adminPrueba = Repositorio.getInstance().usuarios().getUsuarioByName("adminPrueba");
 		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
+		Repositorio.getInstance().usuarios().actualizarUsuarioConAcciones(adminPrueba);
+		adminPrueba = Repositorio.getInstance().usuarios().getUsuarioByName("adminPrueba");
 		Assert.assertFalse(adminPrueba.getFuncionalidad("cambiarEstadoMail")!=null);
 		Assert.assertFalse(adminPrueba.getFuncionalidad("actualizacionLocalesComerciales")!=null);
+		
 		
 		
 		// creamos usuario unUsuarioTerminal1 y le sacamos las funcionalidades busquedaPOI obtenerInfoPOI
 		unUsuarioTerminal1 = Repositorio.getInstance().usuarios().getUsuarioByName("terminal1");
 		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
 		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
+		Repositorio.getInstance().usuarios().actualizarUsuarioConAcciones(unUsuarioTerminal1);
+		unUsuarioTerminal1 = Repositorio.getInstance().usuarios().getUsuarioByName("terminal1");
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
 		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("obtenerInfoPOI")!=null);
+		
 		
 		// iniciamos sesion con usuario admin
 		tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
@@ -119,7 +129,7 @@ public class TestProcesoAgregarAcciones {
 		ResultadoProceso resultadoProceso = new ResultadoProceso();
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		scheduler.getContext().put("ResultadoProceso", resultadoProceso);
-		scheduler.getContext().put("Usuario", adminPrueba);
+		scheduler.getContext().put("Usuario", admin);
 		scheduler.getContext().put("ejecutado", false);
 		
 		scheduler.start();
@@ -146,8 +156,8 @@ public class TestProcesoAgregarAcciones {
 		
 		// Para darle tiempo al planificador que se puedea inicializar y ejecutar los procesos
 		while(!scheduler.getContext().getBoolean("ejecutado")){
-			// Thread.sleep(1000);
-			wait(1000L);
+			Thread.sleep(1000);
+			//wait(1000L);
 		}
 		scheduler.shutdown();
 		
@@ -157,6 +167,16 @@ public class TestProcesoAgregarAcciones {
 
 		// Se valida que el usuario unUsuarioTerminal1 tiene la funcionalidad agregada
 		Assert.assertTrue(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
+	}
+	
+	
+	@After
+	public void outtro(){
+		
+		Repositorio.getInstance().remove(admin);
+		Repositorio.getInstance().remove(adminPrueba);
+		Repositorio.getInstance().remove(unUsuarioTerminal1);
+		
 	}
 	
 }

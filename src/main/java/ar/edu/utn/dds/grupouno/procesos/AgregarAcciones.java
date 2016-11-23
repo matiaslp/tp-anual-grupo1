@@ -75,16 +75,16 @@ public class AgregarAcciones extends Proceso {
 					unUsername = palabras[0];
 					
 					if (Repositorio.getInstance().usuarios().getUsuarioByName(unUsername) == null){
-						usuariosInexistentes = usuariosInexistentes + unUsername;
+						usuariosInexistentes = usuariosInexistentes + " " + unUsername;
 					}
 						
 					// arma la lista de acciones para un usuario
 					for (int i = 1; i < palabras.length; i++) {
 						if (AuthAPI.getInstance().getAccion(palabras[i]) == null){
-							accionesInexistentes = accionesInexistentes + palabras[i];
+							accionesInexistentes = accionesInexistentes + " " + palabras[i];
+						} else {
+							listadoAcciones.add(palabras[i]);
 						}
-							
-						listadoAcciones.add(palabras[i]);
 					}
 
 					AgregarAcciones.AgregarAccionesAUsuario(unUsername, listadoAcciones, transaction);
@@ -139,11 +139,11 @@ public class AgregarAcciones extends Proceso {
 		String transac = null;
 		Usuario unUsuario;
 		DB_Usuarios db_usuario = Repositorio.getInstance().usuarios();
-
 		if ((unUsuario = db_usuario.getUsuarioByName(unUsername)) != null) {
 			transac = unUsername;
 			for (String unaAccion : listadoAcciones) {
-				if ((AuthAPI.getInstance().agregarFuncionalidad(unaAccion, unUsuario)) != false){
+				if ((AuthAPI.getInstance().agregarFuncionalidad(unaAccion, unUsuario)) != false){				
+					Repositorio.getInstance().usuarios().actualizarUsuarioConAcciones(unUsuario);
 					// Agregar accion a transaccion
 					transac = transac + " " + unaAccion;
 				}

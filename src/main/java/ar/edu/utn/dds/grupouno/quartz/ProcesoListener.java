@@ -30,7 +30,7 @@ public abstract class ProcesoListener implements JobListener {
 		return getClass().getName();
 	}
 	
-	// Las subclases concretas que hereden de esta clase abstracta deben implementar este método
+	// Las subclases concretas que hereden de esta clase abstracta deben implementar este mï¿½todo
 	protected abstract void rollback(Usuario usuario);
 	
 	@Override
@@ -49,7 +49,7 @@ public abstract class ProcesoListener implements JobListener {
 		//	TODO Auto-generated method stub
 	}
 	
-	// Método invocado por Quartz luego de ejecutar el Job
+	// Mï¿½todo invocado por Quartz luego de ejecutar el Job
 	public void jobWasExecuted(JobExecutionContext context, JobExecutionException jobException) {
 		Scheduler scheduler = null;
 		SchedulerContext contextoScheduler = null;
@@ -65,13 +65,13 @@ public abstract class ProcesoListener implements JobListener {
 			e.printStackTrace();
 		}
 		
-		// Cargo la fecha de fin de ejecución del job
+		// Cargo la fecha de fin de ejecuciï¿½n del job
 		resultado.setFinEjecucion(MetodosComunes.convertJodatoJava(new DateTime()));
 				
 		//Persiste resultado en la BD
 		Repositorio.getInstance().resultadosProcesos().persistir(resultado);
 		
-		// Se valida si hubo una excepciòn
+		// Se valida si hubo una excepciï¿½n
 		if (jobException != null) {
 			Usuario usuario = (Usuario) contextoScheduler.get("Usuario");
 			
@@ -81,7 +81,7 @@ public abstract class ProcesoListener implements JobListener {
 				EnviarEmail.mandarCorreoProcesoError(usuario,resultados);
 			}
 			
-			// Mientras que la cant de reitentos no alcanze la cantidad seteada por el usuario
+			// Mientras que la cant de reintentos no alcance la cantidad seteada por el usuario
 			// el job se seguira re disparando.
 			int reintento = dataMap.getInt("reintentosCont");
 			if(dataMap.getInt("reintentosMax") > reintento){
@@ -102,7 +102,7 @@ public abstract class ProcesoListener implements JobListener {
 	@SuppressWarnings({ "rawtypes", "unchecked", "static-access" })
 	public void ejecutarProcesoAnidado(JobExecutionContext context) throws SchedulerException {
 
-		// Este método realiza acciones similares al
+		// Este mï¿½todo realiza acciones similares al
 		// ejecutaEjemploProcesosAnidadosConRollback() de la clase Consola
 		Scheduler scheduler = context.getScheduler();
 
@@ -118,16 +118,16 @@ public abstract class ProcesoListener implements JobListener {
 			// Chequea si hay definido un siguiente proceso
 			if (siguienteProceso != null) {
 				
-				// Obtiene el listener del próximo proceso
+				// Obtiene el listener del prï¿½ximo proceso
 				ProcesoListener siguienteListener = ((Proceso) siguienteProceso.newInstance()).getProcesoListener();
 
 				// Define un identificador
 				JobKey jobKey = new JobKey(siguienteProceso.getSimpleName());
 
-				// Se crea una instancia del próximo proceso a ejecutar
+				// Se crea una instancia del prï¿½ximo proceso a ejecutar
 				JobDetail nextJob = JobBuilder.newJob(siguienteProceso).withIdentity(jobKey).requestRecovery(true).build();
 
-				// Se crea un nuevo trigger que ejecutará el nuevo proceso
+				// Se crea un nuevo trigger que ejecutarï¿½ el nuevo proceso
 				Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobKey + "trigger").startNow().build();
 
 				// Se agrega el listener del nuevo proceso al planificador
