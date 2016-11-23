@@ -26,25 +26,23 @@ import org.json.JSONException;
 @ManagedBean
 @ApplicationScoped
 public class HistorialBean {
-	
-	
+
 	private List<RegistroHistorico> listaRH = new ArrayList<RegistroHistorico>();
-	
+
 	String ServicioAPI = "http://trimatek.org/Consultas/";
-	
+
 	Repositorio repositorio;
-	
-	private String textBoxUsuarioID;
+
+	private String textBoxUsuario;
 	private DateTime textBoxFechaDesde;
 	private DateTime textBoxFechaHasta;
-	
-	
-	public String getTextBoxUsuarioID() {
-		return textBoxUsuarioID;
+
+	public String getTextBoxUsuario() {
+		return textBoxUsuario;
 	}
 
 	public void setTextBoxUsuarioID(String textBoxUsuarioID) {
-		this.textBoxUsuarioID = textBoxUsuarioID;
+		this.textBoxUsuario = textBoxUsuarioID;
 	}
 
 	public DateTime getTextBoxFechaDesde() {
@@ -64,7 +62,7 @@ public class HistorialBean {
 	}
 
 	public HistorialBean() {
-		
+
 		RegistroHistorico unRegistroHistorico;
 		ArrayList<POI> listaDePOIs;
 		POI banco1, local1, banco2, local2;
@@ -95,11 +93,10 @@ public class HistorialBean {
 		repositorio.pois().agregarPOI(local1);
 		repositorio.pois().agregarPOI(banco1);
 		unRegistroHistorico = new RegistroHistorico(fecha, 1, "unaStringDeBusqueda", 2, 12, listaDePOIs);
-		
-		
+
 		listaRH.add(unRegistroHistorico);
 	}
-	
+
 	public List<RegistroHistorico> getListaRH() {
 		return listaRH;
 	}
@@ -125,12 +122,14 @@ public class HistorialBean {
 	}
 
 	public void buscar() {
+
 		
-	/*
-		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
-		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
-		System.out.println(Long.parseLong(this.getTextBoxUsuarioID()));
-	*/	
+		System.out.println(MetodosComunes.convertJodatoJava(this.
+		 getTextBoxFechaDesde()));
+		  System.out.println(MetodosComunes.convertJodatoJava(this.
+		  getTextBoxFechaHasta()));
+		  System.out.println(this.getTextBoxUsuario());
+		 
 		listaRH.clear();
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("username"));
@@ -138,25 +137,35 @@ public class HistorialBean {
 		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		List<RegistroHistorico> lstRH = null;
 		try {
-			
-			//	QUERY QUE NO ME ANDA
-			if(this.getTextBoxUsuarioID()!=null && this.getTextBoxFechaDesde()==null && this.getTextBoxFechaHasta()==null)  {
-			lstRH=repositorio.resultadosRegistrosHistoricos().getHistoricobyUserId(Long.parseLong(this.getTextBoxUsuarioID()));}
-			else{
-				if(this.getTextBoxUsuarioID()==null && this.getTextBoxFechaDesde()!=null && this.getTextBoxFechaHasta()!=null){
-				lstRH=repositorio.resultadosRegistrosHistoricos().getHistoricobyEntreFechas(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde())
-						, MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));}
-					else{lstRH=repositorio.resultadosRegistrosHistoricos().getHistoricobyEntreFechasConUserId(MetodosComunes.
-									convertJodatoJava(this.getTextBoxFechaDesde()), MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()), 
-									Long.parseLong(this.getTextBoxUsuarioID()));}
-						}
-			
-			//IMPRIME POR PANTALLA LOS DATOS DE BUSQUEDA Y LO QUE TRAE Y LA LISTA
+
+			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
+			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
+			System.out.println(Long.parseLong(this.getTextBoxUsuario()));
+			// QUERY QUE NO ME ANDA
+			if (this.getTextBoxUsuario() != null
+					&& (this.getTextBoxFechaDesde() == null || this.getTextBoxFechaHasta() == null)) {
+				lstRH = repositorio.resultadosRegistrosHistoricos().getHistoricobyUserId(
+						Repositorio.getInstance().usuarios().getUsuarioByName(this.getTextBoxUsuario()).getId());
+			} else {
+				if (this.getTextBoxUsuario() == null && this.getTextBoxFechaDesde() != null
+						&& this.getTextBoxFechaHasta() != null) {
+					lstRH = repositorio.resultadosRegistrosHistoricos().getHistoricobyEntreFechas(
+							MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()),
+							MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
+				} else {
+					lstRH = repositorio.resultadosRegistrosHistoricos().getHistoricobyEntreFechasConUserId(
+							MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()),
+							MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()),
+							Repositorio.getInstance().usuarios().getUsuarioByName(this.getTextBoxUsuario()).getId());
+				}
+			}
+
+			// IMPRIME POR PANTALLA LOS DATOS DE BUSQUEDA Y LO QUE TRAE Y LA
+			// LISTA
 			System.out.println(lstRH.size());
 			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
 			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
-			System.out.println(Long.parseLong(this.getTextBoxUsuarioID()));
-			
+			System.out.println(Long.parseLong(this.getTextBoxUsuario()));
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -165,6 +174,6 @@ public class HistorialBean {
 		if (lstRH != null && lstRH.size() > 0) {
 			listaRH.addAll(lstRH);
 
-			}
 		}
 	}
+}
