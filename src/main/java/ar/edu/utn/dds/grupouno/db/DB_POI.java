@@ -2,14 +2,20 @@ package ar.edu.utn.dds.grupouno.db;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.joda.time.DateTime;
 
+import ar.edu.utn.dds.grupouno.autentification.Accion;
+import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.db.poi.Etiqueta;
+import ar.edu.utn.dds.grupouno.db.poi.FlyweightFactoryEtiqueta;
 import ar.edu.utn.dds.grupouno.db.poi.Item_Borrar;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
@@ -41,11 +47,15 @@ public class DB_POI extends Repositorio {
 		pois = em.createNamedQuery("getPOIbyNombre").setParameter("pnombre", "%" + nombre + "%").getResultList();
 		return pois;
 	}
+	
+	
 
 	// @Transactional
 	public boolean agregarPOI(POI nuevoPOI) {
 		try {
 			em.getTransaction().begin();
+			FlyweightFactoryEtiqueta.getInstance().refresh();
+			nuevoPOI.refreshEtiquetas();
 			em.persist(nuevoPOI);
 			em.getTransaction().commit();
 			return true;

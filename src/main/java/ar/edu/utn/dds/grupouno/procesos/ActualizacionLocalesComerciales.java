@@ -22,6 +22,7 @@ import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.Resultado;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.quartz.Proceso;
 
@@ -80,7 +81,10 @@ public class ActualizacionLocalesComerciales extends Proceso {
 		try {
 			List<Boolean> resultados = new ArrayList<Boolean>();
 			for (Entry<String, String[]> e : locales.entrySet()) {
-				LocalComercial local = (LocalComercial) getDbPOI().getPOIbyNombre(e.getKey());
+				List<POI> resultado = getDbPOI().getPOIbyNombre(e.getKey());
+				LocalComercial local = null;
+				if ( resultado.size() > 0)
+					local = (LocalComercial) resultado.get(0);
 				
 				// En caso de que el local exista se lo actualiza mientras que 
 				// en caso contrario se crea un local con los datos del archivo.

@@ -1,7 +1,9 @@
 package ar.edu.utn.dds.grupouno.procesos;
 
 import java.io.File;
+import java.util.ArrayList;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +22,7 @@ import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
@@ -36,13 +39,17 @@ public class TestProcesoActualizarLocalComercial {
 	UsuariosFactory fact = new UsuariosFactory();
 	Repositorio repositorio;
 	String filePath;
-	LocalComercial local1, local2, local3;
+	LocalComercial local1, local2, local3, 
+	local1Actualizado, local2Actualizado, local3Actualizado;
+	UsuariosFactory ufactory = new UsuariosFactory();
+	String[] etiquetas = {"mataderos", "heladeria"};
+	String[] etiquetas2 = {"juegos", "azul", "moron"};
+	String[] etiquetas3 = {"azul", "helado", "esquina"};
 	
 	@Before
 	public void init(){
 		Autenticador = AuthAPI.getInstance();
 		repositorio = Repositorio.getInstance();
-		repositorio.usuarios().persistirUsuario(fact.crearUsuario("admin", "123", "ADMIN"));
 		filePath = (new File (".").getAbsolutePath ()) + 
 				"/src/test/java/ar/edu/utn/dds/grupouno/procesos/actualizarLocalesComerciales.txt";
 		initLocales();
@@ -52,20 +59,35 @@ public class TestProcesoActualizarLocalComercial {
 		//Creo un local para corroborar que se actualizan los locales que ya existen:
 		local1 = new LocalComercial();
 		local1.setNombre("local1");
-		String[] etiquetas = {"mataderos", "heladeria"};
 		local1.setEtiquetas(etiquetas);
 		repositorio.pois().agregarPOI(local1);
-				
+		repositorio.pois().getEm().detach(local1);
+		
+		
 		//Creo los locales que espero obtener despues de ejecutar el proceso:
 		local2 = new LocalComercial();
 		local2.setNombre("local2");
-		String[] etiquetas2 = {"juegos", "azul", "moron"};
 		local2.setEtiquetas(etiquetas2);
+//		repositorio.pois().agregarPOI(local2);
+//		repositorio.pois().getEm().detach(local2);
+		
 				
 		local3 = new LocalComercial();
 		local3.setNombre("local3");
-		String[] etiquetas3 = {"azul", "helado", "esquina"};
 		local3.setEtiquetas(etiquetas3);
+//		repositorio.pois().agregarPOI(local3);
+//		repositorio.pois().getEm().detach(local3);
+		
+		unUsuarioAdmin = ufactory.crearUsuario("admin", "password","ADMIN");
+		
+		unUsuarioAdmin.setAuditoriaActivada(true);
+		unUsuarioAdmin.setCorreo("uncorreo@correoloco.com");
+		unUsuarioAdmin.setLog(true);
+		unUsuarioAdmin.setMailHabilitado(true);
+		unUsuarioAdmin.setNombre("Shaggy");
+		unUsuarioAdmin.setNotificacionesActivadas(true);
+		
+		Repositorio.getInstance().usuarios().persistirUsuario(unUsuarioAdmin);
 	}
 
 //	@Test
@@ -136,19 +158,30 @@ public class TestProcesoActualizarLocalComercial {
 		scheduler.shutdown();
 		
 		//Busco las modificaciones para corroborar que se corrio correctamente
-		POI local2Actualizado = repositorio.pois().getPOIbyNombre("local2").get(0);
-		POI local3Actualizado = repositorio.pois().getPOIbyNombre("local3").get(0);
-		POI local1Actualizado = repositorio.pois().getPOIbyNombre("local1").get(0);
+		local2Actualizado = (LocalComercial) repositorio.pois().getPOIbyNombre("local2").get(0);
+		local3Actualizado = (LocalComercial) repositorio.pois().getPOIbyNombre("local3").get(0);
+		local1Actualizado = (LocalComercial) repositorio.pois().getPOIbyNombre("local1").get(0);
 		
 		//Compruebo que el local 2 y 3 hayan sido creados:
 		Assert.assertNotNull(local2Actualizado);
 		Assert.assertNotNull(local3Actualizado);
 		
+		
 		//Compruebo que los locales 2 y 3 se hayan creado correctamente:
 		Assert.assertTrue(local2Actualizado.compararEtiquetas(local2));
 		Assert.assertTrue(local3Actualizado.compararEtiquetas(local3));
 		
-		//Compruebo que el local 4 se actualizo correctamente:
-		Assert.assertTrue(local1Actualizado.compararEtiquetas(local1));
+		//Compruebo que el local 1 se actualizo correctamente:
+		Assert.assertFalse(local1Actualizado.compararEtiquetas(local1));
+	}
+	
+	@After
+	public void outtro(){
+		
+		repositorio.remove(unUsuarioAdmin);
+		repositorio.remove(local1Actualizado);
+		repositorio.remove(local2Actualizado);
+		repositorio.remove(local3Actualizado);
+		
 	}
 }

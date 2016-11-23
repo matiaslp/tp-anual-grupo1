@@ -72,7 +72,7 @@ public class POI extends PersistibleConNombre{
 	@JoinTable(name="POI_ETIQUETA", 
 				joinColumns={@JoinColumn(name="poi_id")}, 
 				inverseJoinColumns={@JoinColumn(name="etiqueta_id")})
-	protected List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();;
+	protected List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
 	@Column
 	@Type(type="org.hibernate.type.ZonedDateTimeType")
 	protected ZonedDateTime fechaBaja = null;
@@ -271,9 +271,18 @@ public class POI extends PersistibleConNombre{
 	public void setEtiquetas(String nombres[]) {
 		this.etiquetas.clear();
 		for (int i = 0; i < nombres.length; i++) {
-			this.etiquetas.add(FlyweightFactoryEtiqueta.getEtiqueta(nombres[i]));
+			this.etiquetas.add(FlyweightFactoryEtiqueta.getInstance().getEtiqueta(nombres[i]));
 		}
 	}
+	
+	public List<Etiqueta> getEtiquetasList(){
+		return this.etiquetas;
+	}
+	
+	public void setEtiquetasList(ArrayList<Etiqueta> et){
+		this.etiquetas = et;
+	}
+	
 
 	public String[] getEtiquetas() {
 		String[] nombres = new String[etiquetas.size()];
@@ -298,6 +307,13 @@ public class POI extends PersistibleConNombre{
 
 		return false;
 	}
+	
+	public void refreshEtiquetas(){
+		String[] etViejas = getEtiquetas();
+		this.setEtiquetas(etViejas);
+	}
+	
+	
 
 	public DateTime getFechaBaja() {
 		DateTime tm = MetodosComunes.convertJavatoJoda(fechaBaja);
