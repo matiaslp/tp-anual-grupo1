@@ -8,6 +8,7 @@ import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
 import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
+import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
@@ -36,7 +37,8 @@ public class HistorialBean {
 	private String textBoxUsuario;
 	private DateTime textBoxFechaDesde;
 	private DateTime textBoxFechaHasta;
-
+	private RegistroHistorico selectedRH;
+	
 	public String getTextBoxUsuario() {
 		return textBoxUsuario;
 	}
@@ -90,11 +92,14 @@ public class HistorialBean {
 		listaDePOIs.add(local1);
 		listaDePOIs.add(banco1);
 
-		repositorio.pois().agregarPOI(local1);
-		repositorio.pois().agregarPOI(banco1);
+		
+		//repositorio.pois().agregarPOI(local1);
+		//repositorio.pois().agregarPOI(banco1);
 		unRegistroHistorico = new RegistroHistorico(fecha, 1, "unaStringDeBusqueda", 2, 12, listaDePOIs);
 
 		listaRH.add(unRegistroHistorico);
+		
+		this.setSelectedRH(unRegistroHistorico);
 	}
 
 	public List<RegistroHistorico> getListaRH() {
@@ -121,6 +126,14 @@ public class HistorialBean {
 		this.repositorio = repositorio;
 	}
 
+	public RegistroHistorico getSelectedRH() {
+		return selectedRH;
+	}
+
+	public void setSelectedRH(RegistroHistorico selectedRH) {
+		this.selectedRH = selectedRH;
+	}
+	
 	public void buscar() {
 
 		
