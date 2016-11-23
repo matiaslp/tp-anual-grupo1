@@ -125,6 +125,12 @@ public class HistorialBean {
 	}
 
 	public void buscar() {
+		
+	/*
+		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
+		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
+		System.out.println(Long.parseLong(this.getTextBoxUsuarioID()));
+	*/	
 		listaRH.clear();
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("username"));
