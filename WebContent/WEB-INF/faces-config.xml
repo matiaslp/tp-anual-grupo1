@@ -54,6 +54,16 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.historial.HistorialBean</managed-bean-class>
 		<managed-bean-scope>application</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>banco</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.db.poi.Banco</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>nodoServicio</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.db.poi.NodoServicio</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>

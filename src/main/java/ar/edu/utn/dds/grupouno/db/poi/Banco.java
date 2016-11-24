@@ -2,6 +2,7 @@ package ar.edu.utn.dds.grupouno.db.poi;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -139,6 +140,14 @@ public class Banco extends POI {
 		} else if (!sucursal.equals(other.sucursal))
 			return false;
 		return true;
+	}
+	
+	public List<NodoServicio> getServicios() {
+		return servicios;
+	}
+
+	public void setServicio(NodoServicio servicio) {
+		servicios.add(servicio);
 	}
 
 }

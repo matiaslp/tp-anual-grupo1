@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos;
 
-class HorariosDTO {
+public class HorariosDTO {
 	int diaSemana;
 	int horaDesde;
 	int minutosDesde;

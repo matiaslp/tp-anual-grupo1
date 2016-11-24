@@ -39,14 +39,11 @@
 					paginator="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="5,10,15">
-<!-- 					selectionMode="single" selection="#{busquedaBean.selectedPoi}" rowKey="#{POI.id}"> -->
-<!-- 					<p:ajax event="rowSelect" listener="#{busquedaBean.onRowSelect}" update=":form:msgs" /> -->
-<!--         			<p:ajax event="rowUnselect" listener="#{busquedaBean.onRowUnselect}" update=":form:msgs" /> -->
 					<p:column headerText="Nombre">
 						<h:outputText value="#{POI.nombre}" />
 					</p:column>
 					<p:column headerText="Direccion">
-						<h:outputText value="#{POI.getDireccion()}" />
+						<h:outputText value="#{POI.direccion}" />
 					</p:column>
 					<p:column headerText="Barrio">
 						<h:outputText value="#{POI.barrio}" />
@@ -56,54 +53,55 @@
                				<f:setPropertyActionListener value="#{POI}" target="#{busquedaBean.selectedPoi}" />
             			</p:commandButton>
         			</p:column>
-<!-- 					<f:facet name="footer"> -->
-<!--            				<p:commandButton process="poiTable" update=":form:poiDetail" icon="ui-icon-search" value="View" oncomplete="PF('poiDialog').show()" /> -->
-<!--         			</f:facet> -->
 				</p:dataTable>
 				<p:commandButton value="Volver atràs" update="panel"
 					action="welcome" />
 				<p:dialog header="POI Info" widgetVar="poiDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="f" >
 			        <p:outputPanel id="poiDetail" style="text-align:center;">
 			            <p:panelGrid  columns="2" rendered="#{busquedaBean.selectedPoi.tipo == 'PARADA_COLECTIVO'}" >   
-<!-- 			            icono colectivo -->
 			        		<f:facet name="header">
-                    			<p:graphicImage name="image/colectivo.png"/> 
+                    			<p:graphicImage value="/image/colectivo.png" width="300" height="300"/> 
                 			</f:facet>						
 							<h:outputText value="N° Linea:" />	
-			            	<h:outputText value="#{busquedaBean.selectedPoiParadaColectivo.linea}" />	
+			            	<h:outputText value="#{busquedaBean.selectedPoi.linea}" />	
 			            </p:panelGrid>
-			            <p:panelGrid  columns="2" rendered="#{busquedaBean.selectedPoi.tipo == 'CGP'}" columnClasses="value,value">   		            		            
-<!-- 			            icono cgp             -->
+			            <p:panelGrid  columns="2" rendered="#{busquedaBean.selectedPoi.tipo == 'CGP'}" columnClasses="label,value">   		            		            
 			        		<f:facet name="header">
-                    			<p:graphicImage name="image/cgp.png"/> 
-                			</f:facet>	
-			            	<h:outputText value="Direccion:" /> 
-			            	<h:outputText value="#{busquedaBean.selectedPoiCGP.getDireccion()}" /> 
-			            	<h:outputText value="Zona:" /> 
-			            	<h:outputText value="#{busquedaBean.selectedPoiCGP.barrio}" /> 
-<!-- 			            lista servicios cgp con horarios    -->
+                    			<p:graphicImage value="/image/cgp.png" width="300" height="300"/> 
+                			</f:facet>
+			            	<h:outputText value="Direccion:"/>
+			            	<h:outputText value="#{busquedaBean.selectedPoi.direccion}" /> 
+							<h:outputText value="Zona:" />
+			            	<h:outputText value="#{busquedaBean.selectedPoi.barrio}" />
+			            	<h:dataTable value="#{busquedaBean.selectedPoi.servicios}" var="nodoServicio">
+			            		<p:column>
+			            			<h:outputText value="#{nodoServicio.nombre}"></h:outputText>
+			            			<h:outputText value="#{nodoServicio.bandaHoraria}"></h:outputText>	
+			            		</p:column>
+			            	</h:dataTable>
 			            </p:panelGrid>
 			            <p:panelGrid  columns="2" rendered="#{busquedaBean.selectedPoi.tipo == 'BANCO'}" columnClasses="value,value"> 
-<!-- 			            icono banco 	 -->
 			        		<f:facet name="header">
-                    			<p:graphicImage name="image/banco.png"/> 
+                    			<p:graphicImage value="/image/banco.png" width="300" height="300"/> 
                 			</f:facet>	
-							<h:outputText value="Direccion:" /> 	
-			            	<h:outputText value="#{busquedaBean.selectedPoiBanco.getDireccion()}" /> 	            
+							<h:outputText value="Direccion:" />
+			            	<h:outputText value="#{busquedaBean.selectedPoi.direccion}" />
 			             	<h:outputText value="Zona:" /> 
-			            	<h:outputText value="#{busquedaBean.selectedPoiBanco.barrio}" /> 
-<!-- 			            lista servicios banco  -->
+			            	<h:outputText value="#{busquedaBean.selectedPoi.barrio}" />					
+							<h:dataTable value="#{busquedaBean.selectedPoi.servicios}" var="nodoServicio">
+			            		<p:column>
+			            			<h:outputText value="#{nodoServicio.nombre}"></h:outputText>	
+			            		</p:column>
+			            	</h:dataTable>							
  						</p:panelGrid>
 			            <p:panelGrid  columns="2" rendered="#{busquedaBean.selectedPoi.tipo == 'LOCAL_COMERCIAL'}" columnClasses="value,value"> 
-<!-- 			            icono local 	 -->
 			        		<f:facet name="header">
-                    			<p:graphicImage name="image/local.png"/> 
+                    			<p:graphicImage value="/image/local.png" width="300" height="300"/> 
                 			</f:facet>	
 							<h:outputText value="Direccion:" /> 	
-			            	<h:outputText value="#{busquedaBean.getSelectedPoiLocalComercial().getDireccion()}" /> 	            
-			             	<h:outputText value="Zona:" /> 
-			            	<h:outputText value="#{busquedaBean.getSelectedPoiLocalComercial().nombre}" /> 
-<!-- 			            lista servicios banco  -->
+			            	<h:outputText value="#{busquedaBean.selectedPoi.direccion}" /> 	            
+			             	<h:outputText value="Nombre:" /> 
+			            	<h:outputText value="#{busquedaBean.selectedPoi.nombre}" /> 
 						</p:panelGrid>
 			        </p:outputPanel>
 			    </p:dialog>

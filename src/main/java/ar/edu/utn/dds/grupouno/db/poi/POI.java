@@ -550,6 +550,14 @@ public class POI extends PersistibleConNombre {
 	public void setEsLocal(boolean esLocal) {
 		this.esLocal = esLocal;
 	}
+	
+	public List<NodoServicio> getServicios() {
+		return servicios;
+	}
+
+	public void setServicios(List<NodoServicio> servicios) {
+		this.servicios = servicios;
+	}
 
 	public POI() {
 
