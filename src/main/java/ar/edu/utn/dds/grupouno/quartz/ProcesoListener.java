@@ -75,7 +75,7 @@ public abstract class ProcesoListener implements JobListener {
 		Repositorio.getInstance().resultadosProcesos().persistir(resultado);
 		
 		// Se valida si hubo una excepci�n
-		if (jobException != null || resultado.getResultado() == Resultado.ERROR) {
+		if (jobException != null) {
 			Usuario usuario = (Usuario) contextoScheduler.get("Usuario");
 			
 			if(dataMap.getBoolean("enviarMail")){
@@ -98,6 +98,7 @@ public abstract class ProcesoListener implements JobListener {
 				}
 			} else {
 				rollback(usuario);
+				contextoScheduler.replace("ejecutado", true);
 			}
 		} else {
 			try {
@@ -119,7 +120,6 @@ public abstract class ProcesoListener implements JobListener {
 		try {
 		// Obtiene la clase del proceso actual
 		Class actualProceso = getClass().getClassLoader().loadClass(nombreProcesoActual);
-		
 		// Obtiene el listener del pr�ximo proceso
 		ProcesoListener siguienteListener = ((Proceso) actualProceso.newInstance()).getProcesoListener();
 
@@ -185,6 +185,8 @@ public abstract class ProcesoListener implements JobListener {
 
 				// Se suma al planificador el nuevo proceso junto con el trigger
 				scheduler.scheduleJob(nextJob, trigger);
+			} else {
+				scheduler.getContext().replace("ejecutado", true);
 			}
 
 		} catch (ClassNotFoundException cnf) {

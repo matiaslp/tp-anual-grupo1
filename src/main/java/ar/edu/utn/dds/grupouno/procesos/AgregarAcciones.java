@@ -104,7 +104,6 @@ public class AgregarAcciones extends Proceso {
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("FileNotFoundException:No existe archivo " + filePath + "\n" + mensaje);
 			schedulerContext.replace("ResultadoProceso", resultado);
-			schedulerContext.replace("ejecutado", true);
 			JobExecutionException e2 = new JobExecutionException(e);
 			throw e2;
 			
@@ -118,7 +117,6 @@ public class AgregarAcciones extends Proceso {
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("IOException:No se puede leer archivo " + filePath + "\n" + mensaje);
 			schedulerContext.replace("ResultadoProceso", resultado);
-			schedulerContext.replace("ejecutado", true);
 			JobExecutionException e2 = new JobExecutionException(e);
 			throw e2;
 		}
@@ -135,7 +133,6 @@ public class AgregarAcciones extends Proceso {
 		}
 		
 		schedulerContext.replace("ResultadoProceso", resultado);
-		schedulerContext.replace("ejecutado", true);
 	}
 	
 	private static boolean AgregarAccionesAUsuario(String unUsername, ArrayList<String> listadoAcciones,

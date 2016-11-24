@@ -79,7 +79,6 @@ public class BajaPOIs extends Proceso {
 				resultado.setResultado(Resultado.ERROR);
 				resultado.setMensajeError(generarMensaje(pois_fallidos));
 				schedulerContext.replace("ResultadoProceso", resultado);
-				schedulerContext.replace("ejecutado", true);
 				JobExecutionException e2 = new JobExecutionException();
 				throw e2;
 			}
@@ -88,13 +87,11 @@ public class BajaPOIs extends Proceso {
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("FileNotFoundException:No existe archivo " + filePath);
 			schedulerContext.replace("ResultadoProceso", resultado);
-			schedulerContext.replace("ejecutado", true);
 			JobExecutionException e2 = new JobExecutionException(e);
 			throw e2;
 		}
 		
 		schedulerContext.replace("ResultadoProceso", resultado);
-		schedulerContext.replace("ejecutado", true);
 	}
 
 	private String generarMensaje(List<Long> keys) {

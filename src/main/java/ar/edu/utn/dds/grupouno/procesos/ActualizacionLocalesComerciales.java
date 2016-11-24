@@ -69,7 +69,6 @@ public class ActualizacionLocalesComerciales extends Proceso {
 				resultado.setResultado(Resultado.ERROR);
 				resultado.setMensajeError("No se pudieron actualizar todos los locales");
 				schedulerContext.replace("ResultadoProceso", resultado);
-				schedulerContext.replace("ejecutado", true);
 				JobExecutionException e2 = new JobExecutionException();
 				throw e2;
 			}
@@ -77,12 +76,10 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("No existe el archivo " + filePath);
 			schedulerContext.replace("ResultadoProceso", resultado);
-			schedulerContext.replace("ejecutado", true);
 			JobExecutionException e2 = new JobExecutionException();
 			throw e2;
 		}
 		schedulerContext.replace("ResultadoProceso", resultado);
-		schedulerContext.replace("ejecutado", true);
 
 	}
 	
@@ -113,7 +110,6 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			resultadoProc.setResultado(Resultado.ERROR);
 			resultadoProc.setMensajeError("DB conection error");
 			schedulerContext.replace("ResultadoProceso", resultadoProc);
-			schedulerContext.replace("ejecutado", true);
 			JobExecutionException e2 = new JobExecutionException();
 			throw e2;
 		}
@@ -142,9 +138,7 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("No existe el archio " + filePath);
 			schedulerContext.replace("ResultadoProceso", resultado);
-			schedulerContext.replace("ejecutado", true);
 			JobExecutionException e2 = new JobExecutionException(e);
-		//	e2.setRefireImmediately(true);
 			throw e2;
 			
 		}
