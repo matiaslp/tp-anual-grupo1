@@ -90,7 +90,7 @@ public class TestProcesoActualizarLocalComercial {
 			SchedulerException, InterruptedException {
 
 		ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales();
-		Scheduler scheduler = ProcesoHandler.ejecutarProceso(unUsuarioAdmin, proceso, filePath, false, REINTENTOS_MAX);
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(unUsuarioAdmin, proceso, filePath, false, REINTENTOS_MAX,null);
 
 		// Para darle tiempo al planificador que se puedea inicializar y
 		// ejecutar los procesos
@@ -121,7 +121,7 @@ public class TestProcesoActualizarLocalComercial {
 	public void testEjecucionMultiple() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			SchedulerException, InterruptedException {
 		ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales();
-		Scheduler scheduler = ProcesoHandler.ejecutarProceso(unUsuarioAdmin, proceso, "", false, REINTENTOS_MAX);
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(unUsuarioAdmin, proceso, "", false, REINTENTOS_MAX,null);
 
 		// Para darle tiempo al planificador que se puedea inicializar y
 		// ejecutar los procesos
@@ -148,6 +148,7 @@ public class TestProcesoActualizarLocalComercial {
 		for ( ResultadoProceso resultado : lstRes){
 			repositorio.remove(resultado);
 		}
+		
 
 	}
 }

@@ -77,7 +77,7 @@ public class TestProcesoBajaPOI {
 	public void testProcesoBajaPoi() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
 			
 		BajaPOIs proceso = new BajaPOIs();
-		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePath, false, REINTENTOS_MAX);
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePath, false, REINTENTOS_MAX,null);
 		
 		// Para darle tiempo al planificador que se puedea inicializar y ejecutar los procesos
 		while(!scheduler.getContext().getBoolean("ejecutado")){
@@ -94,7 +94,7 @@ public class TestProcesoBajaPOI {
 	public void testEjecucionMultiple() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			SchedulerException, InterruptedException {
 		BajaPOIs proceso = new BajaPOIs();
-		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, "", false, REINTENTOS_MAX);
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, "", false, REINTENTOS_MAX,null);
 
 		// Para darle tiempo al planificador que se puedea inicializar y
 		// ejecutar los procesos

@@ -1,5 +1,7 @@
 package ar.edu.utn.dds.grupouno.quartz;
 
+import java.util.List;
+
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
@@ -16,7 +18,8 @@ import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 
 public class ProcesoHandler {
 	
-	public static Scheduler ejecutarProceso(Usuario usuario, Proceso proceso, String filePath, Boolean enviarMail, int reintentosMax) throws SchedulerException, InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException{
+	public static Scheduler ejecutarProceso(Usuario usuario, Proceso proceso, String filePath, 
+			Boolean enviarMail, int reintentosMax, List<NodoProceso> lstProc) throws SchedulerException, InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException{
 		
 		ResultadoProceso resultadoProceso = new ResultadoProceso();
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
@@ -25,6 +28,7 @@ public class ProcesoHandler {
 		scheduler.getContext().put("ejecutado", false);
 		scheduler.getContext().put("reintentosMax", reintentosMax);
 		scheduler.getContext().put("reintentosCont", 0);
+		scheduler.getContext().put("lstProc", lstProc);
 		scheduler.start();
 		
 		JobKey key = new JobKey(proceso.getClass().getSimpleName());

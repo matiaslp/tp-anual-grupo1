@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -18,9 +21,11 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
 import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
+import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.quartz.NodoProceso;
 import ar.edu.utn.dds.grupouno.quartz.Proceso;
 import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
 
@@ -109,7 +114,7 @@ public class TestProcesoMultiple {
 		tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
 		
 		//---------------------------------------------------------------------
-		// Init Proceso Baja Pois
+		// Init Proceso Baja Poislocal1local1
 		//---------------------------------------------------------------------
 		
 		filePathBajaPoi = (new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json";
@@ -118,7 +123,7 @@ public class TestProcesoMultiple {
 		
 		fecha = new DateTime(2016,10,18,0,0);
 		
-		local4.setNombre("local1");
+		local4.setNombre("local4");
 		String[] etiquetas1 = { "matadero", "heladeria" };
 		local4.setEtiquetas(etiquetas1);
 		local4.setFechaBaja(fecha);
@@ -157,13 +162,17 @@ public class TestProcesoMultiple {
 		// Proceso Actualizar Locales Comerciales
 		//---------------------------------------------------------------------
 		
+		List<NodoProceso> lstProc = new ArrayList<NodoProceso>();
+		
 		ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales();
 		AgregarAcciones proceso2 = new AgregarAcciones();
-		proceso.addSiguienteProceso(proceso2, filePathAgregarAcciones, REINTENTOS_MAX, false);
+		NodoProceso e = new NodoProceso(proceso2, filePathAgregarAcciones, REINTENTOS_MAX, false);
+		lstProc.add(e);
 		BajaPOIs proceso3 = new BajaPOIs();
-		proceso2.addSiguienteProceso(proceso3, filePathBajaPoi, REINTENTOS_MAX, false);
+		NodoProceso e2 = new NodoProceso(proceso3, filePathBajaPoi, REINTENTOS_MAX, false);
+		lstProc.add(e2);
 		
-		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePathActualizarLocalesComerciales, false, 0);
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePathActualizarLocalesComerciales, false, 0, lstProc);
 
 		// Para darle tiempo al planificador que se puedea inicializar y
 		// ejecutar los procesos
@@ -206,127 +215,29 @@ public class TestProcesoMultiple {
 		// Proceso Actualizar Baja Pois
 		//---------------------------------------------------------------------
 		
-		Assert.assertTrue(Repositorio.getInstance().pois().getPOIbyNombre("local1").size() == 0);
+		Assert.assertTrue(Repositorio.getInstance().pois().getPOIbyNombre("local4").size() == 0);
 		Assert.assertTrue(Repositorio.getInstance().pois().getPOIbyNombre("banco1").size() == 0);
 
 	}
 	
-//	@Test
-//	public void procesoMultipleTest() {
-//
-//		// usuario admin y sus funcionalidades
-//		Usuario admin = Repositorio.getInstance().usuarios().getUsuarioByName("admin");
-//		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
-//		AuthAPI.getInstance().agregarFuncionalidad("procesoMultiple", admin);
-//		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
-//		AuthAPI.getInstance().agregarFuncionalidad("actualizacionLocalesComerciales", admin);
-//		
-//		
-//		//---------------------------
-//		//Init AgregarAcciones
-//		//---------------------------
-//		// creamos un usuario adminPrueba
-//		Usuario adminPrueba = Repositorio.getInstance().usuarios().getUsuarioByName("adminPrueba");
-//		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
-//		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
-//		Assert.assertFalse(adminPrueba.getFuncionalidad("cambiarEstadoMail")!=null);
-//		Assert.assertFalse(adminPrueba.getFuncionalidad("actualizacionLocalesComerciales")!=null);
-//		
-//		// creamos usuario unUsuarioTerminal1 y le sacamos funcionalidades
-//		Usuario unUsuarioTerminal1 = Repositorio.getInstance().usuarios().getUsuarioByName("terminal1");
-//		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
-//		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
-//		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
-//		Assert.assertFalse(unUsuarioTerminal1.getFuncionalidad("obtenerInfoPOI")!=null);
-//
-//		//---------------------------
-//		//Init BajaPOI
-//		//---------------------------
-//		LocalComercial local1 = new LocalComercial();
-//		Banco banco1 = new Banco();
-//		
-//		local1.setNombre("local1");
-//		String[] etiquetas1 = { "mataderos", "heladeria" };
-//		local1.setEtiquetas(etiquetas1);
-//		local1.setFechaBaja(new DateTime(2016,10,18,0,0));
-//
-//		banco1.setNombre("banco1");
-//		banco1.setFechaBaja(new DateTime(2016,10,18,0,0));
-//
-//		Repositorio.getInstance().pois().agregarPOI(local1);
-//		Repositorio.getInstance().pois().agregarPOI(banco1);
-//		
-//		//---------------------------
-//		//Init ActualizacionLocalesComerciales
-//		//---------------------------
-//		//Creo los locales comerciales pero solo agrego el 3 y 4, 
-//		//esperando que los otros 2 los cree el proceso
-//		LocalComercial local2 = new LocalComercial();
-//		LocalComercial local3 = new LocalComercial();
-//		LocalComercial local4 = new LocalComercial();
-//		
-//		local2.setNombre("local2");
-//		String[] etiquetas2 = {"juegos", "azul", "moron"};
-//		local2.setEtiquetas(etiquetas2);
-//				
-//		local3.setNombre("local3");
-//		String[] etiquetas3 = {"azul", "helado", "esquina"};
-//		local3.setEtiquetas(etiquetas3);
-//				
-//		local4.setNombre("local4");
-//		String[] etiquetas4 = {"mataderos", "heladeria"};
-//		local4.setEtiquetas(etiquetas4);
-//				
-//		Repositorio.getInstance().pois().agregarPOI(local3);
-//		Repositorio.getInstance().pois().agregarPOI(local4);
-//				
-//		// iniciamos sesion con usuario admin
-//		String tokenAdmin = AuthAPI.getInstance().iniciarSesion("admin", "123");
-//
-//		ArrayList<Proceso> listProc = new ArrayList<Proceso>();
-//
-//		// agregamos un proceso de AgregarAcciones
-//		FuncAgregarAcciones funcion = ((FuncAgregarAcciones) admin.getFuncionalidad("agregarAcciones"));
-//		Proceso proc1 = funcion.prepAgregarAcciones(admin, tokenAdmin, 0, false,
-//				(new File(".").getAbsolutePath()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/accionesAAgregar");
-//		listProc.add(proc1);
-//
-//		// agregamos un proceso bajaPOIs
-//		FuncBajaPOIs funcion2 = ((FuncBajaPOIs) admin.getFuncionalidad("bajaPOIs"));
-//		Proceso proc2 = funcion2.prepDarDeBajaPOI(admin, tokenAdmin, 0, false, 
-//				(new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json");
-//		listProc.add(proc2);
-//
-//		// agregamos un proceso actualizacionLocalesComerciales
-//		FuncActualizacionLocalesComerciales funcion3 = ((FuncActualizacionLocalesComerciales) admin.getFuncionalidad("actualizacionLocalesComerciales"));
-//		Proceso proc3 = funcion3.prepAgregarAcciones(admin, tokenAdmin, 0, false, 
-//				(new File (".").getAbsolutePath ())+"/src/test/java/ar/edu/utn/dds/grupouno/procesos/actualizarLocalesComerciales.txt");
-//		listProc.add(proc3);
-//
-//		// Ejecutamos el proceso multiple
-//		FuncMultiple funcion1 = ((FuncMultiple) admin.getFuncionalidad("procesoMultiple"));
-//		funcion1.procesoMultiple(admin, tokenAdmin, 0, false, listProc);
-//				
-//		// Validaciones Proceso AgregarAcciones
-//		// Se valida que el usuario adminPrueba tiene las funcionalidades agregadas
-//		Assert.assertTrue(adminPrueba.getFuncionalidad("cambiarEstadoMail")!=null);
-//		Assert.assertTrue(adminPrueba.getFuncionalidad("actualizacionLocalesComerciales")!=null);
-//
-//		// Se valida que el usuario unUsuarioTerminal1 tiene la funcionalidad agregada
-//		Assert.assertTrue(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
-//
-//		// Validaciones Proceso BajaPOIs
-//		// Se valida que los elementos ya no existan en la lista
-//		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("local1"));
-//		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("banco1"));
-//		
-//		// validaciones Proceso ActualizarLocalesComerciales
-//		// Se valida que los elementos se agreguen o actualizen
-//		POI local2Actualizado = Repositorio.getInstance().pois().getPOIbyNombre("local2").get(0);
-//		POI local3Actualizado = Repositorio.getInstance().pois().getPOIbyNombre("local3").get(0);
-//		
-//		Assert.assertTrue(local2Actualizado.compararEtiquetas(local2));
-//		Assert.assertTrue(local3Actualizado.compararEtiquetas(local3));
-//	}
+@After
+public void outtro(){
+	
+	Repositorio.getInstance().remove(admin);
+	Repositorio.getInstance().remove(adminPrueba);
+	Repositorio.getInstance().remove(unUsuarioTerminal1);
+
+	Repositorio.getInstance().remove(local1Actualizado);
+	Repositorio.getInstance().remove(local2Actualizado);
+	Repositorio.getInstance().remove(local3Actualizado);
+	
+	Repositorio.getInstance().remove(local4);
+	Repositorio.getInstance().remove(banco1);
+	ArrayList<ResultadoProceso> lstRes = Repositorio.getInstance().resultadosProcesos().getListado();
+	for ( ResultadoProceso resultado : lstRes){
+		Repositorio.getInstance().remove(resultado);
+	}
+
+}
 	
 }

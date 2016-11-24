@@ -135,7 +135,7 @@ public class TestProcesoAgregarAcciones {
 	public void testProcesoAgregarAcciones() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
 						
 		AgregarAcciones proceso = new AgregarAcciones();
-		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePath, false, REINTENTOS_MAX);
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePath, false, REINTENTOS_MAX,null);
 		
 		// Para darle tiempo al planificador que se puedea inicializar y ejecutar los procesos
 		while(!scheduler.getContext().getBoolean("ejecutado")){
@@ -155,7 +155,7 @@ public class TestProcesoAgregarAcciones {
 	public void testEjecucionMultiple() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			SchedulerException, InterruptedException {
 		AgregarAcciones proceso = new AgregarAcciones();
-		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, "", false, REINTENTOS_MAX);
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, "", false, REINTENTOS_MAX,null);
 
 		// Para darle tiempo al planificador que se puedea inicializar y
 		// ejecutar los procesos
@@ -175,7 +175,7 @@ public class TestProcesoAgregarAcciones {
 	public void testProcesoAgregarAccionesRollback() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
 						
 		AgregarAcciones proceso = new AgregarAcciones();
-		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePathRollback, false, 0);
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePathRollback, false, 0,null);
 		
 		// Para darle tiempo al planificador que se puedea inicializar y ejecutar los procesos
 		while(!scheduler.getContext().getBoolean("ejecutado")){

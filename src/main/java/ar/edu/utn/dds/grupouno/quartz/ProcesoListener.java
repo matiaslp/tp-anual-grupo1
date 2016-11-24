@@ -160,21 +160,20 @@ public abstract class ProcesoListener implements JobListener {
 		String nombreProcesoActual = getClass().getName().replace("Listener", "");
 		
 		try {
-			// Obtiene la clase del proceso actual
-			Class actualProceso = getClass().getClassLoader().loadClass(nombreProcesoActual);
+			
+			List<NodoProceso> lstProc = (List<NodoProceso>)scheduler.getContext().get("lstProc");
+			if (lstProc != null && lstProc.size() > 0){
+				NodoProceso nodo = lstProc.remove(0);
 			
 			//Obtiene la clase del siguiente proceso encadenado
-			Class siguienteProceso = ((Proceso)actualProceso.newInstance()).getSiguienteProceso();
+			Class siguienteProceso = nodo.getSiguienteProceso();
 
 			// Chequea si hay definido un siguiente proceso
-			if (siguienteProceso != null) {
-				
 				ResultadoProceso resultadoProceso = new ResultadoProceso();
 				scheduler.getContext().put("ResultadoProceso", resultadoProceso);
 				scheduler.getContext().put("ejecutado", false);
-				scheduler.getContext().put("reintentosMax",  ((Proceso)actualProceso.newInstance()).getSiguienteProcesoReintentos());
+				scheduler.getContext().put("reintentosMax",  nodo.getSiguienteProcesoReintentos());
 				scheduler.getContext().put("reintentosCont", 0);
-				scheduler.start();
 				
 				// Obtiene el listener del pr�ximo proceso
 				ProcesoListener siguienteListener = ((Proceso) siguienteProceso.newInstance()).getProcesoListener();
@@ -186,8 +185,8 @@ public abstract class ProcesoListener implements JobListener {
 				JobDetail nextJob = JobBuilder.newJob(siguienteProceso).withIdentity(jobKey).requestRecovery(true).build();
 				
 				// Cargo en el jobDataMap el path del archivo que uso de referencia.
-				nextJob.getJobDataMap().put("filePath", ((Proceso)actualProceso.newInstance()).getSiguienteProcesoFilepath());
-				nextJob.getJobDataMap().put("enviarMail",  ((Proceso)actualProceso.newInstance()).isSiguienteProcesoEnviarEmail());
+				nextJob.getJobDataMap().put("filePath", nodo.getSiguienteProcesoFilepath());
+				nextJob.getJobDataMap().put("enviarMail",  nodo.isSiguienteProcesoEnviarEmail());
 
 				// Se crea un nuevo trigger que ejecutar� el nuevo proceso
 				Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobKey + "trigger").startNow().build();
