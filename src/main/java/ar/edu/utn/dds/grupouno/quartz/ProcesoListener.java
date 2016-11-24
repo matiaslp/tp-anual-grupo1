@@ -16,6 +16,7 @@ import org.quartz.SchedulerContext;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.KeyMatcher;
 
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
@@ -168,6 +169,13 @@ public abstract class ProcesoListener implements JobListener {
 			// Chequea si hay definido un siguiente proceso
 			if (siguienteProceso != null) {
 				
+				ResultadoProceso resultadoProceso = new ResultadoProceso();
+				scheduler.getContext().put("ResultadoProceso", resultadoProceso);
+				scheduler.getContext().put("ejecutado", false);
+				scheduler.getContext().put("reintentosMax",  ((Proceso)actualProceso.newInstance()).getSiguienteProcesoReintentos());
+				scheduler.getContext().put("reintentosCont", 0);
+				scheduler.start();
+				
 				// Obtiene el listener del pr�ximo proceso
 				ProcesoListener siguienteListener = ((Proceso) siguienteProceso.newInstance()).getProcesoListener();
 
@@ -176,6 +184,10 @@ public abstract class ProcesoListener implements JobListener {
 
 				// Se crea una instancia del pr�ximo proceso a ejecutar
 				JobDetail nextJob = JobBuilder.newJob(siguienteProceso).withIdentity(jobKey).requestRecovery(true).build();
+				
+				// Cargo en el jobDataMap el path del archivo que uso de referencia.
+				nextJob.getJobDataMap().put("filePath", ((Proceso)actualProceso.newInstance()).getSiguienteProcesoFilepath());
+				nextJob.getJobDataMap().put("enviarMail",  ((Proceso)actualProceso.newInstance()).isSiguienteProcesoEnviarEmail());
 
 				// Se crea un nuevo trigger que ejecutar� el nuevo proceso
 				Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobKey + "trigger").startNow().build();
