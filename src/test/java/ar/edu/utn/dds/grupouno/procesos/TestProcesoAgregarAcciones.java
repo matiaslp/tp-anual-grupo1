@@ -26,6 +26,7 @@ import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
 import ar.edu.utn.dds.grupouno.db.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
 import ar.edu.utn.dds.grupouno.quartz.ProcesoListener;
 
 public class TestProcesoAgregarAcciones {
@@ -57,6 +58,8 @@ public class TestProcesoAgregarAcciones {
 		Repositorio.getInstance().usuarios().actualizarUsuarioConAcciones(admin);
 		
 		// creamos usuario adminPrueba y le sacamos las funcionalidad cambiarEstadoMail actualizacionLocalesComerciales
+		// Cuando se crean usuarios s eles asignan algunas funcionalidades base acorde a su Rol por lo que deben ser removidas para
+		// este test
 		adminPrueba = Repositorio.getInstance().usuarios().getUsuarioByName("adminPrueba");
 		AuthAPI.getInstance().sacarFuncionalidad("cambiarEstadoMail",adminPrueba);
 		AuthAPI.getInstance().sacarFuncionalidad("actualizacionLocalesComerciales",adminPrueba);
@@ -68,6 +71,8 @@ public class TestProcesoAgregarAcciones {
 		
 		
 		// creamos usuario unUsuarioTerminal1 y le sacamos las funcionalidades busquedaPOI obtenerInfoPOI
+		// Cuando se crean usuarios s eles asignan algunas funcionalidades base acorde a su Rol por lo que deben ser removidas para
+		// este test
 		unUsuarioTerminal1 = Repositorio.getInstance().usuarios().getUsuarioByName("terminal1");
 		AuthAPI.getInstance().sacarFuncionalidad("busquedaPOI",unUsuarioTerminal1);
 		AuthAPI.getInstance().sacarFuncionalidad("obtenerInfoPOI",unUsuarioTerminal1);
@@ -125,39 +130,13 @@ public class TestProcesoAgregarAcciones {
 //	}
 	@Test
 	public void test1() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
-				
-		ResultadoProceso resultadoProceso = new ResultadoProceso();
-		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		scheduler.getContext().put("ResultadoProceso", resultadoProceso);
-		scheduler.getContext().put("Usuario", admin);
-		scheduler.getContext().put("ejecutado", false);
-		
-		scheduler.start();
-		
-		JobKey key = new JobKey(ActualizacionLocalesComerciales.class.getSimpleName());
-		
-		// Crea una instancia del proceso y con la opcion requestRecovery(true) se fuerzan reintentos en caso de fallas
-		JobDetail job = JobBuilder.newJob(AgregarAcciones.class).withIdentity(key).requestRecovery(true).build();
-		
-		// Cargo en el jobDataMap el path del archivo que uso de referencia.
-		job.getJobDataMap().put("filePath", filePath);
-		job.getJobDataMap().put("enviarMail", false);
-		job.getJobDataMap().put("reintentosMax", REINTENTOS_MAX);
-		job.getJobDataMap().put("reintentosCont", 0);
-		
-		Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger").startNow().build();
-				
-		// Creo instancia del jobListener y se lo agrego al scheduler
-		AgregarAcciones procesoInicial = new AgregarAcciones();
-		ProcesoListener procesoInicialListener = procesoInicial.getProcesoListener();
-		scheduler.getListenerManager().addJobListener((JobListener)procesoInicialListener, KeyMatcher.keyEquals(key));
-		
-		StdSchedulerFactory.getDefaultScheduler().scheduleJob(job, trigger);
+						
+		AgregarAcciones proceso = new AgregarAcciones();
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePath, false, REINTENTOS_MAX);
 		
 		// Para darle tiempo al planificador que se puedea inicializar y ejecutar los procesos
 		while(!scheduler.getContext().getBoolean("ejecutado")){
 			Thread.sleep(1000);
-			//wait(1000L);
 		}
 		scheduler.shutdown();
 		

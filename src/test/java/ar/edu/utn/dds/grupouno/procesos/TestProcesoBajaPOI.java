@@ -3,6 +3,7 @@ package ar.edu.utn.dds.grupouno.procesos;
 import java.io.File;
 
 import org.joda.time.DateTime;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,7 @@ import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
 import ar.edu.utn.dds.grupouno.quartz.ProcesoListener;
 
 public class TestProcesoBajaPOI {
@@ -43,10 +45,9 @@ public class TestProcesoBajaPOI {
 	
 	@Before
 	public void init() {
-		Repositorio.getInstance().pois();
-		// DB_POI.getListado().clear();
 		Autenticador = AuthAPI.getInstance();
-		fact.crearUsuario("admin", "123", "ADMIN");
+		Usuario user = fact.crearUsuario("admin", "123", "ADMIN");
+		Repositorio.getInstance().usuarios().persistir(user);
 		filePath = (new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json";
 		local1 = new LocalComercial();
 		banco1 = new Banco();
@@ -66,40 +67,16 @@ public class TestProcesoBajaPOI {
 
 		admin = Repositorio.getInstance().usuarios().getUsuarioByName("admin");
 		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
+		Repositorio.getInstance().usuarios().actualizarUsuarioConAcciones(admin);
 		tokenAdmin=AuthAPI.getInstance().iniciarSesion("admin", "123");
 		funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
 	}
 
 	@Test
 	public void test1() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
-		
-		ResultadoProceso resultadoProceso = new ResultadoProceso();
-		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		scheduler.getContext().put("ResultadoProceso", resultadoProceso);
-		scheduler.getContext().put("Usuario", admin);
-		scheduler.getContext().put("ejecutado", false);
-		
-		scheduler.start();
-		
-		JobKey key = new JobKey(ActualizacionLocalesComerciales.class.getSimpleName());
-		
-		// Crea una instancia del proceso y con la opcion requestRecovery(true) se fuerzan reintentos en caso de fallas
-		JobDetail job = JobBuilder.newJob(BajaPOIs.class).withIdentity(key).requestRecovery(true).build();
-		
-		// Cargo en el jobDataMap el path del archivo que uso de referencia.
-		job.getJobDataMap().put("filePath", filePath);
-		job.getJobDataMap().put("enviarMail", false);
-		job.getJobDataMap().put("reintentosMax", REINTENTOS_MAX);
-		job.getJobDataMap().put("reintentosCont", 0);
-		
-		Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger").startNow().build();
-		
-		// Creo instancia del jobListener y se lo agrego al scheduler
-		BajaPOIs procesoInicial = new BajaPOIs();
-		ProcesoListener procesoInicialListener = procesoInicial.getProcesoListener();
-		scheduler.getListenerManager().addJobListener((JobListener)procesoInicialListener, KeyMatcher.keyEquals(key));
-		
-		StdSchedulerFactory.getDefaultScheduler().scheduleJob(job, trigger);
+			
+		BajaPOIs proceso = new BajaPOIs();
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePath, false, REINTENTOS_MAX);
 		
 		// Para darle tiempo al planificador que se puedea inicializar y ejecutar los procesos
 		while(!scheduler.getContext().getBoolean("ejecutado")){
@@ -108,7 +85,15 @@ public class TestProcesoBajaPOI {
 		
 		scheduler.shutdown();
 		
-		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("local1"));
-		Assert.assertNull(Repositorio.getInstance().pois().getPOIbyNombre("banco1"));
+		Assert.assertTrue(Repositorio.getInstance().pois().getPOIbyNombre("local1").size() == 0);
+		Assert.assertTrue(Repositorio.getInstance().pois().getPOIbyNombre("banco1").size() == 0);
+	}
+	
+	@After
+	public void outtro(){
+		
+		Repositorio.getInstance().remove(local1);
+		Repositorio.getInstance().remove(banco1);
+		Repositorio.getInstance().remove(admin);
 	}
 }
