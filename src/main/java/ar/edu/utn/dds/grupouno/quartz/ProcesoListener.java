@@ -19,6 +19,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.matchers.KeyMatcher;
 
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.db.Resultado;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.email.EnviarEmail;
@@ -67,12 +68,14 @@ public abstract class ProcesoListener implements JobListener {
 		
 		// Cargo la fecha de fin de ejecuci�n del job
 		resultado.setFinEjecucion(MetodosComunes.convertJodatoJava(new DateTime()));
+		resultado.setMensajeError(resultado.getMensajeError()+ ". Reintentado " +
+				((Integer)contextoScheduler.getInt("reintentosCont")).toString() + " veces");
 				
 		//Persiste resultado en la BD
 		Repositorio.getInstance().resultadosProcesos().persistir(resultado);
 		
 		// Se valida si hubo una excepci�n
-		if (jobException != null) {
+		if (jobException != null || resultado.getResultado() == Resultado.ERROR) {
 			Usuario usuario = (Usuario) contextoScheduler.get("Usuario");
 			
 			if(dataMap.getBoolean("enviarMail")){
@@ -83,10 +86,16 @@ public abstract class ProcesoListener implements JobListener {
 			
 			// Mientras que la cant de reintentos no alcance la cantidad seteada por el usuario
 			// el job se seguira re disparando.
-			int reintento = dataMap.getInt("reintentosCont");
-			if(dataMap.getInt("reintentosMax") > reintento){
-				dataMap.put("reintentosCont", reintento++);
-				jobException.refireImmediately();
+			int reintento = contextoScheduler.getInt("reintentosCont");
+			if(contextoScheduler.getInt("reintentosMax") > reintento){
+				reintento++;
+				contextoScheduler.put("reintentosCont", reintento);
+				try {
+					reEjecutarProceso(context);
+				} catch (SchedulerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
 				rollback(usuario);
 			}
@@ -98,6 +107,47 @@ public abstract class ProcesoListener implements JobListener {
 			}
 		}
 	}
+	
+	public void reEjecutarProceso(JobExecutionContext context) throws SchedulerException {
+
+		// Este método realiza acciones similares al
+		// ejecutaEjemploProcesosAnidadosConRollback() de la clase Consola
+		Scheduler scheduler = context.getScheduler();
+		
+		String nombreProcesoActual = getClass().getName().replace("Listener", "");
+
+		try {
+		// Obtiene la clase del proceso actual
+		Class actualProceso = getClass().getClassLoader().loadClass(nombreProcesoActual);
+		
+		// Obtiene el listener del pr�ximo proceso
+		ProcesoListener siguienteListener = ((Proceso) actualProceso.newInstance()).getProcesoListener();
+
+		// Define un identificador
+		JobKey jobKey = new JobKey(actualProceso.getSimpleName() + ((Integer)scheduler.getContext().getInt("reintentosCont")).toString());
+
+		// Se crea una instancia del próximo proceso a ejecutar
+		JobDetail nextJob = JobBuilder.newJob(actualProceso).withIdentity(jobKey).requestRecovery(true).build();
+
+		// Se crea un nuevo trigger que ejecutará el nuevo proceso
+		Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobKey + "trigger").startNow().build();
+
+		// Se agrega el listener del nuevo proceso al planificador
+		scheduler.getListenerManager().addJobListener((JobListener) siguienteListener, KeyMatcher.keyEquals(jobKey));
+
+		// Se suma al planificador el nuevo proceso junto con el trigger
+		scheduler.scheduleJob(nextJob, trigger);
+
+
+		} catch (ClassNotFoundException cnf) {
+		System.out.println(cnf.getMessage());
+		} catch (InstantiationException ie) {
+		System.out.println(ie.getMessage());
+		} catch (IllegalAccessException iae) {
+		System.out.println(iae.getMessage());
+		}
+
+		}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "static-access" })
 	public void ejecutarProcesoAnidado(JobExecutionContext context) throws SchedulerException {

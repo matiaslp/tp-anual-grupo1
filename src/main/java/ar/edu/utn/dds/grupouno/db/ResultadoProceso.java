@@ -3,6 +3,8 @@ package ar.edu.utn.dds.grupouno.db;
 import java.time.ZonedDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.modelo.Persistible;
@@ -11,6 +13,8 @@ import ar.edu.utn.dds.grupouno.procesos.TiposProceso;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "ResultadoProceso")
+@NamedQueries({
+@NamedQuery(name = "ResultadoProceso.findAll", query = "SELECT r FROM ResultadoProceso r")})
 public class ResultadoProceso extends Persistible{
 
 	private ZonedDateTime inicioEjecucion;

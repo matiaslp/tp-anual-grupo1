@@ -78,12 +78,19 @@ public class BajaPOIs extends Proceso {
 				}
 				resultado.setResultado(Resultado.ERROR);
 				resultado.setMensajeError(generarMensaje(pois_fallidos));
+				schedulerContext.replace("ResultadoProceso", resultado);
+				schedulerContext.replace("ejecutado", true);
+				JobExecutionException e2 = new JobExecutionException();
+				throw e2;
 			}
 	
 		} catch (IOException e) {
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("FileNotFoundException:No existe archivo " + filePath);
-			e.printStackTrace();
+			schedulerContext.replace("ResultadoProceso", resultado);
+			schedulerContext.replace("ejecutado", true);
+			JobExecutionException e2 = new JobExecutionException(e);
+			throw e2;
 		}
 		
 		schedulerContext.replace("ResultadoProceso", resultado);

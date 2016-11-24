@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.grupouno.procesos;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -129,7 +130,7 @@ public class TestProcesoAgregarAcciones {
 //		
 //	}
 	@Test
-	public void test1() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
+	public void testProcesoAgregarAcciones() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
 						
 		AgregarAcciones proceso = new AgregarAcciones();
 		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePath, false, REINTENTOS_MAX);
@@ -148,6 +149,26 @@ public class TestProcesoAgregarAcciones {
 		Assert.assertTrue(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")!=null);
 	}
 	
+	@Test
+	public void testEjecucionMultiple() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			SchedulerException, InterruptedException {
+		AgregarAcciones proceso = new AgregarAcciones();
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, "", false, REINTENTOS_MAX);
+
+		// Para darle tiempo al planificador que se puedea inicializar y
+		// ejecutar los procesos
+		while (!scheduler.getContext().getBoolean("ejecutado")) {
+			Thread.sleep(1000);
+		}
+		
+		int reintentosRealizados = scheduler.getContext().getInt("reintentosCont");
+		
+		Assert.assertTrue(reintentosRealizados == REINTENTOS_MAX);
+
+		scheduler.shutdown();
+		
+	}
+	
 	
 	@After
 	public void outtro(){
@@ -155,6 +176,10 @@ public class TestProcesoAgregarAcciones {
 		Repositorio.getInstance().remove(admin);
 		Repositorio.getInstance().remove(adminPrueba);
 		Repositorio.getInstance().remove(unUsuarioTerminal1);
+		ArrayList<ResultadoProceso> lstRes = Repositorio.getInstance().resultadosProcesos().getListado();
+		for ( ResultadoProceso resultado : lstRes){
+			Repositorio.getInstance().remove(resultado);
+		}
 		
 	}
 	

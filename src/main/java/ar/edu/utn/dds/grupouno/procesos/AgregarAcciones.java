@@ -103,8 +103,10 @@ public class AgregarAcciones extends Proceso {
 					"Acciones inexistentes: " + accionesInexistentes + "\n";
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("FileNotFoundException:No existe archivo " + filePath + "\n" + mensaje);
-
-			e.printStackTrace();
+			schedulerContext.replace("ResultadoProceso", resultado);
+			schedulerContext.replace("ejecutado", true);
+			JobExecutionException e2 = new JobExecutionException(e);
+			throw e2;
 			
 			
 			
@@ -115,8 +117,10 @@ public class AgregarAcciones extends Proceso {
 					"Acciones inexistentes: " + accionesInexistentes + "\n";
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError("IOException:No se puede leer archivo " + filePath + "\n" + mensaje);
-				
-			e.printStackTrace();
+			schedulerContext.replace("ResultadoProceso", resultado);
+			schedulerContext.replace("ejecutado", true);
+			JobExecutionException e2 = new JobExecutionException(e);
+			throw e2;
 		}
 			
 		// Ejecucion exitosa

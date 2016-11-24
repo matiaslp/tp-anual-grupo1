@@ -23,18 +23,18 @@ public class ProcesoHandler {
 		scheduler.getContext().put("ResultadoProceso", resultadoProceso);
 		scheduler.getContext().put("Usuario", usuario);
 		scheduler.getContext().put("ejecutado", false);
+		scheduler.getContext().put("reintentosMax", reintentosMax);
+		scheduler.getContext().put("reintentosCont", 0);
 		scheduler.start();
 		
 		JobKey key = new JobKey(proceso.getClass().getSimpleName());
 		
 		// Crea una instancia del proceso y con la opcion requestRecovery(true) se fuerzan reintentos en caso de fallas
 		JobDetail job = JobBuilder.newJob(proceso.getClass()).withIdentity(key).requestRecovery(true).build();
-		
 		// Cargo en el jobDataMap el path del archivo que uso de referencia.
 		job.getJobDataMap().put("filePath", filePath);
 		job.getJobDataMap().put("enviarMail", enviarMail);
-		job.getJobDataMap().put("reintentosMax", reintentosMax);
-		job.getJobDataMap().put("reintentosCont", 0);
+
 		Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger").startNow().build();
 		
 		// creo nueva instancia del listener.

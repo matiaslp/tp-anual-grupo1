@@ -86,7 +86,7 @@ public class TestProcesoActualizarLocalComercial {
 	}
 
 	@Test
-	public void test1() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+	public void testProcesoActualizarLocalesComerciales() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			SchedulerException, InterruptedException {
 
 		ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales();
@@ -116,14 +116,38 @@ public class TestProcesoActualizarLocalComercial {
 		// Compruebo que el local 1 se actualizo correctamente:
 		Assert.assertFalse(local1Actualizado.compararEtiquetas(local1));
 	}
+	
+	@Test
+	public void testEjecucionMultiple() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			SchedulerException, InterruptedException {
+		ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales();
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(unUsuarioAdmin, proceso, "", false, REINTENTOS_MAX);
+
+		// Para darle tiempo al planificador que se puedea inicializar y
+		// ejecutar los procesos
+		while (!scheduler.getContext().getBoolean("ejecutado")) {
+			Thread.sleep(1000);
+		}
+		
+		int reintentosRealizados = scheduler.getContext().getInt("reintentosCont");
+		
+		Assert.assertTrue(reintentosRealizados == REINTENTOS_MAX);
+
+		scheduler.shutdown();
+		
+	}
 
 	@After
 	public void outtro() {
 
-		repositorio.remove(unUsuarioAdmin);
+		repositorio.usuarios().deleteUsuario(unUsuarioAdmin.getId());
 		repositorio.remove(local1Actualizado);
 		repositorio.remove(local2Actualizado);
 		repositorio.remove(local3Actualizado);
+		ArrayList<ResultadoProceso> lstRes = repositorio.resultadosProcesos().getListado();
+		for ( ResultadoProceso resultado : lstRes){
+			repositorio.remove(resultado);
+		}
 
 	}
 }

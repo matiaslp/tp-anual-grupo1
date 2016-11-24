@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.grupouno.procesos;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -73,7 +74,7 @@ public class TestProcesoBajaPOI {
 	}
 
 	@Test
-	public void test1() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
+	public void testProcesoBajaPoi() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
 			
 		BajaPOIs proceso = new BajaPOIs();
 		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePath, false, REINTENTOS_MAX);
@@ -89,11 +90,36 @@ public class TestProcesoBajaPOI {
 		Assert.assertTrue(Repositorio.getInstance().pois().getPOIbyNombre("banco1").size() == 0);
 	}
 	
+	@Test
+	public void testEjecucionMultiple() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			SchedulerException, InterruptedException {
+		BajaPOIs proceso = new BajaPOIs();
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, "", false, REINTENTOS_MAX);
+
+		// Para darle tiempo al planificador que se puedea inicializar y
+		// ejecutar los procesos
+		while (!scheduler.getContext().getBoolean("ejecutado")) {
+			Thread.sleep(1000);
+		}
+		
+		int reintentosRealizados = scheduler.getContext().getInt("reintentosCont");
+		
+		Assert.assertTrue(reintentosRealizados == REINTENTOS_MAX);
+
+		scheduler.shutdown();
+		
+	}
+	
 	@After
 	public void outtro(){
 		
 		Repositorio.getInstance().remove(local1);
 		Repositorio.getInstance().remove(banco1);
+		admin = Repositorio.getInstance().usuarios().getUsuarioByName("admin");
 		Repositorio.getInstance().remove(admin);
+		ArrayList<ResultadoProceso> lstRes = Repositorio.getInstance().resultadosProcesos().getListado();
+		for ( ResultadoProceso resultado : lstRes){
+			Repositorio.getInstance().remove(resultado);
+		}
 	}
 }

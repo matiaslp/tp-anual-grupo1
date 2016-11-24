@@ -1,8 +1,12 @@
 package ar.edu.utn.dds.grupouno.db.repositorio;
 
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 
+import ar.edu.utn.dds.grupouno.db.DB_POI;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
 
 public class ResultadosProcesos {
 	protected EntityManager em;
@@ -19,5 +23,13 @@ public class ResultadosProcesos {
 		em.getTransaction().begin();
 		em.persist(resProc);
 		em.getTransaction().commit();
+	}
+	
+	public ArrayList<ResultadoProceso> getListado() {
+		ArrayList<ResultadoProceso> listadoResultadoProceso = new ArrayList<ResultadoProceso>();
+
+		listadoResultadoProceso = (ArrayList<ResultadoProceso>) em.createNamedQuery("ResultadoProceso.findAll").getResultList();
+
+		return listadoResultadoProceso;
 	}
 }

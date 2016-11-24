@@ -27,6 +27,7 @@ import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.quartz.Proceso;
 
 public class ActualizacionLocalesComerciales extends Proceso {
+	
 
 	public ActualizacionLocalesComerciales(){
 		
@@ -59,25 +60,33 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			excepcion.printStackTrace();
         }
 		
-		if((locales = parsearArchivo(filePath)) != null){
-			boolean resultadoActualizar = actualizar(locales);
+		if((locales = parsearArchivo(filePath,resultado,schedulerContext)) != null){
+			boolean resultadoActualizar = actualizar(locales,resultado,schedulerContext);
 			
 			if (resultadoActualizar) {
 				resultado.setResultado(Resultado.OK);
 			} else {
 				resultado.setResultado(Resultado.ERROR);
 				resultado.setMensajeError("No se pudieron actualizar todos los locales");
+				schedulerContext.replace("ResultadoProceso", resultado);
+				schedulerContext.replace("ejecutado", true);
+				JobExecutionException e2 = new JobExecutionException();
+				throw e2;
 			}
 		} else {
 			resultado.setResultado(Resultado.ERROR);
-			resultado.setMensajeError("No existe el archio " + filePath);
+			resultado.setMensajeError("No existe el archivo " + filePath);
+			schedulerContext.replace("ResultadoProceso", resultado);
+			schedulerContext.replace("ejecutado", true);
+			JobExecutionException e2 = new JobExecutionException();
+			throw e2;
 		}
 		schedulerContext.replace("ResultadoProceso", resultado);
 		schedulerContext.replace("ejecutado", true);
 
 	}
 	
-	private boolean actualizar(Map<String, String[]> locales) {
+	private boolean actualizar(Map<String, String[]> locales,  ResultadoProceso resultadoProc, SchedulerContext schedulerContext) throws JobExecutionException {
 		try {
 			List<Boolean> resultados = new ArrayList<Boolean>();
 			for (Entry<String, String[]> e : locales.entrySet()) {
@@ -101,12 +110,17 @@ public class ActualizacionLocalesComerciales extends Proceso {
 			if(!resultados.contains(false))
 				return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			resultadoProc.setResultado(Resultado.ERROR);
+			resultadoProc.setMensajeError("DB conection error");
+			schedulerContext.replace("ResultadoProceso", resultadoProc);
+			schedulerContext.replace("ejecutado", true);
+			JobExecutionException e2 = new JobExecutionException();
+			throw e2;
 		}
 		return false;
 	}
 		
-	private Map<String, String[]> parsearArchivo(String filePath){
+	private Map<String, String[]> parsearArchivo(String filePath, ResultadoProceso resultado, SchedulerContext schedulerContext) throws JobExecutionException{
 		Path path = Paths.get(filePath);
 		Map<String, String[]> locales = new HashMap<String, String[]>();
 		
@@ -125,8 +139,14 @@ public class ActualizacionLocalesComerciales extends Proceso {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
-			locales = null;
+			resultado.setResultado(Resultado.ERROR);
+			resultado.setMensajeError("No existe el archio " + filePath);
+			schedulerContext.replace("ResultadoProceso", resultado);
+			schedulerContext.replace("ejecutado", true);
+			JobExecutionException e2 = new JobExecutionException(e);
+		//	e2.setRefireImmediately(true);
+			throw e2;
+			
 		}
 		
 		return locales;
