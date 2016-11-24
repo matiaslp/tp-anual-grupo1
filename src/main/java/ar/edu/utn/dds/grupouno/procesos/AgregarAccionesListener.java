@@ -35,6 +35,7 @@ public class AgregarAccionesListener extends ProcesoListener implements JobListe
 					for (int i = 0; i < acciones.length; i++) {
 						AuthAPI.getInstance().sacarFuncionalidad(acciones[i], unUsuario);
 					}
+					Repositorio.getInstance().usuarios().actualizarUsuarioConAcciones(unUsuario);
 				}
 			}
 			// Eliminamos la transacciones que fue rollbackeada

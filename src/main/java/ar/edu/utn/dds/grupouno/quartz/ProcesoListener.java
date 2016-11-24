@@ -75,7 +75,7 @@ public abstract class ProcesoListener implements JobListener {
 		Repositorio.getInstance().resultadosProcesos().persistir(resultado);
 		
 		// Se valida si hubo una excepci�n
-		if (jobException != null) {
+		if (jobException != null || resultado.getResultado() == Resultado.ERROR) {
 			Usuario usuario = (Usuario) contextoScheduler.get("Usuario");
 			
 			if(dataMap.getBoolean("enviarMail")){

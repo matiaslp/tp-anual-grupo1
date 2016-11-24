@@ -38,6 +38,8 @@ public class TestProcesoAgregarAcciones {
 	String tokenAdmin;
 	String filePath = (new File (".").getAbsolutePath ()) + 
 			"/src/test/java/ar/edu/utn/dds/grupouno/procesos/accionesAAgregar";
+	String filePathRollback = (new File (".").getAbsolutePath ()) + 
+			"/src/test/java/ar/edu/utn/dds/grupouno/procesos/accionesAAgregarRollback";
 	int REINTENTOS_MAX = 5;
 	
 	AgregarAccionesTransaction transaction;
@@ -167,6 +169,28 @@ public class TestProcesoAgregarAcciones {
 
 		scheduler.shutdown();
 		
+	}
+	
+	@Test
+	public void testProcesoAgregarAccionesRollback() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException{
+						
+		AgregarAcciones proceso = new AgregarAcciones();
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(admin, proceso, filePathRollback, false, 0);
+		
+		// Para darle tiempo al planificador que se puedea inicializar y ejecutar los procesos
+		while(!scheduler.getContext().getBoolean("ejecutado")){
+			Thread.sleep(1000);
+		}
+		scheduler.shutdown();
+		
+		adminPrueba = Repositorio.getInstance().usuarios().getUsuarioByName("adminPrueba");
+		// Se valida que el usuario adminPrueba tiene las funcionalidades agregadas
+		Assert.assertTrue(adminPrueba.getFuncionalidad("cambiarEstadoMail")==null);
+		Assert.assertTrue(adminPrueba.getFuncionalidad("actualizacionLocalesComerciales")==null);
+
+		unUsuarioTerminal1 = Repositorio.getInstance().usuarios().getUsuarioByName("terminal1");
+		// Se valida que el usuario unUsuarioTerminal1 tiene la funcionalidad agregada
+		Assert.assertTrue(unUsuarioTerminal1.getFuncionalidad("busquedaPOI")==null);
 	}
 	
 	

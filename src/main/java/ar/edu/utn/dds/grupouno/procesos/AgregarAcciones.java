@@ -68,7 +68,7 @@ public class AgregarAcciones extends Proceso {
 		try {
 			if ((fr = new FileReader(filePath)) != null) {
 				BufferedReader br = new BufferedReader(fr);
-				
+				boolean error = false;
 				// lee linea a linea
 				while ((linea = br.readLine()) != null) {
 					palabras = linea.split(" ");
@@ -87,12 +87,23 @@ public class AgregarAcciones extends Proceso {
 						}
 					}
 
-					AgregarAcciones.AgregarAccionesAUsuario(unUsername, listadoAcciones, transaction);
+					if (!AgregarAcciones.AgregarAccionesAUsuario(unUsername, listadoAcciones, transaction))
+						error = true;
 
 				}
 				// Se agrega la transaccion a DB_AgregarAccionesTransaction
 				DB_AgregarAccionesTransaction.getInstance().agregarTransactions(transaction);
 				br.close();
+				
+				if (error){
+					String mensaje = "Usuarios inexistentes: " + usuariosInexistentes + "\n" +
+							"Acciones inexistentes: " + accionesInexistentes + "\n";
+					resultado.setResultado(Resultado.ERROR);
+					resultado.setMensajeError("Usuarios o acciones inexistentes en " + filePath + "\n" + mensaje);
+					schedulerContext.replace("ResultadoProceso", resultado);
+					JobExecutionException e2 = new JobExecutionException();
+					throw e2;
+				}
 			}
 			
 			
@@ -130,6 +141,8 @@ public class AgregarAcciones extends Proceso {
 					"Acciones inexistentes: " + accionesInexistentes + "\n";
 			resultado.setResultado(Resultado.ERROR);
 			resultado.setMensajeError(mensaje);
+			JobExecutionException e2 = new JobExecutionException();
+			throw e2;
 		}
 		
 		schedulerContext.replace("ResultadoProceso", resultado);
