@@ -20,6 +20,7 @@ import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
+import ar.edu.utn.dds.grupouno.repositorio.RepoMongo;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestABMC_Consulta {
@@ -97,11 +98,12 @@ public class TestABMC_Consulta {
 	// deberia devolver 1 solo resultado, pero como el servicio remoto
 	// ServiciosAPI no filtra bien,
 	// devuelve todos los CGPs y el banco encontrado (en total 16)
+	// CON MONGO FUNCIONA BIEN CUANDO ESTA EN CACHE.
 	@Test
 	public void testConsultaRemota2() throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 		lista = abmc.buscar(ServicioAPI, "Galicia", usuario.getId());
-		Assert.assertTrue(lista.size() == 16);
+		Assert.assertTrue(lista.size() == 1);
 	}
 
 	@Test
@@ -109,7 +111,7 @@ public class TestABMC_Consulta {
 			throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", usuario.getId());
-		Assert.assertTrue(lista.size() == 18);// 2 POI locales, 15 POI ext de
+		Assert.assertTrue(lista.size() == 3);// 2 POI locales, 15 POI ext de
 												// CGP porque funciona mal y 1
 												// Banco galicia externo
 	}
@@ -121,21 +123,24 @@ public class TestABMC_Consulta {
 		Assert.assertTrue(!(lista.isEmpty()));
 	}
 
+	//ESTE SIN CACHE DA 18 PORQUE EL SERVICIO ANDA MAL
 	@Test
 	public void testConsultavariasPalabras()
 			throws JSONException, MalformedURLException, IOException, MessagingException {
 		ArrayList<POI> lista = null;
 		lista = abmc.buscar(ServicioAPI, "Galicia Mataderos", usuario.getId());
-		Assert.assertTrue(lista.size() == 18);
+		Assert.assertTrue(lista.size() == 3);
 	}
 
 	@After
 	public void outtro() {
 
 		instance.remove(usuario);
-		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
-		for (RegistroHistorico reg : list)
-			instance.remove(reg);
+		RepoMongo.getInstance().getDatastore().delete(RepoMongo.getInstance()
+				.getDatastore().createQuery(RegistroHistoricoMorphia.class));
+//		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
+//		for (RegistroHistorico reg : list)
+//			instance.remove(reg);
 		instance.remove(cgp);
 		instance.remove(parada);
 		instance.remove(local);

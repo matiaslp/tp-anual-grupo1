@@ -46,10 +46,14 @@ public class DB_HistorialBusquedas extends Repositorio {
 		return em.find(RegistroHistorico.class, id);
 	}
 
-	public List<RegistroHistorico> getHistoricobyUserId(Long userID) {
+	public List<RegistroHistoricoMorphia> getHistoricobyUserId(Long userID) {
 
-		List<RegistroHistorico> resultado = null;
-		resultado = em.createNamedQuery("getHistoricobyUserId").setParameter("ruserid", userID).getResultList();
+//		List<RegistroHistorico> resultado = null;
+//		resultado = em.createNamedQuery("getHistoricobyUserId").setParameter("ruserid", userID).getResultList();
+		
+		List<RegistroHistoricoMorphia> resultado = RepoMongo.getInstance().getDatastore().createQuery(RegistroHistoricoMorphia.class)
+				.filter("userID", userID).asList();
+		
 		return resultado;
 	}
 
@@ -73,16 +77,6 @@ public class DB_HistorialBusquedas extends Repositorio {
 		// } catch (Exception ex) {
 		// return false;
 		// }
-	}
-
-	@Transactional
-	public boolean actualizarRegistroHistorico(RegistroHistorico unRegistroHistorico) {
-		em.getTransaction().begin();
-		// em.remove(getRegistroHistoricobyId(unRegistroHistorico.getId()));
-		// em.persist(unRegistroHistorico);
-		em.flush();
-		em.getTransaction().commit();
-		return true;
 	}
 
 	public boolean eliminarRegistroHistorico(long id) {

@@ -41,12 +41,23 @@ public class CGP extends POI {
 	}
 
 	public void agregarServicio(String nombre, List<Integer> dias, int horaInicio, int horaFin) {
-		NodoServicio nuevoNodo = new NodoServicio();
-		nuevoNodo.setNombre(nombre);
-		nuevoNodo.listaDias = dias;
-		nuevoNodo.horaInicio = horaInicio;
-		nuevoNodo.horaFin = horaFin;
-		servicios.add(nuevoNodo);
+		if(this.servicios == null){
+			servicios = new ArrayList<NodoServicio>();
+			NodoServicio nuevoNodo = new NodoServicio();
+			nuevoNodo.setNombre(nombre);
+			nuevoNodo.listaDias = dias;
+			nuevoNodo.horaInicio = horaInicio;
+			nuevoNodo.horaFin = horaFin;
+			servicios.add(nuevoNodo);
+		}else{
+			NodoServicio nuevoNodo = new NodoServicio();
+			nuevoNodo.setNombre(nombre);
+			nuevoNodo.listaDias = dias;
+			nuevoNodo.horaInicio = horaInicio;
+			nuevoNodo.horaFin = horaFin;
+			servicios.add(nuevoNodo);
+		}
+
 	}
 
 	public boolean disponible(String servicio) {
@@ -96,7 +107,6 @@ public class CGP extends POI {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
 		this.setTipo(TiposPOI.CGP);
-		this.servicios = new ArrayList<NodoServicio>();
 	}
 
 	public CGP() {
@@ -157,7 +167,13 @@ public class CGP extends POI {
 	}
 
 	public void setServicio(NodoServicio servicio) {
-		servicios.add(servicio);
+		if(this.servicios == null){
+			servicios = new ArrayList<NodoServicio>();
+			servicios.add(servicio);
+		}else{
+			servicios.add(servicio);
+		}
+		
 	}
 
 }

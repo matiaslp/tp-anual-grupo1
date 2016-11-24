@@ -34,12 +34,23 @@ public class Banco extends POI {
 	}
 
 	public void agregarServicio(String nombre, ArrayList<Integer> dias, int horaInicio, int horaFin) {
-		NodoServicio nuevoNodo = new NodoServicio();
-		nuevoNodo.setName(nombre);
-		nuevoNodo.listaDias = dias;
-		nuevoNodo.horaInicio = horaInicio;
-		nuevoNodo.horaFin = horaFin;
-		servicios.add(nuevoNodo);
+		if(this.servicios == null){
+			servicios = new ArrayList<NodoServicio>();
+			NodoServicio nuevoNodo = new NodoServicio();
+			nuevoNodo.setName(nombre);
+			nuevoNodo.listaDias = dias;
+			nuevoNodo.horaInicio = horaInicio;
+			nuevoNodo.horaFin = horaFin;
+			servicios.add(nuevoNodo);
+		}else{
+			NodoServicio nuevoNodo = new NodoServicio();
+			nuevoNodo.setName(nombre);
+			nuevoNodo.listaDias = dias;
+			nuevoNodo.horaInicio = horaInicio;
+			nuevoNodo.horaFin = horaFin;
+			servicios.add(nuevoNodo);
+		}
+
 	}
 
 	public boolean disponible(String servicio) {
@@ -93,7 +104,6 @@ public class Banco extends POI {
 		this.ubicacion = GeoLocation.fromDegrees(latitud, longitud);
 		this.setNombre(nombre);
 		this.setTipo(TiposPOI.BANCO);
-		this.servicios = new ArrayList<NodoServicio>();
 	}
 
 	public void setServicios(ArrayList<NodoServicio> serv) {

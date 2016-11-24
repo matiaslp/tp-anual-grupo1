@@ -2,6 +2,8 @@ package ar.edu.utn.dds.grupouno.abmc;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import javax.mail.MessagingException;
@@ -19,6 +21,7 @@ import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
+import ar.edu.utn.dds.grupouno.repositorio.RepoMongo;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestABMC_Historico {
@@ -70,10 +73,10 @@ public class TestABMC_Historico {
 		historico.buscar(ServicioAPI, "Mataderos", usuario.getId());
 		// Assert.assertTrue(DB_HistorialBusquedas.getInstance().cantidadRegistros()
 		// == 1);
-		RegistroHistorico reg = Repositorio.getInstance().resultadosRegistrosHistoricos()
+		RegistroHistoricoMorphia reg = Repositorio.getInstance().resultadosRegistrosHistoricos()
 				.getHistoricobyUserId(usuario.getId()).get(0);
 		Assert.assertTrue(reg.getCantResultados() == 17);
-		Assert.assertTrue(reg.getTime().isBeforeNow());
+		Assert.assertTrue(reg.getTime().before(Date.from(Instant.now())));
 		Assert.assertEquals(reg.getBusqueda(), "Mataderos");
 	}
 
@@ -81,9 +84,11 @@ public class TestABMC_Historico {
 	public void outtro() {
 
 		instance.remove(usuario);
-		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
-		for (RegistroHistorico reg : list)
-			instance.remove(reg);
+		RepoMongo.getInstance().getDatastore().delete(RepoMongo.getInstance()
+				.getDatastore().createQuery(RegistroHistoricoMorphia.class));
+//		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
+//		for (RegistroHistorico reg : list)
+//			instance.remove(reg);
 		instance.remove(cgp);
 		instance.remove(parada);
 		instance.remove(local);
