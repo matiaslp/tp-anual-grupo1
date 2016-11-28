@@ -64,7 +64,7 @@ public class DB_Sesiones extends Repositorio {
 	public void removerSesiones(String user) {
 		List<Sesion> sesiones = this.getSesionbyUser(user);
 		for (Sesion sesion: sesiones)
-			removerSesion(sesion);
+			em.remove(sesion);
 		
 	}
 	

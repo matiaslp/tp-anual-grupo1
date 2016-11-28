@@ -68,6 +68,7 @@ public class DB_POI extends Repositorio {
 			em.getTransaction().commit();
 			return true;
 		} catch (Exception ex) {
+			em.getTransaction().rollback();
 			return true;
 		}
 	}

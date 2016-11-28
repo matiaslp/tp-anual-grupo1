@@ -136,6 +136,7 @@ public class DB_Usuarios extends Repositorio {
 			em.getTransaction().commit();
 			return true;
 		}
+		em.getTransaction().commit();
 		return false;
 	}
 
