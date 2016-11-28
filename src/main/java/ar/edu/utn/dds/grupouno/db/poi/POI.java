@@ -38,9 +38,10 @@ import ar.edu.utn.dds.grupouno.modelo.PersistibleConNombre;
 @Inheritance(strategy=InheritanceType.JOINED)
 @NamedQueries({
 @NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
+@NamedQuery(name = "getPOIbyNombreConEliminados", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre"),
 @NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p")})
 public class POI extends PersistibleConNombre{
-
+	
 	protected String callePrincipal;
 	protected String calleLateral;
 	protected long numeracion;

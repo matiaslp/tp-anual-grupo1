@@ -48,6 +48,14 @@ public class DB_POI extends Repositorio {
 		return pois;
 	}
 	
+	public List<POI> getPOIbyNombreConEliminados(String nombre) {
+		List<POI> pois = null;
+		pois = em.createNamedQuery("getPOIbyNombreConEliminados").setParameter("pnombre", "%" + nombre + "%").getResultList();
+		return pois;
+	}
+	
+	
+	
 	
 
 	// @Transactional

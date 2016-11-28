@@ -2,6 +2,7 @@ package ar.edu.utn.dds.grupouno.procesos;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -26,6 +27,7 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
 import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
 import ar.edu.utn.dds.grupouno.quartz.ProcesoListener;
@@ -113,8 +115,12 @@ public class TestProcesoBajaPOI {
 	@After
 	public void outtro(){
 		
-		Repositorio.getInstance().remove(local1);
-		Repositorio.getInstance().remove(banco1);
+		List<POI> pois = Repositorio.getInstance().pois().getPOIbyNombreConEliminados("local1");
+		if ( pois != null && pois.size() > 0)
+			Repositorio.getInstance().remove(pois.get(0));
+		pois = Repositorio.getInstance().pois().getPOIbyNombreConEliminados("banco1");
+		if ( pois != null && pois.size() > 0)
+			Repositorio.getInstance().remove(pois.get(0));
 		admin = Repositorio.getInstance().usuarios().getUsuarioByName("admin");
 		Repositorio.getInstance().remove(admin);
 		ArrayList<ResultadoProceso> lstRes = Repositorio.getInstance().resultadosProcesos().getListado();
