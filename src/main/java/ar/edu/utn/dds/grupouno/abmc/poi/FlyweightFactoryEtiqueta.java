@@ -5,8 +5,16 @@ import java.util.List;
 
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
-class FlyweightFactoryEtiqueta {
-	IFlyweightEtiqueta etiqueta;
+public class FlyweightFactoryEtiqueta {
+	static FlyweightFactoryEtiqueta instance;
+	
+	public static FlyweightFactoryEtiqueta getInstance() {
+		if (instance == null) {
+			instance = new FlyweightFactoryEtiqueta();
+		}
+		return instance;
+	}
+	
 
 	private static ArrayList<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
 
@@ -18,17 +26,23 @@ class FlyweightFactoryEtiqueta {
 		return null;
 
 	}
-
+	
+	public void refresh(){
+		etiquetas = Repositorio.getInstance().etiquetas().getListado();
+	}
+	
+	
 	public static Etiqueta getEtiqueta(String nombre) {
 		Etiqueta etiqueta = obtenerEtiqueta(nombre);
 		if (etiqueta == null) {
-			List<Etiqueta> etiquetas = Repositorio.getInstance().etiquetas().getEtiquetabyNombre(nombre);
-			if (etiquetas.size() == 0) {
+			List<Etiqueta> etiquetasDB = Repositorio.getInstance().etiquetas().getEtiquetabyNombre(nombre);
+			if (etiquetasDB.size() == 0){
 				etiqueta = new Etiqueta(nombre);
 				etiquetas.add(etiqueta);
 				Repositorio.getInstance().etiquetas().agregarEtiqueta(etiqueta);
-			}
-		}
+			}else {
+				etiqueta = etiquetasDB.get(0);
+		}}
 		return etiqueta;
 	}
 

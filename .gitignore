@@ -8,7 +8,5 @@ target/
 build/
 target/*
 build/*
-.classpath
-.classpath/
-.classpath/*
 .tern-project
+.metadata/*

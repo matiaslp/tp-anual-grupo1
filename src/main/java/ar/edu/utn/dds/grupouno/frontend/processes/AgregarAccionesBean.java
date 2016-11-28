@@ -4,6 +4,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.quartz.SchedulerException;
+
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones;
@@ -41,7 +43,7 @@ public class AgregarAccionesBean {
 		this.filePath = filePath;
 	}
 
-	public String ejecutar() {
+	public String ejecutar() throws InstantiationException, ClassNotFoundException, IllegalAccessException, SchedulerException, InterruptedException {
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
@@ -52,14 +54,14 @@ public class AgregarAccionesBean {
 		return "index";
 	}
 	
-	public String preparar(){
-		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
-		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
-		
-		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
-		funcion.prepAgregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);
-		return "index";
-	}
+//	public String preparar(){
+//		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
+//		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+//		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
+//		
+//		FuncAgregarAcciones funcion = (FuncAgregarAcciones) AuthAPI.getInstance().getAccion("agregarAcciones");
+//		funcion.prepAgregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);
+//		return "index";
+//	}
 
 }

@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.joda.time.DateTime;
+import org.quartz.JobDataMap;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.SchedulerContext;
+import org.quartz.SchedulerException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,65 +25,71 @@ import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.DateDeserializer;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.ItemBorrarConstructor;
 import ar.edu.utn.dds.grupouno.abmc.poi.Item_Borrar;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
-import ar.edu.utn.dds.grupouno.repositorio.DB_ResultadosProcesos;
-import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.quartz.Proceso;
 
 public class BajaPOIs extends Proceso {
 
-	private DB_POI dbPOI = Repositorio.getInstance().pois();
-	private String filePath;
-
+	public BajaPOIs() {
+		
+	}
+	
 	@Override
-	public ResultadoProceso procesado() {
-		return bajaPoi(filePath);
-	}
-
-	public BajaPOIs(int cantidadReintentos, boolean enviarEmail, Usuario unUser, String filePath) {
-		super(cantidadReintentos, enviarEmail, unUser);
-		this.filePath = filePath;
-	}
-
-	public ResultadoProceso bajaPoi(String filePath) {
-		DateTime start = new DateTime();
-		DateTime end;
+	public void execute(JobExecutionContext contexto) throws JobExecutionException {
 		ResultadoProceso resultado = null;
+		SchedulerContext schedulerContext = null;
+		Usuario usuario = null;
+		
+		JobDataMap dataMap = contexto.getJobDetail().getJobDataMap();
+		String filePath = dataMap.getString("filePath");
+		
+		try {
+			//Traigo el contexto
+			schedulerContext = contexto.getScheduler().getContext();
+			
+			// Obtengo del contexto el usuario y el resultado de proceso.
+			usuario = (Usuario)schedulerContext.get("Usuario");
+			resultado = (ResultadoProceso)schedulerContext.get("ResultadoProceso");
+						
+			resultado.setUserID(usuario.getId());
+			resultado.setProc(TiposProceso.BAJAPOIS);
+		
+		} catch (SchedulerException excepcion) {
+			excepcion.printStackTrace();
+        }
+		
 		try {
 			List<Item_Borrar> listadoItems = new ArrayList<Item_Borrar>();
-
 			Gson gson = generarGson();
-
-			listadoItems = leerJson(gson, filePath);
-
+			listadoItems = leerJson(gson,filePath);
 			Map<Long, Boolean> resumen = darDeBaja(listadoItems);
-			end = new DateTime();
-
+						
 			// Si el listado de resumen tiene algun elemento con value false
 			// significa que ese elemento no se pudo borrar
 			if (!resumen.containsValue(false)) {
-				resultado = new ResultadoProceso(start, end, TiposProceso.BAJAPOIS, user.getId(),
-						"Todos los POIs fueron eliminados correctamente", Resultado.OK);
+				resultado.setResultado(Resultado.OK);
 			} else {
 				List<Long> pois_fallidos = new ArrayList<Long>();
 				for (Entry<Long, Boolean> e : resumen.entrySet()) {
 					if (!e.getValue())
 						pois_fallidos.add(e.getKey());
 				}
-				resultado = new ResultadoProceso(start, end, TiposProceso.BAJAPOIS, user.getId(),
-						generarMensaje(pois_fallidos), Resultado.ERROR);
+
+				resultado.setResultado(Resultado.ERROR);
+				resultado.setMensajeError(generarMensaje(pois_fallidos));
+				schedulerContext.replace("ResultadoProceso", resultado);
+				JobExecutionException e2 = new JobExecutionException();
+				throw e2;
 			}
-
-			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
-
+	
 		} catch (IOException e) {
-			end = new DateTime();
-
-			resultado = new ResultadoProceso(start, end, TiposProceso.BAJAPOIS, user.getId(),
-					"FileNotFoundException:No existe archivo " + filePath, Resultado.ERROR);
-			DB_ResultadosProcesos.getInstance().agregarResultadoProceso(resultado);
-			e.printStackTrace();
+			resultado.setResultado(Resultado.ERROR);
+			resultado.setMensajeError("FileNotFoundException:No existe archivo " + filePath);
+			schedulerContext.replace("ResultadoProceso", resultado);
+			JobExecutionException e2 = new JobExecutionException(e);
+			throw e2;
 		}
-		return resultado;
+		
+		schedulerContext.replace("ResultadoProceso", resultado);
 	}
 
 	private String generarMensaje(List<Long> keys) {
@@ -99,21 +109,14 @@ public class BajaPOIs extends Proceso {
 	}
 
 	private List<Item_Borrar> leerJson(Gson gson, String filepath) throws FileNotFoundException {
-		JsonReader jsonReader = new JsonReader(new FileReader(filePath));
+		JsonReader jsonReader = new JsonReader(new FileReader(filepath));
 		Type listType = new TypeToken<ArrayList<Item_Borrar>>() {
 		}.getType();
 		return gson.fromJson(jsonReader, listType);
 	}
 
-	private Map<Long, Boolean> darDeBaja(List<Item_Borrar> listadoItems) {
-		String[] valoresBusqueda = new String[listadoItems.size()];
-		List<String> valores = new ArrayList<String>();
-		List<DateTime> fechas = new ArrayList<DateTime>();
-		for (Item_Borrar item : listadoItems) {
-			valores.add(item.getParametro());
-			fechas.add(new DateTime(item.getFechaBorrado()));
-		}
-		valores.toArray(valoresBusqueda);
-		return dbPOI.bajaPoi(valoresBusqueda, fechas);
+	private Map<Long,Boolean> darDeBaja(List<Item_Borrar> listadoItems){
+		return getDbPOI().bajaPoi(listadoItems);	
 	}
+	
 }

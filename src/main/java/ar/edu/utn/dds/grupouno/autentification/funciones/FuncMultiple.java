@@ -10,7 +10,6 @@ import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
 import ar.edu.utn.dds.grupouno.procesos.ProcesoMultiple;
-
 @Entity
 public class FuncMultiple extends Accion {
 

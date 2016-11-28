@@ -6,29 +6,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
-
-import org.joda.time.DateTime;
-
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
-import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
-
-
 import ar.edu.utn.dds.grupouno.repositorio.DB_HistorialBusquedas;
-import ar.edu.utn.dds.grupouno.repositorio.DB_Usuarios;
-
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean
 @SessionScoped
 public class LoginBean {
 	private String usuario;
 	private String contrasena;
-	
-	//creacion de registros historicos terminal 
-	private DB_HistorialBusquedas historial;
-	//..
 	
 	public String getUsuario() {
 		return usuario;
@@ -59,16 +47,6 @@ public class LoginBean {
             Repositorio.getInstance().usuarios().persistir(terminal);
 		}
 		//-------------------------
-		
-		//creacion de registros historicos terminal 
-		
-		//historial = DB_HistorialBusquedas.getInstance();
-		/*DateTime time = new DateTime(2016, 1, 1, 1, 1);
-		RegistroHistorico registro = new RegistroHistorico(0, time
-		, DB_Usuarios.getInstance().getUsuarioByName("terminal").getID(), "busqueda1", 10, 5);
-		
-		historial.agregarHistorialBusqueda(registro);
-		//..*/
 		
 		//obtenemos usuario
 

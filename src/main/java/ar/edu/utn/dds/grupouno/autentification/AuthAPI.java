@@ -22,9 +22,7 @@ import ar.edu.utn.dds.grupouno.autentification.funciones.FuncObtenerInfoPOI;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedaPorUsuario;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteBusquedasPorFecha;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncReporteCantidadResultadosPorTerminal;
-import ar.edu.utn.dds.grupouno.repositorio.DB_Sesiones;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
-
 
 public class AuthAPI {
 
@@ -47,6 +45,7 @@ public class AuthAPI {
 	}
 
 	public List<Rol> getRoles() {
+		roles = Repositorio.getInstance().usuarios().getListadoRoles();
 		return roles;
 	}
 

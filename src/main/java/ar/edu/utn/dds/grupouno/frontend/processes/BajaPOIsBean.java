@@ -4,14 +4,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.quartz.SchedulerException;
+
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
-
-import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
-import ar.edu.utn.dds.grupouno.repositorio.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
-
 
 @ManagedBean
 @RequestScoped
@@ -45,7 +43,7 @@ public class BajaPOIsBean {
 		this.filePath = filePath;
 	}
 
-	public String ejecutar() {
+	public String ejecutar() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException, InterruptedException {
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
@@ -56,13 +54,13 @@ public class BajaPOIsBean {
 		return "index";
 	}
 	
-	public String preparar(){
-		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
-		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
-		
-		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
-		funcion.prepDarDeBajaPOI(usuario, token, cantidadReintentos, enviarEmail, filePath);
-		return "index";
-	}
+//	public String preparar(){
+//		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
+//		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+//		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
+//		
+//		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
+//		funcion.prepDarDeBajaPOI(usuario, token, cantidadReintentos, enviarEmail, filePath);
+//		return "index";
+//	}
 }

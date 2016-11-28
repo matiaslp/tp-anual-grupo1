@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.grupouno.email;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -22,38 +22,43 @@ import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public abstract class EnviarEmail {
-
-	public static boolean mandarCorreoProcesoError(Usuario user, ArrayList<ResultadoProceso> listaResultados) {
-
+	
+	public static boolean mandarCorreoProcesoError(Usuario user, List<ResultadoProceso> resultados) {
+		
 		String correoEnvia = LeerProperties.getInstance().prop.getProperty("email");
 		String claveCorreo = LeerProperties.getInstance().prop.getProperty("emailPassword");
 
 		String texto = "";
+		String res = "";
 
-		for (ResultadoProceso resultado : listaResultados) {
-			String res = "";
-			String clase = resultado.getProc().nombre();
-			if (resultado.getResultado().equals(Resultado.ERROR))
-				res = "con errores";
-			else if (resultado.getResultado().equals(Resultado.OK))
-				res = "satisfactoria";
-			texto = texto + " Proceso " + clase + " ejecucion " + res + "\n" + "Inicio de ejecucion: "
-					+ resultado.getInicioEjecucion().toString() + "\n" + "Fin de ejecucion: "
-					+ resultado.getFinEjecucion().toString() + "\n" + "Ejecutado por usuario: " + resultado.getUserID()
-					+ "\n" + resultado.getMensajeError() + "\n\n";
+		if(resultados.size() > 0){
+			for(ResultadoProceso resultado : resultados){
+				String clase = resultado.getProc().nombre();
+				
+				if (resultado.getResultado().equals(Resultado.ERROR)){
+					res = "con errores";
+				} else if (resultado.getResultado().equals(Resultado.OK)) {
+					res = "satisfactoria";
+				}
+					
+				texto = texto +  " Proceso " + clase + " ejecucion " + res + "\n" +
+						"Inicio de ejecucion: " + resultado.getInicioEjecucion().toString() + "\n" +
+						"Fin de ejecucion: " + resultado.getFinEjecucion().toString() + "\n" +
+						"Ejecutado por usuario: " + resultado.getUserID() + "\n" +
+						resultado.getMensajeError() + "\n\n";
+
+			}
 		}
-
+							
 		String titulo = "Errores Ejecucion de Proceso";
 
 		boolean enviado = false;
 		try {
 			enviado = mandarCorreo(texto, titulo, user.getCorreo(), correoEnvia, claveCorreo);
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return enviado;
-
 	}
 
 	public static boolean mandarCorreoXSegundos(String nombreDeBusqueda, double segundos, String correoRecibe)

@@ -1,5 +1,7 @@
 package ar.edu.utn.dds.grupouno.repositorio;
 
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 
 import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
@@ -19,5 +21,13 @@ public class ResultadosProcesos {
 		em.getTransaction().begin();
 		em.persist(resProc);
 		em.getTransaction().commit();
+	}
+	
+	public ArrayList<ResultadoProceso> getListado() {
+		ArrayList<ResultadoProceso> listadoResultadoProceso = new ArrayList<ResultadoProceso>();
+
+		listadoResultadoProceso = (ArrayList<ResultadoProceso>) em.createNamedQuery("ResultadoProceso.findAll").getResultList();
+
+		return listadoResultadoProceso;
 	}
 }

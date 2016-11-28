@@ -1,23 +1,13 @@
 package ar.edu.utn.dds.grupouno.repositorio;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.db.Sesion;
-import ar.edu.utn.dds.grupouno.abmc.poi.POI;
-import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
-import ar.edu.utn.dds.grupouno.repositorio.Persistible;
 
 public class DB_Sesiones extends Repositorio {
-
-
 
 	public DB_Sesiones(EntityManager em) {
 		super(em);
@@ -75,9 +65,9 @@ public class DB_Sesiones extends Repositorio {
 	public void removerSesiones(String user) {
 		List<Sesion> sesiones = this.getSesionbyUser(user);
 		for (Sesion sesion: sesiones)
-			removerSesion(sesion);
+			em.remove(sesion);
 		
 
 	}
-
+	
 }

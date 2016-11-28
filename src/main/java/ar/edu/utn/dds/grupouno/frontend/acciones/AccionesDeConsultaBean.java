@@ -21,11 +21,9 @@ public class AccionesDeConsultaBean {
 
 	@SuppressWarnings("unchecked")
 	public AccionesDeConsultaBean() {
-		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("username"));
-		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
-	
+		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
+		//String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+		//Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 		 for (Accion unaAccion:AuthAPI.getInstance().getAcciones()){
 			 accionesParaSeleccionar.add(unaAccion);

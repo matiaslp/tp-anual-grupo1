@@ -6,11 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.joda.time.DateTime;
 
+import ar.edu.utn.dds.grupouno.abmc.poi.FlyweightFactoryEtiqueta;
+import ar.edu.utn.dds.grupouno.abmc.poi.Item_Borrar;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 
+
+@SuppressWarnings({ "unchecked", "unchecked" })
 public class DB_POI extends Repositorio {
 
 	private static ArrayList<POI> listadoPOI;
@@ -33,16 +38,28 @@ public class DB_POI extends Repositorio {
 	}
 
 	public List<POI> getPOIbyNombre(String nombre) {
-
 		List<POI> pois = null;
 		pois = em.createNamedQuery("getPOIbyNombre").setParameter("pnombre", "%" + nombre + "%").getResultList();
 		return pois;
 	}
+	
+	public List<POI> getPOIbyNombreConEliminados(String nombre) {
+		List<POI> pois = null;
+		pois = em.createNamedQuery("getPOIbyNombreConEliminados").setParameter("pnombre", "%" + nombre + "%").getResultList();
+		return pois;
+	}
+	
+	
+	
+	
 
 	// @Transactional
 	public boolean agregarPOI(POI nuevoPOI) {
 		try {
 			em.getTransaction().begin();
+
+			FlyweightFactoryEtiqueta.getInstance().refresh();
+			nuevoPOI.refreshEtiquetas();
 			em.persist(nuevoPOI);
 			em.getTransaction().commit();
 			return true;
@@ -52,7 +69,7 @@ public class DB_POI extends Repositorio {
 		}
 	}
 
-	// @Transactional
+	@Transactional
 	public boolean actualizarPOI(POI poi) {
 		if (em.contains(poi)) {
 			try {
@@ -96,34 +113,24 @@ public class DB_POI extends Repositorio {
 		em.getTransaction().commit();
 	}
 
-	// TODO falta convertirlo a hibernate pero como debemos rehacer la entrega4
-	// de procesos se hara en dicho momento
-	public Map<Long, Boolean> bajaPoi(String[] valoresBusqueda, List<DateTime> fechasBaja) {
+	// TODO falta convertirlo a hibernate pero como debemos rehacer la entrega4 de procesos se hara en dicho momento
+	public Map<Long, Boolean> bajaPoi(List<Item_Borrar> itemsABorrar) {
 		Map<Long, Boolean> resumen = new HashMap<Long, Boolean>();
-		for (int i = listadoPOI.size(); i > 1 || i == 1; i--) {
-			// Si el POI coincide con la busqueda.
-			POI poi = listadoPOI.get(i - 1);
-			int indexFechas = 0;
-			for (String valor : valoresBusqueda) {
+		if(itemsABorrar.size() > 0){
+			for(Item_Borrar itemABorrar : itemsABorrar) {
 				String[] arrayValor = new String[1];
-				arrayValor[0] = valor;
-				if (poi.busquedaEstandar(arrayValor) && poi.dadoDeBaja(fechasBaja.get(indexFechas))) {
-					resumen.put(poi.getId(), eliminarPOI(poi.getId()));
-					break;
+				arrayValor[0] = itemABorrar.getParametro();
+				
+				for (int i = listadoPOI.size() -1; i > 1 || i == 1; i--) {
+					POI poi = listadoPOI.get(i);
+					//En caso de ser el item que estaba buscando, lo elimino y salgo del ciclo.
+					if(poi.busquedaEstandar(arrayValor)){
+						resumen.put(poi.getId(), eliminarPOI(poi.getId()));
+						break;
+					}
 				}
-				indexFechas++;
 			}
-
-			// if (poi.busquedaEstandar(valoresBusqueda)) {
-			// for(DateTime fecha : fechasBaja){
-			// if(poi.dadoDeBaja(fecha)){
-			// resumen.put(poi.getId(), eliminarPOI(poi.getId()));
-			// break;
-			// }
-			// }
-			// }
 		}
-
-		return resumen;
+		return resumen;	
 	}
 }

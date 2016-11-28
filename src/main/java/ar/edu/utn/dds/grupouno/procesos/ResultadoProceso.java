@@ -1,18 +1,23 @@
 package ar.edu.utn.dds.grupouno.procesos;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.time.ZonedDateTime;
 
-import org.joda.time.DateTime;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.repositorio.Persistible;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "ResultadoProceso")
-public class ResultadoProceso extends Persistible {
+@NamedQueries({
+@NamedQuery(name = "ResultadoProceso.findAll", query = "SELECT r FROM ResultadoProceso r")})
+public class ResultadoProceso extends Persistible{
 
-	private DateTime inicioEjecucion;
-	private DateTime finEjecucion;
+	private ZonedDateTime inicioEjecucion;
+	private ZonedDateTime finEjecucion;
 	TiposProceso proc;
 	private long userID;
 	Resultado resultado;
@@ -34,19 +39,19 @@ public class ResultadoProceso extends Persistible {
 		this.proc = p;
 	}
 
-	public DateTime getInicioEjecucion() {
+	public ZonedDateTime getInicioEjecucion() {
 		return inicioEjecucion;
 	}
 
-	public void setInicioEjecucion(DateTime inicioEjecucion) {
+	public void setInicioEjecucion(ZonedDateTime inicioEjecucion) {
 		this.inicioEjecucion = inicioEjecucion;
 	}
 
-	public DateTime getFinEjecucion() {
+	public ZonedDateTime getFinEjecucion() {
 		return finEjecucion;
 	}
 
-	public void setFinEjecucion(DateTime finEjecucion) {
+	public void setFinEjecucion(ZonedDateTime finEjecucion) {
 		this.finEjecucion = finEjecucion;
 	}
 
@@ -76,7 +81,7 @@ public class ResultadoProceso extends Persistible {
 
 	// Si el id no se desea setear, el mismo es generado internamente
 	// al colocar el paramentro en cero
-	public ResultadoProceso(DateTime inicioEjecucion, DateTime finEjecucion, TiposProceso p, long userID,
+	public ResultadoProceso(ZonedDateTime inicioEjecucion, ZonedDateTime finEjecucion, TiposProceso p, long userID,
 			String mensajeError, Resultado unResultado) {
 		super();
 		this.inicioEjecucion = inicioEjecucion;
@@ -87,8 +92,7 @@ public class ResultadoProceso extends Persistible {
 		this.resultado = unResultado;
 	}
 
-	public ResultadoProceso() {
-
+	public ResultadoProceso(){
 	}
 
 }

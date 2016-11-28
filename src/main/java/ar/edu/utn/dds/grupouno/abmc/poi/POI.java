@@ -23,7 +23,6 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
-//import org.joda.time.DateTime;
 import org.joda.time.DateTime;
 
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
@@ -36,10 +35,11 @@ import ar.edu.utn.dds.grupouno.repositorio.PersistibleConNombre;
 @Table(name = "POI")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
-		@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
-		@NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p") })
-public class POI extends PersistibleConNombre {
-
+@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
+@NamedQuery(name = "getPOIbyNombreConEliminados", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre"),
+@NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p")})
+public class POI extends PersistibleConNombre{
+	
 	protected String callePrincipal;
 	protected String calleLateral;
 	protected long numeracion;
@@ -56,24 +56,21 @@ public class POI extends PersistibleConNombre {
 	protected GeoLocation ubicacion;
 	protected long comuna; // define cuando otro punto es cercano.
 	protected long cercania = 500;
-	// este atributo hay que ver si nos sirve porque
-	// las subclases tienen el nombre del tipo, de por si.
 	protected TiposPOI tipo;
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "POI_SERVICIO", joinColumns = { @JoinColumn(name = "poi_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "servicio_id") })
 	protected List<NodoServicio> servicios;
-	// pueden ser varias y se crean a travez de
-	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
+	// pueden ser varias y se crean a travez de FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@OrderColumn
-	@JoinTable(name = "POI_ETIQUETA", joinColumns = { @JoinColumn(name = "poi_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "etiqueta_id") })
-	protected List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();;
+	@JoinTable(name="POI_ETIQUETA", 
+				joinColumns={@JoinColumn(name="poi_id")}, 
+				inverseJoinColumns={@JoinColumn(name="etiqueta_id")})
+	protected List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
 	@Column
 	@Type(type = "org.hibernate.type.ZonedDateTimeType")
 	protected ZonedDateTime fechaBaja = null;
-	// protected DateTime fechaBaja = null;
 	protected boolean esLocal = true;
 
 	@ManyToMany(mappedBy = "pois")
@@ -265,9 +262,18 @@ public class POI extends PersistibleConNombre {
 	public void setEtiquetas(String nombres[]) {
 		this.etiquetas.clear();
 		for (int i = 0; i < nombres.length; i++) {
-			this.etiquetas.add(FlyweightFactoryEtiqueta.getEtiqueta(nombres[i]));
+			this.etiquetas.add(FlyweightFactoryEtiqueta.getInstance().getEtiqueta(nombres[i]));
 		}
 	}
+	
+	public List<Etiqueta> getEtiquetasList(){
+		return this.etiquetas;
+	}
+	
+	public void setEtiquetasList(ArrayList<Etiqueta> et){
+		this.etiquetas = et;
+	}
+	
 
 	public String[] getEtiquetas() {
 		String[] nombres = new String[etiquetas.size()];
@@ -292,6 +298,13 @@ public class POI extends PersistibleConNombre {
 
 		return false;
 	}
+	
+	public void refreshEtiquetas(){
+		String[] etViejas = getEtiquetas();
+		this.setEtiquetas(etViejas);
+	}
+	
+	
 
 	public DateTime getFechaBaja() {
 		DateTime tm = MetodosComunes.convertJavatoJoda(fechaBaja);
