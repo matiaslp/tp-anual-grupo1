@@ -73,12 +73,19 @@
 			            	<h:outputText value="#{busquedaBean.selectedPoi.direccion}" /> 
 							<h:outputText value="Zona:" />
 			            	<h:outputText value="#{busquedaBean.selectedPoi.barrio}" />
-			            	<h:dataTable value="#{busquedaBean.selectedPoi.servicios}" var="nodoServicio">
-			            		<p:column>
-			            			<h:outputText value="#{nodoServicio.nombre}"></h:outputText>
-			            			<h:outputText value="#{nodoServicio.bandaHoraria}"></h:outputText>	
-			            		</p:column>
-			            	</h:dataTable>
+			            	
+                    			<h:dataTable value="#{busquedaBean.selectedPoi.servicios}" var="nodoServicio">
+				            		<p:column >
+				            			<h:outputText value="#{nodoServicio.nombre}"></h:outputText>
+				            		</p:column>
+				            	</h:dataTable>
+			            		<h:dataTable value="#{busquedaBean.selectedPoi.servicios}" var="nodoServicio">
+				            		
+				            		<p:column >
+				            			<h:outputText value="#{nodoServicio.bandaHoraria}"></h:outputText>	
+				            		</p:column>
+			            		</h:dataTable>
+                			
 			            </p:panelGrid>
 			            <p:panelGrid  columns="2" rendered="#{busquedaBean.selectedPoi.tipo == 'BANCO'}" columnClasses="value,value"> 
 			        		<f:facet name="header">

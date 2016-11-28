@@ -25,10 +25,10 @@ import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
 @ApplicationScoped
 public class BusquedaBean {
 	private String textoLibre;
-	private List<resultadoBusquedaDTO> pois = new ArrayList<resultadoBusquedaDTO>();
+	private List<resultadoBusquedaDTO> pois;
 	private resultadoBusquedaDTO selectedPoi;
 	String ServicioAPI = "http://trimatek.org/Consultas/";
-		
+
 	public BusquedaBean() {
 	}
 
@@ -52,23 +52,7 @@ public class BusquedaBean {
 	public resultadoBusquedaDTO getSelectedPoi() {
 		return selectedPoi;
 	}
-	/*
-	public Banco getSelectedPoiBanco() {
-		return (Banco)selectedPoi;
-	}
 	
-	public CGP getSelectedPoiCGP() {
-		return (CGP)selectedPoi;
-	}
-	
-	public ParadaColectivo getSelectedPoiParadaColectivo() {
-		return (ParadaColectivo)selectedPoi;
-	}
-	
-	public LocalComercial getSelectedPoiLocalComercial() {
-		return (LocalComercial)selectedPoi;
-	}
-*/
 	public void setSelectedPoi(resultadoBusquedaDTO selectedPoi) {
 		this.selectedPoi = selectedPoi;
 	}
