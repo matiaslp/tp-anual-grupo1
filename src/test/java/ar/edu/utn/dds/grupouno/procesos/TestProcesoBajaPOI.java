@@ -45,11 +45,12 @@ public class TestProcesoBajaPOI {
 	Usuario admin;
 	String tokenAdmin;
 	FuncBajaPOIs funcion;
+	Usuario user;
 	
 	@Before
 	public void init() {
 		Autenticador = AuthAPI.getInstance();
-		Usuario user = fact.crearUsuario("admin", "123", "ADMIN");
+		user = fact.crearUsuario("admin", "123", "ADMIN");
 		Repositorio.getInstance().usuarios().persistir(user);
 		filePath = (new File (".").getAbsolutePath ()) + "/src/test/java/ar/edu/utn/dds/grupouno/procesos/bajaPois.json";
 		local1 = new LocalComercial();

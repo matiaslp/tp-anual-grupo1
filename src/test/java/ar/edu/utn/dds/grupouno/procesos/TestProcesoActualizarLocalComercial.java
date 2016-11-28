@@ -121,7 +121,7 @@ public class TestProcesoActualizarLocalComercial {
 	public void testEjecucionMultiple() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			SchedulerException, InterruptedException {
 		ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales();
-		Scheduler scheduler = ProcesoHandler.ejecutarProceso(unUsuarioAdmin, proceso, "", false, REINTENTOS_MAX,null);
+		Scheduler scheduler = ProcesoHandler.ejecutarProceso(unUsuarioAdmin, proceso,"", false, REINTENTOS_MAX,null);
 
 		// Para darle tiempo al planificador que se puedea inicializar y
 		// ejecutar los procesos
@@ -141,9 +141,11 @@ public class TestProcesoActualizarLocalComercial {
 	public void outtro() {
 
 		repositorio.usuarios().deleteUsuario(unUsuarioAdmin.getId());
-		repositorio.remove(local1Actualizado);
-		repositorio.remove(local2Actualizado);
-		repositorio.remove(local3Actualizado);
+		
+		ArrayList<POI> lista = repositorio.pois().getListado();
+		for(POI nodo : lista){
+			repositorio.remove(nodo);
+		}
 		ArrayList<ResultadoProceso> lstRes = repositorio.resultadosProcesos().getListado();
 		for ( ResultadoProceso resultado : lstRes){
 			repositorio.remove(resultado);
