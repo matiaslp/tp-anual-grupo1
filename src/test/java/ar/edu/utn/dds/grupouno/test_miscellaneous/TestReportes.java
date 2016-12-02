@@ -23,7 +23,7 @@ import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 import ar.edu.utn.dds.grupouno.repositorio.DB_HistorialBusquedas;
 import ar.edu.utn.dds.grupouno.repositorio.RepoMongo;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
-import ar.edu.utn.dds.grupouno.repositorio.cantBusquedas;
+import ar.edu.utn.dds.grupouno.repositorio.CantBusquedas;
 
 public class TestReportes {
 

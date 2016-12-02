@@ -99,13 +99,13 @@ public class DB_HistorialBusquedas extends Repositorio {
 
 		Iterator<RegistroHistoricoMorphia> query1 = RepoMongo.getInstance().getDatastore()
 				.createAggregation(RegistroHistoricoMorphia.class)
-				.group("time", grouping("cantBusquedas", new Accumulator("$sum", 1)))
-				.out("cantBusquedasDate", RegistroHistoricoMorphia.class);
+				.group("time", grouping("CantBusquedas", new Accumulator("$sum", 1)))
+				.out("CantBusquedasDate", RegistroHistoricoMorphia.class);
 		
-		Query<cantBusquedasDate> query = RepoMongo.getInstance().getDatastore().createQuery(cantBusquedasDate.class);
-		List<cantBusquedasDate> recuperado = query.asList();
+		Query<CantBusquedasDate> query = RepoMongo.getInstance().getDatastore().find(CantBusquedasDate.class);
+		List<CantBusquedasDate> recuperado = query.asList();
 		ArrayList<Object[]> resultado = new ArrayList<Object[]>();
-		for (cantBusquedasDate nodo : recuperado) {
+		for (CantBusquedasDate nodo : recuperado) {
 			Object[] objeto = new Object[2];
 			DateConverter conversor = new DateConverter();
 			objeto[0] = (Object) nodo.get_id();
@@ -149,10 +149,10 @@ public class DB_HistorialBusquedas extends Repositorio {
 				.out("cantBusquedas", RegistroHistoricoMorphia.class);
 
 		// lo obtiene y lo borra de mongo
-		Query<cantBusquedas> query = RepoMongo.getInstance().getDatastore().createQuery(cantBusquedas.class);
-		List<cantBusquedas> recuperado = query.asList();
+		Query<CantBusquedas> query = RepoMongo.getInstance().getDatastore().createQuery(CantBusquedas.class);
+		List<CantBusquedas> recuperado = query.asList();
 		ArrayList<Object[]> resultado = new ArrayList<Object[]>();
-		for (cantBusquedas nodo : recuperado) {
+		for (CantBusquedas nodo : recuperado) {
 			Object[] objeto = new Object[2];
 			objeto[0] = (Object) nodo.get_id();
 			objeto[1] = (Object) nodo.getCantResultados();

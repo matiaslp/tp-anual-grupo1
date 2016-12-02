@@ -1,12 +1,19 @@
 package ar.edu.utn.dds.grupouno.repositorio;
 
-public class cantBusquedas {
-	int _id;
+import java.util.Date;
+
+public class CantBusquedasDate {
+	Date _id;
 	int cantResultados;
-	public int get_id() {
+	
+	public CantBusquedasDate(){
+		this._id = null;
+		this.cantResultados = 0;
+	}
+	public Date get_id() {
 		return _id;
 	}
-	public void set_id(int _id) {
+	public void set_id(Date _id) {
 		this._id = _id;
 	}
 	public int getCantResultados() {
