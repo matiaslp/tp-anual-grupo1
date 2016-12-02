@@ -8,13 +8,6 @@ target/
 build/
 target/*
 build/*
-.classpath
-.classpath/
-.classpath/*
 .tern-project
-.settings
-.settings/
-.settings/*
 .metadata
-WebContent/META-INF/*
-META-INF/
+
