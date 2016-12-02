@@ -2,24 +2,17 @@ package ar.edu.utn.dds.grupouno.abmc;
 
 import java.util.List;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.joda.time.DateTime;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.poi.Rubro;
-import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
+import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestABMC_Baja {
 	private static Repositorio repositorio;
@@ -65,11 +58,10 @@ public class TestABMC_Baja {
 		poiDTOColectivo.setLatitud(-34.5664823);
 		poiDTOColectivo.setLongitud(-34.5664823);
 		parada = poiDTOColectivo.converttoPOI();
-		
-		
+
 		poiDTOColectivo.setNombre("unaParadaDeColectivo2");
 		parada2 = poiDTOColectivo.converttoPOI();
-		
+
 		// Se crean 4 POIs (uno por cada tipo)
 		instancia.agregarPOI(banco);
 		instancia.agregarPOI(cgp);
@@ -121,15 +113,15 @@ public class TestABMC_Baja {
 		boolean respuesta = poi_abmc.delete(id);
 		Assert.assertFalse(respuesta);
 	}
-	
+
 	@AfterClass
-	public static void  outtro() {
-		
+	public static void outtro() {
+
 		repositorio.remove(banco);
 		repositorio.remove(cgp);
 		repositorio.remove(local);
 		repositorio.remove(parada);
 		repositorio.remove(parada2);
-		
+
 	}
 }

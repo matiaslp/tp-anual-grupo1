@@ -7,7 +7,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import ar.edu.utn.dds.grupouno.modelo.Persistible;
+import ar.edu.utn.dds.grupouno.repositorio.Persistible;
 @Entity
 @Table(name = "SESION")
 @NamedQueries({

@@ -10,12 +10,12 @@ import javax.persistence.Entity;
 import org.json.JSONException;
 
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.autentification.Accion;
-import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
+
 @Entity
 public class FuncBusquedaPOI extends Accion {
 
@@ -26,8 +26,9 @@ public class FuncBusquedaPOI extends Accion {
 		this.Roles.add(rol2);
 		nombre = "busquedaPOI";
 	}
-	public FuncBusquedaPOI(){
-		
+
+	public FuncBusquedaPOI() {
+
 	}
 
 	public ArrayList<POI> busquedaPOI(Usuario user, String Token, String texto) {

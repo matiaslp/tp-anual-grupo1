@@ -1,18 +1,17 @@
 package ar.edu.utn.dds.grupouno.test_poi;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import ar.edu.utn.dds.grupouno.db.poi.Banco;
-import ar.edu.utn.dds.grupouno.db.poi.CGP;
-import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
-import ar.edu.utn.dds.grupouno.db.poi.NodoServicio;
-import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
-import ar.edu.utn.dds.grupouno.db.poi.Rubro;
-
 import java.util.Calendar;
 
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
+import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
+import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio;
+import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
 
 public class TestDisponibilidades {
 	public Banco banco;
@@ -56,24 +55,48 @@ public class TestDisponibilidades {
 									// 18
 		cgp.setServicio(nuevoNodo);
 	}
-	
-	//Este teste que haya un servicio rentas, se puede jugar con el horario igualmente.
+
+	// Este teste que haya un servicio rentas, se puede jugar con el horario
+	// igualmente.
 	@Test
 	public void chequearConServicio() {
 		Calendar calendario = Calendar.getInstance();
-		cgp.getServicios().get(0).agregarDia(calendario.get(Calendar.DAY_OF_WEEK));//para que se agrege el dia actual, sino devuelve falso
-		cgp.getServicios().get(0).setHoras(0, 24); //para que se pueda testear a la hora que sea, si no devuelve falso
+		cgp.getServicios().get(0).agregarDia(calendario.get(Calendar.DAY_OF_WEEK));// para
+																					// que
+																					// se
+																					// agrege
+																					// el
+																					// dia
+																					// actual,
+																					// sino
+																					// devuelve
+																					// falso
+		cgp.getServicios().get(0).setHoras(0, 24); // para que se pueda testear
+													// a la hora que sea, si no
+													// devuelve falso
 		boolean resultado = cgp.disponible("rentas");
 		Assert.assertTrue(resultado);
 	}
 
-	//La idea de este es chequear los horarios mas que la existencia de un servicio
+	// La idea de este es chequear los horarios mas que la existencia de un
+	// servicio
 	@Test
 	public void chequearSinServicio() {
 		Calendar calendario = Calendar.getInstance();
-		cgp.getServicios().get(0).agregarDia(calendario.get(Calendar.DAY_OF_WEEK));//para que se agrege el dia actual, sino devuelve falso
-		cgp.getServicios().get(0).setHoras(0, 24); //para que se pueda testear a la hora que sea, si no devuelve falso
-		//Modificar el horario para testear
+		cgp.getServicios().get(0).agregarDia(calendario.get(Calendar.DAY_OF_WEEK));// para
+																					// que
+																					// se
+																					// agrege
+																					// el
+																					// dia
+																					// actual,
+																					// sino
+																					// devuelve
+																					// falso
+		cgp.getServicios().get(0).setHoras(0, 24); // para que se pueda testear
+													// a la hora que sea, si no
+													// devuelve falso
+		// Modificar el horario para testear
 		boolean resultado = cgp.disponible("");
 		Assert.assertTrue(resultado);
 	}
@@ -98,8 +121,9 @@ public class TestDisponibilidades {
 		local.dias.add((long) 4);
 		local.dias.add((long) 5);
 		local.dias.add((long) 6);
-		local.dias.add((long) 7);// Modificando estos parametros se puede testear
-							// todo. No time for writing all :(
+		local.dias.add((long) 7);// Modificando estos parametros se puede
+									// testear
+		// todo. No time for writing all :(
 		local.horas.add((long) 13);
 		local.horas.add((long) 14);
 		local.horas.add((long) 15);
@@ -120,7 +144,7 @@ public class TestDisponibilidades {
 
 	@Test
 	public void chequearDiayHorarios() {
-		
+
 		boolean resultado = local.disponible();
 		Assert.assertTrue(resultado);
 	}

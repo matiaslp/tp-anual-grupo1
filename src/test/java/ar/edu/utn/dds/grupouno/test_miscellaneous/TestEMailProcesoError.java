@@ -11,12 +11,12 @@ import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.AgregarAccionesTransaction;
-import ar.edu.utn.dds.grupouno.db.Resultado;
-import ar.edu.utn.dds.grupouno.db.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.email.EnviarEmail;
 import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
-import ar.edu.utn.dds.grupouno.procesos.AgregarAcciones;
+import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
+import ar.edu.utn.dds.grupouno.procesos.AgregarAccionesTransaction;
+import ar.edu.utn.dds.grupouno.procesos.Resultado;
+import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.procesos.TiposProceso;
 
 public class TestEMailProcesoError {
@@ -52,15 +52,18 @@ public class TestEMailProcesoError {
 		listadoAccionesQueEstanEnAdmin = new ArrayList<String>();
 		listadoAccionesQueEstanEnAdmin.add("obtenerInfoPOI");
 		listadoAccionesQueEstanEnAdmin.add("reporteBusquedaPorUsuario");
-		new AgregarAcciones(0, envio, "unaAccion", unUsuario);
-		primerResultadoDeProceso = new ResultadoProceso(new DateTime().minusHours(1), new DateTime(),
-				TiposProceso.AGREGARACIONES, 11, "Anda mal primerResultadoDeProceso", Resultado.ERROR);
-		new AgregarAcciones(0, envio, "segundaAccion", unUsuario);
-		segundoResultadoDeProceso = new ResultadoProceso(new DateTime().minusHours(1), new DateTime(),
-				TiposProceso.AGREGARACIONES, 11, "Anda mal segundoResultadoDeProceso", Resultado.ERROR);
-		new AgregarAcciones(0, envio, "terceraAccion", unUsuario);
-		tercerResultadoDeProceso = new ResultadoProceso(new DateTime().minusHours(1), new DateTime(),
-				TiposProceso.AGREGARACIONES, 11, "Anda mal tercerResultadoDeProceso", Resultado.ERROR);
+		
+		primerResultadoDeProceso = new ResultadoProceso(MetodosComunes.convertJodatoJava(new DateTime().minusHours(1)), 
+				MetodosComunes.convertJodatoJava(new DateTime()), TiposProceso.AGREGARACIONES, 11, 
+				"Anda mal primerResultadoDeProceso", Resultado.ERROR);
+		
+		segundoResultadoDeProceso = new ResultadoProceso(MetodosComunes.convertJodatoJava(new DateTime().minusHours(1)), 
+				MetodosComunes.convertJodatoJava(new DateTime()), TiposProceso.AGREGARACIONES, 11, 
+				"Anda mal segundoResultadoDeProceso", Resultado.ERROR);
+		
+		tercerResultadoDeProceso = new ResultadoProceso(MetodosComunes.convertJodatoJava(new DateTime().minusHours(1)), 
+				MetodosComunes.convertJodatoJava(new DateTime()), TiposProceso.AGREGARACIONES, 11, 
+				"Anda mal tercerResultadoDeProceso", Resultado.ERROR);
 
 		listaResultados = new ArrayList<ResultadoProceso>();
 		listaResultados.add(primerResultadoDeProceso);

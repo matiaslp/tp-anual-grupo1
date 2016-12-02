@@ -1,14 +1,13 @@
 package ar.edu.utn.dds.grupouno.autentification.funciones;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.persistence.Entity;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
-import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
+
 @Entity
 public class FuncCambiarEstadoNotificarBusquedaLarga extends Accion {
 
@@ -18,18 +17,18 @@ public class FuncCambiarEstadoNotificarBusquedaLarga extends Accion {
 		Roles.add(rol);
 		nombre = "notificarBusquedaLarga";
 	}
-	
-	public FuncCambiarEstadoNotificarBusquedaLarga(){
-		
+
+	public FuncCambiarEstadoNotificarBusquedaLarga() {
+
 	}
-	
+
 	public boolean CambiarEstadoNotificarBusquedaLarga(Usuario user, String Token, boolean Estado) {
-		if (validarsesion(user, Token)){
+		if (validarsesion(user, Token)) {
 			user.setNotificacionesActivadas(Estado);
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
+
 }

@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.grupouno.frontend.busqueda;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,12 @@ import org.json.JSONException;
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.NodoServicioDTO;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.resultadoBusquedaDTO;
+import ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.poi.NodoServicio;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
-import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean
 @ApplicationScoped
@@ -121,4 +122,5 @@ public class BusquedaBean {
 	private String formatBandaHoraria(int horaInicio, int horaFin){
 		return String.valueOf(horaInicio) + " - " + String.valueOf(horaFin);
 	}
+
 }

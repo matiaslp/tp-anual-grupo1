@@ -8,53 +8,52 @@ import javax.faces.event.PhaseListener;
 import javax.servlet.http.HttpSession;
 
 public class AuthorizationListener implements PhaseListener {
-	 
 
-public void afterPhase(PhaseEvent event) {
-	
-	FacesContext facesContext = event.getFacesContext();
-	String currentPage = facesContext.getViewRoot().getViewId();
-	
-	boolean isLoginPage = (currentPage.lastIndexOf("login.xhtml") > -1);
-	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-	Object currentUser = session.getAttribute("username");
-	 
-	if (!isLoginPage && (currentUser == null || currentUser == "")) {
-	NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
-	nh.handleNavigation(facesContext, null, "loginPage");
+	public void afterPhase(PhaseEvent event) {
+
+		FacesContext facesContext = event.getFacesContext();
+		String currentPage = facesContext.getViewRoot().getViewId();
+
+		boolean isLoginPage = (currentPage.lastIndexOf("login.xhtml") > -1);
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+		Object currentUser = session.getAttribute("username");
+
+		if (!isLoginPage && (currentUser == null || currentUser == "")) {
+			NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
+			nh.handleNavigation(facesContext, null, "loginPage");
+		}
+
+		// -----------------------------------------
+
+		// FacesContext facesContext = event.getFacesContext();
+		// String currentPage = facesContext.getViewRoot().getViewId();
+		//
+		// boolean isLoginPage = (currentPage.lastIndexOf("login.xhtml") > -1);
+		// HttpSession session = (HttpSession)
+		// facesContext.getExternalContext().getSession(false);
+		//
+		// if(session==null){
+		// NavigationHandler nh =
+		// facesContext.getApplication().getNavigationHandler();
+		// nh.handleNavigation(facesContext, null, "loginPage");
+		// }
+		//
+		// else{
+		// Object currentUser = session.getAttribute("username");
+		//
+		// if (!isLoginPage && (currentUser == null || currentUser == "")) {
+		// NavigationHandler nh =
+		// facesContext.getApplication().getNavigationHandler();
+		// nh.handleNavigation(facesContext, null, "loginPage");
+		// }
+		// }
 	}
-	
-	
-	
-	
-	//-----------------------------------------
- 
-//FacesContext facesContext = event.getFacesContext();
-//String currentPage = facesContext.getViewRoot().getViewId();
-// 
-//boolean isLoginPage = (currentPage.lastIndexOf("login.xhtml") > -1);
-//HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-//
-//if(session==null){
-//NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
-//nh.handleNavigation(facesContext, null, "loginPage");
-//}
-// 
-//else{
-//Object currentUser = session.getAttribute("username");
-// 
-//if (!isLoginPage && (currentUser == null || currentUser == "")) {
-//NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
-//nh.handleNavigation(facesContext, null, "loginPage");
-//}
-//}
-}
- 
-public void beforePhase(PhaseEvent event) {
- 
-}
- 
-public PhaseId getPhaseId() {
-return PhaseId.RESTORE_VIEW;
-}
+
+	public void beforePhase(PhaseEvent event) {
+
+	}
+
+	public PhaseId getPhaseId() {
+		return PhaseId.RESTORE_VIEW;
+	}
 }

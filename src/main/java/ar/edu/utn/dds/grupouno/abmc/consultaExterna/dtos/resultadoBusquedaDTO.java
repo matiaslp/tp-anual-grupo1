@@ -3,7 +3,7 @@ package ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 
 public class resultadoBusquedaDTO {
 	private String nombre;

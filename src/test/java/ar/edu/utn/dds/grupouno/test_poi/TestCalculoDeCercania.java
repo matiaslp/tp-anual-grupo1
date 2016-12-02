@@ -4,12 +4,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.utn.dds.grupouno.db.poi.Banco;
-import ar.edu.utn.dds.grupouno.db.poi.CGP;
-import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
-import ar.edu.utn.dds.grupouno.db.poi.Rubro;
+import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
+import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
+import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
 
 public class TestCalculoDeCercania {
 
@@ -33,7 +33,7 @@ public class TestCalculoDeCercania {
 
 	@Test
 	public void testcercaniaCGPFalso() {
-		
+
 		// LAs comunas deben ser distintas para que esten lejos los poi
 		POIreferencia.setComuna(1);
 		// Localizado a ~5 cuadras

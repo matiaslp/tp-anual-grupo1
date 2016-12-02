@@ -15,7 +15,7 @@ import org.json.JSONException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import ar.edu.utn.dds.grupouno.db.poi.NodoServicio;
+import ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio;
 
 public class Banco_Converter {
 

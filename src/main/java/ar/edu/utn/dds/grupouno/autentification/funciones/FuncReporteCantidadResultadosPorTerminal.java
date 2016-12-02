@@ -2,16 +2,14 @@ package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
 
 import javax.persistence.Entity;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
-import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.db.DB_HistorialBusquedas;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
+
 @Entity
 public class FuncReporteCantidadResultadosPorTerminal extends Accion {
 
@@ -21,14 +19,15 @@ public class FuncReporteCantidadResultadosPorTerminal extends Accion {
 		Roles.add(rol);
 		nombre = "reportecantidadResultadosPorTerminal";
 	}
-	
-	public FuncReporteCantidadResultadosPorTerminal(){
-		
+
+	public FuncReporteCantidadResultadosPorTerminal() {
+
 	}
 
 	public ArrayList<Object[]> obtenerCantidadResultadosPorTerminal(Usuario user, String Token, long terminal) {
 		if (validarsesion(user, Token))
-			return Repositorio.getInstance().resultadosRegistrosHistoricos().reporteCantidadResultadosPorTerminal(terminal);
+			return Repositorio.getInstance().resultadosRegistrosHistoricos()
+					.reporteCantidadResultadosPorTerminal(terminal);
 		else
 			return null;
 	}

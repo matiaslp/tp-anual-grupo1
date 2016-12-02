@@ -6,7 +6,6 @@ import java.util.HashSet;
 import javax.persistence.Entity;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
-import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.procesos.Proceso;
@@ -21,10 +20,10 @@ public class FuncMultiple extends Accion {
 		nombre = "procesoMultiple";
 	}
 
-	public FuncMultiple(){
-		
+	public FuncMultiple() {
+
 	}
-	
+
 	public void procesoMultiple(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
 			ArrayList<Proceso> listProc) {
 		if (validarsesion(user, Token)) {

@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.BusquedaDePOIsExternos;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 
 public class TestBuscarPoiExterno {
 

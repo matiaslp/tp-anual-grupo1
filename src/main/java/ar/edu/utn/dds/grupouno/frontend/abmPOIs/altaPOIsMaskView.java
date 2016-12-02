@@ -3,10 +3,8 @@ package ar.edu.utn.dds.grupouno.frontend.abmPOIs;
 
 import javax.faces.bean.ManagedBean;
 
-import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.db.DB_POI;
-import ar.edu.utn.dds.grupouno.db.poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
  
 @ManagedBean
 public class altaPOIsMaskView {

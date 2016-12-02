@@ -11,8 +11,8 @@ import org.joda.time.DateTime;
 import org.json.JSONException;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.db.poi.POI;
-import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 // Esta clase funciona como Facade para ocultar el subsistema de
 // busqueda/consulta y sus multiples clases de las que se podrian
@@ -28,6 +28,7 @@ public class POI_ABMC implements Busqueda {
 			instance = new POI_ABMC();
 		return instance;
 	}
+
 	@Transactional
 	public boolean alta(POI_DTO dto) {
 
@@ -39,11 +40,12 @@ public class POI_ABMC implements Busqueda {
 			return true;
 		}
 	}
+
 	@Transactional
 	public boolean delete(long l) {
 		Repositorio.getInstance().getEm().getTransaction().begin();
 		POI poi = Repositorio.getInstance().pois().getPOIbyId(l);
-		//Si existe el poi y no tiene una fecha de baja
+		// Si existe el poi y no tiene una fecha de baja
 		if (poi != null && poi.getFechaBaja() == null) {
 			DateTime now = new DateTime();
 			poi.setFechaBaja(now);
@@ -54,6 +56,7 @@ public class POI_ABMC implements Busqueda {
 			return false;
 		}
 	}
+
 	@Transactional
 	public boolean modificar(POI poi) {
 		if (poi == null) {
