@@ -3,7 +3,6 @@ package ar.edu.utn.dds.grupouno.abmc;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.mail.MessagingException;
 
@@ -16,10 +15,10 @@ import org.junit.Test;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.db.DB_POI;
+import ar.edu.utn.dds.grupouno.db.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.db.poi.Banco;
 import ar.edu.utn.dds.grupouno.db.poi.CGP;
 import ar.edu.utn.dds.grupouno.db.poi.LocalComercial;
-import ar.edu.utn.dds.grupouno.db.poi.NodoServicio;
 import ar.edu.utn.dds.grupouno.db.poi.POI;
 import ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.db.repositorio.Repositorio;
@@ -134,13 +133,13 @@ public class TestABMC_Consulta {
 	public void outtro() {
 		
 		
-//		instance.remove(usuario);
-//		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
-//		for (RegistroHistorico reg : list)
-//			instance.remove(reg);
-//		instance.remove(cgp);
-//		instance.remove(parada);
-//		instance.remove(local);
-//		instance.remove(banco);
+		instance.remove(usuario);
+		ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
+		for (RegistroHistorico reg : list)
+			instance.remove(reg);
+		instance.remove(cgp);
+		instance.remove(parada);
+		instance.remove(local);
+		instance.remove(banco);
 	}
 }

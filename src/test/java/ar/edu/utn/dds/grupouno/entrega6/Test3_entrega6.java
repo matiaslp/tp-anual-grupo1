@@ -103,17 +103,17 @@ public class Test3_entrega6 {
 			}
 		}
 		
-//		@After
-//		public void outtro() {
-//			
-//			ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
-//			for (RegistroHistorico reg : list)
-//				repositorio.remove(reg);
-//			repositorio.remove(cgp);
-//			repositorio.remove(banco);
-//			repositorio.remove(parada);
-//			repositorio.remove(local);
-//			repositorio.remove(usuario);
-//			
-//		}
+		@After
+		public void outtro() {
+			
+			ArrayList<RegistroHistorico> list = Repositorio.getInstance().resultadosRegistrosHistoricos().getListado();
+			for (RegistroHistorico reg : list)
+				repositorio.remove(reg);
+			repositorio.remove(cgp);
+			repositorio.remove(banco);
+			repositorio.remove(parada);
+			repositorio.remove(local);
+			repositorio.remove(usuario);
+			
+		}
 }
