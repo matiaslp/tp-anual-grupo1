@@ -146,7 +146,7 @@ public class DB_HistorialBusquedas extends Repositorio {
 		// Persiste en mongo la sumatoria
 		RepoMongo.getInstance().getDatastore().createAggregation(RegistroHistoricoMorphia.class)
 				.group("userID", grouping("cantResultados", sum("cantResultados")))
-				.out("cantBusquedas", RegistroHistoricoMorphia.class);
+				.out("CantBusquedas", RegistroHistoricoMorphia.class);
 
 		// lo obtiene y lo borra de mongo
 		Query<CantBusquedas> query = RepoMongo.getInstance().getDatastore().createQuery(CantBusquedas.class);
