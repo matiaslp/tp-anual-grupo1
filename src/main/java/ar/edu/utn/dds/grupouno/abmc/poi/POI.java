@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -22,6 +23,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -57,7 +60,8 @@ public class POI extends PersistibleConNombre{
 	protected long comuna; // define cuando otro punto es cercano.
 	protected long cercania = 500;
 	protected TiposPOI tipo;
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	//@Fetch(FetchMode.JOIN)
 	@JoinTable(name = "POI_SERVICIO", joinColumns = { @JoinColumn(name = "poi_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "servicio_id") })
 	protected List<NodoServicio> servicios;

@@ -26,7 +26,7 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 @ApplicationScoped
 public class BusquedaBean {
 	private String textoLibre;
-	private List<resultadoBusquedaDTO> pois;
+	private List<resultadoBusquedaDTO> pois= new ArrayList<resultadoBusquedaDTO>();
 	private resultadoBusquedaDTO selectedPoi;
 	String ServicioAPI = "http://trimatek.org/Consultas/";
 
@@ -88,6 +88,7 @@ public class BusquedaBean {
 		return resultados;
 	}
 
+	@SuppressWarnings("null")
 	private resultadoBusquedaDTO toDTO(POI point) {
 		resultadoBusquedaDTO resultado = new resultadoBusquedaDTO();
 		
@@ -104,7 +105,7 @@ public class BusquedaBean {
 		}
 		
 		List<NodoServicio> servicios = point.getServicios();
-		if(!servicios.isEmpty()){
+		if(servicios!=null && servicios.size()>0){
 			for(int i = 0; i < servicios.size(); i++){
 				resultado.addServicio(toDTO(servicios.get(i)));
 			}
