@@ -13,13 +13,13 @@
 			<p:panel id="panel" header="Procesos">
 				<p:messages id="msgs" />
 				<h:panelGrid columns="1" cellpadding="5" style="width:50%" layout="grid">
-					<p:commandButton value="Actualizacion de Locales Comerciales" style="width:100%" update="panel"
+					<p:commandButton value="Actualizacion de Locales Comerciales" rendered="#{menuBean.usuario.isFuncionalidad('actualizacionLocalesComerciales')}" style="width:100%" update="panel"
 						action="actualizarlocales" />
-					<p:commandButton value="Baja de POIs"  style="width:100% " update="panel"
+					<p:commandButton value="Baja de POIs" rendered="#{menuBean.usuario.isFuncionalidad('bajaPOIs')}" style="width:100% " update="panel"
 						action="bajapois"/>
-					<p:commandButton value="Agregar Acciones a Usuarios" style="width:100%" update="panel"
+					<p:commandButton value="Agregar Acciones a Usuarios" rendered="#{menuBean.usuario.isFuncionalidad('agregarAcciones')}" style="width:100%" update="panel"
 						action="agregaracciones" />
-					<p:commandButton value="Proceso Multiple" style="width:100%" update="panel"
+					<p:commandButton value="Proceso Multiple" rendered="#{menuBean.usuario.isFuncionalidad('procesoMultiple')}" style="width:100%" update="panel"
 						action="procesomultiple" />
 					</h:panelGrid>
 			<p:commandButton value="Volver atràs" update="panel"

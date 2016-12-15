@@ -41,6 +41,20 @@ public class LoginBean {
 		UsuariosFactory fact = new UsuariosFactory();
 		Usuario admin = fact.crearUsuario("admin", "pass", "ADMIN");
 		Usuario terminal = fact.crearUsuario("terminal", "pass", "TERMINAL");
+		AuthAPI.getInstance().agregarFuncionalidad("actualizacionLocalesComerciales",admin);
+		AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones",admin);
+		AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs",admin);
+		AuthAPI.getInstance().agregarFuncionalidad("busquedaPOI",admin);
+		AuthAPI.getInstance().agregarFuncionalidad("auditoria", admin);
+		AuthAPI.getInstance().agregarFuncionalidad("generarLog", admin);
+		AuthAPI.getInstance().agregarFuncionalidad("cambiarEstadoMail", admin);
+		AuthAPI.getInstance().agregarFuncionalidad("notificarBusquedaLarga", admin);
+		AuthAPI.getInstance().agregarFuncionalidad("procesoMultiple", admin);
+		AuthAPI.getInstance().agregarFuncionalidad("obtenerInfoPOI", admin);
+		AuthAPI.getInstance().agregarFuncionalidad("reporteBusquedaPorUsuario", admin);
+		AuthAPI.getInstance().agregarFuncionalidad("reporteBusquedasPorFecha", admin);
+		AuthAPI.getInstance().agregarFuncionalidad("reportecantidadResultadosPorTerminal", admin);
+														
 		
 		if ((Repositorio.getInstance().usuarios().getUsuarioByName("admin")) == null) {
             Repositorio.getInstance().usuarios().persistir(admin);
