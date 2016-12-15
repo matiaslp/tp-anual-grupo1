@@ -14,7 +14,7 @@ import ar.edu.utn.dds.grupouno.repositorio.PersistibleConNombre;
 @Entity
 @Table(name = "ETIQUETA")
 @NamedQueries({
-		@NamedQuery(name = "getEtiquetabyNombre", query = "SELECT e FROM Etiqueta e WHERE e.nombre LIKE :enombre"),
+		@NamedQuery(name = "Etiqueta.getEtiquetabyNombre", query = "SELECT e FROM Etiqueta e WHERE e.nombre LIKE :enombre"),
 		@NamedQuery(name = "Etiqueta.findAll", query = "SELECT e FROM Etiqueta e") })
 public class Etiqueta extends PersistibleConNombre implements IFlyweightEtiqueta {
 	@ManyToMany(mappedBy = "etiquetas")
