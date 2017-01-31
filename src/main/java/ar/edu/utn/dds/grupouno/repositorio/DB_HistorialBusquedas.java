@@ -9,8 +9,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.aggregation.Accumulator;
 import org.mongodb.morphia.converters.DateConverter;
+import org.mongodb.morphia.query.MorphiaIterator;
 import org.mongodb.morphia.query.Query;
 
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
@@ -94,9 +96,9 @@ public class DB_HistorialBusquedas extends Repositorio {
 				.createAggregation(RegistroHistoricoMorphia.class)
 				.group("time", grouping("cantBusquedas", new Accumulator("$sum", 1)))
 				.out("cantBusquedasDate", RegistroHistoricoMorphia.class);
-		
+
 		Query<cantBusquedasDate> query = RepoMongo.getInstance().getDatastore().createQuery(cantBusquedasDate.class);
-		List<cantBusquedasDate> recuperado = query.asList();
+		MorphiaIterator<cantBusquedasDate, cantBusquedasDate> recuperado = query.fetch();
 		ArrayList<Object[]> resultado = new ArrayList<Object[]>();
 		for (cantBusquedasDate nodo : recuperado) {
 			Object[] objeto = new Object[2];

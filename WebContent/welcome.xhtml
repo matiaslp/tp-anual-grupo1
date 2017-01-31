@@ -22,7 +22,7 @@
 						action="processes"/>
 					<p:commandButton value="Reportes" style="width:100%" update="panel"
 						action="reportes" />
-					<p:commandButton value="Historial de Busquedas" style="width:100%" update="panel"
+					<p:commandButton value="Historial de Busquedas" rendered="#{menuBean.usuario.isAdmin()}" style="width:100%" update="panel"
 						action="historial" />
 					<p:commandButton value="ABM USUARIOS" rendered="#{menuBean.usuario.isAdmin()}" style="width:100%" update="panel"
 						action="abmusuarios" />		
