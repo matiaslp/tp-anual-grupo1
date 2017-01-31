@@ -26,12 +26,17 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 @ApplicationScoped
 public class BusquedaBean {
 	private String textoLibre;
+	private String textoBuscar;
 	private List<resultadoBusquedaDTO> pois= new ArrayList<resultadoBusquedaDTO>();
 	private resultadoBusquedaDTO selectedPoi;
 	String ServicioAPI = "http://trimatek.org/Consultas/";
 
-	public BusquedaBean() {
-	}
+	private List<Item> items;
+	
+    public BusquedaBean() {
+   	items = new ArrayList<Item>();
+    	items.add(new Item());
+    }
 
 	public String getTextoLibre() {
 		return textoLibre;
@@ -59,6 +64,36 @@ public class BusquedaBean {
 	}
 	
 	public void buscar() {
+		pois.clear();
+		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("username"));
+		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
+		ArrayList<POI> lstPOI = null;
+		try {
+			textoBuscar=new String();
+			
+			System.out.println("PROBANDO LISTA DE TEXTOS");
+			for( Item unText:items){
+				textoBuscar=textoBuscar+" "+unText.getValue();
+				
+				System.out.println(unText.getValue());
+			}
+			System.out.println(textoBuscar);
+			
+			lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());
+
+		} catch (JSONException | IOException | MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (lstPOI != null && lstPOI.size() > 0) {
+			pois = listToDTO(lstPOI);
+		}
+
+	}
+	
+	public void buscar1() {
 		pois.clear();
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("username"));
@@ -123,5 +158,16 @@ public class BusquedaBean {
 	private String formatBandaHoraria(int horaInicio, int horaFin){
 		return String.valueOf(horaInicio) + " - " + String.valueOf(horaFin);
 	}
+	
+	public void add(){
+		items.add(new Item());
+		
+	}
+	public List<Item> getItems() {
+		return items;
+	}
 
+	public void setItems(List<Item> pois) {
+		this.items = pois;
+	}
 }
