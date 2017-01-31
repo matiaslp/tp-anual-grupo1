@@ -1,10 +1,11 @@
 package ar.edu.utn.dds.grupouno.frontend.historial;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.joda.time.DateTime;
@@ -16,10 +17,11 @@ import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
+import ar.edu.utn.dds.grupouno.repositorio.DB_HistorialBusquedas;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean
-@ApplicationScoped
+@RequestScoped
 public class HistorialBean {
 
 	private List<RegistroHistorico> listaRH = new ArrayList<RegistroHistorico>();
@@ -33,30 +35,6 @@ public class HistorialBean {
 	private DateTime textBoxFechaHasta;
 	private RegistroHistorico selectedRH;
 	
-	public String getTextBoxUsuario() {
-		return textBoxUsuario;
-	}
-
-	public void setTextBoxUsuarioID(String textBoxUsuarioID) {
-		this.textBoxUsuario = textBoxUsuarioID;
-	}
-
-	public DateTime getTextBoxFechaDesde() {
-		return textBoxFechaDesde;
-	}
-
-	public void setTextBoxFechaDesde(DateTime textBoxFechaDesde) {
-		this.textBoxFechaDesde = textBoxFechaDesde;
-	}
-
-	public DateTime getTextBoxFechaHasta() {
-		return textBoxFechaHasta;
-	}
-
-	public void setTextBoxFechaHasta(DateTime textBoxFechaHasta) {
-		this.textBoxFechaHasta = textBoxFechaHasta;
-	}
-
 	public HistorialBean() {
 
 		RegistroHistorico unRegistroHistorico;
@@ -96,6 +74,30 @@ public class HistorialBean {
 		this.setSelectedRH(unRegistroHistorico);
 	}
 
+	public String getTextBoxUsuario() {
+		return textBoxUsuario;
+	}
+
+	public void setTextBoxUsuarioID(String textBoxUsuarioID) {
+		this.textBoxUsuario = textBoxUsuarioID;
+	}
+
+	public DateTime getTextBoxFechaDesde() {
+		return textBoxFechaDesde;
+	}
+
+	public void setTextBoxFechaDesde(DateTime textBoxFechaDesde) {
+		this.textBoxFechaDesde = textBoxFechaDesde;
+	}
+
+	public DateTime getTextBoxFechaHasta() {
+		return textBoxFechaHasta;
+	}
+
+	public void setTextBoxFechaHasta(DateTime textBoxFechaHasta) {
+		this.textBoxFechaHasta = textBoxFechaHasta;
+	}
+	
 	public List<RegistroHistorico> getListaRH() {
 		return listaRH;
 	}
@@ -129,47 +131,55 @@ public class HistorialBean {
 	}
 	
 	public void buscar() {
-
-		
 		System.out.println(MetodosComunes.convertJodatoJava(this.
-		 getTextBoxFechaDesde()));
-		  System.out.println(MetodosComunes.convertJodatoJava(this.
-		  getTextBoxFechaHasta()));
-		  System.out.println(this.getTextBoxUsuario());
+				getTextBoxFechaDesde()));
+		System.out.println(MetodosComunes.convertJodatoJava(this.
+				getTextBoxFechaHasta()));
+		System.out.println(this.getTextBoxUsuario());
 		 
 		listaRH.clear();
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("username"));
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
-		List<RegistroHistorico> lstRH = null;
+		Usuario usuario = repositorio.usuarios().getUsuarioByName(username);
+		List<Object[]> listaResultados = new ArrayList<Object[]>();
 		try {
-
 			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
 			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
 			System.out.println(Long.parseLong(this.getTextBoxUsuario()));
+			DB_HistorialBusquedas db_historial = repositorio.resultadosRegistrosHistoricos();
 			// QUERY QUE NO ME ANDA
-			if (this.getTextBoxUsuario() != null
-					&& (this.getTextBoxFechaDesde() == null || this.getTextBoxFechaHasta() == null)) {
-				lstRH = repositorio.resultadosRegistrosHistoricos().getHistoricobyUserId(
-						Repositorio.getInstance().usuarios().getUsuarioByName(this.getTextBoxUsuario()).getId());
-			} else {
-				if (this.getTextBoxUsuario() == null && this.getTextBoxFechaDesde() != null
-						&& this.getTextBoxFechaHasta() != null) {
-					lstRH = repositorio.resultadosRegistrosHistoricos().getHistoricobyEntreFechas(
-							MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()),
-							MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
-				} else {
-					lstRH = repositorio.resultadosRegistrosHistoricos().getHistoricobyEntreFechasConUserId(
-							MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()),
-							MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()),
-							Repositorio.getInstance().usuarios().getUsuarioByName(this.getTextBoxUsuario()).getId());
+			Long usuarioId = null;
+			Date fechaDesde = null;
+			Date fechaHasta = null;
+			
+			if(!this.getTextBoxUsuario().isEmpty()){
+				Usuario usuarioBuscado = null;
+				if((usuarioBuscado = repositorio.usuarios().getUsuarioByName(this.getTextBoxUsuario())) != null){
+					usuarioId = usuarioBuscado.getId();
 				}
 			}
+			
+			if(this.getTextBoxFechaDesde() != null){
+				fechaDesde = this.getTextBoxFechaDesde().toDate();
+			}
+			
+			if(this.getTextBoxFechaHasta() != null){
+				fechaHasta = this.getTextBoxFechaHasta().toDate();
+			}
+			
+			listaResultados = db_historial.historialBusquedaEntreFechas(usuarioId, fechaDesde, fechaHasta); 
 
-			// IMPRIME POR PANTALLA LOS DATOS DE BUSQUEDA Y LO QUE TRAE Y LA
-			// LISTA
-			System.out.println(lstRH.size());
+			if (listaResultados != null && listaResultados.size() > 0) {
+				for(Object[] resultado : listaResultados){
+					if(resultado != null){
+						listaRH.add(objectToRegistro(resultado));
+					}
+				}
+			}
+			
+			// IMPRIME POR PANTALLA LOS DATOS DE BUSQUEDA Y LO QUE TRAE Y LA LISTA
+			System.out.println(listaResultados.size());
 			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
 			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
 			System.out.println(Long.parseLong(this.getTextBoxUsuario()));
@@ -178,9 +188,18 @@ public class HistorialBean {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (lstRH != null && lstRH.size() > 0) {
-			listaRH.addAll(lstRH);
+	}
 
-		}
+	@SuppressWarnings({"unchecked"})
+	private RegistroHistorico objectToRegistro(Object[] objetoHistorial){
+		RegistroHistorico registro = new RegistroHistorico();
+		registro.setTime((DateTime)objetoHistorial[0]);
+		registro.setUserID((Long)objetoHistorial[1]);
+		registro.setBusqueda((String)objetoHistorial[2]);
+		registro.setCantResultados((Long)objetoHistorial[3]);
+		registro.setTiempoDeConsulta((double)objetoHistorial[4]);
+		registro.setListaDePOIs((List<POI>)objetoHistorial[5]);
+		registro.setId((Long)objetoHistorial[6]);
+		return registro;
 	}
 }
