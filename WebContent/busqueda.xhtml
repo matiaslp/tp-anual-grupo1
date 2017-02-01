@@ -29,7 +29,7 @@
 						</h:column>
 					</h:dataTable>
 					<h:panelGrid columns="2" cellpadding="5">
-						<p:commandButton value="Agregar" update="tabText" 
+						<p:commandButton value="Agregar" update="tabText"
 							icon="ui-icon-check" action="#{busquedaBean.add}" />
 						<p:commandButton value="Buscar" update="panel"
 							icon="ui-icon-search" action="#{busquedaBean.buscar}" />
@@ -54,9 +54,7 @@
 					<p:column headerText="Direccion">
 						<h:outputText value="#{POI.direccion}" />
 					</p:column>
-					<p:column headerText="Barrio">
-						<h:outputText value="#{POI.barrio}" />
-					</p:column>
+
 					<p:column style="width:32px;text-align: center">
 						<p:commandButton update=":form:poiDetail"
 							oncomplete="PF('poiDialog').show()" icon="ui-icon-search"
