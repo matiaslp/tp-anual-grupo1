@@ -1,6 +1,5 @@
 package ar.edu.utn.dds.grupouno.frontend.busqueda;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +26,17 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 public class BusquedaBean {
 	private String textoLibre;
 	private String textoBuscar;
-	private List<resultadoBusquedaDTO> pois= new ArrayList<resultadoBusquedaDTO>();
+
+	private List<resultadoBusquedaDTO> pois = new ArrayList<resultadoBusquedaDTO>();
 	private resultadoBusquedaDTO selectedPoi;
 	String ServicioAPI = "http://trimatek.org/Consultas/";
 
 	private List<Item> items;
-	
-    public BusquedaBean() {
-   	items = new ArrayList<Item>();
-    	items.add(new Item());
-    }
+
+	public BusquedaBean() {
+		items = new ArrayList<Item>();
+		items.add(new Item());
+	}
 
 	public String getTextoLibre() {
 		return textoLibre;
@@ -54,15 +54,15 @@ public class BusquedaBean {
 	public void setTextoLibre(String textoLibre) {
 		this.textoLibre = textoLibre;
 	}
-	
+
 	public resultadoBusquedaDTO getSelectedPoi() {
 		return selectedPoi;
 	}
-	
+
 	public void setSelectedPoi(resultadoBusquedaDTO selectedPoi) {
 		this.selectedPoi = selectedPoi;
 	}
-	
+
 	public void buscar() {
 		pois.clear();
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
@@ -71,16 +71,13 @@ public class BusquedaBean {
 		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		ArrayList<POI> lstPOI = null;
 		try {
-			textoBuscar=new String();
-			
-			System.out.println("PROBANDO LISTA DE TEXTOS");
-			for( Item unText:items){
-				textoBuscar=textoBuscar+" "+unText.getValue();
-				
-				System.out.println(unText.getValue());
+			textoBuscar = new String();
+
+			for (Item unText : items) {
+				textoBuscar = textoBuscar + " " + unText.getValue();
+
 			}
-			System.out.println(textoBuscar);
-			
+
 			lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());
 
 		} catch (JSONException | IOException | MessagingException e) {
@@ -92,31 +89,11 @@ public class BusquedaBean {
 		}
 
 	}
-	
-	public void buscar1() {
-		pois.clear();
-		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("username"));
-		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
-		ArrayList<POI> lstPOI = null;
-		try {
-			lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoLibre, usuario.getId());
 
-		} catch (JSONException | IOException | MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (lstPOI != null && lstPOI.size() > 0) {
-			pois = listToDTO(lstPOI);
-		}
-
-	}
-	
-    private List<resultadoBusquedaDTO> listToDTO(ArrayList<POI> lstPOI) {
+	private List<resultadoBusquedaDTO> listToDTO(ArrayList<POI> lstPOI) {
 		List<resultadoBusquedaDTO> resultados = new ArrayList<resultadoBusquedaDTO>();
-    	if(lstPOI.size() > 0){
-			for(POI point : lstPOI){
+		if (lstPOI.size() > 0) {
+			for (POI point : lstPOI) {
 				resultados.add(toDTO(point));
 			}
 		}
@@ -126,43 +103,57 @@ public class BusquedaBean {
 	@SuppressWarnings("null")
 	private resultadoBusquedaDTO toDTO(POI point) {
 		resultadoBusquedaDTO resultado = new resultadoBusquedaDTO();
-		
+
 		resultado.setTipo(point.getTipo());
-		resultado.setBarrio(point.getBarrio());
-		resultado.setDireccion(point.getDireccion());
-		
-		if(point.getNombre() != null){
+
+		if (point.getBarrio() == null) {
+			if (point.getDireccion() == null) {
+				resultado.setDireccion(null);
+			} else {
+				resultado.setDireccion(point.getDireccion());
+			}
+		} else {
+			if (point.getDireccion() == null) {
+				resultado.setDireccion(point.getBarrio());
+			} else {
+				resultado.setDireccion(point.getBarrio() + ", " + point.getDireccion());
+			}
+		}
+
+
+		if (point.getNombre() != null) {
 			resultado.setNombre(point.getNombre());
 		}
-		
-		if(point.getTipo().equals(TiposPOI.PARADA_COLECTIVO)){
-			resultado.setLinea(((ParadaColectivo)point).getLinea());
+
+		if (point.getTipo().equals(TiposPOI.PARADA_COLECTIVO)) {
+			resultado.setLinea(((ParadaColectivo) point).getLinea());
 		}
-		
+
 		List<NodoServicio> servicios = point.getServicios();
-		if(servicios!=null && servicios.size()>0){
-			for(int i = 0; i < servicios.size(); i++){
+		if (servicios != null && servicios.size() > 0) {
+			for (int i = 0; i < servicios.size(); i++) {
 				resultado.addServicio(toDTO(servicios.get(i)));
 			}
 		}
 		return resultado;
 	}
-	
+
 	private NodoServicioDTO toDTO(NodoServicio servicio) {
 		NodoServicioDTO dto = new NodoServicioDTO();
 		dto.setNombre(servicio.getName());
 		dto.setBandaHoraria(formatBandaHoraria(servicio.getHoraInicio(), servicio.getHoraFin()));
 		return dto;
 	}
-	
-	private String formatBandaHoraria(int horaInicio, int horaFin){
+
+	private String formatBandaHoraria(int horaInicio, int horaFin) {
 		return String.valueOf(horaInicio) + " - " + String.valueOf(horaFin);
 	}
-	
-	public void add(){
+
+	public void add() {
 		items.add(new Item());
-		
+
 	}
+
 	public List<Item> getItems() {
 		return items;
 	}
