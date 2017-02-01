@@ -116,7 +116,7 @@ public class BusquedaBean {
 			if (point.getDireccion() == null) {
 				resultado.setDireccion(point.getBarrio());
 			} else {
-				resultado.setDireccion(point.getBarrio() + ", " + point.getDireccion());
+				resultado.setDireccion( point.getDireccion()+ ", " +point.getBarrio());
 			}
 		}
 
