@@ -4,6 +4,7 @@ import static org.mongodb.morphia.aggregation.Group.grouping;
 import static org.mongodb.morphia.aggregation.Group.sum;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,8 +32,7 @@ public class DB_HistorialBusquedas extends Repositorio {
 	public ArrayList<RegistroHistorico> getListado() {
 		listadoRegistroHistorico.clear();
 
-		listadoRegistroHistorico = (ArrayList<RegistroHistorico>) em.createNamedQuery("RegistroHistorico.findAll")
-				.getResultList();
+		listadoRegistroHistorico = (ArrayList<RegistroHistorico>) em.createNamedQuery("RegistroHistorico.findAll").getResultList();
 
 		return listadoRegistroHistorico;
 	}
@@ -158,8 +158,8 @@ public class DB_HistorialBusquedas extends Repositorio {
 		return resultado;
 	}
 	
-	public ArrayList<Object[]> cargarRegistros(List<RegistroHistoricoMorphia> lista){
-		ArrayList<Object[]> resultado = new ArrayList<Object[]>();
+	public List<Object[]> cargarRegistros(List<RegistroHistoricoMorphia> lista){
+		List<Object[]> resultado = new ArrayList<Object[]>();
 		for(RegistroHistoricoMorphia nodo : lista){
 			Object[] objeto = new Object[7];
 			objeto[0] = (Object) nodo.getTime();
@@ -176,34 +176,26 @@ public class DB_HistorialBusquedas extends Repositorio {
 		return resultado;
 	}
 
-	public ArrayList<Object[]> historialBusquedaEntreFechas(int userID, java.util.Date date, java.util.Date date2){
+	public List<Object[]> historialBusquedaEntreFechas(Long userID, Date fechaDesde, Date fechaHasta){
+		List<RegistroHistoricoMorphia> recuperado = new ArrayList<RegistroHistoricoMorphia>();
+		Query<RegistroHistoricoMorphia> query = RepoMongo.getInstance().getDatastore()
+				.createQuery(RegistroHistoricoMorphia.class);
 		
-		if(date == null && date2 == null){
-			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID).asList();
-			
-			return cargarRegistros(recuperado);
-		}else if(date == null){
-			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID).field("time").lessThan(date2).asList();
-			
-			return cargarRegistros(recuperado);
-		}else if(date2 == null){
-			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID).field("time").greaterThan(date).asList();
-			
-			return cargarRegistros(recuperado);
-		}else{
-			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID).field("time")
-					.greaterThan(date).field("time").lessThan(date2).asList();
-//			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-//					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID)
-//					.filter("time >", date).filter("time <", date2).asList();
-			
-			return cargarRegistros(recuperado);
+		if(userID != null){
+			query = query.filter("userID", userID);
 		}
+		
+		if (fechaDesde == null && fechaHasta == null) {
+			recuperado = query.asList();
+		} else if (fechaDesde == null) {
+			recuperado = query.field("time").lessThan(fechaHasta).asList();
+		} else if (fechaHasta == null) {
+			recuperado = query.field("time").greaterThan(fechaDesde).asList();
+		} else {
+			recuperado = query.field("time").greaterThan(fechaDesde)
+					.field("time").lessThan(fechaHasta).asList();
+		}
+		
+		return cargarRegistros(recuperado);
 	}
-	
-	
 }
