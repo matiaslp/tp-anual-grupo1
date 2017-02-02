@@ -131,10 +131,9 @@ public class HistorialBean {
 	}
 	
 	public void buscar() {
-		System.out.println(MetodosComunes.convertJodatoJava(this.
-				getTextBoxFechaDesde()));
-		System.out.println(MetodosComunes.convertJodatoJava(this.
-				getTextBoxFechaHasta()));
+		//TODO: BORRAR CUANDO FUNCIONE TODO
+		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
+		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
 		System.out.println(this.getTextBoxUsuario());
 		 
 		listaRH.clear();
@@ -144,10 +143,14 @@ public class HistorialBean {
 		Usuario usuario = repositorio.usuarios().getUsuarioByName(username);
 		List<Object[]> listaResultados = new ArrayList<Object[]>();
 		try {
+			//TODO: BORRAR CUANDO FUNCIONE TODO
+			// println para ver que recibe cada elemento
 			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
 			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
 			System.out.println(Long.parseLong(this.getTextBoxUsuario()));
+			
 			DB_HistorialBusquedas db_historial = repositorio.resultadosRegistrosHistoricos();
+			
 			// QUERY QUE NO ME ANDA
 			Long usuarioId = null;
 			Date fechaDesde = null;
@@ -177,7 +180,7 @@ public class HistorialBean {
 					}
 				}
 			}
-			
+			//TODO: BORRAR CUANDO FUNCIONE TODO
 			// IMPRIME POR PANTALLA LOS DATOS DE BUSQUEDA Y LO QUE TRAE Y LA LISTA
 			System.out.println(listaResultados.size());
 			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
@@ -185,7 +188,6 @@ public class HistorialBean {
 			System.out.println(Long.parseLong(this.getTextBoxUsuario()));
 
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -198,7 +200,7 @@ public class HistorialBean {
 		registro.setBusqueda((String)objetoHistorial[2]);
 		registro.setCantResultados((Long)objetoHistorial[3]);
 		registro.setTiempoDeConsulta((double)objetoHistorial[4]);
-		registro.setListaDePOIs((List<POI>)objetoHistorial[5]);
+		registro.setListaDePOIs((ArrayList<POI>)objetoHistorial[5]);
 		registro.setId((Long)objetoHistorial[6]);
 		return registro;
 	}

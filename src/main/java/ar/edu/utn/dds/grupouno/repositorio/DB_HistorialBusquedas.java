@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.mongodb.morphia.Key;
 import org.mongodb.morphia.aggregation.Accumulator;
 import org.mongodb.morphia.converters.DateConverter;
 import org.mongodb.morphia.query.MorphiaIterator;
@@ -158,8 +157,8 @@ public class DB_HistorialBusquedas extends Repositorio {
 		return resultado;
 	}
 	
-	public List<Object[]> cargarRegistros(List<RegistroHistoricoMorphia> lista){
-		List<Object[]> resultado = new ArrayList<Object[]>();
+	public ArrayList<Object[]> cargarRegistros(List<RegistroHistoricoMorphia> lista){
+		ArrayList<Object[]> resultado = new ArrayList<Object[]>();
 		for(RegistroHistoricoMorphia nodo : lista){
 			Object[] objeto = new Object[7];
 			objeto[0] = (Object) nodo.getTime();
@@ -176,7 +175,7 @@ public class DB_HistorialBusquedas extends Repositorio {
 		return resultado;
 	}
 
-	public List<Object[]> historialBusquedaEntreFechas(Long userID, Date fechaDesde, Date fechaHasta){
+	public ArrayList<Object[]> historialBusquedaEntreFechas(Long userID, Date fechaDesde, Date fechaHasta){
 		List<RegistroHistoricoMorphia> recuperado = new ArrayList<RegistroHistoricoMorphia>();
 		Query<RegistroHistoricoMorphia> query = RepoMongo.getInstance().getDatastore()
 				.createQuery(RegistroHistoricoMorphia.class);

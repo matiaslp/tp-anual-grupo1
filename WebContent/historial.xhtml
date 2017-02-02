@@ -13,49 +13,6 @@
 		<h:form id="form">
 			<p:growl id="msgs" showDetail="true" />
 			<p:panel id="panel" header="Busqueda">
-					<p:outputPanel deferred="true">
-						<h3>Criterio de busqueda</h3>
-					</p:outputPanel>
-				<h:panelGrid columns="3" cellpadding="5">
-					<p:outputLabel for="fechaDesde" value="Nombre:" />
-					<p:inputText id="textoLibre" value="#{historialBean.textBoxUsuario}" />
-					<p:outputLabel for="fechaDesde" value="Fecha Desde:" />
-					<p:calendar id="fechaDesde" value="#{historialBean.textBoxFechaDesde}" showOn="button" />
-					<p:outputLabel for="fechaHasta" value="Fecha Hasta:" />
-					<p:calendar id="fechaHasta" value="#{historialBean.textBoxFechaHasta}" showOn="button" />
-				</h:panelGrid>
-				<h:panelGrid columns="1" cellpadding="5">
-					<p:commandButton value="Buscar" icon="ui-icon-search" action="#{historialBean.buscar}" update="panel" />
-				</h:panelGrid>
-					<p:outputPanel deferred="true">
-						<h3>Resultado</h3>
-					</p:outputPanel>
-				<p:dataTable id="poiTable" var="RegistroHistorico" value="#{historialBean.listaRH}" rows="10" paginator="true"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="5,10,15">
-					<p:column headerText="FECHA">
-						<h:outputText value="#{RegistroHistorico.time}" />
-					</p:column>
-					<p:column headerText="UserID">
-						<h:outputText value="#{RegistroHistorico.userID}" />
-					</p:column>
-					<p:column headerText="Parametros">
-						<h:outputText value="#{RegistroHistorico.busqueda}" />
-					</p:column>
-					<p:column headerText="POIs">
-						<h:outputText value="#{RegistroHistorico.cantResultados}" />
-					</p:column>
-					<p:column headerText="POIs">
-						<p:dataTable id="detallePOIs" var="POI"
-							value="#{registroHistorico.pois}" rows="10" paginator="true">
-							<p:column headerText="Detalle POIs">
-								<h:outputText value="#{pOI.nombre}" />
-							</p:column>
-						</p:dataTable>
-					</p:column>
-				</p:dataTable>
-				<p:commandButton value="Volver atràs" update="panel"
-					action="welcome" />
 			</p:panel>
 		</h:form>
 	</ui:define>
