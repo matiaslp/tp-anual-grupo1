@@ -9,7 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
  
 @ManagedBean
 @ViewScoped
@@ -44,18 +46,6 @@ public class altaPOIsMaskView {
 			tipos.add(TiposPOI.LOCAL_COMERCIAL.nombre());
 			tipos.add(TiposPOI.PARADA_COLECTIVO.nombre());
 	 }
-	 
-	
-//	public List<String> complete(String query){
-//		List<String> tipos = new ArrayList<String>();
-//		tipos.add(TiposPOI.BANCO.nombre());
-//		tipos.add(TiposPOI.CGP.nombre());
-//		tipos.add(TiposPOI.LOCAL_COMERCIAL.nombre());
-//		tipos.add(TiposPOI.PARADA_COLECTIVO.nombre());
-//		return tipos;
-//	}
-
-	 
 	 
 	public String getNombre() {
 		return nombre;
@@ -195,35 +185,42 @@ public class altaPOIsMaskView {
 	
 	
 	public void altaPOI() {
-		
-		
-		System.out.println("altaPOI\n");
-		System.out.println(tipo);
-		System.out.println("\n");
-		 //POI_ABMC poi_abmc = new POI_ABMC();
-		// DB_POI instancia = DB_POI.getInstance();
 
 		poiDTO= new POI_DTO();
 		
 		poiDTO.setNombre(this.getNombre());
 		poiDTO.setCallePrincipal(this.getCallePrinsipal());
 		poiDTO.setCalleLateral(this.getCalleLateral());
-		poiDTO.setNumeracion(Integer.parseInt( this.getNumeracion()));
-		poiDTO.setPiso(Integer.parseInt(this.getPiso()));
+		if (numeracion != "")
+			poiDTO.setNumeracion(Integer.parseInt( this.getNumeracion()));
+		if (piso != "")
+			poiDTO.setPiso(Integer.parseInt(this.getPiso()));
 		poiDTO.setDepartamento(this.getDepartamento());
 		poiDTO.setUnidad(this.getUnidad());
-		poiDTO.setCodigoPostal(Integer.parseInt(this.getCodigoPostal()));
+		if (codigoPostal != "")
+			poiDTO.setCodigoPostal(Integer.parseInt(this.getCodigoPostal()));
 		poiDTO.setLocalidad(this.getLocalidad());
 		poiDTO.setBarrio(this.getBarrio());
 		poiDTO.setProvincia((this.getProvincia()));
 		poiDTO.setPais(this.getPais());
-		poiDTO.setLatitud(Double.parseDouble(this.getLatitud()));
-		poiDTO.setLongitud(Double.parseDouble(this.getLongitud()));
-		poiDTO.setComuna(Integer.parseInt(this.getComuna()));
-		poiDTO.setTipo(TiposPOI.valueOf(this.getTipo()));
+		if (latitud != "")
+			poiDTO.setLatitud(Double.parseDouble(this.getLatitud()));
+		if (longitud != "")
+			poiDTO.setLongitud(Double.parseDouble(this.getLongitud()));
+		if (comuna != "")
+			poiDTO.setComuna(Integer.parseInt(this.getComuna()));
+		poiDTO.setTipo(TiposPOI.getEnumByString(tipo));
+
 		/*poiDTO.setServicios(serv);
 		 private String servicios;
 		 private String etiquetas;*/
+		
+		// particularidaddes de subitipos por agregar
+		
+		
+		
+		POI nuevoPOI = poiDTO.converttoPOI();
+		Repositorio.getInstance().pois().agregarPOI(nuevoPOI);
 		
 		
 	}

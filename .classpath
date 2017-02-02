@@ -29,7 +29,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jandex-2.0.0.CR1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jandex-2.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javassist-3.18.1-GA.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.faces.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.faces.jar" sourcepath="/home/matias/.m2/repository/org/glassfish/javax.faces/2.2.0/javax.faces-2.2.0-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.inject-1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.mail-1.5.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.servlet-api-3.1.0.jar"/>

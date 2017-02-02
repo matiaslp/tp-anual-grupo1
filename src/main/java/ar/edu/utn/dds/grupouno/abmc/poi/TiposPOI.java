@@ -12,5 +12,12 @@ public enum TiposPOI {
 	public String nombre() {
 		return this.nombre;
 	}
+	
+    public static TiposPOI getEnumByString(String code){
+        for(TiposPOI e : TiposPOI.values()){
+            if(e.nombre().equals(code)) return e;
+        }
+        return null;
+    }
 
 }
