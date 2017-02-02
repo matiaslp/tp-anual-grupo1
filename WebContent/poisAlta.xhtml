@@ -16,7 +16,8 @@
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel for="Nombre" value="Nombre: " />
 					<p:inputMask id="Nombre" value="#{altaPOIsMaskView.nombre}" />
-	<p:outputLabel for="CallePrincipal" value="CallePrincipal:" />
+					
+					<p:outputLabel for="CallePrincipal" value="CallePrincipal:" />
 					<p:inputMask id="CallePrincipal"
 						value="#{altaPOIsMaskView.callePrinsipal}" />
 
@@ -69,7 +70,7 @@
 						value="#{altaPOIsMaskView.tipo}" style="width:150px">
 						<f:selectItems value="#{altaPOIsMaskView.tipos}" />
 					</p:selectOneMenu>
-
+					
 					<p:outputLabel for="servicios" value="servicios:" />
 					<p:inputMask id="servicios" value="#{altaPOIsMaskView.servicios}" />
 

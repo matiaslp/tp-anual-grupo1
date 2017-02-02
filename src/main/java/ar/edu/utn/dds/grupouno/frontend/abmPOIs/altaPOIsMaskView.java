@@ -242,8 +242,8 @@ public class altaPOIsMaskView {
 	}
 
 
-	public void setTipos(List<String> tiposs) {
-		this.tipos = tiposs;
+	public void setTipos(List<String> tipos) {
+		this.tipos = tipos;
 	}	
 	
 }
