@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
@@ -22,7 +24,7 @@ import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean
-@ApplicationScoped
+@SessionScoped
 public class BusquedaBean {
 	private String textoLibre;
 	private String textoBuscar;
