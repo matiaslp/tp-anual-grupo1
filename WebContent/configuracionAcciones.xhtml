@@ -14,9 +14,11 @@
 			<p:growl id="msgs" showDetail="true" />
 			<p:panel header="Acciones ante la busqueda"
 				style="margin-bottom:10px;">
-				<h:panelGrid columns="4" cellpadding="5">
-					<p:inputText name="Usuario" value="#{AccionesDeConsultaBean.username}" />
-					<p:commandButton value="Cargar" update="msgs"
+				<h:panelGrid columns="5" cellpadding="5">
+					<p:outputLabel value="Usuario" />
+					<p:inputText name="Usuario"
+						value="#{AccionesDeConsultaBean.username}" />
+					<p:commandButton value="Cargar" update="accionesSeleccionadas"
 						action="#{AccionesDeConsultaBean.cargarUsuario}"
 						icon="ui-icon-check">
 					</p:commandButton>
@@ -32,10 +34,10 @@
 					</p:commandButton>
 				</h:panelGrid>
 				<p:separator />
-				<p:dataTable var="acciones"
+				<p:dataTable id="accionesSeleccionadas" var="Accion"
 					value="#{AccionesDeConsultaBean.accionesSeleccionadas}">
 					<p:column headerText="Acciones">
-						<h:outputText value="#{acciones.nombre}" />
+						<h:outputText value="#{Accion.nombre}" />
 					</p:column>
 					<p:column style="width:32px;text-align: center">
 						<p:commandButton value="Agregar" update="msgs"

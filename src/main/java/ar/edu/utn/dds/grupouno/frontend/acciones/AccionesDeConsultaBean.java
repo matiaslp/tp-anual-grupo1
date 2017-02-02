@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.grupouno.frontend.acciones;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -93,10 +94,15 @@ public class AccionesDeConsultaBean {
 
 	}
 	
-	public List<Accion> cargarUsuario(){
-		Repositorio.getInstance().usuarios().getUsuarioByName(this.getUsername());
-		this.accionesSeleccionadas = (List<Accion>) usuario.getFuncionalidades();
-		return this.accionesSeleccionadas;
+	public void cargarUsuario(){
+		this.usuario = Repositorio.getInstance().usuarios().getUsuarioByName(this.getUsername());
+		Iterator<Accion> iterFunc = usuario.getFuncionalidades().iterator();
+		while(iterFunc.hasNext()){
+			Accion unaAccion =iterFunc.next();
+			if( unaAccion != null){
+				accionesSeleccionadas.add(unaAccion);
+			}
+		}
 	}
 
 	public String getUsername() {
