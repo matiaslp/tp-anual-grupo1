@@ -26,7 +26,7 @@
 						action="historial" />
 					<p:commandButton value="ABM USUARIOS" rendered="#{menuBean.usuario.isAdmin()}" style="width:100%" update="panel"
 						action="abmusuarios" />		
-					<p:commandButton value="ABM POIS" rendered="#{menuBean.usuario.rol == 'ADMIN'}" style="width:100%" update="panel"
+					<p:commandButton value="ABM POIS" rendered="#{menuBean.usuario.isAdmin()}" style="width:100%" update="panel"
 						action="abmpois" />	
 					<p:commandButton value="Configuración de Acciones ante una Consulta" rendered="#{menuBean.usuario.isAdmin()}" style="width:100%" update="panel"
 						action="configuracionAcciones" />
