@@ -1,12 +1,18 @@
 package ar.edu.utn.dds.grupouno.frontend.abmPOIs;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
  
 @ManagedBean
+@ViewScoped
 public class altaPOIsMaskView {
 	 private String nombre;
 	 private String callePrinsipal;
@@ -26,10 +32,31 @@ public class altaPOIsMaskView {
 	 private String tipo;
 	 private String servicios;
 	 private String etiquetas;
+	 private List<String> tipos = new ArrayList<String>();
 	 
 
 	 private POI_DTO poiDTO;
+	 
+	 @SuppressWarnings("unchecked")
+	 public altaPOIsMaskView(){
+			tipos.add(TiposPOI.BANCO.nombre());
+			tipos.add(TiposPOI.CGP.nombre());
+			tipos.add(TiposPOI.LOCAL_COMERCIAL.nombre());
+			tipos.add(TiposPOI.PARADA_COLECTIVO.nombre());
+	 }
+	 
+	
+//	public List<String> complete(String query){
+//		List<String> tipos = new ArrayList<String>();
+//		tipos.add(TiposPOI.BANCO.nombre());
+//		tipos.add(TiposPOI.CGP.nombre());
+//		tipos.add(TiposPOI.LOCAL_COMERCIAL.nombre());
+//		tipos.add(TiposPOI.PARADA_COLECTIVO.nombre());
+//		return tipos;
+//	}
 
+	 
+	 
 	public String getNombre() {
 		return nombre;
 	}
@@ -169,7 +196,10 @@ public class altaPOIsMaskView {
 	
 	public void altaPOI() {
 		
-	
+		
+		System.out.println("altaPOI\n");
+		System.out.println(tipo);
+		System.out.println("\n");
 		 //POI_ABMC poi_abmc = new POI_ABMC();
 		// DB_POI instancia = DB_POI.getInstance();
 
@@ -205,4 +235,15 @@ public class altaPOIsMaskView {
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
 	}
+
+
+	public List<String> getTipos() {
+		return tipos;
+	}
+
+
+	public void setTipos(List<String> tiposs) {
+		this.tipos = tiposs;
+	}	
+	
 }
