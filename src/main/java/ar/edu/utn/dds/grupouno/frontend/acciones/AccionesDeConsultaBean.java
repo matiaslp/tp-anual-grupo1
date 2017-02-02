@@ -2,6 +2,7 @@ package ar.edu.utn.dds.grupouno.frontend.acciones;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -17,18 +18,33 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 public class AccionesDeConsultaBean {
 	private List<Accion> accionesParaSeleccionar = new ArrayList<Accion>();
 	private List<Accion> accionesSeleccionadas = new ArrayList<Accion>();
+	private List<String> nombresAcciones = new ArrayList<String>();
+	private Usuario usuario = null;
+	private String username = null;
 	private String accion = null;
 
 	@SuppressWarnings("unchecked")
 	public AccionesDeConsultaBean() {
-		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
+		//String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
 		//String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
 		//Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 		 for (Accion unaAccion:AuthAPI.getInstance().getAcciones()){
 			 accionesParaSeleccionar.add(unaAccion);
 		 }
+		 
+		 for (Accion unaAccion : accionesParaSeleccionar){
+			 nombresAcciones.add(unaAccion.getNombreFuncion());
+		 }
     }
+	
+	public List<String> getNombresAcciones() {
+		return nombresAcciones;
+	}
+
+	public void setNombresAcciones(List<String> nombresAcciones) {
+		this.nombresAcciones = nombresAcciones;
+	}
 	
 	public List<Accion> getAccionesParaSeleccionar() {
 		return accionesParaSeleccionar;
@@ -55,7 +71,8 @@ public class AccionesDeConsultaBean {
 	}
 
 	public void confirmar() {
-		// agrega las acciones al usuario.
+		usuario.setFuncionalidades((Set<Accion>) accionesSeleccionadas);
+		Repositorio.getInstance().usuarios().persistirUsuario(usuario);
 	}
 
 	public void eliminar(Accion accion) {
@@ -66,7 +83,28 @@ public class AccionesDeConsultaBean {
 		return "cancel";
 	}
 
-	public void agregar(Accion accion) {
-		this.accionesSeleccionadas.add(accion);
+	public void agregar(String nombre) {
+		
+		for(Accion unaAccion : accionesParaSeleccionar){
+			if(unaAccion.getNombreFuncion() == nombre){
+				this.accionesSeleccionadas.add(unaAccion);
+			}
+		}
+
 	}
+	
+	public List<Accion> cargarUsuario(){
+		Repositorio.getInstance().usuarios().getUsuarioByName(this.getUsername());
+		this.accionesSeleccionadas = (List<Accion>) usuario.getFuncionalidades();
+		return this.accionesSeleccionadas;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 }
