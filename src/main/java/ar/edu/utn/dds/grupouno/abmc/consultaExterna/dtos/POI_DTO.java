@@ -43,6 +43,8 @@ public class POI_DTO {
 	String zonas;
 	String gerente;
 	String sucursal;
+	int linea;
+	int cercania;
 	ArrayList<Long> dias = new ArrayList<Long>();
 	ArrayList<Long> horas = new ArrayList<Long>();
 
@@ -51,12 +53,21 @@ public class POI_DTO {
 
 		if (this.getTipo().equals(TiposPOI.CGP)) {
 			nuevoPOI = new CGP(this.getNombre(), this.getLatitud(), this.getLongitud());
+			((CGP)nuevoPOI).setDirector(director);
+			((CGP)nuevoPOI).setTelefono(telefono);
+			((CGP)nuevoPOI).setCecania(cercania);
 		} else if (this.getTipo().equals(TiposPOI.LOCAL_COMERCIAL)) {
 			nuevoPOI = new LocalComercial(this.getNombre(), this.getLatitud(), this.getLongitud(), this.getRubro());
+			((LocalComercial)nuevoPOI).setRubro(rubro);
+			((LocalComercial)nuevoPOI).setCecania(cercania);
 		} else if (this.getTipo().equals(TiposPOI.BANCO)) {
 			nuevoPOI = new Banco(this.getNombre(), this.getLatitud(), this.getLongitud());
+			((Banco)nuevoPOI).setSucursal(sucursal);
+			((Banco)nuevoPOI).setGerente(gerente);
+			((Banco)nuevoPOI).setCecania(cercania);
 		} else if (this.getTipo().equals(TiposPOI.PARADA_COLECTIVO)) {
 			nuevoPOI = new ParadaColectivo(this.getNombre(), this.getLatitud(), this.getLongitud());
+			((ParadaColectivo)nuevoPOI).setLinea(linea);
 		}
 
 		nuevoPOI.setCallePrincipal(callePrincipal);
@@ -320,6 +331,16 @@ public class POI_DTO {
 
 	public DateTime getFechaBaja() {
 		return fechaBaja;
+	}
+
+	public void setLinea(int parseInt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setCercania(int parseInt) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

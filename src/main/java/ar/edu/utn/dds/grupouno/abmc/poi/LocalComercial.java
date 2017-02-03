@@ -10,7 +10,9 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -24,7 +26,8 @@ import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 @PrimaryKeyJoinColumn(name = "id")
 public class LocalComercial extends POI {
 
-	@OneToOne(cascade = CascadeType.ALL)
+	//@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "rubro_id", referencedColumnName = "id")
 	Rubro rubro;
 	@ElementCollection

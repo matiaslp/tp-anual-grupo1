@@ -9,7 +9,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
+import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
+import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
+import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
+import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
  
@@ -32,19 +37,35 @@ public class altaPOIsMaskView {
 	 private String longitud;
 	 private String comuna;
 	 private String tipo;
+	 private TiposPOI tipoPOI = TiposPOI.BANCO;
 	 private String servicios;
 	 private String etiquetas;
 	 private List<String> tipos = new ArrayList<String>();
+	 private String cercania;
+	  
+	 // BANCOS
+	 private String sucursal;
+	 private String gerente;
+	 
+	 // PARADAS
+	 private String linea;
+	 
+	 // CGP
+	 private String director;
+	 private String telefono;
+	 
+	 // LOCALES
+	 private String rubro;
 	 
 
 	 private POI_DTO poiDTO;
 	 
 	 @SuppressWarnings("unchecked")
 	 public altaPOIsMaskView(){
-			tipos.add(TiposPOI.BANCO.nombre());
-			tipos.add(TiposPOI.CGP.nombre());
-			tipos.add(TiposPOI.LOCAL_COMERCIAL.nombre());
-			tipos.add(TiposPOI.PARADA_COLECTIVO.nombre());
+			tipos.add(TiposPOI.BANCO.name());
+			tipos.add(TiposPOI.CGP.name());
+			tipos.add(TiposPOI.LOCAL_COMERCIAL.name());
+			tipos.add(TiposPOI.PARADA_COLECTIVO.name());
 	 }
 	 
 	public String getNombre() {
@@ -209,7 +230,26 @@ public class altaPOIsMaskView {
 			poiDTO.setLongitud(Double.parseDouble(this.getLongitud()));
 		if (comuna != "")
 			poiDTO.setComuna(Integer.parseInt(this.getComuna()));
-		poiDTO.setTipo(TiposPOI.getEnumByString(tipo));
+		poiDTO.setTipo(TiposPOI.valueOf(tipo));
+		
+		
+		// Atributos particulares para distintos tipos de POIs
+		if (this.getTipo().equals(TiposPOI.CGP)) {
+			poiDTO.setDirector(director);
+			poiDTO.setTelefono(telefono);
+			poiDTO.setCercania(Integer.parseInt(cercania));
+		} else if (this.getTipo().equals(TiposPOI.LOCAL_COMERCIAL)) {
+			Rubro nuevoRubro = new Rubro();
+			nuevoRubro.setNombre(rubro);
+			nuevoRubro.setCercania(Integer.parseInt(cercania));
+		} else if (this.getTipo().equals(TiposPOI.BANCO)) {
+			poiDTO.setSucursal(sucursal);
+			poiDTO.setGerente(gerente);
+			poiDTO.setCercania(Integer.parseInt(cercania));
+		} else if (this.getTipo().equals(TiposPOI.PARADA_COLECTIVO)) {
+			poiDTO.setLinea(Integer.parseInt(linea));
+			
+		}
 
 		/*poiDTO.setServicios(serv);
 		 private String servicios;
@@ -223,6 +263,10 @@ public class altaPOIsMaskView {
 		Repositorio.getInstance().pois().agregarPOI(nuevoPOI);
 		
 		
+	}
+	
+	public void listener() {
+		tipoPOI = TiposPOI.valueOf(tipo);
 	}
 
 	public String getProvincia() {
@@ -241,6 +285,72 @@ public class altaPOIsMaskView {
 
 	public void setTipos(List<String> tipos) {
 		this.tipos = tipos;
+	}
+
+	public String getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(String sucursal) {
+		this.sucursal = sucursal;
+	}
+
+	public String getGerente() {
+		return gerente;
+	}
+
+	public void setGerente(String gerente) {
+		this.gerente = gerente;
+	}
+
+	public TiposPOI getTipoPOI() {
+		return tipoPOI;
+	}
+
+	public void setTipoPOI(TiposPOI tipoPOI) {
+		this.tipoPOI = tipoPOI;
+	}
+
+	public String getLinea() {
+		return linea;
+	}
+
+	public void setLinea(String linea) {
+		this.linea = linea;
+	}
+
+	public String getCercania() {
+		return cercania;
+	}
+
+	public void setCercania(String cercania) {
+		this.cercania = cercania;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getRubro() {
+		return rubro;
+	}
+
+	public void setRubro(String rubro) {
+		this.rubro = rubro;
 	}	
+	
+	
 	
 }
