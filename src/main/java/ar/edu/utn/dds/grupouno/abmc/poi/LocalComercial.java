@@ -27,8 +27,8 @@ import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 public class LocalComercial extends POI {
 
 	//@OneToOne(cascade = CascadeType.ALL)
-	@ManyToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "rubro_id", referencedColumnName = "id")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "rubro_id")//, referencedColumnName = "id")
 	Rubro rubro;
 	@ElementCollection
 	@CollectionTable(name = "LOCAL_DIAS")
