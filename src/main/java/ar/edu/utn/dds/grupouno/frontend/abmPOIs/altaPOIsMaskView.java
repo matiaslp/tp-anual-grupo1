@@ -73,13 +73,13 @@ public class altaPOIsMaskView {
 			tipos.add(TiposPOI.CGP.name());
 			tipos.add(TiposPOI.LOCAL_COMERCIAL.name());
 			tipos.add(TiposPOI.PARADA_COLECTIVO.name());
-	        dias.add("Domingo");
-	        dias.add("Lunes");
-	        dias.add("Martes");
-	        dias.add("Miercoles");
-	        dias.add("Jueves");
-	        dias.add("Viernes");
-	        dias.add("Sabado");  
+	        dias.add("DOMINGO");
+	        dias.add("LUNES");
+	        dias.add("MARTES");
+	        dias.add("MIERCOLES");
+	        dias.add("JUEVES");
+	        dias.add("VIERNES");
+	        dias.add("SABADO");  
 	 }
 	 
 	public String getNombre() {
@@ -213,8 +213,11 @@ public class altaPOIsMaskView {
 	}
 	
 	public void agregarServicio(){
-		
-		servicios.add(new NodoServicio());
+		for (String dia:diasSeleccionados){
+			Dias diaEnum = Dias.valueOf(dia);
+			this.nodoServicioCreando.agregarDia(diaEnum.getValue());
+		}
+		servicios.add(this.nodoServicioCreando);
 	}
 
 	public String getEtiquetas() {

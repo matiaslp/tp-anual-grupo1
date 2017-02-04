@@ -59,4 +59,26 @@ public class NodoServicio extends PersistibleConNombre {
 	public NodoServicio() {
 
 	}
+
+	public Set<POI> getPois() {
+		return pois;
+	}
+
+	public void setPois(Set<POI> pois) {
+		this.pois = pois;
+	}
+
+	public void setListaDias(List<Integer> listaDias) {
+		this.listaDias = listaDias;
+	}
+
+	public void setHoraInicio(int horaInicio) {
+		this.horaInicio = horaInicio;
+	}
+
+	public void setHoraFin(int horaFin) {
+		this.horaFin = horaFin;
+	}
+	
+	
 }

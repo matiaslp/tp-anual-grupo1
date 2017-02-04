@@ -114,9 +114,12 @@
 						rendered="#{!altaPOIsMaskView.tipoPOI.isParada()}" />
 				</h:panelGrid>
 
+				<p:remoteCommand name="onShow" action="#{altaPOIsMaskView.listenerCrearServicio()}"
+      				partialSubmit="true" process="@this"/>
 
 				<p:dialog header="Nuevo Servicio" widgetVar="servDialog"
-					modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+					modal="true" showEffect="fade" hideEffect="fade" resizable="f"
+					onShow="onShow()">
 					<p:outputPanel id="nuevoServicio" style="text-align:center;">
 						<p:panelGrid columns="2" cellpadding="5">
 							<p:outputLabel for="nombre" value="Nombre" />
@@ -137,7 +140,7 @@
 						</p:panelGrid>
 						<h:panelGrid columns="2" cellpadding="5">
 							<p:commandButton value="Agregar Servicio" update="Servicios"
-								onclick="servDialog.hide()" title="View" />
+								onclick="servDialog.hide()" title="View" action="#{altaPOIsMaskView.agregarServicio()}" />
 							<p:commandButton value="Cancelar" update="Servicios"
 								onclick="servDialog.hide()" title="View" />
 						</h:panelGrid>
@@ -148,30 +151,26 @@
 				<p:dataTable id="Servicios" var="nodoServicio"
 					value="#{altaPOIsMaskView.servicios}">
 					<p:column headerText="Servicios">
-						<p:inputMask value="#{nodoServicio.nombre}" />
+						<h:outputText value="#{nodoServicio.nombre}" />
 					</p:column>
 					<p:column headerText="Dias">
 						<p:selectCheckboxMenu id="menu" value="#{nodoServicio.listaDias}"
-							label="Cities" filter="true" filterMatchMode="startsWith"
+							label="Dias" filter="true" filterMatchMode="startsWith"
 							panelStyle="width:250px">
 							<f:selectItems value="#{altaPOIsMaskView.dias}" />
 						</p:selectCheckboxMenu>
 					</p:column>
 					<p:column headerText="Desde">
-						<p:autoComplete id="desde" dropdown="true"
-							value="#{nodoServicio.horaInicio}"
-							completeMethod="#{altaPOIsMaskView.completeText}" />
+						<h:outputText value="#{nodoServicio.horaInicio}" />
 					</p:column>
 					<p:column headerText="Hasta">
-						<p:autoComplete id="hasta" dropdown="true"
-							value="#{nodoServicio.horaFin}"
-							completeMethod="#{altaPOIsMaskView.completeText}" />
+						<h:outputText value="#{nodoServicio.horaFin}" />
 					</p:column>
 				</p:dataTable>
 
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:commandButton value="Agregar Servicio"
-						oncomplete="PF('servDialog').show()" title="View" update="nuevoServicio" action="#{altaPOIsMaskView.listenerCrearServicio}">
+						oncomplete="PF('servDialog').show()" title="View" update="nuevoServicio" >
 					</p:commandButton>	
 				</h:panelGrid>
 
