@@ -234,19 +234,20 @@ public class altaPOIsMaskView {
 		
 		
 		// Atributos particulares para distintos tipos de POIs
-		if (this.getTipo().equals(TiposPOI.CGP)) {
+		if (this.getTipoPOI().equals(TiposPOI.CGP)) {
 			poiDTO.setDirector(director);
 			poiDTO.setTelefono(telefono);
 			poiDTO.setCercania(Integer.parseInt(cercania));
-		} else if (this.getTipo().equals(TiposPOI.LOCAL_COMERCIAL)) {
+		} else if (this.getTipoPOI().equals(TiposPOI.LOCAL_COMERCIAL)) {
 			Rubro nuevoRubro = new Rubro();
 			nuevoRubro.setNombre(rubro);
 			nuevoRubro.setCercania(Integer.parseInt(cercania));
-		} else if (this.getTipo().equals(TiposPOI.BANCO)) {
+			poiDTO.setRubro(nuevoRubro);
+		} else if (this.getTipoPOI().equals(TiposPOI.BANCO)) {
 			poiDTO.setSucursal(sucursal);
 			poiDTO.setGerente(gerente);
 			poiDTO.setCercania(Integer.parseInt(cercania));
-		} else if (this.getTipo().equals(TiposPOI.PARADA_COLECTIVO)) {
+		} else if (this.getTipoPOI().equals(TiposPOI.PARADA_COLECTIVO)) {
 			poiDTO.setLinea(Integer.parseInt(linea));
 			
 		}
@@ -260,7 +261,7 @@ public class altaPOIsMaskView {
 		
 		
 		POI nuevoPOI = poiDTO.converttoPOI();
-		Repositorio.getInstance().pois().agregarPOI(nuevoPOI);
+		Repositorio.getInstance().pois().agregarPOI((Banco)nuevoPOI);
 		
 		
 	}

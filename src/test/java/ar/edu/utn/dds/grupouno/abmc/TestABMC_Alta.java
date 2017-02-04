@@ -41,7 +41,6 @@ public class TestABMC_Alta {
 		poiDTOCGP.setNombre("unCGP");
 		poiDTOCGP.setLatitud(-34.5664823);
 		poiDTOCGP.setLongitud(-34.5664823);
-		poiDTOCGP.setRubro(rubro = new Rubro("unRubro"));
 		cgp = poiDTOCGP.converttoPOI();
 
 		poiDTOComercial = new POI_DTO();
