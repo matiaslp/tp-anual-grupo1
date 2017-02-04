@@ -48,7 +48,7 @@ public class altaPOIsMaskView {
 	 private List<String> dias = new ArrayList<String>();
 	 private String cercania;
 	 
-	 private List<SelectItem> diasSeleccionados = new ArrayList<SelectItem>();
+	 private String[] diasSeleccionados;
 	  
 	 // BANCOS
 	 private String sucursal;
@@ -64,7 +64,7 @@ public class altaPOIsMaskView {
 	 // LOCALES
 	 private String rubro;
 	 
-	 private NodoServicio nodoServicioCreando = new NodoServicio();
+	 private NodoServicio nodoServicioCreando;
 	 private POI_DTO poiDTO;
 	 
 	 @SuppressWarnings("unchecked")
@@ -394,11 +394,13 @@ public class altaPOIsMaskView {
 		this.dias = dias;
 	}
 
-	public List<SelectItem> getDiasSeleccionados() {
+
+
+	public String[] getDiasSeleccionados() {
 		return diasSeleccionados;
 	}
 
-	public void setDiasSeleccionados(List<SelectItem> diasSeleccionados) {
+	public void setDiasSeleccionados(String[] diasSeleccionados) {
 		this.diasSeleccionados = diasSeleccionados;
 	}
 

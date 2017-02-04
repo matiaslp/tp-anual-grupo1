@@ -122,10 +122,9 @@
 							<p:outputLabel for="nombre" value="Nombre" />
 							<p:inputMask id="nombre" value="#{altaPOIsMaskView.nodoServicioCreando.nombre}" />
 							<p:outputLabel for="dias" value="Dias" />
-							<p:selectCheckboxMenu id="dias" value="#{altaPOIsMaskView.dias}"
-								label="Dias" filter="true" filterMatchMode="startsWith"
-								panelStyle="width:250px">
-								<f:selectItems value="#{altaPOIsMaskView.diasSeleccionados}" />
+							<p:selectCheckboxMenu id="dias" value="#{altaPOIsMaskView.diasSeleccionados}"
+								label="Dias" panelStyle="width:250px">
+								<f:selectItems  value="#{altaPOIsMaskView.dias}" />
 							</p:selectCheckboxMenu>
 							<p:outputLabel for="desde" value="Hora Inicio" />
 							<p:autoComplete id="desde" dropdown="true"
