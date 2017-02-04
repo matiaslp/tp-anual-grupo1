@@ -10,7 +10,7 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:form>
+		<h:form id="form">
 			<p:panel id="panel" header="Alta POI">
 				<p:messages id="msgs" />
 				<h:panelGrid columns="2" cellpadding="5">
@@ -114,39 +114,7 @@
 						rendered="#{!altaPOIsMaskView.tipoPOI.isParada()}" />
 				</h:panelGrid>
 
-				<p:remoteCommand name="onShow" action="#{altaPOIsMaskView.listenerCrearServicio()}"
-      				partialSubmit="true" process="@this"/>
 
-				<p:dialog header="Nuevo Servicio" widgetVar="servDialog"
-					modal="true" showEffect="fade" hideEffect="fade" resizable="f"
-					onShow="onShow()">
-					<p:outputPanel id="nuevoServicio" style="text-align:center;">
-						<p:panelGrid columns="2" cellpadding="5">
-							<p:outputLabel for="nombre" value="Nombre" />
-							<p:inputMask id="nombre" value="#{altaPOIsMaskView.nodoServicioCreando.nombre}" />
-							<p:outputLabel for="dias" value="Dias" />
-							<p:selectCheckboxMenu id="dias" value="#{altaPOIsMaskView.diasSeleccionados}"
-								label="Dias" panelStyle="width:250px">
-								<f:selectItems  value="#{altaPOIsMaskView.dias}" />
-							</p:selectCheckboxMenu>
-							<p:outputLabel for="desde" value="Hora Inicio" />
-							<p:autoComplete id="desde" dropdown="true"
-								value="#{altaPOIsMaskView.nodoServicioCreando.horaInicio}"
-								completeMethod="#{altaPOIsMaskView.completeText}" />
-							<p:outputLabel for="hasta" value="Hora Fin" />
-							<p:autoComplete id="hasta" dropdown="true"
-								value="#{altaPOIsMaskView.nodoServicioCreando.horaFin}"
-								completeMethod="#{altaPOIsMaskView.completeText}" />
-						</p:panelGrid>
-						<h:panelGrid columns="2" cellpadding="5">
-							<p:commandButton value="Agregar Servicio" update="Servicios"
-								onclick="servDialog.hide()" title="View" action="#{altaPOIsMaskView.agregarServicio()}" />
-							<p:commandButton value="Cancelar" update="Servicios"
-								onclick="servDialog.hide()" title="View" />
-						</h:panelGrid>
-
-					</p:outputPanel>
-				</p:dialog>
 
 				<p:dataTable id="Servicios" var="nodoServicio"
 					value="#{altaPOIsMaskView.servicios}">
@@ -154,11 +122,16 @@
 						<h:outputText value="#{nodoServicio.nombre}" />
 					</p:column>
 					<p:column headerText="Dias">
-						<p:selectCheckboxMenu id="menu" value="#{nodoServicio.listaDias}"
-							label="Dias" filter="true" filterMatchMode="startsWith"
-							panelStyle="width:250px">
-							<f:selectItems value="#{altaPOIsMaskView.dias}" />
-						</p:selectCheckboxMenu>
+						<p:commandButton id="botonDias" value="Dias" type="button" />
+    					<p:overlayPanel id="listaDias" for="botonDias" hideEffect="fade">
+       						<h:outputText value="Domingo&lt;br /&gt;" rendered="#{nodoServicio.isDomingo()}" escape="false" />
+       						<h:outputText value="Lunes&lt;br /&gt;" rendered="#{nodoServicio.isLunes()}" escape="false" />
+       						<h:outputText value="Martes&lt;br /&gt;" rendered="#{nodoServicio.isMartes()}" escape="false" />
+       						<h:outputText value="Miercoles&lt;br /&gt;" rendered="#{nodoServicio.isMiercoles()}" escape="false" />
+       						<h:outputText value="Jueves&lt;br /&gt;" rendered="#{nodoServicio.isJueves()}" escape="false" />
+       						<h:outputText value="Viernes&lt;br /&gt;" rendered="#{nodoServicio.isViernes()}" escape="false" />
+       						<h:outputText value="Sabado&lt;br /&gt;" rendered="#{nodoServicio.isSabado()}" escape="false" />
+    					</p:overlayPanel>
 					</p:column>
 					<p:column headerText="Desde">
 						<h:outputText value="#{nodoServicio.horaInicio}" />
@@ -166,12 +139,23 @@
 					<p:column headerText="Hasta">
 						<h:outputText value="#{nodoServicio.horaFin}" />
 					</p:column>
+					<p:column style="width:32px;text-align: center">
+                    <p:commandButton icon="ui-icon-trash"
+                        title="Borrar este servicio"
+                        actionListener="#{altaPOIsMaskView.removeServicio(nodoServicio)}"
+                        ajax="false"
+                        update="panel"
+                        immediate="true" />
+                	</p:column>
 				</p:dataTable>
+				
+
 
 				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Agregar Servicio"
-						oncomplete="PF('servDialog').show()" title="View" update="nuevoServicio" >
-					</p:commandButton>	
+					<p:commandButton value="Agregar Servicio" action="#{altaPOIsMaskView.listenerCrearServicio()}"
+						update=":formDialog:nuevoServicio"
+						oncomplete="PF('servDialog').show()" title="View">
+					</p:commandButton>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2" cellpadding="5">
@@ -183,9 +167,45 @@
 				</h:panelGrid>
 
 			</p:panel>
+</h:form>
+						<p:dialog header="Nuevo Servicio" widgetVar="servDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="f" onShow="#{altaPOIsMaskView.listenerCrearServicio()}" >
+			<h:form id="formDialog" >
+				<p:outputPanel id="nuevoServicio" style="text-align:center;" >
+					<p:panelGrid columns="2" cellpadding="5">
+						<p:outputLabel for="nombre" value="Nombre" />
+						<p:inputMask id="nombre"
+							value="#{altaPOIsMaskView.nodoServicioCreando.nombre}" />
+						<p:outputLabel for="dias" value="Dias" />
+						<p:selectCheckboxMenu id="dias"
+							value="#{altaPOIsMaskView.diasSeleccionados}" label="Dias"
+							panelStyle="width:250px">
+							<f:selectItems value="#{altaPOIsMaskView.dias}" />
+						</p:selectCheckboxMenu>
+						<p:outputLabel for="desde" value="Hora Inicio" />
+						<p:autoComplete id="desde" dropdown="true"
+							value="#{altaPOIsMaskView.nodoServicioCreando.horaInicio}"
+							completeMethod="#{altaPOIsMaskView.completeText}" />
+						<p:outputLabel for="hasta" value="Hora Fin" />
+						<p:autoComplete id="hasta" dropdown="true"
+							value="#{altaPOIsMaskView.nodoServicioCreando.horaFin}"
+							completeMethod="#{altaPOIsMaskView.completeText}" />
+					</p:panelGrid>
+					<h:panelGrid columns="2" cellpadding="5">
+						<p:commandButton value="Agregar Servicio" action="#{altaPOIsMaskView.agregarServicio()}" 
+						update=":form:Servicios"
+							oncomplete="PF('servDialog').hide()" title="View" />
+							
+						<p:commandButton value="Cancelar" update=":form:Servicios"
+							onclick="PF('servDialog').hide()" title="View" />
+					</h:panelGrid>
+
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		
 
 
-		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

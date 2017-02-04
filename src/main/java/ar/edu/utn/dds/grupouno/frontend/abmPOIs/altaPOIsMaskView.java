@@ -64,7 +64,7 @@ public class altaPOIsMaskView {
 	 // LOCALES
 	 private String rubro;
 	 
-	 private NodoServicio nodoServicioCreando;
+	 private NodoServicio nodoServicioCreando = new NodoServicio();
 	 private POI_DTO poiDTO;
 	 
 	 @SuppressWarnings("unchecked")
@@ -218,6 +218,16 @@ public class altaPOIsMaskView {
 			this.nodoServicioCreando.agregarDia(diaEnum.getValue());
 		}
 		servicios.add(this.nodoServicioCreando);
+		nodoServicioCreando = new NodoServicio();
+		this.diasSeleccionados = new String[0];
+	}
+	
+	public void removeServicio(NodoServicio servicio) {
+	    try {
+	    	servicios.remove(servicio);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	public String getEtiquetas() {
@@ -304,7 +314,7 @@ public class altaPOIsMaskView {
 	}
 	
 	public void listenerCrearServicio() {
-		nodoServicioCreando = new NodoServicio();
+	//	nodoServicioCreando = new NodoServicio();
 	}
 
 	public String getProvincia() {

@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import ar.edu.utn.dds.grupouno.frontend.abmPOIs.Dias;
 import ar.edu.utn.dds.grupouno.repositorio.PersistibleConNombre;
 
 @Entity
@@ -78,6 +79,28 @@ public class NodoServicio extends PersistibleConNombre {
 
 	public void setHoraFin(int horaFin) {
 		this.horaFin = horaFin;
+	}
+	
+	public boolean isDomingo(){
+		return this.listaDias.contains(Dias.DOMINGO.getValue());
+	}
+	public boolean isLunes(){
+		return this.listaDias.contains(Dias.LUNES.getValue());
+	}
+	public boolean isMartes(){
+		return this.listaDias.contains(Dias.MARTES.getValue());
+	}
+	public boolean isMiercoles(){
+		return this.listaDias.contains(Dias.MIERCOLES.getValue());
+	}
+	public boolean isJueves(){
+		return this.listaDias.contains(Dias.JUEVES.getValue());
+	}
+	public boolean isViernes(){
+		return this.listaDias.contains(Dias.VIERNES.getValue());
+	}
+	public boolean isSabado(){
+		return this.listaDias.contains(Dias.SABADO.getValue());
 	}
 	
 	
