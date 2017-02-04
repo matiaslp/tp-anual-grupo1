@@ -14,9 +14,19 @@
 			<p:panel id="panel" header="Alta POI">
 				<p:messages id="msgs" />
 				<h:panelGrid columns="2" cellpadding="5">
+
+					<p:outputLabel for="TIPO" value="Tipo:" />
+					<p:selectOneMenu id="TIPO" value="#{altaPOIsMaskView.tipo}"
+						style="width:150px">
+						<f:selectItems value="#{altaPOIsMaskView.tipos}" />
+						<p:ajax update="panel" event="change"
+							listener="#{altaPOIsMaskView.listener}" />
+					</p:selectOneMenu>
+
 					<p:outputLabel for="Nombre" value="Nombre: " />
-					<p:inputMask id="Nombre" value="#{altaPOIsMaskView.nombre}" required="true" />
-					
+					<p:inputMask id="Nombre" value="#{altaPOIsMaskView.nombre}"
+						required="true" />
+
 					<p:outputLabel for="CallePrincipal" value="Calle Principal:" />
 					<p:inputMask id="CallePrincipal"
 						value="#{altaPOIsMaskView.callePrinsipal}" />
@@ -53,51 +63,119 @@
 
 					<p:outputLabel for="pais" value="Pais:" />
 					<p:inputMask id="pais" value="#{altaPOIsMaskView.pais}" />
-					
+
 					<p:outputLabel for="LATITUD" value="Latitud" />
-					<p:inputMask id="LATITUD" value="#{altaPOIsMaskView.latitud}" required="true" />
+					<p:inputMask id="LATITUD" value="#{altaPOIsMaskView.latitud}"
+						required="true" />
 
 					<p:outputLabel for="LONGITUD" value="Longitud" />
-					<p:inputMask id="LONGITUD" value="#{altaPOIsMaskView.longitud}" required="true" />
+					<p:inputMask id="LONGITUD" value="#{altaPOIsMaskView.longitud}"
+						required="true" />
 
 					<p:outputLabel for="comuna" value="Comuna:" />
 					<p:inputMask id="comuna" value="#{altaPOIsMaskView.comuna}" />
 
-					<p:outputLabel for="TIPO" value="Tipo:" />				
-					<p:selectOneMenu id="TIPO"
-						value="#{altaPOIsMaskView.tipo}" style="width:150px">
-						<f:selectItems value="#{altaPOIsMaskView.tipos}" />
-						<p:ajax update="panel" event="change" listener="#{altaPOIsMaskView.listener}" />
-					</p:selectOneMenu>
-					
-					<p:outputLabel for="servicios" value="Servicios:" />
-					<p:inputMask id="servicios" value="#{altaPOIsMaskView.servicios}" />
-
 					<p:outputLabel for="etiquetas" value="Etiquetas:" />
 					<p:inputMask id="etiquetas" value="#{altaPOIsMaskView.etiquetas}" />
-					
-					<p:outputLabel for="sucursal" value="Sucursal" rendered="#{altaPOIsMaskView.tipoPOI.isBanco()}" />
-					<p:inputMask id="sucursal" value="#{altaPOIsMaskView.sucursal}" rendered="#{altaPOIsMaskView.tipoPOI.isBanco()}" />
-					
-					<p:outputLabel for="gerente" value="Gerente" rendered="#{altaPOIsMaskView.tipoPOI.isBanco()}" />
-					<p:inputMask id="gerente" value="#{altaPOIsMaskView.gerente}" rendered="#{altaPOIsMaskView.tipoPOI.isBanco()}" />
-					
-					<p:outputLabel for="linea" value="Linea" rendered="#{altaPOIsMaskView.tipoPOI.isParada()}" />
-					<p:inputMask id="linea" value="#{altaPOIsMaskView.linea}" rendered="#{altaPOIsMaskView.tipoPOI.isParada()}" />
-					
-					<p:outputLabel for="director" value="Director" rendered="#{altaPOIsMaskView.tipoPOI.isCGP()}" />
-					<p:inputMask id="director" value="#{altaPOIsMaskView.director}" rendered="#{altaPOIsMaskView.tipoPOI.isCGP()}" />
-					
-					<p:outputLabel for="telefono" value="Telefono" rendered="#{altaPOIsMaskView.tipoPOI.isCGP()}" />
-					<p:inputMask id="telefono" value="#{altaPOIsMaskView.telefono}" rendered="#{altaPOIsMaskView.tipoPOI.isCGP()}" />
-					
-					<p:outputLabel for="rubro" value="Rubro" rendered="#{altaPOIsMaskView.tipoPOI.isLocal()}" />
-					<p:inputMask id="rubro" value="#{altaPOIsMaskView.rubro}" rendered="#{altaPOIsMaskView.tipoPOI.isLocal()}" required="true" />
-					
-					<p:outputLabel for="cercania" value="Cercania" rendered="#{!altaPOIsMaskView.tipoPOI.isParada()}" />
-					<p:inputMask id="cercania" value="#{altaPOIsMaskView.cercania}" rendered="#{!altaPOIsMaskView.tipoPOI.isParada()}" />
 
+					<p:outputLabel for="sucursal" value="Sucursal"
+						rendered="#{altaPOIsMaskView.tipoPOI.isBanco()}" />
+					<p:inputMask id="sucursal" value="#{altaPOIsMaskView.sucursal}"
+						rendered="#{altaPOIsMaskView.tipoPOI.isBanco()}" />
+
+					<p:outputLabel for="gerente" value="Gerente"
+						rendered="#{altaPOIsMaskView.tipoPOI.isBanco()}" />
+					<p:inputMask id="gerente" value="#{altaPOIsMaskView.gerente}"
+						rendered="#{altaPOIsMaskView.tipoPOI.isBanco()}" />
+
+					<p:outputLabel for="linea" value="Linea"
+						rendered="#{altaPOIsMaskView.tipoPOI.isParada()}" />
+					<p:inputMask id="linea" value="#{altaPOIsMaskView.linea}"
+						rendered="#{altaPOIsMaskView.tipoPOI.isParada()}" />
+
+					<p:outputLabel for="director" value="Director"
+						rendered="#{altaPOIsMaskView.tipoPOI.isCGP()}" />
+					<p:inputMask id="director" value="#{altaPOIsMaskView.director}"
+						rendered="#{altaPOIsMaskView.tipoPOI.isCGP()}" />
+
+					<p:outputLabel for="telefono" value="Telefono"
+						rendered="#{altaPOIsMaskView.tipoPOI.isCGP()}" />
+					<p:inputMask id="telefono" value="#{altaPOIsMaskView.telefono}"
+						rendered="#{altaPOIsMaskView.tipoPOI.isCGP()}" />
+
+					<p:outputLabel for="rubro" value="Rubro"
+						rendered="#{altaPOIsMaskView.tipoPOI.isLocal()}" />
+					<p:inputMask id="rubro" value="#{altaPOIsMaskView.rubro}"
+						rendered="#{altaPOIsMaskView.tipoPOI.isLocal()}" required="true" />
+
+					<p:outputLabel for="cercania" value="Cercania"
+						rendered="#{!altaPOIsMaskView.tipoPOI.isParada()}" />
+					<p:inputMask id="cercania" value="#{altaPOIsMaskView.cercania}"
+						rendered="#{!altaPOIsMaskView.tipoPOI.isParada()}" />
 				</h:panelGrid>
+
+
+				<p:dialog header="Nuevo Servicio" widgetVar="servDialog"
+					modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+					<p:outputPanel id="nuevoServicio" style="text-align:center;">
+						<p:panelGrid columns="2" cellpadding="5">
+							<p:outputLabel for="nombre" value="Nombre" />
+							<p:inputMask id="nombre" value="#{altaPOIsMaskView.nodoServicioCreando.nombre}" />
+							<p:outputLabel for="dias" value="Dias" />
+							<p:selectCheckboxMenu id="dias" value="#{altaPOIsMaskView.dias}"
+								label="Dias" filter="true" filterMatchMode="startsWith"
+								panelStyle="width:250px">
+								<f:selectItems value="#{altaPOIsMaskView.diasSeleccionados}" />
+							</p:selectCheckboxMenu>
+							<p:outputLabel for="desde" value="Hora Inicio" />
+							<p:autoComplete id="desde" dropdown="true"
+								value="#{altaPOIsMaskView.nodoServicioCreando.horaInicio}"
+								completeMethod="#{altaPOIsMaskView.completeText}" />
+							<p:outputLabel for="hasta" value="Hora Fin" />
+							<p:autoComplete id="hasta" dropdown="true"
+								value="#{altaPOIsMaskView.nodoServicioCreando.horaFin}"
+								completeMethod="#{altaPOIsMaskView.completeText}" />
+						</p:panelGrid>
+						<h:panelGrid columns="2" cellpadding="5">
+							<p:commandButton value="Agregar Servicio" update="Servicios"
+								onclick="servDialog.hide()" title="View" />
+							<p:commandButton value="Cancelar" update="Servicios"
+								onclick="servDialog.hide()" title="View" />
+						</h:panelGrid>
+
+					</p:outputPanel>
+				</p:dialog>
+
+				<p:dataTable id="Servicios" var="nodoServicio"
+					value="#{altaPOIsMaskView.servicios}">
+					<p:column headerText="Servicios">
+						<p:inputMask value="#{nodoServicio.nombre}" />
+					</p:column>
+					<p:column headerText="Dias">
+						<p:selectCheckboxMenu id="menu" value="#{nodoServicio.listaDias}"
+							label="Cities" filter="true" filterMatchMode="startsWith"
+							panelStyle="width:250px">
+							<f:selectItems value="#{altaPOIsMaskView.dias}" />
+						</p:selectCheckboxMenu>
+					</p:column>
+					<p:column headerText="Desde">
+						<p:autoComplete id="desde" dropdown="true"
+							value="#{nodoServicio.horaInicio}"
+							completeMethod="#{altaPOIsMaskView.completeText}" />
+					</p:column>
+					<p:column headerText="Hasta">
+						<p:autoComplete id="hasta" dropdown="true"
+							value="#{nodoServicio.horaFin}"
+							completeMethod="#{altaPOIsMaskView.completeText}" />
+					</p:column>
+				</p:dataTable>
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:commandButton value="Agregar Servicio"
+						oncomplete="PF('servDialog').show()" title="View" update="nuevoServicio" action="#{altaPOIsMaskView.listenerCrearServicio}">
+					</p:commandButton>	
+				</h:panelGrid>
+
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:commandButton value="Crear POI" update="panel"
 						action="#{altaPOIsMaskView.altaPOI}" />

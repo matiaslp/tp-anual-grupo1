@@ -84,6 +84,11 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmPOIs.altaPOIsMaskView</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>nodoServicio</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>

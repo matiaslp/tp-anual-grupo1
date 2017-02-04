@@ -2,16 +2,20 @@ package ar.edu.utn.dds.grupouno.frontend.abmPOIs;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
 import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
 import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
+import ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
@@ -38,10 +42,13 @@ public class altaPOIsMaskView {
 	 private String comuna;
 	 private String tipo;
 	 private TiposPOI tipoPOI = TiposPOI.BANCO;
-	 private String servicios;
+	 private List<NodoServicio> servicios = new ArrayList<NodoServicio>();
 	 private String etiquetas;
 	 private List<String> tipos = new ArrayList<String>();
+	 private List<String> dias = new ArrayList<String>();
 	 private String cercania;
+	 
+	 private List<SelectItem> diasSeleccionados = new ArrayList<SelectItem>();
 	  
 	 // BANCOS
 	 private String sucursal;
@@ -57,7 +64,7 @@ public class altaPOIsMaskView {
 	 // LOCALES
 	 private String rubro;
 	 
-
+	 private NodoServicio nodoServicioCreando = new NodoServicio();
 	 private POI_DTO poiDTO;
 	 
 	 @SuppressWarnings("unchecked")
@@ -66,6 +73,13 @@ public class altaPOIsMaskView {
 			tipos.add(TiposPOI.CGP.name());
 			tipos.add(TiposPOI.LOCAL_COMERCIAL.name());
 			tipos.add(TiposPOI.PARADA_COLECTIVO.name());
+	        dias.add("Domingo");
+	        dias.add("Lunes");
+	        dias.add("Martes");
+	        dias.add("Miercoles");
+	        dias.add("Jueves");
+	        dias.add("Viernes");
+	        dias.add("Sabado");  
 	 }
 	 
 	public String getNombre() {
@@ -188,12 +202,19 @@ public class altaPOIsMaskView {
 		this.tipo = tipo;
 	}
 
-	public String getServicios() {
+	
+
+	public List<NodoServicio> getServicios() {
 		return servicios;
 	}
 
-	public void setServicios(String servicios) {
+	public void setServicios(List<NodoServicio> servicios) {
 		this.servicios = servicios;
+	}
+	
+	public void agregarServicio(){
+		
+		servicios.add(new NodoServicio());
 	}
 
 	public String getEtiquetas() {
@@ -266,8 +287,21 @@ public class altaPOIsMaskView {
 		
 	}
 	
+	  public List<String> completeText(String query) {
+	        List<String> results = new ArrayList<String>();
+	        for(int i = 0; i <= 24; i++) {
+	            results.add(query + i);
+	        }
+	         
+	        return results;
+	    }
+	
 	public void listener() {
 		tipoPOI = TiposPOI.valueOf(tipo);
+	}
+	
+	public void listenerCrearServicio() {
+		nodoServicioCreando = new NodoServicio();
 	}
 
 	public String getProvincia() {
@@ -350,7 +384,40 @@ public class altaPOIsMaskView {
 
 	public void setRubro(String rubro) {
 		this.rubro = rubro;
-	}	
+	}
+
+	public List<String> getDias() {
+		return dias;
+	}
+
+	public void setDias(List<String> dias) {
+		this.dias = dias;
+	}
+
+	public List<SelectItem> getDiasSeleccionados() {
+		return diasSeleccionados;
+	}
+
+	public void setDiasSeleccionados(List<SelectItem> diasSeleccionados) {
+		this.diasSeleccionados = diasSeleccionados;
+	}
+
+	public NodoServicio getNodoServicioCreando() {
+		return nodoServicioCreando;
+	}
+
+	public void setNodoServicioCreando(NodoServicio nodoServicioCreando) {
+		this.nodoServicioCreando = nodoServicioCreando;
+	}
+
+//	public Set<Dias> getDias() {
+//		return dias;
+//	}
+//
+//	public void setDias(Set<Dias> dias) {
+//		this.dias = dias;
+//	}	
+	
 	
 	
 	
