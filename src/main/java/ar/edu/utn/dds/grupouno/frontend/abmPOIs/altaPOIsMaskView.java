@@ -14,6 +14,7 @@ import javax.faces.model.SelectItem;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
 import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
+import ar.edu.utn.dds.grupouno.abmc.poi.Etiqueta;
 import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
@@ -43,12 +44,17 @@ public class altaPOIsMaskView {
 	 private String tipo;
 	 private TiposPOI tipoPOI = TiposPOI.BANCO;
 	 private List<NodoServicio> servicios = new ArrayList<NodoServicio>();
+	 public List<Long> diasLocal = new ArrayList<Long>();
+	 public List<Long> horasLocal = new ArrayList<Long>();
 	 private String etiquetas;
 	 private List<String> tipos = new ArrayList<String>();
 	 private List<String> dias = new ArrayList<String>();
+	 private List<String> horas = new ArrayList<String>();
 	 private String cercania;
 	 
 	 private String[] diasSeleccionados;
+	 private String[] diasLocalSeleccionados;
+	 private String[] horasLocalSeleccionados;
 	  
 	 // BANCOS
 	 private String sucursal;
@@ -79,7 +85,9 @@ public class altaPOIsMaskView {
 	        dias.add("MIERCOLES");
 	        dias.add("JUEVES");
 	        dias.add("VIERNES");
-	        dias.add("SABADO");  
+	        dias.add("SABADO");
+	        for (int i = 0; i<= 24; i++)
+	        	horas.add(Integer.toString(i));
 	 }
 	 
 	public String getNombre() {
@@ -265,6 +273,11 @@ public class altaPOIsMaskView {
 		if (comuna != "")
 			poiDTO.setComuna(Integer.parseInt(this.getComuna()));
 		poiDTO.setTipo(TiposPOI.valueOf(tipo));
+		String[] filter = etiquetas.split("\\s+");
+		Etiqueta[] et = new Etiqueta[filter.length];
+		for (int i = 0; i > filter.length; i++)
+			et[i].setNombre(filter[0]);
+		poiDTO.setEtiquetas(et);
 		
 		
 		// Atributos particulares para distintos tipos de POIs
@@ -272,28 +285,31 @@ public class altaPOIsMaskView {
 			poiDTO.setDirector(director);
 			poiDTO.setTelefono(telefono);
 			poiDTO.setCercania(Integer.parseInt(cercania));
+			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
 		} else if (this.getTipoPOI().equals(TiposPOI.LOCAL_COMERCIAL)) {
 			Rubro nuevoRubro = new Rubro();
 			nuevoRubro.setNombre(rubro);
 			nuevoRubro.setCercania(Integer.parseInt(cercania));
 			poiDTO.setRubro(nuevoRubro);
+			for (String dia:diasLocalSeleccionados){
+				Dias diaEnum = Dias.valueOf(dia);
+				this.diasLocal.add((long) diaEnum.getValue());
+			}
+			for (String hora:horasLocalSeleccionados){
+				this.horasLocal.add(Long.parseLong(hora));
+			}
+			poiDTO.setDias((ArrayList<Long>) diasLocal);
+			poiDTO.setHoras((ArrayList<Long>) horasLocal);
 		} else if (this.getTipoPOI().equals(TiposPOI.BANCO)) {
 			poiDTO.setSucursal(sucursal);
 			poiDTO.setGerente(gerente);
 			poiDTO.setCercania(Integer.parseInt(cercania));
+			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
 		} else if (this.getTipoPOI().equals(TiposPOI.PARADA_COLECTIVO)) {
 			poiDTO.setLinea(Integer.parseInt(linea));
 			
 		}
 
-		/*poiDTO.setServicios(serv);
-		 private String servicios;
-		 private String etiquetas;*/
-		
-		// particularidaddes de subitipos por agregar
-		
-		
-		
 		POI nuevoPOI = poiDTO.converttoPOI();
 		Repositorio.getInstance().pois().agregarPOI((Banco)nuevoPOI);
 		
@@ -425,13 +441,47 @@ public class altaPOIsMaskView {
 		this.nodoServicioCreando = nodoServicioCreando;
 	}
 
-//	public Set<Dias> getDias() {
-//		return dias;
-//	}
-//
-//	public void setDias(Set<Dias> dias) {
-//		this.dias = dias;
-//	}	
+	public List<Long> getDiasLocal() {
+		return diasLocal;
+	}
+
+	public void setDiasLocal(List<Long> diasLocal) {
+		this.diasLocal = diasLocal;
+	}
+
+	public List<Long> getHorasLocal() {
+		return horasLocal;
+	}
+
+	public void setHorasLocal(List<Long> horasLocal) {
+		this.horasLocal = horasLocal;
+	}
+
+	public List<String> getHoras() {
+		return horas;
+	}
+
+	public void setHoras(List<String> horas) {
+		this.horas = horas;
+	}
+
+	public String[] getDiasLocalSeleccionados() {
+		return diasLocalSeleccionados;
+	}
+
+	public void setDiasLocalSeleccionados(String[] diasLocalSeleccionados) {
+		this.diasLocalSeleccionados = diasLocalSeleccionados;
+	}
+
+	public String[] getHorasLocalSeleccionados() {
+		return horasLocalSeleccionados;
+	}
+
+	public void setHorasLocalSeleccionados(String[] horasLocalSeleccionados) {
+		this.horasLocalSeleccionados = horasLocalSeleccionados;
+	}
+
+
 	
 	
 	

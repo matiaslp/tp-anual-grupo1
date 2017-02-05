@@ -56,15 +56,19 @@ public class POI_DTO {
 			((CGP)nuevoPOI).setDirector(director);
 			((CGP)nuevoPOI).setTelefono(telefono);
 			((CGP)nuevoPOI).setCecania(cercania);
+			((CGP)nuevoPOI).setServicios(servicios);
 		} else if (this.getTipo().equals(TiposPOI.LOCAL_COMERCIAL)) {
 			nuevoPOI = new LocalComercial(this.getNombre(), this.getLatitud(), this.getLongitud(), this.getRubro());
 			((LocalComercial)nuevoPOI).setRubro(rubro);
 			((LocalComercial)nuevoPOI).setCecania(cercania);
+			((LocalComercial)nuevoPOI).setDias(dias);
+			((LocalComercial)nuevoPOI).setHoras(horas);
 		} else if (this.getTipo().equals(TiposPOI.BANCO)) {
 			nuevoPOI = new Banco(this.getNombre(), this.getLatitud(), this.getLongitud());
 			((Banco)nuevoPOI).setSucursal(sucursal);
 			((Banco)nuevoPOI).setGerente(gerente);
 			((Banco)nuevoPOI).setCecania(cercania);
+			((Banco)nuevoPOI).setServicios(servicios);
 		} else if (this.getTipo().equals(TiposPOI.PARADA_COLECTIVO)) {
 			nuevoPOI = new ParadaColectivo(this.getNombre(), this.getLatitud(), this.getLongitud());
 			((ParadaColectivo)nuevoPOI).setLinea(linea);

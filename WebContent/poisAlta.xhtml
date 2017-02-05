@@ -112,26 +112,51 @@
 						rendered="#{!altaPOIsMaskView.tipoPOI.isParada()}" />
 					<p:inputMask id="cercania" value="#{altaPOIsMaskView.cercania}"
 						rendered="#{!altaPOIsMaskView.tipoPOI.isParada()}" />
+						
+					<p:outputLabel for="diasLocal" value="Dias Disponible" rendered="#{altaPOIsMaskView.tipoPOI.isLocal()}" />
+					<p:selectCheckboxMenu id="diasLocal"
+						value="#{altaPOIsMaskView.diasLocalSeleccionados}" label="Dias"
+						panelStyle="width:250px" rendered="#{altaPOIsMaskView.tipoPOI.isLocal()}">
+						<f:selectItems value="#{altaPOIsMaskView.dias}" />
+					</p:selectCheckboxMenu>
+					
+					<p:outputLabel for="horasLocal" value="Horario Disponible" rendered="#{altaPOIsMaskView.tipoPOI.isLocal()}" />
+					<p:selectCheckboxMenu id="horasLocal"
+						value="#{altaPOIsMaskView.horasLocalSeleccionados}" label="Horas"
+						panelStyle="width:250px" rendered="#{altaPOIsMaskView.tipoPOI.isLocal()}">
+						<f:selectItems value="#{altaPOIsMaskView.horas}" />
+					</p:selectCheckboxMenu>
+				
+				
 				</h:panelGrid>
+				
+				
 
 
 
 				<p:dataTable id="Servicios" var="nodoServicio"
-					value="#{altaPOIsMaskView.servicios}">
+					value="#{altaPOIsMaskView.servicios}" rendered="#{altaPOIsMaskView.tipoPOI.isCGP()||altaPOIsMaskView.tipoPOI.isBanco()}" >
 					<p:column headerText="Servicios">
 						<h:outputText value="#{nodoServicio.nombre}" />
 					</p:column>
 					<p:column headerText="Dias">
 						<p:commandButton id="botonDias" value="Dias" type="button" />
-    					<p:overlayPanel id="listaDias" for="botonDias" hideEffect="fade">
-       						<h:outputText value="Domingo&lt;br /&gt;" rendered="#{nodoServicio.isDomingo()}" escape="false" />
-       						<h:outputText value="Lunes&lt;br /&gt;" rendered="#{nodoServicio.isLunes()}" escape="false" />
-       						<h:outputText value="Martes&lt;br /&gt;" rendered="#{nodoServicio.isMartes()}" escape="false" />
-       						<h:outputText value="Miercoles&lt;br /&gt;" rendered="#{nodoServicio.isMiercoles()}" escape="false" />
-       						<h:outputText value="Jueves&lt;br /&gt;" rendered="#{nodoServicio.isJueves()}" escape="false" />
-       						<h:outputText value="Viernes&lt;br /&gt;" rendered="#{nodoServicio.isViernes()}" escape="false" />
-       						<h:outputText value="Sabado&lt;br /&gt;" rendered="#{nodoServicio.isSabado()}" escape="false" />
-    					</p:overlayPanel>
+						<p:overlayPanel id="listaDias" for="botonDias" hideEffect="fade">
+							<h:outputText value="Domingo&lt;br /&gt;"
+								rendered="#{nodoServicio.isDomingo()}" escape="false" />
+							<h:outputText value="Lunes&lt;br /&gt;"
+								rendered="#{nodoServicio.isLunes()}" escape="false" />
+							<h:outputText value="Martes&lt;br /&gt;"
+								rendered="#{nodoServicio.isMartes()}" escape="false" />
+							<h:outputText value="Miercoles&lt;br /&gt;"
+								rendered="#{nodoServicio.isMiercoles()}" escape="false" />
+							<h:outputText value="Jueves&lt;br /&gt;"
+								rendered="#{nodoServicio.isJueves()}" escape="false" />
+							<h:outputText value="Viernes&lt;br /&gt;"
+								rendered="#{nodoServicio.isViernes()}" escape="false" />
+							<h:outputText value="Sabado&lt;br /&gt;"
+								rendered="#{nodoServicio.isSabado()}" escape="false" />
+						</p:overlayPanel>
 					</p:column>
 					<p:column headerText="Desde">
 						<h:outputText value="#{nodoServicio.horaInicio}" />
@@ -140,19 +165,17 @@
 						<h:outputText value="#{nodoServicio.horaFin}" />
 					</p:column>
 					<p:column style="width:32px;text-align: center">
-                    <p:commandButton icon="ui-icon-trash"
-                        title="Borrar este servicio"
-                        actionListener="#{altaPOIsMaskView.removeServicio(nodoServicio)}"
-                        ajax="false"
-                        update="panel"
-                        immediate="true" />
-                	</p:column>
+						<p:commandButton icon="ui-icon-trash" title="Borrar este servicio"
+							actionListener="#{altaPOIsMaskView.removeServicio(nodoServicio)}"
+							ajax="false" update="panel" immediate="true" />
+					</p:column>
 				</p:dataTable>
-				
 
 
-				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Agregar Servicio" action="#{altaPOIsMaskView.listenerCrearServicio()}"
+
+				<h:panelGrid columns="2" cellpadding="5" rendered="#{altaPOIsMaskView.tipoPOI.isCGP()||altaPOIsMaskView.tipoPOI.isBanco()}">
+					<p:commandButton value="Agregar Servicio"
+						action="#{altaPOIsMaskView.listenerCrearServicio()}"
 						update=":formDialog:nuevoServicio"
 						oncomplete="PF('servDialog').show()" title="View">
 					</p:commandButton>
@@ -167,11 +190,12 @@
 				</h:panelGrid>
 
 			</p:panel>
-</h:form>
-						<p:dialog header="Nuevo Servicio" widgetVar="servDialog" modal="true"
-			showEffect="fade" hideEffect="fade" resizable="f" onShow="#{altaPOIsMaskView.listenerCrearServicio()}" >
-			<h:form id="formDialog" >
-				<p:outputPanel id="nuevoServicio" style="text-align:center;" >
+		</h:form>
+		<p:dialog header="Nuevo Servicio" widgetVar="servDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="f"
+			onShow="#{altaPOIsMaskView.listenerCrearServicio()}">
+			<h:form id="formDialog">
+				<p:outputPanel id="nuevoServicio" style="text-align:center;">
 					<p:panelGrid columns="2" cellpadding="5">
 						<p:outputLabel for="nombre" value="Nombre" />
 						<p:inputMask id="nombre"
@@ -192,20 +216,16 @@
 							completeMethod="#{altaPOIsMaskView.completeText}" />
 					</p:panelGrid>
 					<h:panelGrid columns="2" cellpadding="5">
-						<p:commandButton value="Agregar Servicio" action="#{altaPOIsMaskView.agregarServicio()}" 
-						update=":form:Servicios"
-							oncomplete="PF('servDialog').hide()" title="View" />
-							
+						<p:commandButton value="Agregar Servicio"
+							action="#{altaPOIsMaskView.agregarServicio()}"
+							update=":form:Servicios" oncomplete="PF('servDialog').hide()"
+							title="View" />
 						<p:commandButton value="Cancelar" update=":form:Servicios"
 							onclick="PF('servDialog').hide()" title="View" />
 					</h:panelGrid>
-
 				</p:outputPanel>
 			</h:form>
 		</p:dialog>
-		
-
-
 	</ui:define>
 </ui:composition>
 </html>
