@@ -27,7 +27,7 @@
 	<managed-bean>
 		<managed-bean-name>accionesDeConsultaBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.acciones.AccionesDeConsultaBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>busquedaBean</managed-bean-name>
@@ -67,11 +67,6 @@
 	<managed-bean>
 		<managed-bean-name>rol</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.autentification.Rol</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<managed-bean-name>accion</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.autentification.Accion</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>

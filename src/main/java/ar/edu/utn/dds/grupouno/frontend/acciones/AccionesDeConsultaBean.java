@@ -1,12 +1,15 @@
 package ar.edu.utn.dds.grupouno.frontend.acciones;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
@@ -15,7 +18,7 @@ import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean(name = "AccionesDeConsultaBean")
-@RequestScoped
+@SessionScoped
 public class AccionesDeConsultaBean {
 	private List<Accion> accionesParaSeleccionar = new ArrayList<Accion>();
 	private List<Accion> accionesSeleccionadas = new ArrayList<Accion>();
@@ -72,7 +75,19 @@ public class AccionesDeConsultaBean {
 	}
 
 	public void confirmar() {
-		usuario.setFuncionalidades((Set<Accion>) accionesSeleccionadas);
+		Iterator<Accion> iter = this.usuario.getFuncionalidades().iterator();
+		while(iter.hasNext()){
+			Accion unaAccion =iter.next();
+			if(!this.accionesSeleccionadas.contains(unaAccion)){
+				this.usuario.getFuncionalidades().remove(unaAccion);
+			}
+		}
+		
+		for(Accion otraAccion : this.accionesSeleccionadas){
+			if(!this.usuario.getFuncionalidades().contains(otraAccion)){
+				this.usuario.getFuncionalidades().add(otraAccion);
+			}
+		}
 		Repositorio.getInstance().usuarios().persistirUsuario(usuario);
 	}
 
@@ -84,19 +99,19 @@ public class AccionesDeConsultaBean {
 		return "cancel";
 	}
 
-	public void agregar(String nombre) {
-		
+	public void agregar() {
 		for(Accion unaAccion : accionesParaSeleccionar){
-			if(unaAccion.getNombreFuncion() == nombre){
+			if(unaAccion.getNombreFuncion().equals(this.accion) && !this.accionesSeleccionadas.contains(unaAccion)){
 				this.accionesSeleccionadas.add(unaAccion);
+				break;
 			}
 		}
-
 	}
 	
 	public void cargarUsuario(){
 		this.usuario = Repositorio.getInstance().usuarios().getUsuarioByName(this.getUsername());
 		Iterator<Accion> iterFunc = usuario.getFuncionalidades().iterator();
+		accionesSeleccionadas.clear();
 		while(iterFunc.hasNext()){
 			Accion unaAccion =iterFunc.next();
 			if( unaAccion != null){
