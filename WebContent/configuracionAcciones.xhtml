@@ -35,14 +35,14 @@
 				<p:separator />
 				<p:dataTable id="accionesSeleccionadas" var="Accion"
 					value="#{AccionesDeConsultaBean.accionesSeleccionadas}">
-					<p:column headerText="Acciones">
+					<p:column style="width:100px;text-align: center" headerText="Acciones">
 						<h:outputText value="#{Accion.nombre}" />
 					</p:column>
 					<p:column style="width:32px;text-align: center">
 						<p:commandButton value="Eliminar" update="accionesSeleccionadas"
 							actionListener="#{AccionesDeConsultaBean.eliminar}"
 							icon="ui-icon-check">
-							<f:param name="accionesElegidas" value="acciones"></f:param>
+							<f:param name="accionesElegidas" value="accion"></f:param>
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>

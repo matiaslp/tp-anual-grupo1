@@ -51,7 +51,7 @@
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>banco</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.db.poi.Banco</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.poi.Banco</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
