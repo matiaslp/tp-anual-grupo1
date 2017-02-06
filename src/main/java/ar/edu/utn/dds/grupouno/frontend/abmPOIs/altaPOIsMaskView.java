@@ -311,7 +311,7 @@ public class altaPOIsMaskView {
 		}
 
 		POI nuevoPOI = poiDTO.converttoPOI();
-		Repositorio.getInstance().pois().agregarPOI((Banco)nuevoPOI);
+		Repositorio.getInstance().pois().agregarPOI(nuevoPOI);
 		
 		
 	}
