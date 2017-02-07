@@ -24,6 +24,14 @@ public class AccionesDeConsultaBean {
 	private List<Accion> accionesSeleccionadas = new ArrayList<Accion>();
 	private List<String> nombresAcciones = new ArrayList<String>();
 	private Usuario usuario = null;
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	private String username = null;
 	private String accion = null;
 
@@ -32,16 +40,16 @@ public class AccionesDeConsultaBean {
 		//String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
 		//String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
 		//Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
-		
-		 for (Accion unaAccion:AuthAPI.getInstance().getAcciones()){
-			 accionesParaSeleccionar.add(unaAccion);
-		 }
-		 
-		 for (Accion unaAccion : accionesParaSeleccionar){
-			 nombresAcciones.add(unaAccion.getNombreFuncion());
-		 }
-    }
-	
+
+		for (Accion unaAccion:AuthAPI.getInstance().getAcciones()){
+			accionesParaSeleccionar.add(unaAccion);
+		}
+
+		for (Accion unaAccion : accionesParaSeleccionar){
+			nombresAcciones.add(unaAccion.getNombreFuncion());
+		}
+	}
+
 	public List<String> getNombresAcciones() {
 		return nombresAcciones;
 	}
@@ -49,7 +57,7 @@ public class AccionesDeConsultaBean {
 	public void setNombresAcciones(List<String> nombresAcciones) {
 		this.nombresAcciones = nombresAcciones;
 	}
-	
+
 	public List<Accion> getAccionesParaSeleccionar() {
 		return accionesParaSeleccionar;
 	}
@@ -76,19 +84,24 @@ public class AccionesDeConsultaBean {
 
 	public void confirmar() {
 		Iterator<Accion> iter = this.usuario.getFuncionalidades().iterator();
+		ArrayList<Accion> accionesAEliminar =new ArrayList<Accion>(); //no me lo deja eliminar mientras itera, por eso lo hice asi--Maxi.
 		while(iter.hasNext()){
-			Accion unaAccion =iter.next();
-			if(!this.accionesSeleccionadas.contains(unaAccion)){
-				this.usuario.getFuncionalidades().remove(unaAccion);
-			}
+				Accion unaAccion = iter.next();
+				if(unaAccion !=null && !this.accionesSeleccionadas.contains(unaAccion)){
+					accionesAEliminar.add(unaAccion);
+				}
 		}
 		
+		for(Accion accionAEliminar : accionesAEliminar){
+			this.usuario.getFuncionalidades().remove(accionAEliminar);
+		}
+
 		for(Accion otraAccion : this.accionesSeleccionadas){
 			if(!this.usuario.getFuncionalidades().contains(otraAccion)){
 				this.usuario.getFuncionalidades().add(otraAccion);
 			}
 		}
-		Repositorio.getInstance().usuarios().persistirUsuario(usuario);
+		Repositorio.getInstance().usuarios().persistirUsuario(this.usuario);
 	}
 
 	public void eliminar(Accion accion) {
@@ -101,16 +114,16 @@ public class AccionesDeConsultaBean {
 
 	public void agregar() {
 		for(Accion unaAccion : accionesParaSeleccionar){
-			if(unaAccion.getNombreFuncion().equals(this.accion) && !this.accionesSeleccionadas.contains(unaAccion)){
+			if(unaAccion.getNombreFuncion().equals(this.accion) && !this.accionesSeleccionadas.contains(unaAccion) && unaAccion.getRoles().contains(usuario.getRol())){
 				this.accionesSeleccionadas.add(unaAccion);
 				break;
 			}
 		}
 	}
-	
+
 	public void cargarUsuario(){
 		this.usuario = Repositorio.getInstance().usuarios().getUsuarioByName(this.getUsername());
-		Iterator<Accion> iterFunc = usuario.getFuncionalidades().iterator();
+		Iterator<Accion> iterFunc = this.usuario.getFuncionalidades().iterator();
 		accionesSeleccionadas.clear();
 		while(iterFunc.hasNext()){
 			Accion unaAccion =iterFunc.next();
@@ -127,5 +140,5 @@ public class AccionesDeConsultaBean {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 }

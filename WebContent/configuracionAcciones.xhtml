@@ -26,8 +26,7 @@
 						<f:selectItems value="#{AccionesDeConsultaBean.nombresAcciones}" />
 					</p:selectOneMenu>
 					<p:commandButton value="Agregar" update="accionesSeleccionadas"
-						action="#{AccionesDeConsultaBean.agregar()}"
-						icon="ui-icon-check">
+						action="#{AccionesDeConsultaBean.agregar()}" icon="ui-icon-check">
 					</p:commandButton>
 				</h:panelGrid>
 				<p:separator />
@@ -38,17 +37,17 @@
 						<h:outputText value="#{accion.nombre}" />
 					</p:column>
 					<p:column style="width:32px;text-align: center">
-						<p:commandButton value="Eliminar"
+						<p:commandButton value="Eliminar" update="accionesSeleccionadas"
 							action="#{AccionesDeConsultaBean.eliminar(accion)}"
-							icon="ui-icon-check" update="accionesSeleccionas" ajax="false">
+							icon="ui-icon-check">
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 				<p:separator />
-				<p:commandButton value="OK" update="panel"
-					action="#{accionesDeConsultaBean.confirmar}" icon="ui-icon-check" />
+				<p:commandButton value="OK"
+					action="#{AccionesDeConsultaBean.confirmar()}" icon="ui-icon-check"></p:commandButton>
 				<p:commandButton value="Cancelar" update="panel"
-					action="#{accionesDeConsultaBean.cancelar}" icon="ui-icon-check" />
+					action="#{AccionesDeConsultaBean.cancelar}" icon="ui-icon-check"></p:commandButton>
 			</p:panel>
 		</h:form>
 	</ui:define>

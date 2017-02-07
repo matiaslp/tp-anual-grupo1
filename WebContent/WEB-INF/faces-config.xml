@@ -27,7 +27,7 @@
 	<managed-bean>
 		<managed-bean-name>accionesDeConsultaBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.acciones.AccionesDeConsultaBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>busquedaBean</managed-bean-name>
