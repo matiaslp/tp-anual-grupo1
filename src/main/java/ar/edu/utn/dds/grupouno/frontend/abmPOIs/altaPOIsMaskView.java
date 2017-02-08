@@ -1,12 +1,10 @@
 package ar.edu.utn.dds.grupouno.frontend.abmPOIs;
 
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
@@ -245,12 +243,11 @@ public class altaPOIsMaskView {
 	public void setEtiquetas(String etiquetas) {
 		this.etiquetas = etiquetas;
 	}
-	
-	
+
 	public void altaPOI() {
 
-		poiDTO= new POI_DTO();
-		
+		poiDTO = new POI_DTO();
+
 		poiDTO.setNombre(this.getNombre());
 		poiDTO.setCallePrincipal(this.getCallePrinsipal());
 		poiDTO.setCalleLateral(this.getCalleLateral());
@@ -341,11 +338,9 @@ public class altaPOIsMaskView {
 		this.provincia = provincia;
 	}
 
-
 	public List<String> getTipos() {
 		return tipos;
 	}
-
 
 	public void setTipos(List<String> tipos) {
 		this.tipos = tipos;
@@ -480,10 +475,5 @@ public class altaPOIsMaskView {
 	public void setHorasLocalSeleccionados(String[] horasLocalSeleccionados) {
 		this.horasLocalSeleccionados = horasLocalSeleccionados;
 	}
-
-
-	
-	
-	
 	
 }

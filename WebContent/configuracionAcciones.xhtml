@@ -21,8 +21,7 @@
 						action="#{AccionesDeConsultaBean.cargarUsuario}"
 						icon="ui-icon-check">
 					</p:commandButton>
-					<p:selectOneMenu id="AccionSeleccionar"
-						value="#{AccionesDeConsultaBean.accion}" style="width:150px">
+					<p:selectOneMenu id="AccionSeleccionar" value="#{AccionesDeConsultaBean.accion}" style="width:150px">
 						<f:selectItems value="#{AccionesDeConsultaBean.nombresAcciones}" />
 					</p:selectOneMenu>
 					<p:commandButton value="Agregar" update="accionesSeleccionadas"

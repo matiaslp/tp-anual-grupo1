@@ -13,6 +13,47 @@
 		<h:form id="form">
 			<p:growl id="msgs" showDetail="true" />
 			<p:panel id="panel" header="Busqueda">
+				<p:outputPanel deferred="true">
+					<h3>Criterio de busqueda</h3>
+				</p:outputPanel>
+				<h:panelGrid columns="1" cellpadding="5">
+					<h:inputText value="#{historialBean.textBoxUsuario}" />
+					<p:commandButton value="Buscar" update="panel" icon="ui-icon-search" action="#{historialBean.buscar}" ajax="false"/>
+				</h:panelGrid>
+				
+				
+				<p:outputPanel deferred="true">
+					<h3>Resultados</h3>
+				</p:outputPanel>
+				<p:dataTable id="poiTable" var="RegistroHistorico"
+					value="#{historialBean.listaRH}" rows="10" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column headerText="FECHA">
+						<h:outputText value="#{RegistroHistorico.time}" />
+					</p:column>
+					<p:column headerText="UserID">
+						<h:outputText value="#{RegistroHistorico.userID}" />
+					</p:column>
+					<p:column headerText="Parametros">
+						<h:outputText value="#{RegistroHistorico.busqueda}" />
+					</p:column>
+					<p:column headerText="POIs">
+						<h:outputText value="#{RegistroHistorico.cantResultados}" />
+					</p:column>
+					<p:column headerText="POIs">
+						<p:dataTable id="detallePOIs" var="POI"
+							value="#{registroHistorico.pois}" rows="10" paginator="true">
+							<p:column headerText="Detalle POIs">
+								<h:outputText value="#{pOI.nombre}" />
+							</p:column>
+						</p:dataTable>
+					</p:column>
+				</p:dataTable>
+				<div style="padding-top: 15px;">
+					<p:commandButton value="Volver atràs" update="panel"
+						action="welcome" />
+				</div>
 			</p:panel>
 		</h:form>
 	</ui:define>

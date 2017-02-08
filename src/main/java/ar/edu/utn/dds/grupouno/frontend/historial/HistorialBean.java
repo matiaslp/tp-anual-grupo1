@@ -3,6 +3,7 @@ package ar.edu.utn.dds.grupouno.frontend.historial;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -18,6 +19,7 @@ import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 import ar.edu.utn.dds.grupouno.repositorio.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.repositorio.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean
@@ -28,8 +30,7 @@ public class HistorialBean {
 
 	String ServicioAPI = "http://trimatek.org/Consultas/";
 
-	Repositorio repositorio;
-
+	private Repositorio repositorio;
 	private String textBoxUsuario;
 	private DateTime textBoxFechaDesde;
 	private DateTime textBoxFechaHasta;
@@ -37,36 +38,28 @@ public class HistorialBean {
 	
 	public HistorialBean() {
 
-		RegistroHistorico unRegistroHistorico;
-		ArrayList<POI> listaDePOIs;
+		RegistroHistorico unRegistroHistorico, unRH, registroHistoricoRecuperado;
 		POI banco1, local1, banco2, local2;
-		DateTime fecha;
-		RegistroHistorico unRH;
-		POI_DTO local_dto, banco_dto;
-
-		RegistroHistorico registroHistoricoRecuperado;
-
+		ArrayList<POI> listaDePOIs = new ArrayList<POI>();
+		DateTime fecha = new DateTime(2016, 02, 02, 0, 0);
+		POI_DTO local_dto = new POI_DTO();
+		POI_DTO banco_dto = new POI_DTO();
 		repositorio = Repositorio.getInstance();
-		listaDePOIs = new ArrayList<POI>();
-		local_dto = new POI_DTO();
-		banco_dto = new POI_DTO();
-		fecha = new DateTime(2016, 02, 02, 0, 0);
-
+		
 		local_dto.setNombre("local1");
 		local_dto.setId((long) 11);
 		local_dto.setTipo(TiposPOI.LOCAL_COMERCIAL);
+		
 		banco_dto.setNombre("banco1");
 		banco_dto.setId((long) 22);
 		banco_dto.setTipo(TiposPOI.BANCO);
+		
 		local1 = local_dto.converttoPOI();
 		banco1 = banco_dto.converttoPOI();
 
 		listaDePOIs.add(local1);
 		listaDePOIs.add(banco1);
 
-		
-		//repositorio.pois().agregarPOI(local1);
-		//repositorio.pois().agregarPOI(banco1);
 		unRegistroHistorico = new RegistroHistorico(fecha, 1, "unaStringDeBusqueda", 2, 12, listaDePOIs);
 
 		listaRH.add(unRegistroHistorico);
@@ -132,21 +125,26 @@ public class HistorialBean {
 	
 	public void buscar() {
 		//TODO: BORRAR CUANDO FUNCIONE TODO
-		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
-		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
+//		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
+//		System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
 		System.out.println(this.getTextBoxUsuario());
 		 
-		listaRH.clear();
-		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("username"));
-		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-		Usuario usuario = repositorio.usuarios().getUsuarioByName(username);
+		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		DB_Usuarios usuarios = repositorio.usuarios();
+		
+		String username = ((String)sessionMap.get("username"));
+		String token = ((String) sessionMap.get("token"));
+		Usuario usuario = usuarios.getUsuarioByName(username);
+		
 		List<Object[]> listaResultados = new ArrayList<Object[]>();
+		
+		listaRH.clear();
+		
 		try {
 			//TODO: BORRAR CUANDO FUNCIONE TODO
 			// println para ver que recibe cada elemento
-			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
-			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
+//			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaDesde()));
+//			System.out.println(MetodosComunes.convertJodatoJava(this.getTextBoxFechaHasta()));
 			System.out.println(Long.parseLong(this.getTextBoxUsuario()));
 			
 			DB_HistorialBusquedas db_historial = repositorio.resultadosRegistrosHistoricos();
@@ -158,7 +156,7 @@ public class HistorialBean {
 			
 			if(!this.getTextBoxUsuario().isEmpty()){
 				Usuario usuarioBuscado = null;
-				if((usuarioBuscado = repositorio.usuarios().getUsuarioByName(this.getTextBoxUsuario())) != null){
+				if((usuarioBuscado = usuarios.getUsuarioByName(this.getTextBoxUsuario())) != null){
 					usuarioId = usuarioBuscado.getId();
 				}
 			}
