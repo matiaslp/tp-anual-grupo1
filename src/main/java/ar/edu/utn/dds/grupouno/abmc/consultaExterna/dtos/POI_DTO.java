@@ -337,14 +337,22 @@ public class POI_DTO {
 		return fechaBaja;
 	}
 
-	public void setLinea(int parseInt) {
-		// TODO Auto-generated method stub
-		
+	public int getLinea() {
+		return linea;
 	}
 
-	public void setCercania(int parseInt) {
-		// TODO Auto-generated method stub
-		
+	public void setLinea(int linea) {
+		this.linea = linea;
 	}
+
+	public int getCercania() {
+		return cercania;
+	}
+
+	public void setCercania(int cercania) {
+		this.cercania = cercania;
+	}
+
+
 
 }

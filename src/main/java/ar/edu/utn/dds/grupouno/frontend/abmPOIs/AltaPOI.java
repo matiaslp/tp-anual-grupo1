@@ -11,6 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.context.RequestContext;
+
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
 import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
@@ -25,7 +27,7 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
  
 @ManagedBean
 @ViewScoped
-public class altaPOIsMaskView {
+public class AltaPOI {
 	 private String nombre;
 	 private String callePrinsipal;
 	 private String calleLateral;
@@ -74,7 +76,7 @@ public class altaPOIsMaskView {
 	 private POI_DTO poiDTO;
 	 
 	 @SuppressWarnings("unchecked")
-	 public altaPOIsMaskView(){
+	 public AltaPOI(){
 			tipos.add(TiposPOI.BANCO.name());
 			tipos.add(TiposPOI.CGP.name());
 			tipos.add(TiposPOI.LOCAL_COMERCIAL.name());
@@ -311,7 +313,14 @@ public class altaPOIsMaskView {
 		}
 
 		POI nuevoPOI = poiDTO.converttoPOI();
-		Repositorio.getInstance().pois().agregarPOI((Banco)nuevoPOI);
+		if(Repositorio.getInstance().pois().agregarPOI(nuevoPOI)){	
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('poiCreadoDialog').show();");
+			reset();
+		} else {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('poiCreadoDialogError').show();");
+		}
 		
 		
 	}
@@ -480,6 +489,45 @@ public class altaPOIsMaskView {
 	public void setHorasLocalSeleccionados(String[] horasLocalSeleccionados) {
 		this.horasLocalSeleccionados = horasLocalSeleccionados;
 	}
+	
+	public void reset() {
+
+		this.nombre = "";
+		this.callePrinsipal = "";
+		this.calleLateral = "";
+		this.numeracion = "";
+		this.piso = "";
+		this.departamento = "";
+		this.unidad = "";
+		this.codigoPostal = "";
+		this.localidad = "";
+		this.barrio = "";
+		this.provincia = "";
+		this.pais = "";
+		this.latitud = "";
+		this.longitud = "";
+		this.comuna = "";
+		this.servicios.clear();
+		this.diasLocal.clear();
+		this.horasLocal.clear();
+		this.etiquetas = "";
+		this.horas.clear();
+		this.cercania = "";
+		this.diasSeleccionados = new String[0];;
+		this.diasLocalSeleccionados = new String[0];
+		this.horasLocalSeleccionados = new String[0];
+		this.sucursal = "";
+		this.gerente = "";
+		this.linea = "";
+		this.director = "";
+		this.telefono = "";
+		this.rubro = "";
+		this.nodoServicioCreando = new NodoServicio();
+		this.poiDTO = null;
+		RequestContext.getCurrentInstance().reset("form:panel");
+	}
+	
+	
 
 
 	
