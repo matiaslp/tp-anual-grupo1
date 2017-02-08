@@ -41,7 +41,6 @@ public class TestABMC_Alta {
 		poiDTOCGP.setNombre("unCGP");
 		poiDTOCGP.setLatitud(-34.5664823);
 		poiDTOCGP.setLongitud(-34.5664823);
-		poiDTOCGP.setRubro(rubro = new Rubro("unRubro"));
 		cgp = poiDTOCGP.converttoPOI();
 
 		poiDTOComercial = new POI_DTO();
@@ -49,6 +48,10 @@ public class TestABMC_Alta {
 		poiDTOComercial.setNombre("unLocalComercial");
 		poiDTOComercial.setLatitud(-34.5664823);
 		poiDTOComercial.setLongitud(-34.5664823);
+		Rubro rub = new Rubro();
+		rub.setNombre("Perfumeria");
+		rub.setCercania(1000);
+		poiDTOComercial.setRubro(rub);
 		local = poiDTOComercial.converttoPOI();
 
 		poiDTOColectivo = new POI_DTO();
@@ -89,13 +92,13 @@ public class TestABMC_Alta {
 		Assert.assertTrue(instancia.getPOIbyNombre(poiDTOColectivo.getNombre()).size() >= 1);
 	}
 
-	@After
-	public void outtro() {
-
-		repositorio.remove(banco);
-		repositorio.remove(cgp);
-		repositorio.remove(local);
-		repositorio.remove(parada);
-
-	}
+//	@After
+//	public void outtro() {
+//
+//		repositorio.remove(banco);
+//		repositorio.remove(cgp);
+//		repositorio.remove(local);
+//		repositorio.remove(parada);
+//
+//	}
 }

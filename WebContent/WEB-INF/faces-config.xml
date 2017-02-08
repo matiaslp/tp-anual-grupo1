@@ -27,7 +27,7 @@
 	<managed-bean>
 		<managed-bean-name>accionesDeConsultaBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.acciones.AccionesDeConsultaBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>busquedaBean</managed-bean-name>
@@ -51,12 +51,7 @@
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>banco</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.db.poi.Banco</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<managed-bean-name>nodoServicio</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.db.poi.NodoServicio</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.poi.Banco</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
@@ -75,14 +70,14 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>accion</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.autentification.Accion</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
 		<managed-bean-name>altaPOIsMaskView</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmPOIs.altaPOIsMaskView</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>nodoServicio</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<navigation-rule>
@@ -220,6 +215,24 @@
 		<navigation-case>
 			<from-outcome>configuracionAcciones</from-outcome>
 			<to-view-id>/configuracionAcciones.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>abmpois</from-outcome>
+			<to-view-id>/abmpois.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmpois.xhtml</display-name>
+		<from-view-id>/abmpois.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>poisAlta</from-outcome>
+			<to-view-id>/poisAlta.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
