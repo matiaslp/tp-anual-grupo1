@@ -1,16 +1,24 @@
 package ar.edu.utn.dds.grupouno.frontend.abmPOIs;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
+import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
+import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
+import ar.edu.utn.dds.grupouno.abmc.poi.Etiqueta;
+import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
@@ -65,6 +73,7 @@ public class AltaPOI {
 	private NodoServicio nodoServicioCreando = new NodoServicio();
 	private POI_DTO poiDTO;
 
+	@SuppressWarnings("unchecked")
 	public AltaPOI() {
 		tipos.add(TiposPOI.BANCO.name());
 		tipos.add(TiposPOI.CGP.name());
@@ -479,6 +488,7 @@ public class AltaPOI {
 	}
 
 	public void reset() {
+
 		this.nombre = "";
 		this.callePrinsipal = "";
 		this.calleLateral = "";
