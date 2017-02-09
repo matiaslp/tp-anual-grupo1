@@ -27,7 +27,7 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 @ViewScoped
 public class AltaPOI {
 	private String nombre;
-	private String callePrinsipal;
+	private String callePrincipal;
 	private String calleLateral;
 	private String numeracion;
 	private String piso;
@@ -98,12 +98,12 @@ public class AltaPOI {
 		this.nombre = nombre;
 	}
 
-	public String getCallePrinsipal() {
-		return callePrinsipal;
+	public String getCallePrincipal() {
+		return callePrincipal;
 	}
 
-	public void setCallePrinsipal(String callePrinsipal) {
-		this.callePrinsipal = callePrinsipal;
+	public void setCallePrincipal(String callePrinsipal) {
+		this.callePrincipal = callePrinsipal;
 	}
 
 	public String getCalleLateral() {
@@ -249,7 +249,7 @@ public class AltaPOI {
 		poiDTO = new POI_DTO();
 
 		poiDTO.setNombre(this.getNombre());
-		poiDTO.setCallePrincipal(this.getCallePrinsipal());
+		poiDTO.setCallePrincipal(this.getCallePrincipal());
 		poiDTO.setCalleLateral(this.getCalleLateral());
 		if (numeracion != "")
 			poiDTO.setNumeracion(Integer.parseInt(this.getNumeracion()));
@@ -490,7 +490,7 @@ public class AltaPOI {
 	public void reset() {
 
 		this.nombre = "";
-		this.callePrinsipal = "";
+		this.callePrincipal = "";
 		this.calleLateral = "";
 		this.numeracion = "";
 		this.piso = "";
