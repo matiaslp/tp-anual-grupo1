@@ -33,6 +33,10 @@ public enum TiposPOI {
     	return TiposPOI.PARADA_COLECTIVO.nombre.equals(nombre);
     }
     
+    public boolean isNotParada(){
+    	return !(this.isParada());
+    }
+    
     public boolean isLocal(){
     	return TiposPOI.LOCAL_COMERCIAL.nombre.equals(nombre);
     }

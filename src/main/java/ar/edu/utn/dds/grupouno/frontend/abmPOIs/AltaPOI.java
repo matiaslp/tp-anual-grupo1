@@ -1,93 +1,86 @@
 package ar.edu.utn.dds.grupouno.frontend.abmPOIs;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.SelectItem;
+
+import org.primefaces.context.RequestContext;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
-import ar.edu.utn.dds.grupouno.abmc.poi.Banco;
-import ar.edu.utn.dds.grupouno.abmc.poi.CGP;
-import ar.edu.utn.dds.grupouno.abmc.poi.Etiqueta;
-import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
-import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
- 
+
 @ManagedBean
 @ViewScoped
-public class altaPOIsMaskView {
-	 private String nombre;
-	 private String callePrinsipal;
-	 private String calleLateral;
-	 private String numeracion;
-	 private String piso;
-	 private String departamento;
-	 private String unidad;
-	 private String codigoPostal;
-	 private String localidad;
-	 private String barrio;
-	 private String provincia;
-	 private String pais;
-	 private String latitud;
-	 private String longitud;
-	 private String comuna;
-	 private String tipo;
-	 private TiposPOI tipoPOI = TiposPOI.BANCO;
-	 private List<NodoServicio> servicios = new ArrayList<NodoServicio>();
-	 public List<Long> diasLocal = new ArrayList<Long>();
-	 public List<Long> horasLocal = new ArrayList<Long>();
-	 private String etiquetas;
-	 private List<String> tipos = new ArrayList<String>();
-	 private List<String> dias = new ArrayList<String>();
-	 private List<String> horas = new ArrayList<String>();
-	 private String cercania;
-	 
-	 private String[] diasSeleccionados;
-	 private String[] diasLocalSeleccionados;
-	 private String[] horasLocalSeleccionados;
-	  
-	 // BANCOS
-	 private String sucursal;
-	 private String gerente;
-	 
-	 // PARADAS
-	 private String linea;
-	 
-	 // CGP
-	 private String director;
-	 private String telefono;
-	 
-	 // LOCALES
-	 private String rubro;
-	 
-	 private NodoServicio nodoServicioCreando = new NodoServicio();
-	 private POI_DTO poiDTO;
-	 
-	 @SuppressWarnings("unchecked")
-	 public altaPOIsMaskView(){
-			tipos.add(TiposPOI.BANCO.name());
-			tipos.add(TiposPOI.CGP.name());
-			tipos.add(TiposPOI.LOCAL_COMERCIAL.name());
-			tipos.add(TiposPOI.PARADA_COLECTIVO.name());
-	        dias.add("DOMINGO");
-	        dias.add("LUNES");
-	        dias.add("MARTES");
-	        dias.add("MIERCOLES");
-	        dias.add("JUEVES");
-	        dias.add("VIERNES");
-	        dias.add("SABADO");
-	        for (int i = 0; i<= 24; i++)
-	        	horas.add(Integer.toString(i));
-	 }
-	 
+public class AltaPOI {
+	private String nombre;
+	private String callePrinsipal;
+	private String calleLateral;
+	private String numeracion;
+	private String piso;
+	private String departamento;
+	private String unidad;
+	private String codigoPostal;
+	private String localidad;
+	private String barrio;
+	private String provincia;
+	private String pais;
+	private String latitud;
+	private String longitud;
+	private String comuna;
+	private String tipo;
+	private TiposPOI tipoPOI = TiposPOI.BANCO;
+	private List<NodoServicio> servicios = new ArrayList<NodoServicio>();
+	public List<Long> diasLocal = new ArrayList<Long>();
+	public List<Long> horasLocal = new ArrayList<Long>();
+	private String etiquetas;
+	private List<String> tipos = new ArrayList<String>();
+	private List<String> dias = new ArrayList<String>();
+	private List<String> horas = new ArrayList<String>();
+	private String cercania;
+
+	private String[] diasSeleccionados;
+	private String[] diasLocalSeleccionados;
+	private String[] horasLocalSeleccionados;
+
+	// BANCOS
+	private String sucursal;
+	private String gerente;
+
+	// PARADAS
+	private String linea;
+
+	// CGP
+	private String director;
+	private String telefono;
+
+	// LOCALES
+	private String rubro;
+
+	private NodoServicio nodoServicioCreando = new NodoServicio();
+	private POI_DTO poiDTO;
+
+	public AltaPOI() {
+		tipos.add(TiposPOI.BANCO.name());
+		tipos.add(TiposPOI.CGP.name());
+		tipos.add(TiposPOI.LOCAL_COMERCIAL.name());
+		tipos.add(TiposPOI.PARADA_COLECTIVO.name());
+		dias.add("DOMINGO");
+		dias.add("LUNES");
+		dias.add("MARTES");
+		dias.add("MIERCOLES");
+		dias.add("JUEVES");
+		dias.add("VIERNES");
+		dias.add("SABADO");
+		for (int i = 0; i <= 24; i++)
+			horas.add(Integer.toString(i));
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -208,8 +201,6 @@ public class altaPOIsMaskView {
 		this.tipo = tipo;
 	}
 
-	
-
 	public List<NodoServicio> getServicios() {
 		return servicios;
 	}
@@ -217,9 +208,9 @@ public class altaPOIsMaskView {
 	public void setServicios(List<NodoServicio> servicios) {
 		this.servicios = servicios;
 	}
-	
-	public void agregarServicio(){
-		for (String dia:diasSeleccionados){
+
+	public void agregarServicio() {
+		for (String dia : diasSeleccionados) {
 			Dias diaEnum = Dias.valueOf(dia);
 			this.nodoServicioCreando.agregarDia(diaEnum.getValue());
 		}
@@ -227,13 +218,13 @@ public class altaPOIsMaskView {
 		nodoServicioCreando = new NodoServicio();
 		this.diasSeleccionados = new String[0];
 	}
-	
+
 	public void removeServicio(NodoServicio servicio) {
-	    try {
-	    	servicios.remove(servicio);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		try {
+			servicios.remove(servicio);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getEtiquetas() {
@@ -252,7 +243,7 @@ public class altaPOIsMaskView {
 		poiDTO.setCallePrincipal(this.getCallePrinsipal());
 		poiDTO.setCalleLateral(this.getCalleLateral());
 		if (numeracion != "")
-			poiDTO.setNumeracion(Integer.parseInt( this.getNumeracion()));
+			poiDTO.setNumeracion(Integer.parseInt(this.getNumeracion()));
 		if (piso != "")
 			poiDTO.setPiso(Integer.parseInt(this.getPiso()));
 		poiDTO.setDepartamento(this.getDepartamento());
@@ -271,28 +262,33 @@ public class altaPOIsMaskView {
 			poiDTO.setComuna(Integer.parseInt(this.getComuna()));
 		poiDTO.setTipo(TiposPOI.valueOf(tipo));
 		String[] filter = etiquetas.split("\\s+");
-		Etiqueta[] et = new Etiqueta[filter.length];
-		for (int i = 0; i > filter.length; i++)
-			et[i].setNombre(filter[0]);
+		int prueba = filter.length;
+		String[] et = new String[filter.length];
+		int contador = 0;
+		for (String palabra : filter) {
+			et[contador] = palabra;
+			contador++;
+		}
 		poiDTO.setEtiquetas(et);
-		
-		
+
 		// Atributos particulares para distintos tipos de POIs
 		if (this.getTipoPOI().equals(TiposPOI.CGP)) {
 			poiDTO.setDirector(director);
 			poiDTO.setTelefono(telefono);
-			poiDTO.setCercania(Integer.parseInt(cercania));
+			if (cercania != "")
+				poiDTO.setCercania(Integer.parseInt(cercania));
 			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
 		} else if (this.getTipoPOI().equals(TiposPOI.LOCAL_COMERCIAL)) {
 			Rubro nuevoRubro = new Rubro();
 			nuevoRubro.setNombre(rubro);
-			nuevoRubro.setCercania(Integer.parseInt(cercania));
+			if (cercania != "")
+				nuevoRubro.setCercania(Integer.parseInt(cercania));
 			poiDTO.setRubro(nuevoRubro);
-			for (String dia:diasLocalSeleccionados){
+			for (String dia : diasLocalSeleccionados) {
 				Dias diaEnum = Dias.valueOf(dia);
 				this.diasLocal.add((long) diaEnum.getValue());
 			}
-			for (String hora:horasLocalSeleccionados){
+			for (String hora : horasLocalSeleccionados) {
 				this.horasLocal.add(Long.parseLong(hora));
 			}
 			poiDTO.setDias((ArrayList<Long>) diasLocal);
@@ -300,34 +296,42 @@ public class altaPOIsMaskView {
 		} else if (this.getTipoPOI().equals(TiposPOI.BANCO)) {
 			poiDTO.setSucursal(sucursal);
 			poiDTO.setGerente(gerente);
-			poiDTO.setCercania(Integer.parseInt(cercania));
+			if (cercania != "")
+				poiDTO.setCercania(Integer.parseInt(cercania));
 			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
 		} else if (this.getTipoPOI().equals(TiposPOI.PARADA_COLECTIVO)) {
-			poiDTO.setLinea(Integer.parseInt(linea));
-			
+			if (this.linea != "")
+				poiDTO.setLinea(Integer.parseInt(linea));
+
 		}
 
 		POI nuevoPOI = poiDTO.converttoPOI();
-		Repositorio.getInstance().pois().agregarPOI((Banco)nuevoPOI);
-		
-		
+		if (Repositorio.getInstance().pois().agregarPOI(nuevoPOI)) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('poiCreadoDialog').show();");
+			reset();
+		} else {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('poiCreadoDialogError').show();");
+		}
+
 	}
-	
-	  public List<String> completeText(String query) {
-	        List<String> results = new ArrayList<String>();
-	        for(int i = 0; i <= 24; i++) {
-	            results.add(query + i);
-	        }
-	         
-	        return results;
-	    }
-	
+
+	public List<String> completeText(String query) {
+		List<String> results = new ArrayList<String>();
+		for (int i = 0; i <= 24; i++) {
+			results.add(query + i);
+		}
+
+		return results;
+	}
+
 	public void listener() {
 		tipoPOI = TiposPOI.valueOf(tipo);
 	}
-	
+
 	public void listenerCrearServicio() {
-	//	nodoServicioCreando = new NodoServicio();
+		// nodoServicioCreando = new NodoServicio();
 	}
 
 	public String getProvincia() {
@@ -418,8 +422,6 @@ public class altaPOIsMaskView {
 		this.dias = dias;
 	}
 
-
-
 	public String[] getDiasSeleccionados() {
 		return diasSeleccionados;
 	}
@@ -475,5 +477,41 @@ public class altaPOIsMaskView {
 	public void setHorasLocalSeleccionados(String[] horasLocalSeleccionados) {
 		this.horasLocalSeleccionados = horasLocalSeleccionados;
 	}
-	
+
+	public void reset() {
+		this.nombre = "";
+		this.callePrinsipal = "";
+		this.calleLateral = "";
+		this.numeracion = "";
+		this.piso = "";
+		this.departamento = "";
+		this.unidad = "";
+		this.codigoPostal = "";
+		this.localidad = "";
+		this.barrio = "";
+		this.provincia = "";
+		this.pais = "";
+		this.latitud = "";
+		this.longitud = "";
+		this.comuna = "";
+		this.servicios.clear();
+		this.diasLocal.clear();
+		this.horasLocal.clear();
+		this.etiquetas = "";
+		this.horas.clear();
+		this.cercania = "";
+		this.diasSeleccionados = new String[0];
+		this.diasLocalSeleccionados = new String[0];
+		this.horasLocalSeleccionados = new String[0];
+		this.sucursal = "";
+		this.gerente = "";
+		this.linea = "";
+		this.director = "";
+		this.telefono = "";
+		this.rubro = "";
+		this.nodoServicioCreando = new NodoServicio();
+		this.poiDTO = null;
+		RequestContext.getCurrentInstance().reset("form:panel");
+	}
+
 }

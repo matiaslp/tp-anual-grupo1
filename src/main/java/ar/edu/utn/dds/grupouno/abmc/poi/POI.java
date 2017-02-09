@@ -281,9 +281,10 @@ public class POI extends PersistibleConNombre{
 
 	public void setEtiquetas(String nombres[]) {
 		this.etiquetas.clear();
-		for (int i = 0; i < nombres.length; i++) {
-			this.etiquetas.add(FlyweightFactoryEtiqueta.getInstance().getEtiqueta(nombres[i]));
-		}
+		if (nombres != null)
+			for (int i = 0; i < nombres.length; i++) {
+				this.etiquetas.add(FlyweightFactoryEtiqueta.getInstance().getEtiqueta(nombres[i]));
+			}
 	}
 	
 	public List<Etiqueta> getEtiquetasList(){

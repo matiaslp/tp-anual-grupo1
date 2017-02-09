@@ -12,6 +12,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
@@ -102,6 +104,8 @@ public class AccionesDeConsultaBean {
 			}
 		}
 		Repositorio.getInstance().usuarios().persistirUsuario(this.usuario);
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.execute("PF('funcionesAgregadas').show();");
 	}
 
 	public void eliminar(Accion accion) {
@@ -114,9 +118,15 @@ public class AccionesDeConsultaBean {
 
 	public void agregar() {
 		for(Accion unaAccion : accionesParaSeleccionar){
-			if(unaAccion.getNombreFuncion().equals(this.accion) && !this.accionesSeleccionadas.contains(unaAccion) && unaAccion.getRoles().contains(usuario.getRol())){
-				this.accionesSeleccionadas.add(unaAccion);
-				break;
+			if(unaAccion.getNombreFuncion().equals(this.accion) && !this.accionesSeleccionadas.contains(unaAccion)){
+				if(unaAccion.getRoles().contains(usuario.getRol())){
+					this.accionesSeleccionadas.add(unaAccion);
+					break;
+				}else{
+					RequestContext context = RequestContext.getCurrentInstance();
+					context.execute("PF('permisos').show();");
+					break;
+				}
 			}
 		}
 	}

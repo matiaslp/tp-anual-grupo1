@@ -26,8 +26,6 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 
 public class TestReportes {
-	private int DIEZ = 10;
-	
 	
 	private DB_HistorialBusquedas historial;
 	Usuario terminal;
@@ -154,11 +152,11 @@ public class TestReportes {
 		RepoMongo.getInstance().getDatastore()
 		.delete(RepoMongo.getInstance().getDatastore()
 				.createQuery(RegistroHistoricoMorphia.class));
-//		Repositorio.getInstance().remove(registro1);
-//		Repositorio.getInstance().remove(registro2);
-//		Repositorio.getInstance().remove(registro3);
-//		Repositorio.getInstance().remove(registro4);
-//		Repositorio.getInstance().remove(registro5);
+		Repositorio.getInstance().remove(registro1);
+		Repositorio.getInstance().remove(registro2);
+		Repositorio.getInstance().remove(registro3);
+		Repositorio.getInstance().remove(registro4);
+		Repositorio.getInstance().remove(registro5);
 		Repositorio.getInstance().remove(local1);
 		Repositorio.getInstance().remove(banco1);
 
