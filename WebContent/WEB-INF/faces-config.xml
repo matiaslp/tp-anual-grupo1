@@ -45,9 +45,9 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>historialBean</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.historial.HistorialBean</managed-bean-class>
-		<managed-bean-scope>application</managed-bean-scope>
+		<managed-bean-name>busquedaHistorialBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.historial.busquedaHistorialBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>banco</managed-bean-name>
