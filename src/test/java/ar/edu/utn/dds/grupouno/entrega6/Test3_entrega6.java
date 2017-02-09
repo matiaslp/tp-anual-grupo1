@@ -68,8 +68,10 @@ public class Test3_entrega6 {
 
 	}
 	
-	//Este dependiendo del estado de la cache es 3 o 18, por el orden en que se ejecutan los test
-	// y porque el servicio anda mal, si tiene cache es 3, sino 18 porque devuelve todo.
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	//Este dependiendo del estado de la cache es 3 o 18, por el orden en que se ejecutan los test  //
+	// y porque el servicio anda mal, si tiene cache es 3, sino 18 porque devuelve todo.           //
+	/////////////////////////////////////////////////////////////////////////////////////////////////
 	@Test
 	public void modificarPersistirRecuperarCoordenadas() {
 		// Realizamos una busqueda, la misma se persiste
