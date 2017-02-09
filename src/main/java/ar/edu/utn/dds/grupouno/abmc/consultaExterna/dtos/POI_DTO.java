@@ -37,7 +37,7 @@ public class POI_DTO {
 	double longitud;
 	Rubro rubro;
 	ArrayList<NodoServicio> servicios = new ArrayList<NodoServicio>();
-	Etiqueta[] etiquetas;
+	String[] etiquetas;
 	String telefono;
 	String director;
 	String zonas;
@@ -89,6 +89,7 @@ public class POI_DTO {
 		nuevoPOI.setTipo(tipo);
 		nuevoPOI.setFechaBaja(fechaBaja);
 		nuevoPOI.setEsLocal(false);
+		nuevoPOI.setEtiquetas(etiquetas);
 		return nuevoPOI;
 
 	}
@@ -245,11 +246,11 @@ public class POI_DTO {
 		this.rubro = rubro;
 	}
 
-	public Etiqueta[] getEtiquetas() {
+	public String[] getEtiquetas() {
 		return etiquetas;
 	}
 
-	public void setEtiquetas(Etiqueta[] etiquetas) {
+	public void setEtiquetas(String[] etiquetas) {
 		this.etiquetas = etiquetas;
 	}
 

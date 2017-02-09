@@ -92,13 +92,13 @@ public class TestABMC_Alta {
 		Assert.assertTrue(instancia.getPOIbyNombre(poiDTOColectivo.getNombre()).size() >= 1);
 	}
 
-//	@After
-//	public void outtro() {
-//
-//		repositorio.remove(banco);
-//		repositorio.remove(cgp);
-//		repositorio.remove(local);
-//		repositorio.remove(parada);
-//
-//	}
+	@After
+	public void outtro() {
+
+		repositorio.remove(banco);
+		repositorio.remove(cgp);
+		repositorio.remove(local);
+		repositorio.remove(parada);
+
+	}
 }

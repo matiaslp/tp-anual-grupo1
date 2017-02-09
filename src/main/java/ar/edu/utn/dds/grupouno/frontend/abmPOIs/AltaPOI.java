@@ -276,9 +276,13 @@ public class AltaPOI {
 			poiDTO.setComuna(Integer.parseInt(this.getComuna()));
 		poiDTO.setTipo(TiposPOI.valueOf(tipo));
 		String[] filter = etiquetas.split("\\s+");
-		Etiqueta[] et = new Etiqueta[filter.length];
-		for (int i = 0; i > filter.length; i++)
-			et[i].setNombre(filter[0]);
+		int prueba = filter.length;
+		String[] et = new String[filter.length];
+		int contador = 0;
+		for (String palabra : filter){
+			et[contador] = palabra;
+			contador++;
+		}
 		poiDTO.setEtiquetas(et);
 		
 		
@@ -286,12 +290,14 @@ public class AltaPOI {
 		if (this.getTipoPOI().equals(TiposPOI.CGP)) {
 			poiDTO.setDirector(director);
 			poiDTO.setTelefono(telefono);
-			poiDTO.setCercania(Integer.parseInt(cercania));
+			if( cercania != "")
+				poiDTO.setCercania(Integer.parseInt(cercania));
 			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
 		} else if (this.getTipoPOI().equals(TiposPOI.LOCAL_COMERCIAL)) {
 			Rubro nuevoRubro = new Rubro();
 			nuevoRubro.setNombre(rubro);
-			nuevoRubro.setCercania(Integer.parseInt(cercania));
+			if( cercania != "")
+				nuevoRubro.setCercania(Integer.parseInt(cercania));
 			poiDTO.setRubro(nuevoRubro);
 			for (String dia:diasLocalSeleccionados){
 				Dias diaEnum = Dias.valueOf(dia);
@@ -305,10 +311,12 @@ public class AltaPOI {
 		} else if (this.getTipoPOI().equals(TiposPOI.BANCO)) {
 			poiDTO.setSucursal(sucursal);
 			poiDTO.setGerente(gerente);
-			poiDTO.setCercania(Integer.parseInt(cercania));
+			if( cercania != "")
+				poiDTO.setCercania(Integer.parseInt(cercania));
 			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
 		} else if (this.getTipoPOI().equals(TiposPOI.PARADA_COLECTIVO)) {
-			poiDTO.setLinea(Integer.parseInt(linea));
+			if (this.linea != "")
+				poiDTO.setLinea(Integer.parseInt(linea));
 			
 		}
 
