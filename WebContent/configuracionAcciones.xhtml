@@ -50,6 +50,18 @@
 					action="#{AccionesDeConsultaBean.cancelar}" icon="ui-icon-check"></p:commandButton>
 			</p:panel>
 		</h:form>
+		<p:dialog header="Agregadas" widgetVar="funcionesAgregadas"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="accionesAgregadas">
+				<h:outputText value="Acciones Agregadas" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Permisos" widgetVar="permisos"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="permisos">
+				<h:outputText value="Este usuario no tiene permiso para usar esa accion... picarón" />
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>
