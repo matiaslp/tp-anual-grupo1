@@ -73,6 +73,8 @@ public class AltaPOI {
 	private NodoServicio nodoServicioCreando = new NodoServicio();
 	private POI_DTO poiDTO;
 
+	
+	// Se generan los String necesarios para mostrar como opciones en pantalla
 	@SuppressWarnings("unchecked")
 	public AltaPOI() {
 		tipos.add(TiposPOI.BANCO.name());
@@ -88,6 +90,163 @@ public class AltaPOI {
 		dias.add("SABADO");
 		for (int i = 0; i <= 24; i++)
 			horas.add(Integer.toString(i));
+		reset();
+	}
+
+	// Agregar un Servicio a la lista
+	public void agregarServicio() {
+		for (String dia : diasSeleccionados) {
+			Dias diaEnum = Dias.valueOf(dia);
+			this.nodoServicioCreando.agregarDia(diaEnum.getValue());
+		}
+		servicios.add(this.nodoServicioCreando);
+		nodoServicioCreando = new NodoServicio();
+		this.diasSeleccionados = new String[0];
+	}
+
+	// Eliminar servicio de la lista de servicios a crear junto con el POI
+	public void removeServicio(NodoServicio servicio) {
+		try {
+			servicios.remove(servicio);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void altaPOI() {
+
+		poiDTO = new POI_DTO();
+
+		poiDTO.setNombre(this.getNombre());
+		poiDTO.setCallePrincipal(this.getCallePrincipal());
+		poiDTO.setCalleLateral(this.getCalleLateral());
+		if (numeracion != "")
+			poiDTO.setNumeracion(Integer.parseInt(this.getNumeracion()));
+		if (piso != "")
+			poiDTO.setPiso(Integer.parseInt(this.getPiso()));
+		poiDTO.setDepartamento(this.getDepartamento());
+		poiDTO.setUnidad(this.getUnidad());
+		if (codigoPostal != "")
+			poiDTO.setCodigoPostal(Integer.parseInt(this.getCodigoPostal()));
+		poiDTO.setLocalidad(this.getLocalidad());
+		poiDTO.setBarrio(this.getBarrio());
+		poiDTO.setProvincia((this.getProvincia()));
+		poiDTO.setPais(this.getPais());
+		if (latitud != "")
+			poiDTO.setLatitud(Double.parseDouble(this.getLatitud()));
+		if (longitud != "")
+			poiDTO.setLongitud(Double.parseDouble(this.getLongitud()));
+		if (comuna != "")
+			poiDTO.setComuna(Integer.parseInt(this.getComuna()));
+		poiDTO.setTipo(TiposPOI.valueOf(tipo));
+		String[] filter = etiquetas.split("\\s+");
+		String[] et = new String[filter.length];
+		int contador = 0;
+		for (String palabra : filter) {
+			et[contador] = palabra;
+			contador++;
+		}
+		poiDTO.setEtiquetas(et);
+
+		// Atributos particulares para distintos tipos de POIs
+		if (this.getTipoPOI().equals(TiposPOI.CGP)) {
+			poiDTO.setDirector(director);
+			poiDTO.setTelefono(telefono);
+			if (cercania != "")
+				poiDTO.setCercania(Integer.parseInt(cercania));
+			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
+		} else if (this.getTipoPOI().equals(TiposPOI.LOCAL_COMERCIAL)) {
+			Rubro nuevoRubro = new Rubro();
+			nuevoRubro.setNombre(rubro);
+			if (cercania != "")
+				nuevoRubro.setCercania(Integer.parseInt(cercania));
+			poiDTO.setRubro(nuevoRubro);
+			for (String dia : diasLocalSeleccionados) {
+				Dias diaEnum = Dias.valueOf(dia);
+				this.diasLocal.add((long) diaEnum.getValue());
+			}
+			for (String hora : horasLocalSeleccionados) {
+				this.horasLocal.add(Long.parseLong(hora));
+			}
+			poiDTO.setDias((ArrayList<Long>) diasLocal);
+			poiDTO.setHoras((ArrayList<Long>) horasLocal);
+		} else if (this.getTipoPOI().equals(TiposPOI.BANCO)) {
+			poiDTO.setSucursal(sucursal);
+			poiDTO.setGerente(gerente);
+			if (cercania != "")
+				poiDTO.setCercania(Integer.parseInt(cercania));
+			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
+		} else if (this.getTipoPOI().equals(TiposPOI.PARADA_COLECTIVO)) {
+			if (this.linea != "")
+				poiDTO.setLinea(Integer.parseInt(linea));
+
+		}
+		
+		// Creacion de POI
+		POI nuevoPOI = poiDTO.converttoPOI();
+		
+		// Persistiendo POI
+		if (Repositorio.getInstance().pois().agregarPOI(nuevoPOI)) {
+			// Mensaje de POI Creado
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('poiCreadoDialog').show();");
+			reset();
+		} else {
+			// Mensaje de Error
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('poiCreadoDialogError').show();");
+		}
+
+	}
+
+	public List<String> completeText(String query) {
+		List<String> results = new ArrayList<String>();
+		for (int i = 0; i <= 24; i++) {
+			results.add(query + i);
+		}
+
+		return results;
+	}
+
+	public void reset() {
+
+		this.nombre = "";
+		this.callePrincipal = "";
+		this.calleLateral = "";
+		this.numeracion = "";
+		this.piso = "";
+		this.departamento = "";
+		this.unidad = "";
+		this.codigoPostal = "";
+		this.localidad = "";
+		this.barrio = "";
+		this.provincia = "";
+		this.pais = "";
+		this.latitud = "";
+		this.longitud = "";
+		this.comuna = "";
+		this.servicios.clear();
+		this.diasLocal.clear();
+		this.horasLocal.clear();
+		this.etiquetas = "";
+		this.horas.clear();
+		this.cercania = "";
+		this.diasSeleccionados = new String[0];
+		this.diasLocalSeleccionados = new String[0];
+		this.horasLocalSeleccionados = new String[0];
+		this.sucursal = "";
+		this.gerente = "";
+		this.linea = "";
+		this.director = "";
+		this.telefono = "";
+		this.rubro = "";
+		this.nodoServicioCreando = new NodoServicio();
+		this.poiDTO = null;
+		RequestContext.getCurrentInstance().reset("form:panel");
+	}
+
+	public void listener() {
+		tipoPOI = TiposPOI.valueOf(tipo);
 	}
 
 	public String getNombre() {
@@ -218,129 +377,12 @@ public class AltaPOI {
 		this.servicios = servicios;
 	}
 
-	public void agregarServicio() {
-		for (String dia : diasSeleccionados) {
-			Dias diaEnum = Dias.valueOf(dia);
-			this.nodoServicioCreando.agregarDia(diaEnum.getValue());
-		}
-		servicios.add(this.nodoServicioCreando);
-		nodoServicioCreando = new NodoServicio();
-		this.diasSeleccionados = new String[0];
-	}
-
-	public void removeServicio(NodoServicio servicio) {
-		try {
-			servicios.remove(servicio);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public String getEtiquetas() {
 		return etiquetas;
 	}
 
 	public void setEtiquetas(String etiquetas) {
 		this.etiquetas = etiquetas;
-	}
-
-	public void altaPOI() {
-
-		poiDTO = new POI_DTO();
-
-		poiDTO.setNombre(this.getNombre());
-		poiDTO.setCallePrincipal(this.getCallePrincipal());
-		poiDTO.setCalleLateral(this.getCalleLateral());
-		if (numeracion != "")
-			poiDTO.setNumeracion(Integer.parseInt(this.getNumeracion()));
-		if (piso != "")
-			poiDTO.setPiso(Integer.parseInt(this.getPiso()));
-		poiDTO.setDepartamento(this.getDepartamento());
-		poiDTO.setUnidad(this.getUnidad());
-		if (codigoPostal != "")
-			poiDTO.setCodigoPostal(Integer.parseInt(this.getCodigoPostal()));
-		poiDTO.setLocalidad(this.getLocalidad());
-		poiDTO.setBarrio(this.getBarrio());
-		poiDTO.setProvincia((this.getProvincia()));
-		poiDTO.setPais(this.getPais());
-		if (latitud != "")
-			poiDTO.setLatitud(Double.parseDouble(this.getLatitud()));
-		if (longitud != "")
-			poiDTO.setLongitud(Double.parseDouble(this.getLongitud()));
-		if (comuna != "")
-			poiDTO.setComuna(Integer.parseInt(this.getComuna()));
-		poiDTO.setTipo(TiposPOI.valueOf(tipo));
-		String[] filter = etiquetas.split("\\s+");
-		int prueba = filter.length;
-		String[] et = new String[filter.length];
-		int contador = 0;
-		for (String palabra : filter) {
-			et[contador] = palabra;
-			contador++;
-		}
-		poiDTO.setEtiquetas(et);
-
-		// Atributos particulares para distintos tipos de POIs
-		if (this.getTipoPOI().equals(TiposPOI.CGP)) {
-			poiDTO.setDirector(director);
-			poiDTO.setTelefono(telefono);
-			if (cercania != "")
-				poiDTO.setCercania(Integer.parseInt(cercania));
-			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
-		} else if (this.getTipoPOI().equals(TiposPOI.LOCAL_COMERCIAL)) {
-			Rubro nuevoRubro = new Rubro();
-			nuevoRubro.setNombre(rubro);
-			if (cercania != "")
-				nuevoRubro.setCercania(Integer.parseInt(cercania));
-			poiDTO.setRubro(nuevoRubro);
-			for (String dia : diasLocalSeleccionados) {
-				Dias diaEnum = Dias.valueOf(dia);
-				this.diasLocal.add((long) diaEnum.getValue());
-			}
-			for (String hora : horasLocalSeleccionados) {
-				this.horasLocal.add(Long.parseLong(hora));
-			}
-			poiDTO.setDias((ArrayList<Long>) diasLocal);
-			poiDTO.setHoras((ArrayList<Long>) horasLocal);
-		} else if (this.getTipoPOI().equals(TiposPOI.BANCO)) {
-			poiDTO.setSucursal(sucursal);
-			poiDTO.setGerente(gerente);
-			if (cercania != "")
-				poiDTO.setCercania(Integer.parseInt(cercania));
-			poiDTO.setServicios((ArrayList<NodoServicio>) servicios);
-		} else if (this.getTipoPOI().equals(TiposPOI.PARADA_COLECTIVO)) {
-			if (this.linea != "")
-				poiDTO.setLinea(Integer.parseInt(linea));
-
-		}
-
-		POI nuevoPOI = poiDTO.converttoPOI();
-		if (Repositorio.getInstance().pois().agregarPOI(nuevoPOI)) {
-			RequestContext context = RequestContext.getCurrentInstance();
-			context.execute("PF('poiCreadoDialog').show();");
-			reset();
-		} else {
-			RequestContext context = RequestContext.getCurrentInstance();
-			context.execute("PF('poiCreadoDialogError').show();");
-		}
-
-	}
-
-	public List<String> completeText(String query) {
-		List<String> results = new ArrayList<String>();
-		for (int i = 0; i <= 24; i++) {
-			results.add(query + i);
-		}
-
-		return results;
-	}
-
-	public void listener() {
-		tipoPOI = TiposPOI.valueOf(tipo);
-	}
-
-	public void listenerCrearServicio() {
-		// nodoServicioCreando = new NodoServicio();
 	}
 
 	public String getProvincia() {
@@ -485,43 +527,6 @@ public class AltaPOI {
 
 	public void setHorasLocalSeleccionados(String[] horasLocalSeleccionados) {
 		this.horasLocalSeleccionados = horasLocalSeleccionados;
-	}
-
-	public void reset() {
-
-		this.nombre = "";
-		this.callePrincipal = "";
-		this.calleLateral = "";
-		this.numeracion = "";
-		this.piso = "";
-		this.departamento = "";
-		this.unidad = "";
-		this.codigoPostal = "";
-		this.localidad = "";
-		this.barrio = "";
-		this.provincia = "";
-		this.pais = "";
-		this.latitud = "";
-		this.longitud = "";
-		this.comuna = "";
-		this.servicios.clear();
-		this.diasLocal.clear();
-		this.horasLocal.clear();
-		this.etiquetas = "";
-		this.horas.clear();
-		this.cercania = "";
-		this.diasSeleccionados = new String[0];
-		this.diasLocalSeleccionados = new String[0];
-		this.horasLocalSeleccionados = new String[0];
-		this.sucursal = "";
-		this.gerente = "";
-		this.linea = "";
-		this.director = "";
-		this.telefono = "";
-		this.rubro = "";
-		this.nodoServicioCreando = new NodoServicio();
-		this.poiDTO = null;
-		RequestContext.getCurrentInstance().reset("form:panel");
 	}
 
 }

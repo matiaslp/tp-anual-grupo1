@@ -79,6 +79,11 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>altaUsuario</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.AltaUsuario</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
@@ -233,6 +238,78 @@
 		<navigation-case>
 			<from-outcome>poisAlta</from-outcome>
 			<to-view-id>/poisAlta.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>abmusuarios</from-outcome>
+			<to-view-id>/abmusuarios.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmusuarios.xhtml</display-name>
+		<from-view-id>/abmusuarios.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>usuarioAlta</from-outcome>
+			<to-view-id>/usuarioAlta.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmpois.xhtml</display-name>
+		<from-view-id>/abmpois.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>poisBaja</from-outcome>
+			<to-view-id>/poisBaja.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmusuarios.xhtml</display-name>
+		<from-view-id>/abmusuarios.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>usuarioBaja</from-outcome>
+			<to-view-id>/usuarioBaja.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisAlta.xhtml</display-name>
+		<from-view-id>/poisAlta.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisBaja.xhtml</display-name>
+		<from-view-id>/poisBaja.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioAlta.xhtml</display-name>
+		<from-view-id>/usuarioAlta.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioBaja.xhtml</display-name>
+		<from-view-id>/usuarioBaja.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

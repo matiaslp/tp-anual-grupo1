@@ -168,7 +168,6 @@
 				<h:panelGrid columns="2" cellpadding="5"
 					rendered="#{altaPOI.tipoPOI.isCGP()||altaPOI.tipoPOI.isBanco()}">
 					<p:commandButton value="Agregar Servicio"
-						action="#{altaPOI.listenerCrearServicio()}"
 						update=":formDialog:nuevoServicio"
 						oncomplete="PF('servDialog').show()" title="View">
 					</p:commandButton>
@@ -178,15 +177,14 @@
 					<p:commandButton value="Crear POI" update="panel"
 						action="#{altaPOI.altaPOI}" />
 					<p:commandButton value="Volver atras" update="panel"
-						action="welcome" />
+						action="welcome" immediate="true"/>
 
 				</h:panelGrid>
 
 			</p:panel>
 		</h:form>
 		<p:dialog header="Nuevo Servicio" widgetVar="servDialog" modal="true"
-			showEffect="fade" hideEffect="fade" resizable="f"
-			onShow="#{altaPOI.listenerCrearServicio()}">
+			showEffect="fade" hideEffect="fade" resizable="f">
 			<h:form id="formDialog">
 				<p:outputPanel id="nuevoServicio" style="text-align:center;">
 					<p:panelGrid columns="2" cellpadding="5">
