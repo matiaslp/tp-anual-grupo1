@@ -15,11 +15,6 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>bajaPoisBean</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.BajaPOIsBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
 		<managed-bean-name>agregarAccionesBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.AgregarAccionesBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
@@ -85,8 +80,18 @@
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>configuracion1</managed-bean-name>
+		<managed-bean-name>configuracion</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.configuracion.Configuracion</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>bajaPOI</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.procesos.BajaPOIs</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>bajaUsuario</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.BajaUsuario</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
 
