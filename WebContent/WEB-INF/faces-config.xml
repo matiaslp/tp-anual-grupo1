@@ -84,6 +84,11 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.AltaUsuario</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>configuracion1</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.configuracion.Configuracion</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
@@ -316,6 +321,24 @@
 	<navigation-rule>
 		<display-name>processes.xhtml</display-name>
 		<from-view-id>/processes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>configuracion</from-outcome>
+			<to-view-id>/configuracion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>configuracion.xhtml</display-name>
+		<from-view-id>/configuracion.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>welcome</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
