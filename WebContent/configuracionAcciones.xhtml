@@ -10,7 +10,7 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:form>
+		<h:form id="form">
 			<p:panel id="panel" header="Acciones ante la busqueda"
 				style="margin-bottom:10px;">
 				<h:panelGrid columns="5" cellpadding="5">
@@ -21,38 +21,46 @@
 						action="#{AccionesDeConsultaBean.cargarUsuario}"
 						icon="ui-icon-check">
 					</p:commandButton>
-					<p:selectOneMenu id="AccionSeleccionar"
-						value="#{AccionesDeConsultaBean.accion}" style="width:150px">
+					<p:selectOneMenu id="AccionSeleccionar" value="#{AccionesDeConsultaBean.accion}" style="width:150px">
 						<f:selectItems value="#{AccionesDeConsultaBean.nombresAcciones}" />
 					</p:selectOneMenu>
 					<p:commandButton value="Agregar" update="accionesSeleccionadas"
-						actionListener="#{AccionesDeConsultaBean.agregar}"
-						icon="ui-icon-check">
-						<f:param name="accionElegida"
-							value="AccionesDeConsultaBean.accion"></f:param>
+						action="#{AccionesDeConsultaBean.agregar()}" icon="ui-icon-check">
 					</p:commandButton>
 				</h:panelGrid>
 				<p:separator />
-				<p:dataTable id="accionesSeleccionadas" var="Accion"
+				<p:dataTable id="accionesSeleccionadas" var="accion"
 					value="#{AccionesDeConsultaBean.accionesSeleccionadas}">
-					<p:column headerText="Acciones">
-						<h:outputText value="#{Accion.nombre}" />
+					<p:column style="width:100px;text-align: center"
+						headerText="Acciones">
+						<h:outputText value="#{accion.nombre}" />
 					</p:column>
 					<p:column style="width:32px;text-align: center">
 						<p:commandButton value="Eliminar" update="accionesSeleccionadas"
-							actionListener="#{AccionesDeConsultaBean.eliminar}"
+							action="#{AccionesDeConsultaBean.eliminar(accion)}"
 							icon="ui-icon-check">
-							<f:param name="accionesElegidas" value="acciones"></f:param>
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 				<p:separator />
-				<p:commandButton value="OK" update="panel"
-					action="#{accionesDeConsultaBean.confirmar}" icon="ui-icon-check" />
+				<p:commandButton value="OK"
+					action="#{AccionesDeConsultaBean.confirmar()}" icon="ui-icon-check"></p:commandButton>
 				<p:commandButton value="Cancelar" update="panel"
-					action="#{accionesDeConsultaBean.cancelar}" icon="ui-icon-check" />
+					action="#{AccionesDeConsultaBean.cancelar}" icon="ui-icon-check"></p:commandButton>
 			</p:panel>
 		</h:form>
+		<p:dialog header="Agregadas" widgetVar="funcionesAgregadas"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="accionesAgregadas">
+				<h:outputText value="Acciones Agregadas" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Permisos" widgetVar="permisos"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="permisos">
+				<h:outputText value="Este usuario no tiene permiso para usar esa accion... picarón" />
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

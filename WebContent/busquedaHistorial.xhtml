@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+			<h:form>
+				<p:panel id="panel" header="Busqueda de Historial">
+					<h:panelGrid columns="2" cellpadding="5">
+						<p:outputLabel>Usuario </p:outputLabel>
+						<p:inputText value="#{busquedaHistorialBean.usuario}"/>
+						<p:outputLabel>Desde </p:outputLabel>
+						<p:calendar value="#{busquedaHistorialBean.fechaDesde}" pattern="MM/dd/yyyy HH:mm:ss" />
+						<p:outputLabel>Hasta </p:outputLabel> 
+						<p:calendar value="#{busquedaHistorialBean.fechaHasta}" pattern="MM/dd/yyyy HH:mm:ss" />
+						
+						<p:commandButton value="Buscar" update="tblHistorial" icon="ui-icon-search" 
+							action="#{busquedaHistorialBean.buscar}"/>
+					</h:panelGrid>
+					
+					<p:dataTable id="tblHistorial" var="historial" value="#{busquedaHistorialBean.listaRH}" rows="10" 
+						paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="header">Resultados</f:facet>
+						<p:column headerText="Usuario">
+							<h:outputText value="historial.userID"/>
+						</p:column>
+						<p:column headerText="Fecha">
+							<h:outputText value="historial.time"/>
+						</p:column>
+						<p:column headerText="Parametros">
+							<h:outputText value="historial.busqueda"/>
+						</p:column>
+						<p:column headerText="Resultados">
+							<h:outputText value="historial.cantResultados"/>
+						</p:column>
+						<p:column headerText="Detalles">
+							<h:outputText value="historial.tiempoDeConsulta"/>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

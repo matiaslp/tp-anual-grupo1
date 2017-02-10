@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.frontend.abmPOIs;
+package ar.edu.utn.dds.grupouno.frontend.abmUsuarios;
 
 
 import javax.faces.bean.ManagedBean;
@@ -8,7 +8,7 @@ import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
  
 @ManagedBean
-public class bajaUsuariosMaskView {
+public class BajaUsuario {
 	 private String nombre;
 	
 
