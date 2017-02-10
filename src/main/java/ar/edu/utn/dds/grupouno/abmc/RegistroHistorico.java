@@ -55,7 +55,6 @@ public class RegistroHistorico extends Persistible {
 	}
 
 	public void setTime(DateTime time) {
-
 		this.time = MetodosComunes.convertJodatoJava(time);
 	}
 
