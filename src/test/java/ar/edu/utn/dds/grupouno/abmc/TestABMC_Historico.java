@@ -20,6 +20,7 @@ import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
 import ar.edu.utn.dds.grupouno.repositorio.RepoMongo;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
@@ -46,7 +47,7 @@ public class TestABMC_Historico {
 		banco.setPais("Argentina");
 		banco.setCallePrincipal("Alberdi");
 		banco.setCalleLateral("Escalada");
-		ServicioAPI = "http://trimatek.org/Consultas/";
+		ServicioAPI = LeerProperties.getInstance().prop.getProperty("Servicio_Externo");
 		historico = new Historico();
 
 		usuario = ufactory.crearUsuario("admin", "password", "ADMIN");

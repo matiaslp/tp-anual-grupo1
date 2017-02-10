@@ -19,6 +19,7 @@ import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean
@@ -29,13 +30,14 @@ public class BusquedaBean {
 
 	private List<resultadoBusquedaDTO> pois = new ArrayList<resultadoBusquedaDTO>();
 	private resultadoBusquedaDTO selectedPoi;
-	String ServicioAPI = "http://trimatek.org/Consultas/";
+	String ServicioAPI;
 
 	private List<Item> items;
 
 	public BusquedaBean() {
 		items = new ArrayList<Item>();
 		items.add(new Item());
+		ServicioAPI = LeerProperties.getInstance().prop.getProperty("Servicio_Externo");
 	}
 
 	public String getTextoLibre() {
