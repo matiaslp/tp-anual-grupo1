@@ -33,7 +33,6 @@ public class busquedaHistorialBean {
 	private RegistroHistorico rhSeleccionado;
 	
 	private List<RegistroHistorico> listaRH = new ArrayList<RegistroHistorico>();
-	private String ServicioAPI = "http://trimatek.org/Consultas/";
 	private DateFormat sdf = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss aaa");
 	
 	public void buscar(){
@@ -143,14 +142,6 @@ public class busquedaHistorialBean {
 
 	public void setListaRH(List<RegistroHistorico> listaRH) {
 		this.listaRH = listaRH;
-	}
-
-	public String getServicioAPI() {
-		return ServicioAPI;
-	}
-
-	public void setServicioAPI(String servicioAPI) {
-		ServicioAPI = servicioAPI;
 	}
 	
 	@SuppressWarnings({"unchecked", "unused"})
