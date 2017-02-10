@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
 import org.json.JSONException;
+import org.primefaces.context.RequestContext;
 
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.NodoServicioDTO;
@@ -76,8 +77,13 @@ public class BusquedaBean {
 			textoBuscar = new String();
 
 			for (Item unText : items) {
-				textoBuscar = textoBuscar + " " + unText.getValue();
-
+				if(unText.getValue().length()>0){
+					textoBuscar = textoBuscar + " " + unText.getValue();
+				}else{
+					RequestContext context = RequestContext.getCurrentInstance();
+					context.execute("PF('unCaracter').show();");
+					return;
+				}
 			}
 
 			lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());

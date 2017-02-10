@@ -26,19 +26,19 @@
 						paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 						<f:facet name="header">Resultados</f:facet>
 						<p:column headerText="Usuario">
-							<h:outputText value="historial.userID"/>
+							<h:outputText value="#{historial.userID}"/>
 						</p:column>
 						<p:column headerText="Fecha">
-							<h:outputText value="historial.time"/>
+							<h:outputText value="#{historial.time}"/>
 						</p:column>
 						<p:column headerText="Parametros">
-							<h:outputText value="historial.busqueda"/>
+							<h:outputText value="#{historial.busqueda}"/>
 						</p:column>
 						<p:column headerText="Resultados">
-							<h:outputText value="historial.cantResultados"/>
+							<h:outputText value="#{historial.cantResultados}"/>
 						</p:column>
 						<p:column headerText="Detalles">
-							<h:outputText value="historial.tiempoDeConsulta"/>
+							<h:outputText value="#{historial.tiempoDeConsulta}"/>
 						</p:column>
 					</p:dataTable>
 				</p:panel>

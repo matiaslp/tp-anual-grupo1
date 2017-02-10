@@ -67,12 +67,13 @@ public class TestABMC_Consulta {
 
 	}
 
-	@Test
-	public void testConsultaVacia() throws JSONException, MalformedURLException, IOException, MessagingException {
-		ArrayList<POI> lista = null;
-		lista = abmc.buscar(ServicioAPI, "", usuario.getId());
-		Assert.assertTrue(lista.isEmpty());
-	}
+	//Este test queda anulado ya que no se puede buscar por un string vacio
+//	@Test
+//	public void testConsultaVacia() throws JSONException, MalformedURLException, IOException, MessagingException {
+//		ArrayList<POI> lista = null;
+//		lista = abmc.buscar(ServicioAPI, "", usuario.getId());
+//		Assert.assertTrue(lista.isEmpty());
+//	}
 
 	@Test
 	public void testConsultaLocal() throws JSONException, MalformedURLException, IOException, MessagingException {

@@ -34,6 +34,12 @@
 						<p:commandButton value="Buscar" update="panel"
 							icon="ui-icon-search" action="#{busquedaBean.buscar}" />
 					</h:panelGrid>
+					<p:dialog header="No hay caracteres" widgetVar="unCaracter"
+						modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+						<h:form id="unCaracter">
+							<h:outputText value="Uno o mas valores son vacios, necesitas ingresar al menos 1 caracter" />
+						</h:form>
+					</p:dialog>
 
 
 				</h:panelGrid>
