@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.joda.time.DateTime;
@@ -21,7 +22,7 @@ import ar.edu.utn.dds.grupouno.repositorio.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class busquedaHistorialBean {
 
 	private String usuario;
