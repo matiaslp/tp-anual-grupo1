@@ -22,7 +22,7 @@ import ar.edu.utn.dds.grupouno.repositorio.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class busquedaHistorialBean {
 
 	private String usuario;

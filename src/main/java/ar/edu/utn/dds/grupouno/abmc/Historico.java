@@ -36,11 +36,11 @@ class Historico implements Busqueda {
 		Timer timer = new Timer();
 		ArrayList<POI> resultado = timer.buscar(url, texto, userID);
 		ArrayList<POI> resAPersistir = new ArrayList<POI>();
-//		for (POI poi : resultado) {
+		for (POI poi : resultado) {
 //			if (poi.isEsLocal()) {
-//				resAPersistir.add(poi);
+				resAPersistir.add(poi);
 //			}
-//		}
+		}
 
 		// Se evalua si el Timer tardo mas de los segundos estipulados por
 		// archivo de configuracion

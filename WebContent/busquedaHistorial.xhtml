@@ -39,7 +39,9 @@
 								<p:overlayPanel for="res" showEffect="blind" hideEffect="explode" showEvent="mouseover" 
 									hideEvent="mousedown" dismissable="true" showCloseIcon="true">
 									<p:dataTable id="tblResultados" var="poi" value="#{historial.pois}">
-						        		<h:outputText value="#{poi.nombre}"></h:outputText>
+										<p:column headerText="Fecha">
+						        			<h:outputText value="#{poi.nombre}"></h:outputText>
+						        		</p:column>
 						        	</p:dataTable>
 						    	</p:overlayPanel>
 							</h:outputLabel>

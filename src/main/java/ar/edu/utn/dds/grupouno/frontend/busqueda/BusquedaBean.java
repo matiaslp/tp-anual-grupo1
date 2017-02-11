@@ -25,7 +25,7 @@ import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class BusquedaBean {
 	private String textoLibre;
 	private String textoBuscar;
