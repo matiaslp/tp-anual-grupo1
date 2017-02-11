@@ -152,5 +152,8 @@ public class busquedaHistorialBean {
 		setUsuario("");
 		RequestContext.getCurrentInstance().reset("form:panel");
 	}
-
+	
+	public String username(String userID){
+		return Repositorio.getInstance().usuarios().getUsuarioById(Long.parseLong(userID)).getUsername();
+	}
 }
