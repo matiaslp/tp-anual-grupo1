@@ -2,14 +2,20 @@ package ar.edu.utn.dds.grupouno.autentification.funciones;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.persistence.Entity;
+
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.procesos.Proceso;
-import ar.edu.utn.dds.grupouno.procesos.ProcesoMultiple;
+
+import ar.edu.utn.dds.grupouno.quartz.NodoProceso;
+import ar.edu.utn.dds.grupouno.quartz.Proceso;
+import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
 @Entity
 public class FuncMultiple extends Accion {
 
@@ -24,11 +30,16 @@ public class FuncMultiple extends Accion {
 
 	}
 
-	public void procesoMultiple(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail,
-			ArrayList<Proceso> listProc) {
+	public void procesoMultiple(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail, Proceso proceso,
+			ArrayList<NodoProceso> listProc, String filePath) {
 		if (validarsesion(user, Token)) {
-			ProcesoMultiple proceso = new ProcesoMultiple(cantidadReintentos, enviarEmail, listProc, user);
-			proceso.execute();
+			try {
+				Scheduler scheduler = ProcesoHandler.ejecutarProceso(user, proceso, filePath, enviarEmail, cantidadReintentos, (List)listProc);
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SchedulerException
+					| InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
