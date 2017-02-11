@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
 import org.json.JSONException;
+import org.primefaces.context.RequestContext;
 
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.NodoServicioDTO;
@@ -74,14 +75,24 @@ public class BusquedaBean {
 		ArrayList<POI> lstPOI = null;
 		try {
 			textoBuscar = new String();
-
+			int fallo=0;
 			for (Item unText : items) {
-				textoBuscar = textoBuscar + " " + unText.getValue();
-
+				if(unText.getValue().length()>0){
+					if(textoBuscar.length()>0){
+						textoBuscar = textoBuscar + " " + unText.getValue();
+					}else{
+						textoBuscar = unText.getValue();
+					}
+				}else{
+					RequestContext context = RequestContext.getCurrentInstance();
+					context.execute("PF('unCaracter').show();");
+					fallo=1;
+					break;
+				}
 			}
-
-			lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());
-
+			if(fallo==0){
+				lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());
+			}
 		} catch (JSONException | IOException | MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,7 +100,6 @@ public class BusquedaBean {
 		if (lstPOI != null && lstPOI.size() > 0) {
 			pois = listToDTO(lstPOI);
 		}
-
 	}
 
 	private List<resultadoBusquedaDTO> listToDTO(ArrayList<POI> lstPOI) {

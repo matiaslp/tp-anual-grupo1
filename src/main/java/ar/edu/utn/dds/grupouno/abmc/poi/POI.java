@@ -64,7 +64,7 @@ public class POI extends PersistibleConNombre{
 	//@Fetch(FetchMode.JOIN)
 	@JoinTable(name = "POI_SERVICIO", joinColumns = { @JoinColumn(name = "poi_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "servicio_id") })
-	protected List<NodoServicio> servicios;
+	protected List<NodoServicio> servicios = new ArrayList<NodoServicio>();
 	// pueden ser varias y se crean a travez de FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@OrderColumn

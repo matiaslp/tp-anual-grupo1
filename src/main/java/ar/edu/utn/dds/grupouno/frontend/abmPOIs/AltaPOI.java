@@ -90,7 +90,6 @@ public class AltaPOI {
 		dias.add("SABADO");
 		for (int i = 0; i <= 24; i++)
 			horas.add(Integer.toString(i));
-		reset();
 	}
 
 	// Agregar un Servicio a la lista

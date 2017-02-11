@@ -24,7 +24,6 @@
 		<class>ar.edu.utn.dds.grupouno.db.poi.ParadaColectivo</class>
 		<class>ar.edu.utn.dds.grupouno.db.poi.Rubro</class>
 		<class>ar.edu.utn.dds.grupouno.geolocation.GeoLocation</class>
-		<class>ar.edu.utn.dds.grupouno.procesos.Proceso</class>
 		<class>ar.edu.utn.dds.grupouno.db.RegistroHistorico</class>
 		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncActualizacionLocalesComerciales</class>
 		<class>ar.edu.utn.dds.grupouno.autentification.funciones.FuncAgregarAcciones</class>
