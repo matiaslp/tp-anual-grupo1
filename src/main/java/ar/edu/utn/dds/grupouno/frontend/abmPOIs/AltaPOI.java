@@ -183,6 +183,7 @@ public class AltaPOI {
 		
 		// Creacion de POI
 		POI nuevoPOI = poiDTO.converttoPOI();
+		nuevoPOI.setEsLocal(true);
 		
 		// Persistiendo POI
 		if (Repositorio.getInstance().pois().agregarPOI(nuevoPOI)) {

@@ -121,17 +121,17 @@ public class POI extends PersistibleConNombre{
 	public String getDireccion() {
 		
 		String resultado = "";
-		if (!this.callePrincipal.isEmpty())
+		if (this.callePrincipal != null && !this.callePrincipal.isEmpty())
 			resultado = resultado + callePrincipal + " ";
 		if (this.numeracion > 0)
 			resultado = resultado + numeracion + " ";
 		if (this.piso > 0)
 			resultado = resultado + piso + "°" + " ";
-		if (!departamento.isEmpty())
+		if (this.departamento != null && !departamento.isEmpty())
 			resultado = resultado + departamento + " ";
-		if (!unidad.isEmpty())
+		if (this.unidad != null && !unidad.isEmpty())
 			resultado = resultado + unidad + " ";
-		if (!barrio.isEmpty())
+		if (this.barrio != null && !barrio.isEmpty())
 			resultado = resultado + barrio;
 		return resultado;
 	}
