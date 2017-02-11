@@ -37,7 +37,8 @@
 					<p:dialog header="No hay caracteres" widgetVar="unCaracter"
 						modal="true" showEffect="fade" hideEffect="fade" resizable="f">
 						<h:form id="unCaracter">
-							<h:outputText value="Uno o mas valores son vacios, necesitas ingresar al menos 1 caracter" />
+							<h:outputText
+								value="Uno o mas valores son vacios, necesitas ingresar al menos 1 caracter" />
 						</h:form>
 					</p:dialog>
 
@@ -70,8 +71,8 @@
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
-				<p:commandButton value="Volver atràs" update="panel"
-					action="welcome" />
+				<p:commandButton value="Volver atras" update="panel"
+					action="welcome" immediate="true" onclick="reset()" />
 				<p:dialog header="POI Info" widgetVar="poiDialog" modal="true"
 					showEffect="fade" hideEffect="fade" resizable="f">
 					<p:outputPanel id="poiDetail" style="text-align:center;">
@@ -142,6 +143,7 @@
 						</p:panelGrid>
 					</p:outputPanel>
 				</p:dialog>
+
 			</p:panel>
 		</h:form>
 	</ui:define>
