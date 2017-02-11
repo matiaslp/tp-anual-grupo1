@@ -182,10 +182,8 @@ public class DB_HistorialBusquedas extends Repositorio {
 		
 		if(userID != null){
 			query = query.filter("userID", userID);
-		} else {
-			return new ArrayList<Object[]>();
 		}
-		
+				
 		if (fechaDesde == null && fechaHasta == null) {
 			recuperado = query.asList();
 		} else if (fechaDesde == null) {

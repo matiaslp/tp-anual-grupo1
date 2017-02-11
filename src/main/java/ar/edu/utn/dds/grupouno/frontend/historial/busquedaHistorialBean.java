@@ -1,7 +1,6 @@
 package ar.edu.utn.dds.grupouno.frontend.historial;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,12 +26,11 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 public class busquedaHistorialBean {
 	
 	private String usuario;
-	private String fechaDesde;
-	private String fechaHasta;
+	private Date fechaDesde;
+	private Date fechaHasta;
 	private RegistroHistorico rhSeleccionado;
 	
 	private List<RegistroHistorico> listaRH = new ArrayList<RegistroHistorico>();
-	private DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy,HH:mm:ss aaa");
 	
 	public void buscar(){
 		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -58,13 +56,13 @@ public class busquedaHistorialBean {
 			Date fechaHasta = null;
 			
 			//valida el filtro por fecha desde
-			if(!this.getFechaDesde().isEmpty()){
-				fechaDesde = sdf.parse(this.getFechaDesde());
+			if(this.getFechaDesde() != null){
+				fechaDesde = this.getFechaDesde();
 			}
 
 			//valida el filtro por fecha hasta			
-			if(!this.getFechaHasta().isEmpty()){
-				fechaHasta = sdf.parse(this.getFechaHasta());
+			if(this.getFechaHasta() != null){
+				fechaHasta = this.getFechaHasta();
 			}
 			
 			//valida el filtro por usuario
@@ -90,9 +88,12 @@ public class busquedaHistorialBean {
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		} 
+//		catch (ParseException e) {
+//			e.printStackTrace();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public busquedaHistorialBean() {
@@ -107,21 +108,37 @@ public class busquedaHistorialBean {
 		this.usuario = usuario;
 	}
 
-	public String getFechaDesde() {
+	public Date getFechaDesde() {
 		return fechaDesde;
 	}
 
-	public void setFechaDesde(String fechaDesde) {
+	public void setFechaDesde(Date fechaDesde) {
 		this.fechaDesde = fechaDesde;
 	}
 
-	public String getFechaHasta() {
+	public Date getFechaHasta() {
 		return fechaHasta;
 	}
 
-	public void setFechaHasta(String fechaHasta) {
+	public void setFechaHasta(Date fechaHasta) {
 		this.fechaHasta = fechaHasta;
 	}
+	
+//	public ZonedDateTime getFechaDesde() {
+//		return fechaDesde;
+//	}
+//
+//	public void setFechaDesde(ZonedDateTime fechaDesde) {
+//		this.fechaDesde = fechaDesde;
+//	}
+//
+//	public ZonedDateTime getFechaHasta() {
+//		return fechaHasta;
+//	}
+//
+//	public void setFechaHasta(ZonedDateTime fechaHasta) {
+//		this.fechaHasta = fechaHasta;
+//	}
 
 	public RegistroHistorico getRhSeleccionado() {
 		return rhSeleccionado;

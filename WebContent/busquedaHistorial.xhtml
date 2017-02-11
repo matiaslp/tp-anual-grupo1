@@ -14,9 +14,9 @@
 						<p:outputLabel>Usuario </p:outputLabel>
 						<p:inputText value="#{busquedaHistorialBean.usuario}"/>
 						<p:outputLabel>Desde </p:outputLabel>
-						<p:calendar value="#{busquedaHistorialBean.fechaDesde}" pattern="MM/dd/yyyy HH:mm:ss" />
-						<p:outputLabel>Hasta </p:outputLabel> 
-						<p:calendar value="#{busquedaHistorialBean.fechaHasta}" pattern="MM/dd/yyyy HH:mm:ss" />
+						<p:calendar value="#{busquedaHistorialBean.fechaDesde}" pattern="dd/MM/yyyy"/>
+						<p:outputLabel>Hasta </p:outputLabel>
+						<p:calendar value="#{busquedaHistorialBean.fechaHasta}" pattern="dd/MM/yyyy"/>
 						
 						<p:commandButton value="Buscar" update="tblHistorial" icon="ui-icon-search" 
 							action="#{busquedaHistorialBean.buscar}"/>
