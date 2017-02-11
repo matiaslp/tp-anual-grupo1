@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.quartz;
+package ar.edu.utn.dds.grupouno.procesos;
 
 @SuppressWarnings("rawtypes")
 public class NodoProceso {

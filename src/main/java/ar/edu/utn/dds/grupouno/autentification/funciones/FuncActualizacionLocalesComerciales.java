@@ -19,9 +19,9 @@ import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.procesos.ActualizacionLocalesComerciales;
+import ar.edu.utn.dds.grupouno.procesos.ProcesoHandler;
+import ar.edu.utn.dds.grupouno.procesos.ProcesoListener;
 import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
-import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
-import ar.edu.utn.dds.grupouno.quartz.ProcesoListener;
 
 @SuppressWarnings("serial")
 @Entity

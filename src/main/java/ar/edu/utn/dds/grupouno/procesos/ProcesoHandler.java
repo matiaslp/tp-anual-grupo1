@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.quartz;
+package ar.edu.utn.dds.grupouno.procesos;
 
 import java.util.List;
 
@@ -14,7 +14,6 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.KeyMatcher;
 
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
 
 public class ProcesoHandler {
 	

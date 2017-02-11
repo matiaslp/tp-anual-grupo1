@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.quartz;
+package ar.edu.utn.dds.grupouno.procesos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,6 @@ import org.quartz.impl.matchers.KeyMatcher;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.email.EnviarEmail;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
-import ar.edu.utn.dds.grupouno.procesos.Resultado;
-import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 @SuppressWarnings("rawtypes")

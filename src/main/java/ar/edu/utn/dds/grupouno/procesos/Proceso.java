@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.grupouno.quartz;
+package ar.edu.utn.dds.grupouno.procesos;
 
 import org.quartz.Job;
 

@@ -12,10 +12,9 @@ import org.quartz.SchedulerException;
 import ar.edu.utn.dds.grupouno.autentification.Accion;
 import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-
-import ar.edu.utn.dds.grupouno.quartz.NodoProceso;
-import ar.edu.utn.dds.grupouno.quartz.Proceso;
-import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
+import ar.edu.utn.dds.grupouno.procesos.NodoProceso;
+import ar.edu.utn.dds.grupouno.procesos.Proceso;
+import ar.edu.utn.dds.grupouno.procesos.ProcesoHandler;
 @Entity
 public class FuncMultiple extends Accion {
 

@@ -14,7 +14,6 @@ import org.quartz.SchedulerException;
 
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.quartz.Proceso;
 import ar.edu.utn.dds.grupouno.repositorio.DB_AgregarAccionesTransaction;
 import ar.edu.utn.dds.grupouno.repositorio.DB_Usuarios;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
