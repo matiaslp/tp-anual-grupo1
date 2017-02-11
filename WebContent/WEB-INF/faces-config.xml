@@ -94,6 +94,11 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.BajaUsuario</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>bajaPoisBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.BajaPOIsBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
