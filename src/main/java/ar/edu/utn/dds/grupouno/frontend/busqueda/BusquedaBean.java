@@ -75,19 +75,24 @@ public class BusquedaBean {
 		ArrayList<POI> lstPOI = null;
 		try {
 			textoBuscar = new String();
-
+			int fallo=0;
 			for (Item unText : items) {
 				if(unText.getValue().length()>0){
-					textoBuscar = textoBuscar + " " + unText.getValue();
+					if(textoBuscar.length()>0){
+						textoBuscar = textoBuscar + " " + unText.getValue();
+					}else{
+						textoBuscar = unText.getValue();
+					}
 				}else{
 					RequestContext context = RequestContext.getCurrentInstance();
 					context.execute("PF('unCaracter').show();");
-					return;
+					fallo=1;
+					break;
 				}
 			}
-
-			lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());
-
+			if(fallo==0){
+				lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());
+			}
 		} catch (JSONException | IOException | MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,7 +100,6 @@ public class BusquedaBean {
 		if (lstPOI != null && lstPOI.size() > 0) {
 			pois = listToDTO(lstPOI);
 		}
-
 	}
 
 	private List<resultadoBusquedaDTO> listToDTO(ArrayList<POI> lstPOI) {
