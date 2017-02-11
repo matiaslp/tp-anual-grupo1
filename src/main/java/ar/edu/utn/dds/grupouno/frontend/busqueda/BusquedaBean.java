@@ -75,22 +75,22 @@ public class BusquedaBean {
 		ArrayList<POI> lstPOI = null;
 		try {
 			textoBuscar = new String();
-			int fallo=0;
+			int fallo = 0;
 			for (Item unText : items) {
-				if(unText.getValue().length()>0){
-					if(textoBuscar.length()>0){
+				if (unText.getValue().length() > 0) {
+					if (textoBuscar.length() > 0) {
 						textoBuscar = textoBuscar + " " + unText.getValue();
-					}else{
+					} else {
 						textoBuscar = unText.getValue();
 					}
-				}else{
+				} else {
 					RequestContext context = RequestContext.getCurrentInstance();
 					context.execute("PF('unCaracter').show();");
-					fallo=1;
+					fallo = 1;
 					break;
 				}
 			}
-			if(fallo==0){
+			if (fallo == 0) {
 				lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());
 			}
 		} catch (JSONException | IOException | MessagingException e) {
@@ -128,10 +128,9 @@ public class BusquedaBean {
 			if (point.getDireccion() == null) {
 				resultado.setDireccion(point.getBarrio());
 			} else {
-				resultado.setDireccion( point.getDireccion()+ ", " +point.getBarrio());
+				resultado.setDireccion(point.getDireccion() + ", " + point.getBarrio());
 			}
 		}
-
 
 		if (point.getNombre() != null) {
 			resultado.setNombre(point.getNombre());
@@ -172,5 +171,13 @@ public class BusquedaBean {
 
 	public void setItems(List<Item> pois) {
 		this.items = pois;
+	}
+
+	public void reset() {
+		textoLibre = "";
+		textoBuscar = "";
+		pois.clear();
+		selectedPoi = null;
+		items = new ArrayList<Item>();
 	}
 }
