@@ -99,6 +99,11 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.BajaPOIsBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>registroHistorico</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.RegistroHistorico</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>

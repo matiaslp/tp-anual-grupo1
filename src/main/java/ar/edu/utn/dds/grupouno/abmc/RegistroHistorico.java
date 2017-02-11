@@ -49,6 +49,18 @@ public class RegistroHistorico extends Persistible {
 			@JoinColumn(name = "poi_id") })
 	private List<POI> pois = new ArrayList<POI>();
 
+	public List<POI> getPois() {
+		return pois;
+	}
+
+	public void setPois(List<POI> pois) {
+		this.pois = pois;
+	}
+
+	public void setTime(ZonedDateTime time) {
+		this.time = time;
+	}
+
 	public DateTime getTime() {
 
 		return MetodosComunes.convertJavatoJoda(this.time);

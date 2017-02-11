@@ -25,23 +25,27 @@
 					<p:dataTable id="tblHistorial" var="historial" value="#{busquedaHistorialBean.listaRH}" rows="10" 
 						paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 						<f:facet name="header">Resultados</f:facet>
-						<p:column headerText="Usuario">
-							<h:outputText value="#{historial.userID}"/>
-						</p:column>
 						<p:column headerText="Fecha">
 							<h:outputText value="#{historial.time}"/>
+						</p:column>
+						<p:column headerText="Usuario">
+							<h:outputText value="#{historial.userID}"/>
 						</p:column>
 						<p:column headerText="Parametros">
 							<h:outputText value="#{historial.busqueda}"/>
 						</p:column>
 						<p:column headerText="Resultados">
-							<h:outputText value="#{historial.cantResultados}"/>
-						</p:column>
-						<p:column headerText="Detalles">
-							<h:outputText value="#{historial.tiempoDeConsulta}"/>
+							<h:outputLabel id="res" value="#{historial.cantResultados}">
+								<p:overlayPanel for="res" showEffect="blind" hideEffect="explode" showEvent="mouseover" 
+									hideEvent="mousedown" dismissable="true" showCloseIcon="true">
+									<p:dataTable id="tblResultados" var="poi" value="#{historial.pois}">
+						        		<h:outputText value="#{poi.nombre}"></h:outputText>
+						        	</p:dataTable>
+						    	</p:overlayPanel>
+							</h:outputLabel>
 						</p:column>
 					</p:dataTable>
-				<p:commandButton value="Volver atras" update="panel" action="welcome" immediate="true" onclick="reset()"/>
+					<p:commandButton value="Volver atras" update="panel" action="welcome" immediate="true" onclick="reset()"/>
 				</p:panel>
 			</h:form>
 		</ui:define>
