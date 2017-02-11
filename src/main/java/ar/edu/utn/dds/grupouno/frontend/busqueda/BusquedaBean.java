@@ -117,21 +117,7 @@ public class BusquedaBean {
 		resultadoBusquedaDTO resultado = new resultadoBusquedaDTO();
 
 		resultado.setTipo(point.getTipo());
-
-		if (point.getBarrio() == null) {
-			if (point.getDireccion() == null) {
-				resultado.setDireccion(null);
-			} else {
-				resultado.setDireccion(point.getDireccion());
-			}
-		} else {
-			if (point.getDireccion() == null) {
-				resultado.setDireccion(point.getBarrio());
-			} else {
-				resultado.setDireccion(point.getDireccion() + ", " + point.getBarrio());
-			}
-		}
-
+		resultado.setDireccion(point.getDireccion());
 		if (point.getNombre() != null) {
 			resultado.setNombre(point.getNombre());
 		}
