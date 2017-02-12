@@ -120,9 +120,9 @@ public class CGP extends POI {
 			return true;
 
 		for (String filtro : filtros) {
-			if (LevDist.calcularDistancia(filtro, this.director)) {
+			if (this.director != null && compararAtributo(filtro, this.director)) {
 				return true;
-			} else if (LevDist.calcularDistancia(filtro, this.telefono)) {
+			} else if (this.telefono != null && compararAtributo(filtro, this.telefono)) {
 				return true;
 			} else {
 				this.buscarServicios(filtro);

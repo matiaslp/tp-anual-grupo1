@@ -119,9 +119,9 @@ public class Banco extends POI {
 		}
 
 		for (String filtro : filtros) {
-			if (LevDist.calcularDistancia(filtro, this.sucursal)) {
+			if (this.sucursal != null && compararAtributo(filtro, this.sucursal)) {
 				return true;
-			} else if (LevDist.calcularDistancia(filtro, this.gerente)) {
+			} else if (this.gerente != null && compararAtributo(filtro, this.gerente)) {
 				return true;
 			} else {
 				this.buscarServicios(filtro);
