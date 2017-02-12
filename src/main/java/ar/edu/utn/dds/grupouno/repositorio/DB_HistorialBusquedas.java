@@ -60,7 +60,7 @@ public class DB_HistorialBusquedas extends Repositorio {
 		RegistroHistoricoMorphia registroMorphia = new RegistroHistoricoMorphia();
 		registroMorphia.setBusqueda(nuevoRegistroHistorico.getBusqueda());
 		registroMorphia.setCantResultados(nuevoRegistroHistorico.getCantResultados());
-		registroMorphia.setPois(nuevoRegistroHistorico.getListaDePOIs());
+	//	registroMorphia.setPois(nuevoRegistroHistorico.getListaDePOIs());
 		registroMorphia.setTiempoDeConsulta(nuevoRegistroHistorico.getTiempoDeConsulta());
 		registroMorphia.setUserID(nuevoRegistroHistorico.getUserID());
 		registroMorphia.setTime(MetodosComunes.convertJodatoJava(nuevoRegistroHistorico.getTime()));

@@ -377,7 +377,8 @@ public class POI extends PersistibleConNombre{
 					return true;
 				else if (comuna == valor)
 					return true;
-			} else if (LevDist.calcularDistancia(filtro, this.nombre))
+			}
+			if (LevDist.calcularDistancia(filtro, this.nombre))
 				return true;
 			else if (LevDist.calcularDistancia(filtro, this.callePrincipal))
 				return true;
