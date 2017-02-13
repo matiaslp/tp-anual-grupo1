@@ -36,7 +36,7 @@
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>poi</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.PoiService</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.poi.POI</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
@@ -107,6 +107,11 @@
 	<managed-bean>
 		<managed-bean-name>datoHistoricoPOIMorphia</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.DatoHistoricoPOIMorphia</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>item</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.Item</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 

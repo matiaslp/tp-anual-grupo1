@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.grupouno.frontend.historial;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -147,10 +148,17 @@ public class busquedaHistorialBean {
 	}
 
 	public void reset() {
+		listaRH.clear();
 		setFechaHasta(null);
 		setFechaDesde(null);
 		setUsuario("");
 		RequestContext.getCurrentInstance().reset("form:panel");
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/tp-anual/faces/welcome.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String username(String userID){

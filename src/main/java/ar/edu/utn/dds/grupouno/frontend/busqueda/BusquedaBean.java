@@ -155,6 +155,11 @@ public class BusquedaBean {
 		items.add(new Item());
 
 	}
+	
+	public void remove(Item it){
+		if (items.size() > 1)
+			items.remove(it);
+	}
 
 	public List<Item> getItems() {
 		return items;
@@ -170,5 +175,15 @@ public class BusquedaBean {
 		pois.clear();
 		selectedPoi = null;
 		items = new ArrayList<Item>();
+		items.add(new Item());
+		RequestContext.getCurrentInstance().reset("form:panel");
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/tp-anual/faces/welcome.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	
+	
 }
