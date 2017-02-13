@@ -16,7 +16,7 @@
 					
 					<p:commandButton value="Buscar POIs" rendered="#{menuBean.isFuncionalidad('busquedaPOI')}" style="width:100%" update="panel"
 						action="busqueda" />
-					<p:commandButton value="Procesos"  style="width:100% " update="panel"
+					<p:commandButton value="Procesos" rendered="#{menuBean.usuario.isAdmin()}" style="width:100% " update="panel"
 						action="processes"/>
 					<p:commandButton value="Reportes" rendered="#{menuBean.usuario.isAdmin()}" style="width:100%" update="panel"
 						action="reportes" />
