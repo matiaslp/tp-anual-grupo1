@@ -67,6 +67,7 @@ public class BusquedaBean {
 		this.selectedPoi = selectedPoi;
 	}
 
+	@SuppressWarnings("null")
 	public void buscar() {
 		pois.clear();
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
@@ -74,6 +75,7 @@ public class BusquedaBean {
 		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
 		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		ArrayList<POI> lstPOI = null;
+		ArrayList<POI> lstPOIPalSeparada = null;
 		try {
 			textoBuscar = new String();
 			int fallo = 0;
@@ -92,6 +94,8 @@ public class BusquedaBean {
 				}
 			}
 			if (fallo == 0) {
+				
+
 				lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());
 			}
 		} catch (JSONException | IOException | MessagingException e) {

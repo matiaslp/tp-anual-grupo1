@@ -42,9 +42,9 @@
 							<p:overlayPanel for="res" showEffect="blind" hideEffect="explode"
 								showEvent="mouseover" hideEvent="mousedown" dismissable="true"
 								showCloseIcon="true">
-								<p:dataList value="#{historial.pois}" var="poi" type="definition">
+								<p:dataList value="#{historial.pois}" var="datoHistoricoPOIMorphia" type="definition">
 									<f:facet name="header"> Detalle de POIs</f:facet>
-        							#{poi.nombre}
+        							#{datoHistoricoPOIMorphia.nombre}
     							</p:dataList>
 							</p:overlayPanel>
 						</h:outputLabel>

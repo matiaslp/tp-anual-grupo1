@@ -104,6 +104,11 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.RegistroHistorico</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>datoHistoricoPOIMorphia</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.DatoHistoricoPOIMorphia</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>

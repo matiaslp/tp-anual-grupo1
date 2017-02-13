@@ -15,8 +15,10 @@ import org.mongodb.morphia.converters.DateConverter;
 import org.mongodb.morphia.query.MorphiaIterator;
 import org.mongodb.morphia.query.Query;
 
+import ar.edu.utn.dds.grupouno.abmc.DatoHistoricoPOIMorphia;
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistoricoMorphia;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 
 public class DB_HistorialBusquedas extends Repositorio {
@@ -56,11 +58,21 @@ public class DB_HistorialBusquedas extends Repositorio {
 
 		// nuevoPOI.setId(listadonuevoRegistroHistorico.size() + 1);
 		//// persistir(nuevoRegistroHistorico);
+		ArrayList<DatoHistoricoPOIMorphia> listaPOIs = new ArrayList<DatoHistoricoPOIMorphia>();
+		
+for(POI unPOI:nuevoRegistroHistorico.getListaDePOIs()){
+
+	
+	DatoHistoricoPOIMorphia unDatoHistoricoPOIMorphia = new DatoHistoricoPOIMorphia();
+	unDatoHistoricoPOIMorphia.setId(unPOI.getId());
+	unDatoHistoricoPOIMorphia.setNombre(unPOI.getNombre());
+	listaPOIs.add(unDatoHistoricoPOIMorphia);
+}
 		
 		RegistroHistoricoMorphia registroMorphia = new RegistroHistoricoMorphia();
 		registroMorphia.setBusqueda(nuevoRegistroHistorico.getBusqueda());
 		registroMorphia.setCantResultados(nuevoRegistroHistorico.getCantResultados());
-		registroMorphia.setPois(nuevoRegistroHistorico.getListaDePOIs());
+		registroMorphia.setPois(listaPOIs);
 		registroMorphia.setTiempoDeConsulta(nuevoRegistroHistorico.getTiempoDeConsulta());
 		registroMorphia.setUserID(nuevoRegistroHistorico.getUserID());
 		registroMorphia.setTime(MetodosComunes.convertJodatoJava(nuevoRegistroHistorico.getTime()));
