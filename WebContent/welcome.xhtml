@@ -18,7 +18,7 @@
 						action="busqueda" />
 					<p:commandButton value="Procesos"  style="width:100% " update="panel"
 						action="processes"/>
-					<p:commandButton value="Reportes" style="width:100%" update="panel"
+					<p:commandButton value="Reportes" rendered="#{menuBean.usuario.isAdmin()}" style="width:100%" update="panel"
 						action="reportes" />
 					<p:commandButton value="Historial de Busquedas" rendered="#{menuBean.usuario.isAdmin()}" style="width:100%" update="panel"
 						action="historial" />
@@ -31,7 +31,7 @@
 					<p:commandButton value="Cambiar Configuracion" style="width:100%" update="panel"
 						action="configuracion" />	
 					<p:commandButton value="Logout" style="width:100%" update="panel"
-						action="configuracion" />											
+						action="#{loginBean.logout()}" />											
 
 					</h:panelGrid>
 			</p:panel>

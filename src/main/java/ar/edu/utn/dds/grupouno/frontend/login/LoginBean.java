@@ -1,5 +1,7 @@
 package ar.edu.utn.dds.grupouno.frontend.login;
 
+import java.io.IOException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
@@ -90,6 +92,20 @@ public class LoginBean {
 	}
 
 	public void logout() {
+		
+		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("username"));
+		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
+		
+		AuthAPI.getInstance().cerrarSesion(usuario.getUsername(), token);
+		
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/tp-anual/faces/login.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
