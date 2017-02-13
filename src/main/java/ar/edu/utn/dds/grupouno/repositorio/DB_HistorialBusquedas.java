@@ -72,7 +72,9 @@ for(POI unPOI:nuevoRegistroHistorico.getListaDePOIs()){
 		RegistroHistoricoMorphia registroMorphia = new RegistroHistoricoMorphia();
 		registroMorphia.setBusqueda(nuevoRegistroHistorico.getBusqueda());
 		registroMorphia.setCantResultados(nuevoRegistroHistorico.getCantResultados());
+
 		registroMorphia.setPois(listaPOIs);
+
 		registroMorphia.setTiempoDeConsulta(nuevoRegistroHistorico.getTiempoDeConsulta());
 		registroMorphia.setUserID(nuevoRegistroHistorico.getUserID());
 		registroMorphia.setTime(MetodosComunes.convertJodatoJava(nuevoRegistroHistorico.getTime()));

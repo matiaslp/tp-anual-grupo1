@@ -314,7 +314,7 @@ public class POI extends PersistibleConNombre{
 	public Boolean buscarEtiqueta(String etiquetaNombre) {
 		if (etiquetas != null)
 			for (Etiqueta e : etiquetas) {
-				if (LevDist.calcularDistancia(etiquetaNombre, e.getNombre())) {
+				if (compararAtributo(etiquetaNombre, e.getNombre())) {
 					return true;
 				}
 			}
@@ -377,37 +377,44 @@ public class POI extends PersistibleConNombre{
 					return true;
 				else if (comuna == valor)
 					return true;
-			} else if (LevDist.calcularDistancia(filtro, this.nombre))
+			}
+			if (this.nombre != null && compararAtributo(filtro, this.nombre))
 				return true;
-			else if (LevDist.calcularDistancia(filtro, this.callePrincipal))
+			else if (this.callePrincipal != null && compararAtributo(filtro, this.callePrincipal))
 				return true;
-			else if (LevDist.calcularDistancia(filtro, this.calleLateral))
+			else if (this.calleLateral != null && compararAtributo(filtro, this.calleLateral))
 				return true;
-			else if (LevDist.calcularDistancia(filtro, this.departamento))
+			else if (this.departamento != null && compararAtributo(filtro, this.departamento))
 				return true;
-			else if (LevDist.calcularDistancia(filtro, this.unidad))
+			else if (this.unidad != null && compararAtributo(filtro, this.unidad))
 				return true;
-			else if (LevDist.calcularDistancia(filtro, this.localidad))
+			else if (this.localidad != null && compararAtributo(filtro, this.localidad))
 				return true;
-			else if (LevDist.calcularDistancia(filtro, this.barrio))
+			else if (this.barrio != null && compararAtributo(filtro, this.barrio))
 				return true;
-			else if (LevDist.calcularDistancia(filtro, this.provincia))
+			else if (this.provincia != null && compararAtributo(filtro, this.provincia))
 				return true;
-			else if (LevDist.calcularDistancia(filtro, this.pais))
+			else if (this.pais != null && compararAtributo(filtro, this.pais))
 				return true;
-			else if (LevDist.calcularDistancia(filtro, TiposPOI.BANCO.name()))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, TiposPOI.CGP.name()))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, TiposPOI.LOCAL_COMERCIAL.name()))
-				return true;
-			else if (LevDist.calcularDistancia(filtro, TiposPOI.PARADA_COLECTIVO.name()))
+			else if (this.tipo != null && compararAtributo(filtro, this.tipo.name()))
 				return true;
 			else if (buscarEtiqueta(filtro))
 				return true;
 		}
 		return false;
 	}
+	
+	
+	public boolean compararAtributo(String str, String atributo) {
+		
+		String palabrasAtributo[] = atributo.split("\\s+");
+		for (String palabra: palabrasAtributo){
+			if(LevDist.calcularDistancia(str,palabra))
+				return true;
+		}
+		return false;
+	}
+	
 
 	public boolean buscarServicios(String filtro) {
 		if (servicios != null) {
