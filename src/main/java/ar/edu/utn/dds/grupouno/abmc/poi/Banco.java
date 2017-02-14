@@ -124,7 +124,8 @@ public class Banco extends POI {
 			} else if (this.gerente != null && compararAtributo(filtro, this.gerente)) {
 				return true;
 			} else {
-				this.buscarServicios(filtro);
+				if(this.buscarServicios(filtro))
+					return true;
 			}
 		}
 

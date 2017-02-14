@@ -61,7 +61,7 @@ public class ParadaColectivo extends POI {
 
 	@Override
 	public boolean compararPOI(POI poi) {
-		if (super.compararPOI(poi)) {
+		if (!super.compararPOI(poi)) {
 			return false;
 		}
 

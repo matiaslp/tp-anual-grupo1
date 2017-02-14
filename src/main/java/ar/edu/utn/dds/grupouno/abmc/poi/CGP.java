@@ -125,7 +125,8 @@ public class CGP extends POI {
 			} else if (this.telefono != null && compararAtributo(filtro, this.telefono)) {
 				return true;
 			} else {
-				this.buscarServicios(filtro);
+				if(this.buscarServicios(filtro))
+					return true;
 			}
 		}
 
