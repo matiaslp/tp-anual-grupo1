@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" />
+			<p:panel id="panel" header="Busqueda">
+				<h:form>
+					<p:outputPanel deferred="true">
+
+						<h3>Criterio de busqueda</h3>
+					</p:outputPanel>
+				</h:form>
+				<h:panelGrid columns="1" cellpadding="5">
+
+
+					<h:dataTable id="tabText" value="#{busquedaBean.items}" var="item">
+						<h:column>
+							<h:inputText value="#{item.value}" />
+						</h:column>
+						<p:column style="width:32px;text-align: center">
+						<p:commandButton icon="ui-icon-trash" title="Remover"
+							actionListener="#{busquedaBean.remove(item)}"
+							update="form:panel" immediate="true" />
+					</p:column>
+					</h:dataTable>
+					<h:panelGrid columns="2" cellpadding="5">
+						<p:commandButton value="Agregar" update="tabText"
+							icon="ui-icon-check" action="#{busquedaBean.add}" />
+						<p:commandButton value="Buscar" update="panel"
+							icon="ui-icon-search" action="#{busquedaBean.buscar}" />
+					</h:panelGrid>
+				</h:panelGrid>
+
+
+				<h:form>
+					<p:outputPanel deferred="true">
+						<h3>Resultado</h3>
+					</p:outputPanel>
+				</h:form>
+				<p:dataTable id="poiTable" var="POI" value="#{busquedaBean.pois}"
+					rows="10" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column headerText="Nombre">
+						<h:outputText value="#{POI.nombre}" />
+					</p:column>
+					<p:column headerText="Direccion">
+						<h:outputText value="#{POI.direccion}" />
+					</p:column>
+
+					<p:column style="width:100px;text-align: center">
+						<p:commandButton update="form:panel" action="#{busquedaBean.borrarPoi}"
+						value="Borrar">
+							<f:setPropertyActionListener value="#{POI}"
+								target="#{busquedaBean.selectedPoi}" />						
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="Volver atras" update="panel"
+					action="#{busquedaBean.reset}" immediate="true" />
+			</p:panel>
+		</h:form>
+							<p:dialog header="No hay caracteres" widgetVar="unCaracter"
+						modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+						<h:form id="unCaracter">
+							<h:outputText
+								value="Uno o mas valores son vacios, necesitas ingresar al menos 1 caracter" />
+						</h:form>
+					</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

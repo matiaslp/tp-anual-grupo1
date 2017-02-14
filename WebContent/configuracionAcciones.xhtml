@@ -11,7 +11,7 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
-			<p:panel id="panel" header="Acciones ante la busqueda"
+			<p:panel id="panel" header="Configuración de Acciones ante una Consulta"
 				style="margin-bottom:10px;">
 				<h:panelGrid columns="5" cellpadding="5">
 					<p:outputLabel value="Usuario" />
@@ -45,8 +45,8 @@
 				<p:separator />
 				<p:commandButton value="OK"
 					action="#{AccionesDeConsultaBean.confirmar()}" icon="ui-icon-check"></p:commandButton>
-				<p:commandButton value="Cancelar" update="panel"
-					action="#{AccionesDeConsultaBean.cancelar}" icon="ui-icon-check"></p:commandButton>
+				<p:commandButton value="Volver atras" update="panel"
+					action="#{AccionesDeConsultaBean.cancelar}"></p:commandButton>
 			</p:panel>
 		</h:form>
 		<p:dialog header="Agregadas" widgetVar="funcionesAgregadas"

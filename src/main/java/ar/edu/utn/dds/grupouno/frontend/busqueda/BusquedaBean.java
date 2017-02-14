@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -21,6 +22,7 @@ import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
+import ar.edu.utn.dds.grupouno.frontend.abmPOIs.BajaPOI;
 import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
@@ -33,7 +35,7 @@ public class BusquedaBean {
 	private List<resultadoBusquedaDTO> pois = new ArrayList<resultadoBusquedaDTO>();
 	private resultadoBusquedaDTO selectedPoi;
 	String ServicioAPI;
-
+	
 	private List<Item> items;
 
 	public BusquedaBean() {
@@ -94,7 +96,6 @@ public class BusquedaBean {
 				}
 			}
 			if (fallo == 0) {
-				
 
 				lstPOI = POI_ABMC.getInstance().buscar(ServicioAPI, textoBuscar, usuario.getId());
 			}
@@ -121,6 +122,7 @@ public class BusquedaBean {
 	private resultadoBusquedaDTO toDTO(POI point) {
 		resultadoBusquedaDTO resultado = new resultadoBusquedaDTO();
 
+		resultado.setId(point.getId());
 		resultado.setTipo(point.getTipo());
 		resultado.setDireccion(point.getDireccion());
 		if (point.getNombre() != null) {
@@ -155,8 +157,8 @@ public class BusquedaBean {
 		items.add(new Item());
 
 	}
-	
-	public void remove(Item it){
+
+	public void remove(Item it) {
 		if (items.size() > 1)
 			items.remove(it);
 	}
@@ -183,7 +185,21 @@ public class BusquedaBean {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
+	
+	public String borrarPoi(){
+		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("username"));
+		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().put("poiSeleccionado"+token+usuario,Long.toString(this.selectedPoi.getId()));			
+		return "poisBajaB";
+
+	}
+
 	
 	
 }

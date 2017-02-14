@@ -6,6 +6,8 @@ import java.util.List;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 
 public class resultadoBusquedaDTO {
+	
+	private long id;
 	private String nombre;
 	private List<NodoServicioDTO> servicios = new ArrayList<NodoServicioDTO>();
 	private TiposPOI tipo;
@@ -51,6 +53,12 @@ public class resultadoBusquedaDTO {
 	}
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	

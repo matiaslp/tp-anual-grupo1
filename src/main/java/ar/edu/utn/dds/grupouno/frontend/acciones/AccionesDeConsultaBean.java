@@ -150,5 +150,9 @@ public class AccionesDeConsultaBean {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	public void reset(){
+		
+	}
 
 }
