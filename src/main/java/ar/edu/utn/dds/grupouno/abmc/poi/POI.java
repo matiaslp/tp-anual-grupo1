@@ -38,11 +38,11 @@ import ar.edu.utn.dds.grupouno.repositorio.PersistibleConNombre;
 @Table(name = "POI")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
-@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
-@NamedQuery(name = "getPOIbyNombreConEliminados", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre"),
-@NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p")})
-public class POI extends PersistibleConNombre{
-	
+		@NamedQuery(name = "getPOIbyNombre", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre AND p.fechaBaja IS NULL"),
+		@NamedQuery(name = "getPOIbyNombreConEliminados", query = "SELECT p FROM POI p WHERE p.nombre LIKE :pnombre"),
+		@NamedQuery(name = "POI.findAll", query = "SELECT p FROM POI p") })
+public class POI extends PersistibleConNombre {
+
 	protected String callePrincipal;
 	protected String calleLateral;
 	protected long numeracion;
@@ -61,16 +61,16 @@ public class POI extends PersistibleConNombre{
 	protected long cercania = 500;
 	protected TiposPOI tipo;
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	//@Fetch(FetchMode.JOIN)
+	// @Fetch(FetchMode.JOIN)
 	@JoinTable(name = "POI_SERVICIO", joinColumns = { @JoinColumn(name = "poi_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "servicio_id") })
 	protected List<NodoServicio> servicios = new ArrayList<NodoServicio>();
-	// pueden ser varias y se crean a travez de FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
+	// pueden ser varias y se crean a travez de
+	// FlyweightFactoryEtiqueta.listarEtiquetas(String etiquetas[])
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@OrderColumn
-	@JoinTable(name="POI_ETIQUETA", 
-				joinColumns={@JoinColumn(name="poi_id")}, 
-				inverseJoinColumns={@JoinColumn(name="etiqueta_id")})
+	@JoinTable(name = "POI_ETIQUETA", joinColumns = { @JoinColumn(name = "poi_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "etiqueta_id") })
 	protected List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
 	@Column
 	@Type(type = "org.hibernate.type.ZonedDateTimeType")
@@ -117,9 +117,9 @@ public class POI extends PersistibleConNombre{
 		else
 			return true;
 	}
-	
+
 	public String getDireccion() {
-		
+
 		String resultado = "";
 		if (this.callePrincipal != null && !this.callePrincipal.isEmpty())
 			resultado = resultado + callePrincipal + " ";
@@ -288,15 +288,14 @@ public class POI extends PersistibleConNombre{
 				this.etiquetas.add(FlyweightFactoryEtiqueta.getInstance().getEtiqueta(nombres[i]));
 			}
 	}
-	
-	public List<Etiqueta> getEtiquetasList(){
+
+	public List<Etiqueta> getEtiquetasList() {
 		return this.etiquetas;
 	}
-	
-	public void setEtiquetasList(ArrayList<Etiqueta> et){
+
+	public void setEtiquetasList(ArrayList<Etiqueta> et) {
 		this.etiquetas = et;
 	}
-	
 
 	public String[] getEtiquetas() {
 		String[] nombres = new String[etiquetas.size()];
@@ -321,13 +320,11 @@ public class POI extends PersistibleConNombre{
 
 		return false;
 	}
-	
-	public void refreshEtiquetas(){
+
+	public void refreshEtiquetas() {
 		String[] etViejas = getEtiquetas();
 		this.setEtiquetas(etViejas);
 	}
-	
-	
 
 	public DateTime getFechaBaja() {
 		DateTime tm = MetodosComunes.convertJavatoJoda(fechaBaja);
@@ -403,23 +400,21 @@ public class POI extends PersistibleConNombre{
 		}
 		return false;
 	}
-	
-	
+
 	public boolean compararAtributo(String str, String atributo) {
-		
+
 		String palabrasAtributo[] = atributo.split("\\s+");
-		for (String palabra: palabrasAtributo){
-			if(LevDist.calcularDistancia(str,palabra))
+		for (String palabra : palabrasAtributo) {
+			if (LevDist.calcularDistancia(str, palabra))
 				return true;
 		}
 		return false;
 	}
-	
 
 	public boolean buscarServicios(String filtro) {
 		if (servicios != null) {
 			for (NodoServicio servicio : servicios) {
-				if (LevDist.calcularDistancia(filtro, servicio.getNombre())) {
+				if (servicio.getNombre() != null && compararAtributo(filtro, servicio.getNombre())) {
 					return true;
 				} else if (MetodosComunes.isNumeric(filtro)) {
 					long filtroNumerico = Long.parseLong(filtro);
@@ -431,9 +426,7 @@ public class POI extends PersistibleConNombre{
 				}
 			}
 		}
-
 		return false;
-
 	}
 
 	public boolean compararPOI(POI poi) {
@@ -576,7 +569,7 @@ public class POI extends PersistibleConNombre{
 	public void setEsLocal(boolean esLocal) {
 		this.esLocal = esLocal;
 	}
-	
+
 	public List<NodoServicio> getServicios() {
 		return servicios;
 	}
