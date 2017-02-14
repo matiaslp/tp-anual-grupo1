@@ -23,14 +23,18 @@
 							listener="#{altaUsuario.listener}" />
 					</p:selectOneMenu>
 					<h:outputText value="" />
+					
 					<p:outputLabel for="Nombre" value="Nombre: " />
 					<p:inputMask id="Nombre" value="#{altaUsuario.nombre}"
 						required="true" />
 					<h:outputText value="" />
+					
 					<h:outputText value="Auditoria: " />
 					<p:selectBooleanButton id="logueo" value="#{altaUsuario.logueo}"
 						onLabel="Yes" offLabel="No" style="width:60px" />
-					<h:outputText value="" />
+					<p:outputLabel value="¿Se desea guardar registros historicos de las busquedas de este usuario?" 
+						style="font-size:12px; color:red;" />
+					
 					<p:outputLabel for="correo" value="Correo:"
 						rendered="#{altaUsuario.isAdmin()}" />
 					<p:inputMask id="correo" value="#{altaUsuario.correo}"
@@ -43,7 +47,13 @@
 					<p:selectBooleanButton id="mailHabilitado"
 						value="#{altaUsuario.mailHabilitado}" onLabel="Yes" offLabel="No"
 						style="width:60px" rendered="#{altaUsuario.isAdmin()}" />
-					<h:outputText value="" rendered="#{altaUsuario.isAdmin()}" />
+					<h:outputText value="¿Se desea recibir emails de notificaciones por busquedas demoradas?" rendered="#{altaUsuario.isAdmin()}" 
+						style="font-size:12px; color:red;" />
+
+					<h:outputText value="La contraseña debe tener al menos 8 caracteres" 
+						style="font-size:12px; color:red;" />
+					<h:outputText value="" />
+					<h:outputText value="" />
 
 					<p:outputLabel for="password" value="Password:" />
 					<p:password id="password" value="#{altaUsuario.password}"
@@ -52,10 +62,13 @@
 						<p:ajax update="msgContrasena" event="keyup" />
 					</p:password>
 					<p:message for="password" id="msgContrasena" display="icon" />
+
+					
 					<p:outputLabel for="username" value="Username:" />
 					<p:inputMask id="username" value="#{altaUsuario.username}"
 						required="true" />
 					<h:outputText value="" />
+					
 					<p:commandButton value="Resetiar" type="reset" />
 					<p:commandButton value="Agregar" update="panel"
 						action="#{altaUsuario.altaUsuario}" />
