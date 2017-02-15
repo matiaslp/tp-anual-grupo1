@@ -1,7 +1,7 @@
 package ar.edu.utn.dds.grupouno.test_miscellaneous;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -19,14 +19,16 @@ import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
-import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 import ar.edu.utn.dds.grupouno.repositorio.DB_HistorialBusquedas;
+import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
 import ar.edu.utn.dds.grupouno.repositorio.RepoMongo;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 import ar.edu.utn.dds.grupouno.repositorio.CantBusquedas;
 
-public class TestReportes {
 
+
+public class TestReportes {
+	
 	private DB_HistorialBusquedas historial;
 	Usuario terminal;
 	UsuariosFactory fact;
@@ -118,7 +120,7 @@ public class TestReportes {
 	
 	@Test
 	public void testBusquedaHistorial2Fechas(){
-		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10,
+		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10L,
 				Date.from(MetodosComunes.convertJodatoJava(registro1.getTime()).toInstant()),
 				Date.from(MetodosComunes.convertJodatoJava(registro4.getTime()).toInstant()));
 		
@@ -127,7 +129,7 @@ public class TestReportes {
 	
 	@Test
 	public void testBusquedaHistorialFinalInicial(){
-		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10,
+		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10L,
 				Date.from(MetodosComunes.convertJodatoJava(registro1.getTime()).toInstant()),
 				null);
 		
@@ -135,14 +137,14 @@ public class TestReportes {
 	}
 	@Test
 	public void testBusquedaHistorialFechaFinal(){
-		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10,null,
+		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10L,null,
 				Date.from(MetodosComunes.convertJodatoJava(registro4.getTime()).toInstant()));
 		
 		Assert.assertTrue(resultado.size() == 3);
 	}
 	@Test
 	public void testBusquedaHistorialNull(){
-		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10,null,null);
+		ArrayList<Object[]> resultado = historial.historialBusquedaEntreFechas(10L,null,null);
 		
 		Assert.assertTrue(resultado.size() == 4);
 	}
@@ -152,11 +154,11 @@ public class TestReportes {
 		RepoMongo.getInstance().getDatastore()
 		.delete(RepoMongo.getInstance().getDatastore()
 				.createQuery(RegistroHistoricoMorphia.class));
-//		Repositorio.getInstance().remove(registro1);
-//		Repositorio.getInstance().remove(registro2);
-//		Repositorio.getInstance().remove(registro3);
-//		Repositorio.getInstance().remove(registro4);
-//		Repositorio.getInstance().remove(registro5);
+		Repositorio.getInstance().remove(registro1);
+		Repositorio.getInstance().remove(registro2);
+		Repositorio.getInstance().remove(registro3);
+		Repositorio.getInstance().remove(registro4);
+		Repositorio.getInstance().remove(registro5);
 		Repositorio.getInstance().remove(local1);
 		Repositorio.getInstance().remove(banco1);
 

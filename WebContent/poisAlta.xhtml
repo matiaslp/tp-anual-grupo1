@@ -10,81 +10,262 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-<h:form>
-	<p:panel id="panel9" header="Alta POI">
+		<h:form id="form">
+			<p:panel id="panel" header="Alta POI">
 				<p:messages id="msgs" />
-    <h:panelGrid columns="2" cellpadding="5">
-        <p:outputLabel for="Nombre" value="Nombre: " />
-        <p:inputMask id="Nombre" value="#{altaPOIsMaskView.nombre}" />
- 
-        <p:outputLabel for="CallePrincipal" value="CallePrincipal:" />
-        <p:inputMask id="CallePrincipal" value="#{altaPOIsMaskView.callePrinsipal}" />
-   
-        <p:outputLabel for="CalleLateral" value="CalleLateral:" />
-        <p:inputMask id="CalleLateral" value="#{altaPOIsMaskView.calleLateral}" />
-  
-        <p:outputLabel for="numeracion" value="numeracion:" />
-        <p:inputMask id="numeracion" value="#{altaPOIsMaskView.numeracion}" />
-  
-        <p:outputLabel for="piso" value="piso:" />
-        <p:inputMask id="piso" value="#{altaPOIsMaskView.piso}" />
-  
-        <p:outputLabel for="departamento" value="departamento:" />
-        <p:inputMask id="departamento" value="#{altaPOIsMaskView.departamento}" />
-  
-        <p:outputLabel for="unidad" value="unidad:" />
-        <p:inputMask id="unidad" value="#{altaPOIsMaskView.unidad}" />
-  
-        <p:outputLabel for="codigoPostal" value="codigoPostal:" />
-        <p:inputMask id="codigoPostal" value="#{altaPOIsMaskView.codigoPostal}" />
-  
-        <p:outputLabel for="localidad" value="localidad:" />
-        <p:inputMask id="localidad" value="#{altaPOIsMaskView.localidad}" />
-  
-        <p:outputLabel for="barrio" value="barrio:" />
-        <p:inputMask id="barrio" value="#{altaPOIsMaskView.barrio}" />
-  
-        <p:outputLabel for="provincia" value="provincia:" />
-        <p:inputMask id="provincia" value="#{altaPOIsMaskView.provincia}" />
-  
-        <p:outputLabel for="pais" value="pais:" />
-        <p:inputMask id="pais" value="#{altaPOIsMaskView.pais}" />
-  
-        <p:outputLabel for="LATITUD" value="LATITUD:" />
-        <p:inputMask id="LATITUD" value="#{altaPOIsMaskView.latitud}" />
-  
-        <p:outputLabel for="LONGITUD" value="LONGITUD:" />
-        <p:inputMask id="LONGITUD" value="#{altaPOIsMaskView.longitud}" />
-  
-        <p:outputLabel for="comuna" value="comuna:" />
-        <p:inputMask id="comuna" value="#{altaPOIsMaskView.comuna}" />
-  
-        <p:outputLabel for="TIPO" value="TIPO:" />
-        <p:inputMask id="TIPO" value="#{altaPOIsMaskView.tipo}" />
-        
-        <p:outputLabel value="Tipo:" for="dd" />
-        <p:autoComplete id="dd" dropdown="true" value="#{autoCompleteView.txt6}" completeMethod="#{autoCompleteView.completeText}" />
- 
-         <p:outputLabel for="servicios" value="servicios:" />
-        <p:inputMask id="servicios" value="#{altaPOIsMaskView.servicios}" />
+				<h:panelGrid columns="3" cellpadding="5">
 
-		<p:outputLabel for="etiquetas" value="etiquetas:" />
-        <p:inputMask id="etiquetas" value="#{altaPOIsMaskView.etiquetas}" />
-        		
+					<p:outputLabel for="TIPO" value="Tipo:" />
+					<p:selectOneMenu id="TIPO" value="#{altaPOI.tipo}"
+						style="width:150px">
+						<f:selectItems value="#{altaPOI.tipos}" />
+						<p:ajax update="panel" event="change"
+							listener="#{altaPOI.listener}" />
+					</p:selectOneMenu>
+					<h:outputText value="" />
+					
+					<p:outputLabel for="Nombre" value="Nombre: " />
+					<p:inputMask id="Nombre" value="#{altaPOI.nombre}" required="true" />
+					<h:outputText value="" />
+					
+					<p:outputLabel for="CallePrincipal" value="Calle Principal:" />
+					<p:inputMask id="CallePrincipal" value="#{altaPOI.callePrincipal}" />
+					<h:outputText value="" />
+					
+					<p:outputLabel for="CalleLateral" value="Calle Lateral:" />
+					<p:inputMask id="CalleLateral" value="#{altaPOI.calleLateral}" />
+					<h:outputText value="" />
+					
+					<p:outputLabel for="numeracion" value="Numeracion:"/>
+					<p:inputMask id="numeracion" value="#{altaPOI.numeracion}" mask="9?99999" maxlength="6" />
+					<p:outputLabel value="La numeracion debe ser solo de caracteres numericos y hasta 6 digitos" 
+					style="font-size:12px; color:red;" />
 
-    
+					<p:outputLabel for="piso" value="Piso:" />
+					<p:inputMask id="piso" value="#{altaPOI.piso}" mask="9?99" maxlength="3" />
+					<p:outputLabel value="El piso debe ser solo de caracteres numericos y hasta 3 digitos" 
+					style="font-size:12px; color:red;" />
+					
+					<p:outputLabel for="departamento" value="Departamento:" />
+					<p:inputMask id="departamento" value="#{altaPOI.departamento}" />
+					<h:outputText value="" />
+					
+					<p:outputLabel for="unidad" value="Unidad:" />
+					<p:inputMask id="unidad" value="#{altaPOI.unidad}" />
+					<h:outputText value="" />
+					
+					<p:outputLabel for="codigoPostal" value="Codigo Postal:" />
+					<p:inputMask id="codigoPostal" value="#{altaPOI.codigoPostal}" mask="9?999" maxlength="4" />
+					<p:outputLabel value="El codigo postal debe ser solo de caracteres numericos y hasta 4 digitos" 
+					style="font-size:12px; color:red;" />
 
+					<p:outputLabel for="localidad" value="Localidad:" />
+					<p:inputMask id="localidad" value="#{altaPOI.localidad}" />
+					<h:outputText value="" />
+					
+					<p:outputLabel for="barrio" value="Barrio:" />
+					<p:inputMask id="barrio" value="#{altaPOI.barrio}" />
+					<h:outputText value="" />
+					
+					<p:outputLabel for="provincia" value="Provincia:" />
+					<p:inputMask id="provincia" value="#{altaPOI.provincia}" />
+					<h:outputText value="" />
+					
+					<p:outputLabel for="pais" value="Pais:" />
+					<p:inputMask id="pais" value="#{altaPOI.pais}" />
+					<h:outputText value="" />
+					
+					<p:outputLabel for="LATITUD" value="Latitud" />
+					<p:inputMask id="LATITUD" value="#{altaPOI.latitud}" mask="9?99999" maxlength="6"
+						required="true" />
+					<p:outputLabel value="La latitud debe ser solo de caracteres numericos y hasta 6 digitos" 
+					style="font-size:12px; color:red;" />
 
+					<p:outputLabel for="LONGITUD" value="Longitud" />
+					<p:inputMask id="LONGITUD" value="#{altaPOI.longitud}" mask="9?99999" maxlength="6"
+						required="true" />
+					<p:outputLabel value="La longitud debe ser solo de caracteres numericos y hasta 6 digitos" 
+					style="font-size:12px; color:red;" />
+					
+					<p:outputLabel for="comuna" value="Comuna:" />
+					<p:inputMask id="comuna" value="#{altaPOI.comuna}" mask="9?99" maxlength="3" />
+					<p:outputLabel value="La comuna debe ser solo de caracteres numericos y hasta 3 digitos" 
+					style="font-size:12px; color:red;" />
+					
+					<p:outputLabel for="etiquetas" value="Etiquetas:" />
+					<p:inputMask id="etiquetas" value="#{altaPOI.etiquetas}" />
+					<p:outputLabel value="Ingrese todas las etiquetas que desee para el POI separadas por un espacio" 
+					style="font-size:12px; color:red;" />
 
-	    <p:commandButton value="Resetiar" type="reset" />
-        <p:commandButton value="Agregar" update="panel9" action="#{altaPOIsMaskView.altaPOI}"/>
-        
-    </h:panelGrid>
-    	
-    </p:panel>
-       
+					<p:outputLabel for="sucursal" value="Sucursal"
+						rendered="#{altaPOI.tipoPOI.isBanco()}" />
+					<p:inputMask id="sucursal" value="#{altaPOI.sucursal}"
+						rendered="#{altaPOI.tipoPOI.isBanco()}" />
+					<h:outputText value="" rendered="#{altaPOI.tipoPOI.isBanco()}"/>
+					
+					<p:outputLabel for="gerente" value="Gerente"
+						rendered="#{altaPOI.tipoPOI.isBanco()}" />
+					<p:inputMask id="gerente" value="#{altaPOI.gerente}"
+						rendered="#{altaPOI.tipoPOI.isBanco()}" />
+					<h:outputText value="" rendered="#{altaPOI.tipoPOI.isBanco()}"/>
+					
+					<p:outputLabel for="linea" value="Linea"
+						rendered="#{altaPOI.tipoPOI.isParada()}" />
+					<p:inputMask id="linea" value="#{altaPOI.linea}" mask="9?99999" maxlength="6"
+						rendered="#{altaPOI.tipoPOI.isParada()}" />
+					<p:outputLabel value="El numero de linea debe ser solo de caracteres numericos y hasta 6 digitos" 
+					style="font-size:12px; color:red;" 
+					rendered="#{altaPOI.tipoPOI.isParada()}" />
 
-</h:form>
+					<p:outputLabel for="director" value="Director"
+						rendered="#{altaPOI.tipoPOI.isCGP()}" />
+					<p:inputMask id="director" value="#{altaPOI.director}"
+						rendered="#{altaPOI.tipoPOI.isCGP()}" />
+					<h:outputText value="" rendered="#{altaPOI.tipoPOI.isCGP()}"/>
+					
+					<p:outputLabel for="telefono" value="Telefono"
+						rendered="#{altaPOI.tipoPOI.isCGP()}" />
+					<p:inputMask id="telefono" value="#{altaPOI.telefono}"
+						rendered="#{altaPOI.tipoPOI.isCGP()}" />
+					<h:outputText value="" rendered="#{altaPOI.tipoPOI.isCGP()}"/>
+					
+					<p:outputLabel for="rubro" value="Rubro"
+						rendered="#{altaPOI.tipoPOI.isLocal()}" />
+					<p:inputMask id="rubro" value="#{altaPOI.rubro}"
+						rendered="#{altaPOI.tipoPOI.isLocal()}" required="true" />
+					<h:outputText value="" rendered="#{altaPOI.tipoPOI.isLocal()}"/>
+					
+					<p:outputLabel for="cercania" value="Cercania"
+						rendered="#{altaPOI.tipoPOI.isNotParada()}" />
+					<p:inputMask id="cercania" value="#{altaPOI.cercania}" mask="9?99999" maxlength="6"
+						rendered="#{altaPOI.tipoPOI.isNotParada()}" />
+					<p:outputLabel value="La cercania debe ser solo de caracteres numericos y hasta 6 digitos
+					Indicar cantidad de metros" 
+					style="font-size:12px; color:red;" 
+					rendered="#{altaPOI.tipoPOI.isNotParada()}" />
+						
+
+					<p:outputLabel for="diasLocal" value="Dias Disponible"
+						rendered="#{altaPOI.tipoPOI.isLocal()}" />
+					<p:selectCheckboxMenu id="diasLocal"
+						value="#{altaPOI.diasLocalSeleccionados}" label="Dias"
+						panelStyle="width:250px" rendered="#{altaPOI.tipoPOI.isLocal()}">
+						<f:selectItems value="#{altaPOI.dias}" />
+					</p:selectCheckboxMenu>
+					<h:outputText value="" rendered="#{altaPOI.tipoPOI.isLocal()}"/>
+
+					<p:outputLabel for="horasLocal" value="Horario Disponible"
+						rendered="#{altaPOI.tipoPOI.isLocal()}" />
+					<p:selectCheckboxMenu id="horasLocal"
+						value="#{altaPOI.horasLocalSeleccionados}" label="Horas"
+						panelStyle="width:250px" rendered="#{altaPOI.tipoPOI.isLocal()}">
+						<f:selectItems value="#{altaPOI.horas}" />
+					</p:selectCheckboxMenu>
+					<h:outputText value="" rendered="#{altaPOI.tipoPOI.isLocal()}"/>
+
+				</h:panelGrid>
+
+				<p:dataTable id="Servicios" var="nodoServicio"
+					value="#{altaPOI.servicios}"
+					rendered="#{altaPOI.tipoPOI.isCGP()||altaPOI.tipoPOI.isBanco()}">
+					<p:column headerText="Servicios">
+						<h:outputText value="#{nodoServicio.nombre}" />
+					</p:column>
+					<p:column headerText="Dias">
+						<p:commandButton id="botonDias" value="Dias" type="button" />
+						<p:overlayPanel id="listaDias" for="botonDias" hideEffect="fade">
+							<h:outputText value="Domingo&lt;br /&gt;"
+								rendered="#{nodoServicio.isDomingo()}" escape="false" />
+							<h:outputText value="Lunes&lt;br /&gt;"
+								rendered="#{nodoServicio.isLunes()}" escape="false" />
+							<h:outputText value="Martes&lt;br /&gt;"
+								rendered="#{nodoServicio.isMartes()}" escape="false" />
+							<h:outputText value="Miercoles&lt;br /&gt;"
+								rendered="#{nodoServicio.isMiercoles()}" escape="false" />
+							<h:outputText value="Jueves&lt;br /&gt;"
+								rendered="#{nodoServicio.isJueves()}" escape="false" />
+							<h:outputText value="Viernes&lt;br /&gt;"
+								rendered="#{nodoServicio.isViernes()}" escape="false" />
+							<h:outputText value="Sabado&lt;br /&gt;"
+								rendered="#{nodoServicio.isSabado()}" escape="false" />
+						</p:overlayPanel>
+					</p:column>
+					<p:column headerText="Desde">
+						<h:outputText value="#{nodoServicio.horaInicio}" />
+					</p:column>
+					<p:column headerText="Hasta">
+						<h:outputText value="#{nodoServicio.horaFin}" />
+					</p:column>
+					<p:column style="width:32px;text-align: center">
+						<p:commandButton icon="ui-icon-trash" title="Borrar este servicio"
+							actionListener="#{altaPOI.removeServicio(nodoServicio)}"
+							update="Servicios" immediate="true" />
+					</p:column>
+				</p:dataTable>
+
+				<h:panelGrid columns="2" cellpadding="5"
+					rendered="#{altaPOI.tipoPOI.isCGP()||altaPOI.tipoPOI.isBanco()}">
+					<p:commandButton value="Agregar Servicio"
+						update=":formDialog:nuevoServicio"
+						oncomplete="PF('servDialog').show()" title="View">
+					</p:commandButton>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:commandButton value="Crear POI" update="panel"
+						action="#{altaPOI.altaPOI}" />
+					<p:commandButton value="Volver atras" update="panel"
+						action="welcome" immediate="true"/>
+
+				</h:panelGrid>
+
+			</p:panel>
+		</h:form>
+		<p:dialog header="Nuevo Servicio" widgetVar="servDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="formDialog">
+				<p:outputPanel id="nuevoServicio" style="text-align:center;">
+					<p:panelGrid columns="2" cellpadding="5">
+						<p:outputLabel for="nombre" value="Nombre" />
+						<p:inputMask id="nombre"
+							value="#{altaPOI.nodoServicioCreando.nombre}" />
+						<p:outputLabel for="dias" value="Dias" />
+						<p:selectCheckboxMenu id="dias"
+							value="#{altaPOI.diasSeleccionados}" label="Dias"
+							panelStyle="width:250px">
+							<f:selectItems value="#{altaPOI.dias}" />
+						</p:selectCheckboxMenu>
+						<p:outputLabel for="desde" value="Hora Inicio" />
+						<p:autoComplete id="desde" dropdown="true"
+							value="#{altaPOI.nodoServicioCreando.horaInicio}"
+							completeMethod="#{altaPOI.completeText}" />
+						<p:outputLabel for="hasta" value="Hora Fin" />
+						<p:autoComplete id="hasta" dropdown="true"
+							value="#{altaPOI.nodoServicioCreando.horaFin}"
+							completeMethod="#{altaPOI.completeText}" />
+					</p:panelGrid>
+					<h:panelGrid columns="2" cellpadding="5">
+						<p:commandButton value="Agregar Servicio"
+							action="#{altaPOI.agregarServicio()}" update=":form:Servicios"
+							oncomplete="PF('servDialog').hide()" title="View" />
+						<p:commandButton value="Cancelar" update=":form:Servicios"
+							onclick="PF('servDialog').hide()" title="View" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+				<p:dialog widgetVar="poiCreadoDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="poiCreadoDialog">
+				<h:outputText value="POI Creado" />
+			</h:form>
+		</p:dialog>
+				<p:dialog header="Error" widgetVar="poiCreadoDialogError" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="poiCreadoDialogError">
+				<h:outputText value="Upps!! Hubo un error al crear un POI" />
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:panel id="panel" header="Configuracion">
+				<p:messages id="msgs" />
+				<h:panelGrid columns="3" cellpadding="5">
+
+					<h:outputText value="Auditoria: " rendered="#{configuracion.usuario.isFuncionalidad('generarLog')}" />
+					<p:selectBooleanButton id="logueo" value="#{configuracion.logueo}"
+						onLabel="Yes" offLabel="No" style="width:60px" 
+						rendered="#{configuracion.usuario.isFuncionalidad('generarLog')}" />
+					<h:outputText value="" rendered="#{configuracion.usuario.isFuncionalidad('generarLog')}" />
+					<p:outputLabel for="mailHabilitado"
+						value="Notificaciones por email:"
+						rendered="#{configuracion.usuario.isFuncionalidad('cambiarEstadoMail')}" />
+					<p:selectBooleanButton id="mailHabilitado"
+						value="#{configuracion.mailHabilitado}" onLabel="Yes" offLabel="No"
+						style="width:60px" rendered="#{configuracion.usuario.isFuncionalidad('cambiarEstadoMail')}" />
+					<h:outputText value="" rendered="#{configuracion.usuario.isFuncionalidad('cambiarEstadoMail')}" />
+
+					<p:commandButton value="Guardar" update="panel"
+						action="#{configuracion.guardar}" />
+				</h:panelGrid>
+				
+				<p:commandButton value="Volver atras" update="panel"
+					action="welcome" immediate="true"/>
+			</p:panel>
+		</h:form>
+		<p:dialog widgetVar="configGuardadaDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="configGuardadaDialog">
+				<h:outputText
+					value="Cambios en configuracion guardados" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Error" widgetVar="configError"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="configError">
+				<h:outputText
+					value="Upps!! Hubo un error al modificar tu configuracion" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

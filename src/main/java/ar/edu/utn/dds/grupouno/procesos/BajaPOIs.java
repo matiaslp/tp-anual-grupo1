@@ -25,7 +25,6 @@ import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.DateDeserializer;
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.ItemBorrarConstructor;
 import ar.edu.utn.dds.grupouno.abmc.poi.Item_Borrar;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.quartz.Proceso;
 
 public class BajaPOIs extends Proceso {
 

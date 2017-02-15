@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.utn.dds.grupouno.abmc.DatoHistoricoPOIMorphia;
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistoricoMorphia;
@@ -22,6 +23,7 @@ import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 import ar.edu.utn.dds.grupouno.repositorio.RepoMongo;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
@@ -46,7 +48,7 @@ public class Test3_entrega6 {
 		banco.setPais("Argentina");
 		banco.setCallePrincipal("Alberdi");
 		banco.setCalleLateral("Escalada");
-		ServicioAPI = "http://trimatek.org/Consultas/";
+		ServicioAPI = LeerProperties.getInstance().prop.getProperty("Servicio_Externo");
 		local = new LocalComercial("Localcito", 0, 0, null);
 		parada = new ParadaColectivo("47", 0, 0);
 		cgp = new CGP("Mataderos", 0, 0);
@@ -68,8 +70,10 @@ public class Test3_entrega6 {
 
 	}
 	
-	//Este dependiendo del estado de la cache es 3 o 18, por el orden en que se ejecutan los test
-	// y porque el servicio anda mal, si tiene cache es 3, sino 18 porque devuelve todo.
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	//Este dependiendo del estado de la cache es 3 o 18, por el orden en que se ejecutan los test  //
+	// y porque el servicio anda mal, si tiene cache es 3, sino 18 porque devuelve todo.           //
+	/////////////////////////////////////////////////////////////////////////////////////////////////
 	@Test
 	public void modificarPersistirRecuperarCoordenadas() {
 		// Realizamos una busqueda, la misma se persiste
@@ -95,8 +99,8 @@ public class Test3_entrega6 {
 		Assert.assertTrue(reg.getUserID() == usuario.getId());
 
 		// Comprobamos referencias a los POIs
-		for (POI poi : reg.getPois()) {
-			Assert.assertTrue(lista.contains(poi));
+		for (DatoHistoricoPOIMorphia poi : reg.getPois()) {
+			Assert.assertTrue(lista.contains(Repositorio.getInstance().pois().getPOIbyId(poi.getId())));
 
 		}
 	}

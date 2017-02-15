@@ -15,11 +15,6 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>bajaPoisBean</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.BajaPOIsBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
 		<managed-bean-name>agregarAccionesBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.AgregarAccionesBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
@@ -27,12 +22,12 @@
 	<managed-bean>
 		<managed-bean-name>accionesDeConsultaBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.acciones.AccionesDeConsultaBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>busquedaBean</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.BusquedaBean</managed-bean-class>
-		<managed-bean-scope>view</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>basicView</managed-bean-name>
@@ -41,12 +36,102 @@
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>poi</managed-bean-name>
-		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.PoiService</managed-bean-class>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.poi.POI</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>busquedaHistorialBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.historial.busquedaHistorialBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>banco</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.poi.Banco</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>menuBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.welcome.MenuBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>usuario</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.autentification.Usuario</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>rol</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.autentification.Rol</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>altaPOI</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmPOIs.AltaPOI</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>nodoServicio</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.poi.NodoServicio</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>altaUsuario</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.AltaUsuario</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>configuracion</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.configuracion.Configuracion</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>bajaPOI</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmPOIs.BajaPOI</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>bajaUsuario</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.BajaUsuario</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>bajaPoisBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.BajaPOIsBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>registroHistorico</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.RegistroHistorico</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>datoHistoricoPOIMorphia</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.abmc.DatoHistoricoPOIMorphia</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>item</managed-bean-name>
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.busqueda.Item</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>bajaPOIs</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.procesos.BajaPOIs</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>modificacionPOI</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmPOIs.ModificacionPOI</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>modificacionUsuario</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.ModificacionUsuario</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>modificacionUsuarioBusqueda</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.ModificacionUsuarioBusqueda</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
 
@@ -66,32 +151,36 @@
 		<display-name>processes.xhtml</display-name>
 		<from-view-id>/processes.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{processes.actualizarlocales}</from-action>
+			<from-outcome>actualizarlocales</from-outcome>
 			<to-view-id>/actualizarlocales.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<display-name>processes.xhtml</display-name>
 		<from-view-id>/processes.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{processes.procesomultiple}</from-action>
+			<from-outcome>procesomultiple</from-outcome>
 			<to-view-id>/procesomultiple.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<display-name>processes.xhtml</display-name>
 		<from-view-id>/processes.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{processes.bajapois}</from-action>
+			<from-outcome>bajapois</from-outcome>
 			<to-view-id>/bajapois.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<display-name>processes.xhtml</display-name>
 		<from-view-id>/processes.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{processes.agregaracciones}</from-action>
+			<from-outcome>agregaracciones</from-outcome>
 			<to-view-id>/agregaracciones.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -100,6 +189,7 @@
 		<navigation-case>
 			<from-outcome>success</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -108,6 +198,7 @@
 				<navigation-case>
         			<from-outcome>cancel</from-outcome>
         			<to-view-id>/welcome.xhtml</to-view-id>
+        			<redirect />
     			</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -116,6 +207,7 @@
 		<navigation-case>
 			<from-outcome>index</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -124,6 +216,7 @@
 		<navigation-case>
 			<from-outcome>index</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -132,6 +225,7 @@
 		<navigation-case>
 			<from-outcome>index</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -140,6 +234,7 @@
 		<navigation-case>
 			<from-outcome>index</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -148,6 +243,7 @@
 		<navigation-case>
 			<from-outcome>processes</from-outcome>
 			<to-view-id>/processes.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -156,6 +252,7 @@
 		<navigation-case>
 			<from-outcome>busqueda</from-outcome>
 			<to-view-id>/busqueda.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -163,7 +260,224 @@
 		<from-view-id>/welcome.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>historial</from-outcome>
-			<to-view-id>/historial.xhtml</to-view-id>
+			<to-view-id>/busquedaHistorial.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>configuracionAcciones</from-outcome>
+			<to-view-id>/configuracionAcciones.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>abmpois</from-outcome>
+			<to-view-id>/abmpois.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmpois.xhtml</display-name>
+		<from-view-id>/abmpois.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>poisAlta</from-outcome>
+			<to-view-id>/poisAlta.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>abmusuarios</from-outcome>
+			<to-view-id>/abmusuarios.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmusuarios.xhtml</display-name>
+		<from-view-id>/abmusuarios.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>usuarioAlta</from-outcome>
+			<to-view-id>/usuarioAlta.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmusuarios.xhtml</display-name>
+		<from-view-id>/abmusuarios.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>usuarioBaja</from-outcome>
+			<to-view-id>/usuarioBaja.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisAlta.xhtml</display-name>
+		<from-view-id>/poisAlta.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioAlta.xhtml</display-name>
+		<from-view-id>/usuarioAlta.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioBaja.xhtml</display-name>
+		<from-view-id>/usuarioBaja.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>processes.xhtml</display-name>
+		<from-view-id>/processes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>configuracion</from-outcome>
+			<to-view-id>/configuracion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>configuracion.xhtml</display-name>
+		<from-view-id>/configuracion.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmpois.xhtml</display-name>
+		<from-view-id>/abmpois.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>poisBaja</from-outcome>
+			<to-view-id>/poisBajaA.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisBajaA.xhtml</display-name>
+		<from-view-id>/poisBajaA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>poisBajaB</from-outcome>
+			<to-view-id>/poisBajaB.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisBajaA.xhtml</display-name>
+		<from-view-id>/poisBajaA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisBajaB.xhtml</display-name>
+		<from-view-id>/poisBajaB.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmpois.xhtml</display-name>
+		<from-view-id>/abmpois.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>poisModificacion</from-outcome>
+			<to-view-id>/poisModificacionA.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisModificacionA.xhtml</display-name>
+		<from-view-id>/poisModificacionA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>poisModificacionB</from-outcome>
+			<to-view-id>/poisModificacionB.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisModificacionA.xhtml</display-name>
+		<from-view-id>/poisModificacionA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisModificacionB.xhtml</display-name>
+		<from-view-id>/poisModificacionB.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmusuarios.xhtml</display-name>
+		<from-view-id>/abmusuarios.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>usuarioModificacion</from-outcome>
+			<to-view-id>/usuarioModificacionA.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioModificacionA.xhtml</display-name>
+		<from-view-id>/usuarioModificacionA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>usuarioModificacionB</from-outcome>
+			<to-view-id>/usuarioModificacionB.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioModificacionA.xhtml</display-name>
+		<from-view-id>/usuarioModificacionA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioModificacionB.xhtml</display-name>
+		<from-view-id>/usuarioModificacionB.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	

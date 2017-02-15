@@ -11,29 +11,31 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h:form>
-			<p:panel id="panel" header="Modificacion Usuario">
+			<p:panel id="panel" header="Baja de Usuarios">
 				<h:form>
 					<p:outputPanel deferred="true">
-						
+						<h3>Modificacion de Usuarios</h3>
 						<p>Nombre de Usuario</p>
 					</p:outputPanel>
 				</h:form>
-				<h:dataTable value="#{busquedaBean.items}" var="item" id="table">
-					<h:column>
-						<h:inputText value="#{item.value}" />
-					</h:column>
-				</h:dataTable>
+					<p:inputMask id="Nombre" value="#{modificacionUsuarioBusqueda.busqueda}"
+					required="true" />
 				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Modificar" update="table" icon="ui-icon-check" action="usuarioModificacionB" />
-	
+					<p:commandButton value="Modificar" icon="ui-icon-check"
+						action="#{modificacionUsuarioBusqueda.seleccionUsuario}" />
 				</h:panelGrid>
-				
-				
-				
-			<p:commandButton value="Volver atràs" update="panel"
-					action="abmpois"/>
+				<p:commandButton value="Volver atras" update="panel"
+					action="welcome" immediate="true"/>
 			</p:panel>
 		</h:form>
+		<p:dialog header="Error" widgetVar="usuarioModificacionDialogError"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="usuarioModificacionDialogError">
+				<h:outputText
+					value="Upps!! No existe usuario con ese nombre.
+				Porfavor reintente con otro username" />
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

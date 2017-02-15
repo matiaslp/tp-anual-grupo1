@@ -19,7 +19,6 @@ import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
 import ar.edu.utn.dds.grupouno.autentification.funciones.FuncBajaPOIs;
-import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestProcesoBajaPOI {

@@ -3,26 +3,23 @@ package ar.edu.utn.dds.grupouno.repositorio;
 import static org.mongodb.morphia.aggregation.Group.grouping;
 import static org.mongodb.morphia.aggregation.Group.sum;
 
-import java.sql.Date;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
-import org.json.JSONObject;
 import org.mongodb.morphia.aggregation.Accumulator;
 import org.mongodb.morphia.converters.DateConverter;
+import org.mongodb.morphia.query.MorphiaIterator;
 import org.mongodb.morphia.query.Query;
 
-import com.mongodb.util.JSON;
-
+import ar.edu.utn.dds.grupouno.abmc.DatoHistoricoPOIMorphia;
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistoricoMorphia;
+import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.helpers.MetodosComunes;
-import jdk.nashorn.internal.parser.JSONParser;
 
 public class DB_HistorialBusquedas extends Repositorio {
 
@@ -36,8 +33,7 @@ public class DB_HistorialBusquedas extends Repositorio {
 	public ArrayList<RegistroHistorico> getListado() {
 		listadoRegistroHistorico.clear();
 
-		listadoRegistroHistorico = (ArrayList<RegistroHistorico>) em.createNamedQuery("RegistroHistorico.findAll")
-				.getResultList();
+		listadoRegistroHistorico = (ArrayList<RegistroHistorico>) em.createNamedQuery("RegistroHistorico.findAll").getResultList();
 
 		return listadoRegistroHistorico;
 	}
@@ -62,11 +58,23 @@ public class DB_HistorialBusquedas extends Repositorio {
 
 		// nuevoPOI.setId(listadonuevoRegistroHistorico.size() + 1);
 		//// persistir(nuevoRegistroHistorico);
+		ArrayList<DatoHistoricoPOIMorphia> listaPOIs = new ArrayList<DatoHistoricoPOIMorphia>();
+		
+for(POI unPOI:nuevoRegistroHistorico.getListaDePOIs()){
+
+	
+	DatoHistoricoPOIMorphia unDatoHistoricoPOIMorphia = new DatoHistoricoPOIMorphia();
+	unDatoHistoricoPOIMorphia.setId(unPOI.getId());
+	unDatoHistoricoPOIMorphia.setNombre(unPOI.getNombre());
+	listaPOIs.add(unDatoHistoricoPOIMorphia);
+}
 		
 		RegistroHistoricoMorphia registroMorphia = new RegistroHistoricoMorphia();
 		registroMorphia.setBusqueda(nuevoRegistroHistorico.getBusqueda());
 		registroMorphia.setCantResultados(nuevoRegistroHistorico.getCantResultados());
-		registroMorphia.setPois(nuevoRegistroHistorico.getListaDePOIs());
+
+		registroMorphia.setPois(listaPOIs);
+
 		registroMorphia.setTiempoDeConsulta(nuevoRegistroHistorico.getTiempoDeConsulta());
 		registroMorphia.setUserID(nuevoRegistroHistorico.getUserID());
 		registroMorphia.setTime(MetodosComunes.convertJodatoJava(nuevoRegistroHistorico.getTime()));
@@ -104,6 +112,7 @@ public class DB_HistorialBusquedas extends Repositorio {
 		
 		Query<CantBusquedasDate> query = RepoMongo.getInstance().getDatastore().find(CantBusquedasDate.class);
 		List<CantBusquedasDate> recuperado = query.asList();
+
 		ArrayList<Object[]> resultado = new ArrayList<Object[]>();
 		for (CantBusquedasDate nodo : recuperado) {
 			Object[] objeto = new Object[2];
@@ -181,34 +190,26 @@ public class DB_HistorialBusquedas extends Repositorio {
 		return resultado;
 	}
 
-	public ArrayList<Object[]> historialBusquedaEntreFechas(int userID, java.util.Date date, java.util.Date date2){
+	public ArrayList<Object[]> historialBusquedaEntreFechas(Long userID, Date fechaDesde, Date fechaHasta){
+		List<RegistroHistoricoMorphia> recuperado = new ArrayList<RegistroHistoricoMorphia>();
+		Query<RegistroHistoricoMorphia> query = RepoMongo.getInstance().getDatastore()
+				.createQuery(RegistroHistoricoMorphia.class);
 		
-		if(date == null && date2 == null){
-			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID).asList();
-			
-			return cargarRegistros(recuperado);
-		}else if(date == null){
-			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID).field("time").lessThan(date2).asList();
-			
-			return cargarRegistros(recuperado);
-		}else if(date2 == null){
-			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID).field("time").greaterThan(date).asList();
-			
-			return cargarRegistros(recuperado);
-		}else{
-			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID).field("time")
-					.greaterThan(date).field("time").lessThan(date2).asList();
-//			List<RegistroHistoricoMorphia> recuperado = RepoMongo.getInstance().getDatastore()
-//					.createQuery(RegistroHistoricoMorphia.class).filter("userID", userID)
-//					.filter("time >", date).filter("time <", date2).asList();
-			
-			return cargarRegistros(recuperado);
+		if(userID != null){
+			query = query.filter("userID", userID);
 		}
+				
+		if (fechaDesde == null && fechaHasta == null) {
+			recuperado = query.asList();
+		} else if (fechaDesde == null) {
+			recuperado = query.field("time").lessThan(fechaHasta).asList();
+		} else if (fechaHasta == null) {
+			recuperado = query.field("time").greaterThan(fechaDesde).asList();
+		} else {
+			recuperado = query.field("time").greaterThan(fechaDesde)
+					.field("time").lessThan(fechaHasta).asList();
+		}
+		
+		return cargarRegistros(recuperado);
 	}
-	
-	
 }

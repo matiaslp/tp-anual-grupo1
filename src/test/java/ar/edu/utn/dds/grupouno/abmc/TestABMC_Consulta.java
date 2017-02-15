@@ -19,6 +19,7 @@ import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
 import ar.edu.utn.dds.grupouno.repositorio.RepoMongo;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
@@ -44,7 +45,7 @@ public class TestABMC_Consulta {
 		banco.setPais("Argentina");
 		banco.setCallePrincipal("Alberdi");
 		banco.setCalleLateral("Escalada");
-		ServicioAPI = "http://trimatek.org/Consultas/";
+		ServicioAPI = LeerProperties.getInstance().prop.getProperty("Servicio_Externo");
 		local = new LocalComercial("Localcito", 0, 0, null);
 		parada = new ParadaColectivo("47", 0, 0);
 		cgp = new CGP("Mataderos", 0, 0);
@@ -66,12 +67,13 @@ public class TestABMC_Consulta {
 
 	}
 
-	@Test
-	public void testConsultaVacia() throws JSONException, MalformedURLException, IOException, MessagingException {
-		ArrayList<POI> lista = null;
-		lista = abmc.buscar(ServicioAPI, "", usuario.getId());
-		Assert.assertTrue(lista.isEmpty());
-	}
+	//Este test queda anulado ya que no se puede buscar por un string vacio
+//	@Test
+//	public void testConsultaVacia() throws JSONException, MalformedURLException, IOException, MessagingException {
+//		ArrayList<POI> lista = null;
+//		lista = abmc.buscar(ServicioAPI, "", usuario.getId());
+//		Assert.assertTrue(lista.isEmpty());
+//	}
 
 	@Test
 	public void testConsultaLocal() throws JSONException, MalformedURLException, IOException, MessagingException {

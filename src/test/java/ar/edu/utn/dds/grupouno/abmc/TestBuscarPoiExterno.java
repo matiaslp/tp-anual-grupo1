@@ -6,19 +6,29 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.BusquedaDePOIsExternos;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 
 public class TestBuscarPoiExterno {
+	
+	private String ServicioAPI;
+
+	@Before
+	public void inicializar(){
+		
+		ServicioAPI = LeerProperties.getInstance().prop.getProperty("Servicio_Externo");
+	}
 
 	@Test
 	public void testBuscarPOIsExternosBanco() throws JSONException, MalformedURLException, IOException {
 		String var1 = "Galicia";
 		String var2 = "";
 		List<POI> listaResultado = null;
-		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos("http://trimatek.org/Consultas/", var1, var2);
+		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos(ServicioAPI, var1, var2);
 
 		Assert.assertNotNull(listaResultado);
 
@@ -29,7 +39,7 @@ public class TestBuscarPoiExterno {
 		String var1 = "Santander";
 		String var2 = "Pagos";
 		List<POI> listaResultado = null;
-		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos("http://trimatek.org/Consultas/", var1, var2);
+		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos(ServicioAPI, var1, var2);
 
 		Assert.assertTrue(listaResultado.size() == 1);
 
@@ -40,7 +50,7 @@ public class TestBuscarPoiExterno {
 		String var1 = "";
 		String var2 = "";
 		List<POI> listaResultado = null;
-		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos("http://trimatek.org/Consultas/", var1, var2);
+		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos(ServicioAPI, var1, var2);
 		Assert.assertTrue(listaResultado.isEmpty());
 	}
 
@@ -49,7 +59,7 @@ public class TestBuscarPoiExterno {
 		String var1 = "Boedo";
 
 		List<POI> listaResultado = null;
-		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos("http://trimatek.org/Consultas/", var1);
+		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos(ServicioAPI, var1);
 
 		Assert.assertNotNull(listaResultado);
 	}
@@ -59,7 +69,7 @@ public class TestBuscarPoiExterno {
 		String var1 = "Boedo";
 
 		List<POI> listaResultado = null;
-		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos("http://trimatek.org/Consultas/", var1);
+		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos(ServicioAPI, var1);
 
 		Assert.assertTrue(listaResultado.size() == 16);
 	}
@@ -69,7 +79,7 @@ public class TestBuscarPoiExterno {
 		String var1 = "";
 
 		List<POI> listaResultado = null;
-		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos("http://trimatek.org/Consultas/", var1);
+		listaResultado = BusquedaDePOIsExternos.buscarPOIsExternos(ServicioAPI, var1);
 
 		Assert.assertTrue(listaResultado.isEmpty());
 	}

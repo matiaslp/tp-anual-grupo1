@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -26,13 +27,13 @@ import ar.edu.utn.dds.grupouno.repositorio.PersistibleConNombre;
 		@NamedQuery(name = "updateUsername", query = "UPDATE Usuario SET username = :username where id = :id") })
 public class Usuario extends PersistibleConNombre {
 
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	// @ManyToOne(cascade = { CascadeType.ALL})
 	@JoinColumn(name = "Rol", nullable = false)
 	private Rol rol;
 	private String username;
 	private String password;
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	// @ManyToMany(cascade = { CascadeType.ALL})
 	@JoinTable(name = "USUARIO_FUNCIONALIDAD", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "func_id") })
@@ -159,6 +160,23 @@ public class Usuario extends PersistibleConNombre {
 			}
 		}
 		return null;
+	}
+	
+	public boolean isFuncionalidad(String funcionalidad) {
+		for (Accion accion : this.funcionalidades) {
+			if (accion.getNombreFuncion().equals(funcionalidad)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isAdmin (){	
+		return getRol().getValue().equals("ADMIN");
+	}
+	
+	public boolean isTerminal (){	
+		return getRol().getValue().equals("TERMINAL");
 	}
 
 }

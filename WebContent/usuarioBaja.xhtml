@@ -11,28 +11,37 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h:form>
-			<p:panel id="panel" header="Busqueda">
+			<p:panel id="panel" header="Baja de Usuarios">
 				<h:form>
 					<p:outputPanel deferred="true">
 						<h3>Baja Usuario</h3>
 						<p>Nombre de Usuario</p>
 					</p:outputPanel>
 				</h:form>
-				<h:dataTable value="#{busquedaBean.items}" var="item" id="table">
-					<h:column>
-						<h:inputText value="#{item.value}" />
-					</h:column>
-				</h:dataTable>
+					<p:inputMask id="Nombre" value="#{bajaUsuario.nombre}"
+					required="true" />
 				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Baja" update="table" icon="ui-icon-check" action="#{busquedaBean.add}" />
-					
+					<p:commandButton value="Baja" update="panel" icon="ui-icon-check"
+						action="#{bajaUsuario.bajaUsuario()}" />
 				</h:panelGrid>
-				
-				
-			<p:commandButton value="Volver atràs" update="panel"
-					action="abmusuarios"/>
+				<p:commandButton value="Volver atras" update="panel"
+					action="welcome" immediate="true"/>
 			</p:panel>
 		</h:form>
+		<p:dialog widgetVar="usuarioBajaDialog" modal="true" showEffect="fade"
+			hideEffect="fade" resizable="f">
+			<h:form id="usuariobajaDialog">
+				<h:outputText value="Usuario dado de baja" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Error" widgetVar="usuarioBajaDialogError"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="usuarioBajaDialogError">
+				<h:outputText
+					value="Upps!! Hubo un error al dar de baja un Usuario.
+				Porfavor reintente con otro username" />
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

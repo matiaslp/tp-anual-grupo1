@@ -4,6 +4,8 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,11 +26,14 @@ import ar.edu.utn.dds.grupouno.repositorio.Persistible;
 @Entity
 @Table(name = "HISTORICO")
 @NamedQueries({
-		@NamedQuery(name = "getHistoricobyUserId", query = "SELECT r FROM RegistroHistorico r WHERE r.userID = :ruserid"),
-		@NamedQuery(name = "RegistroHistorico.findAll", query = "SELECT r FROM RegistroHistorico r"),
-		@NamedQuery(name = "RegistroHistorico.reporteBusquedasPorFecha", query = "SELECT date(r.time) as fecha,count(r.id) as cantidadBusquedas FROM RegistroHistorico r group by date(r.time)"),
-		@NamedQuery(name = "RegistroHistorico.reporteCantidadResultadosPorTerminal", query = "SELECT cantResultados,busqueda FROM RegistroHistorico r WHERE r.userID = :ruserid"),
-		@NamedQuery(name = "RegistroHistorico.reporteBusquedaPorUsuario", query = "SELECT r.userID,SUM(r.cantResultados) FROM RegistroHistorico r group by r.userID") })
+@NamedQuery(name = "getHistoricobyUserId", query = "SELECT r FROM RegistroHistorico r WHERE r.userID = :ruserid"),
+@NamedQuery(name = "getHistoricobyEntreFechas", query = "SELECT r FROM RegistroHistorico r WHERE r.time BETWEEN :desde AND :hasta"),
+@NamedQuery(name = "getHistoricobyEntreFechasConUserId", query = "SELECT r FROM RegistroHistorico r WHERE r.time BETWEEN :desde AND :hasta AND r.userID = :ruserid"),
+@NamedQuery(name = "RegistroHistorico.findAll", query = "SELECT r FROM RegistroHistorico r"),
+@NamedQuery(name = "RegistroHistorico.reporteBusquedasPorFecha", query ="SELECT date(r.time) as fecha,count(r.id) as cantidadBusquedas FROM RegistroHistorico r group by date(r.time)"),
+@NamedQuery(name = "RegistroHistorico.reporteCantidadResultadosPorTerminal", query = "SELECT cantResultados,busqueda FROM RegistroHistorico r WHERE r.userID = :ruserid"),
+@NamedQuery(name = "RegistroHistorico.reporteBusquedaPorUsuario", query = "SELECT r.userID,SUM(r.cantResultados) FROM RegistroHistorico r group by r.userID")})
+
 public class RegistroHistorico extends Persistible {
 
 	private ZonedDateTime time;
@@ -37,10 +42,24 @@ public class RegistroHistorico extends Persistible {
 	private String busqueda;
 	private long cantResultados;
 	private double tiempoDeConsulta;
+
+	
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinTable(name = "HISTORICO_POI", joinColumns = { @JoinColumn(name = "historico_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "poi_id") })
 	private List<POI> pois = new ArrayList<POI>();
+
+	public List<POI> getPois() {
+		return pois;
+	}
+
+	public void setPois(List<POI> pois) {
+		this.pois = pois;
+	}
+
+	public void setTime(ZonedDateTime time) {
+		this.time = time;
+	}
 
 	public DateTime getTime() {
 
@@ -48,7 +67,6 @@ public class RegistroHistorico extends Persistible {
 	}
 
 	public void setTime(DateTime time) {
-
 		this.time = MetodosComunes.convertJodatoJava(time);
 	}
 

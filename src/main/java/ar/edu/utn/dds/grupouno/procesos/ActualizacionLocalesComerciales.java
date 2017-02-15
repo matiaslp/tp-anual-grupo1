@@ -21,7 +21,6 @@ import org.quartz.SchedulerException;
 import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.quartz.Proceso;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class ActualizacionLocalesComerciales extends Proceso {

@@ -18,6 +18,7 @@ import ar.edu.utn.dds.grupouno.abmc.poi.LocalComercial;
 import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
+import ar.edu.utn.dds.grupouno.helpers.LeerProperties;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
 public class TestABMC_Timer {
@@ -41,7 +42,7 @@ public class TestABMC_Timer {
 		banco.setPais("Argentina");
 		banco.setCallePrincipal("Alberdi");
 		banco.setCalleLateral("Escalada");
-		ServicioAPI = "http://trimatek.org/Consultas/";
+		ServicioAPI = LeerProperties.getInstance().prop.getProperty("Servicio_Externo");
 
 		usuario = ufactory.crearUsuario("admin", "password", "ADMIN");
 

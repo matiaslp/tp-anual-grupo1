@@ -10,33 +10,57 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:form>
-			<p:growl id="msgs" showDetail="true" />
-		    <p:panel header="Acciones ante la busqueda" style="margin-bottom:10px;">
-		    	<h:panelGrid columns="2" cellpadding="5">
-		        	<p:selectOneMenu id="AccionSeleccionar" value="#{AccionesDeConsultaBean.accion}" style="width:150px">
-		            	<f:selectItems value="#{AccionesDeConsultaBean.accionesParaSeleccionar}" />
-		            </p:selectOneMenu>
-		            <p:commandButton value="Agregar" update="msgs" actionListener="#{AccionesDeConsultaBean.agregar}" icon="ui-icon-check">
-		            	<f:param name="accionElegida" value="AccionesDeConsultaBean.accion"></f:param>
-		            </p:commandButton>
-		        </h:panelGrid>
-		  		<p:separator />
-		  		<p:dataTable var="acciones" value="#{AccionesDeConsultaBean.accionesSeleccionadas}">
-					<p:column headerText="Acciones">
-		    			<h:outputText value="#{acciones.nombre}" />
-		   			</p:column>
-		    		<p:column style="width:32px;text-align: center">
-		    			<p:commandButton value="Agregar" update="msgs" actionListener="#{AccionesDeConsultaBean.eliminar}" icon="ui-icon-check" >
-		    				<f:param name="accionesElegidas" value="acciones"></f:param>
-		    			</p:commandButton>
-		    		</p:column>
-		  		</p:dataTable>
+		<h:form id="form">
+			<p:panel id="panel" header="Configuración de Acciones ante una Consulta"
+				style="margin-bottom:10px;">
+				<h:panelGrid columns="5" cellpadding="5">
+					<p:outputLabel value="Usuario" />
+					<p:inputText name="Usuario"
+						value="#{AccionesDeConsultaBean.username}" />
+					<p:commandButton value="Cargar" update="accionesSeleccionadas"
+						action="#{AccionesDeConsultaBean.cargarUsuario}"
+						icon="ui-icon-check">
+					</p:commandButton>
+					<p:selectOneMenu id="AccionSeleccionar" value="#{AccionesDeConsultaBean.accion}" style="width:150px">
+						<f:selectItems value="#{AccionesDeConsultaBean.nombresAcciones}" />
+					</p:selectOneMenu>
+					<p:commandButton value="Agregar" update="accionesSeleccionadas"
+						action="#{AccionesDeConsultaBean.agregar()}" icon="ui-icon-check">
+					</p:commandButton>
+				</h:panelGrid>
 				<p:separator />
-				<p:commandButton value="OK" update="msgs" action="#{accionesDeConsultaBean.confirmar}" icon="ui-icon-check" />
-		  		<p:commandButton value="Cancelar" update="msgs" action="#{accionesDeConsultaBean.cancelar}" icon="ui-icon-check" />
+				<p:dataTable id="accionesSeleccionadas" var="accion"
+					value="#{AccionesDeConsultaBean.accionesSeleccionadas}">
+					<p:column style="width:100px;text-align: center"
+						headerText="Acciones">
+						<h:outputText value="#{accion.nombre}" />
+					</p:column>
+					<p:column style="width:32px;text-align: center">
+						<p:commandButton value="Eliminar" update="accionesSeleccionadas"
+							action="#{AccionesDeConsultaBean.eliminar(accion)}"
+							icon="ui-icon-check">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				<p:separator />
+				<p:commandButton value="OK"
+					action="#{AccionesDeConsultaBean.confirmar()}" icon="ui-icon-check"></p:commandButton>
+				<p:commandButton value="Volver atras" update="panel"
+					action="#{AccionesDeConsultaBean.cancelar}"></p:commandButton>
 			</p:panel>
 		</h:form>
+		<p:dialog header="Agregadas" widgetVar="funcionesAgregadas"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="accionesAgregadas">
+				<h:outputText value="Acciones Agregadas" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Permisos" widgetVar="permisos"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="permisos">
+				<h:outputText value="Este usuario no tiene permiso para usar esa accion... picarón" />
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

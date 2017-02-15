@@ -15,7 +15,6 @@ import ar.edu.utn.dds.grupouno.abmc.poi.POI;
 import ar.edu.utn.dds.grupouno.autentification.AuthAPI;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.autentification.UsuariosFactory;
-import ar.edu.utn.dds.grupouno.quartz.ProcesoHandler;
 import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
@@ -52,18 +51,18 @@ public class TestProcesoActualizarLocalComercial {
 		local1.setEtiquetas(etiquetas);
 		repositorio.pois().agregarPOI(local1);
 		repositorio.pois().getEm().detach(local1);
-
+		
 		// Creo los locales que espero obtener despues de ejecutar el proceso:
 		local2 = new LocalComercial();
 		local2.setNombre("local2");
 		local2.setEtiquetas(etiquetas2);
-
+		
 		local3 = new LocalComercial();
 		local3.setNombre("local3");
 		local3.setEtiquetas(etiquetas3);
-
+		
 		unUsuarioAdmin = ufactory.crearUsuario("admin", "password", "ADMIN");
-
+		
 		unUsuarioAdmin.setAuditoriaActivada(true);
 		unUsuarioAdmin.setCorreo("uncorreo@correoloco.com");
 		unUsuarioAdmin.setLog(true);
@@ -77,31 +76,31 @@ public class TestProcesoActualizarLocalComercial {
 	@Test
 	public void testProcesoActualizarLocalesComerciales() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			SchedulerException, InterruptedException {
-
+		
 		ActualizacionLocalesComerciales proceso = new ActualizacionLocalesComerciales();
 		Scheduler scheduler = ProcesoHandler.ejecutarProceso(unUsuarioAdmin, proceso, filePath, false, REINTENTOS_MAX,null);
-
+		
 		// Para darle tiempo al planificador que se puedea inicializar y
 		// ejecutar los procesos
 		while (!scheduler.getContext().getBoolean("ejecutado")) {
 			Thread.sleep(1000);
 		}
-
+		
 		scheduler.shutdown();
-
+		
 		// Busco las modificaciones para corroborar que se corrio correctamente
 		local2Actualizado = (LocalComercial) repositorio.pois().getPOIbyNombre("local2").get(0);
 		local3Actualizado = (LocalComercial) repositorio.pois().getPOIbyNombre("local3").get(0);
 		local1Actualizado = (LocalComercial) repositorio.pois().getPOIbyNombre("local1").get(0);
-
+		
 		// Compruebo que el local 2 y 3 hayan sido creados:
 		Assert.assertNotNull(local2Actualizado);
 		Assert.assertNotNull(local3Actualizado);
-
+		
 		// Compruebo que los locales 2 y 3 se hayan creado correctamente:
 		Assert.assertTrue(local2Actualizado.compararEtiquetas(local2));
 		Assert.assertTrue(local3Actualizado.compararEtiquetas(local3));
-
+		
 		// Compruebo que el local 1 se actualizo correctamente:
 		Assert.assertFalse(local1Actualizado.compararEtiquetas(local1));
 	}
@@ -121,7 +120,7 @@ public class TestProcesoActualizarLocalComercial {
 		int reintentosRealizados = scheduler.getContext().getInt("reintentosCont");
 		
 		Assert.assertTrue(reintentosRealizados == REINTENTOS_MAX);
-
+		
 		scheduler.shutdown();
 		
 	}

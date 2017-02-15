@@ -13,7 +13,7 @@ public class UsuariosFactory {
 
 	public Usuario crearUsuario(String username, String password, String rol) {
 		Usuario nuevoUsuario = null;
-		if (cantidadConMismoNombre(username) > 1) {
+		if (cantidadConMismoNombre(username) >= 1) {
 			return null;
 		} else {
 			nuevoUsuario = new Usuario();

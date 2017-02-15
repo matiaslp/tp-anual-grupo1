@@ -1,5 +1,7 @@
 package ar.edu.utn.dds.grupouno.frontend.login;
 
+import java.io.IOException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
@@ -17,7 +19,7 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 public class LoginBean {
 	private String usuario;
 	private String contrasena;
-	
+
 	public String getUsuario() {
 		return usuario;
 	}
@@ -41,14 +43,31 @@ public class LoginBean {
 		UsuariosFactory fact = new UsuariosFactory();
 		Usuario admin = fact.crearUsuario("admin", "pass", "ADMIN");
 		Usuario terminal = fact.crearUsuario("terminal", "pass", "TERMINAL");
-		
-		if ((Repositorio.getInstance().usuarios().getUsuarioByName("admin")) == null) {
-            Repositorio.getInstance().usuarios().persistir(admin);
-            Repositorio.getInstance().usuarios().persistir(terminal);
+		if (admin != null) {
+			AuthAPI.getInstance().agregarFuncionalidad("actualizacionLocalesComerciales", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("agregarAcciones", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("bajaPOIs", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("busquedaPOI", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("auditoria", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("generarLog", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("cambiarEstadoMail", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("notificarBusquedaLarga", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("procesoMultiple", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("obtenerInfoPOI", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("reporteBusquedaPorUsuario", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("reporteBusquedasPorFecha", admin);
+			AuthAPI.getInstance().agregarFuncionalidad("reportecantidadResultadosPorTerminal", admin);
 		}
-		//-------------------------
-		
-		//obtenemos usuario
+
+		if ((Repositorio.getInstance().usuarios().getUsuarioByName("admin")) == null) {
+			Repositorio.getInstance().usuarios().persistir(admin);
+		}
+		if ((Repositorio.getInstance().usuarios().getUsuarioByName("terminal")) == null) {
+			Repositorio.getInstance().usuarios().persistir(terminal);
+		}
+		// -------------------------
+
+		// obtenemos usuario
 
 		String token = AuthAPI.getInstance().iniciarSesion(usuario, contrasena);
 		if (token != null) {
@@ -73,6 +92,20 @@ public class LoginBean {
 	}
 
 	public void logout() {
+		
+		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("username"));
+		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
+		
+		AuthAPI.getInstance().cerrarSesion(usuario.getUsername(), token);
+		
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/tp-anual/faces/login.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -10,51 +10,86 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-<h:form>
-	<p:panel id="panel9" header="Alta Usuario">
+		<h:form>
+			<p:panel id="panel" header="Alta Usuario">
 				<p:messages id="msgs" />
-    <h:panelGrid columns="2" cellpadding="5">
-        <p:outputLabel for="Nombre" value="Nombre: " />
-        <p:inputMask id="Nombre" value="#{altaUsuariosMaskView.nombre}" />
+				<h:panelGrid columns="3" cellpadding="5">
 
-        <h:outputText value="auditoriaActivada " />
-        <p:selectBooleanButton id="value1" value="#{selectBooleanView.value1}" onLabel="Yes" offLabel="No" style="width:60px" />
- 
+					<p:outputLabel for="rol" value="Rol:" />
+					<p:selectOneMenu id="rol" value="#{altaUsuario.rol}"
+						style="width:150px">
+						<f:selectItems value="#{altaUsuario.roles}" />
+						<p:ajax update="panel" event="change"
+							listener="#{altaUsuario.listener}" />
+					</p:selectOneMenu>
+					<h:outputText value="" />
+					
+					<p:outputLabel for="Nombre" value="Nombre: " />
+					<p:inputMask id="Nombre" value="#{altaUsuario.nombre}"
+						required="true" />
+					<h:outputText value="" />
+					
+					<h:outputText value="Auditoria: " />
+					<p:selectBooleanButton id="logueo" value="#{altaUsuario.logueo}"
+						onLabel="Yes" offLabel="No" style="width:60px" />
+					<p:outputLabel value="¿Se desea guardar registros historicos de las busquedas de este usuario?" 
+						style="font-size:12px; color:red;" />
+					
+					<p:outputLabel for="correo" value="Correo:"
+						rendered="#{altaUsuario.isAdmin()}" />
+					<p:inputMask id="correo" value="#{altaUsuario.correo}"
+						rendered="#{altaUsuario.isAdmin()}" />
+					<h:outputText value="" rendered="#{altaUsuario.isAdmin()}" />
 
-        <p:outputLabel for="correo" value="correo:" />
-        <p:inputMask id="correo" value="#{altaUsuariosMaskView.correo}" />
-  
-        <p:outputLabel for="mailHabilitado" value="mailHabilitado:" />
-        <p:inputMask id="mailHabilitado" value="#{altaUsuariosMaskView.mailHabilitado}" />
-  
-        <p:outputLabel for="notificacionesActivadas" value="notificacionesActivadas:" />
-        <p:inputMask id="notificacionesActivadas" value="#{altaUsuariosMaskView.notificacionesActivadas}" />
-  
-        <p:outputLabel for="password" value="password:" />
-        <p:inputMask id="password" value="#{altaUsuariosMaskView.password}" />
-  
-        <p:outputLabel for="username" value="username:" />
-        <p:inputMask id="username" value="#{altaUsuariosMaskView.username}" />
-  
-        <p:outputLabel for="rol" value="rol:" />
-        <p:inputMask id="rol" value="#{altaUsuariosMaskView.rol}" />
-  
-        		
+					<p:outputLabel for="mailHabilitado"
+						value="Notificaciones por email:"
+						rendered="#{altaUsuario.isAdmin()}" />
+					<p:selectBooleanButton id="mailHabilitado"
+						value="#{altaUsuario.mailHabilitado}" onLabel="Yes" offLabel="No"
+						style="width:60px" rendered="#{altaUsuario.isAdmin()}" />
+					<h:outputText value="¿Se desea recibir emails de notificaciones por busquedas demoradas?" rendered="#{altaUsuario.isAdmin()}" 
+						style="font-size:12px; color:red;" />
+					
+					<p:outputLabel for="password" value="Password:" />
+					<p:password id="password" value="#{altaUsuario.password}"
+						label="Contrasena" required="true">
+						<f:validateLength minimum="8" />
+						<p:ajax update="msgContrasena" event="keyup" />
+					</p:password>
+					<p:message for="password" id="msgContrasena" display="icon" />
 
-    
-
-
-
-	    <p:commandButton value="Resetiar" type="reset" />
-        <p:commandButton value="Agregar" update="panel9" action="#{altaUsuariosMaskView.altaUsuario}"/>
-    </h:panelGrid>
-
-    			<p:commandButton value="Volver atràs" update="panel9"	action="abmusuarios"/>
-
-    </p:panel>
-       
-
-</h:form>
+					
+					<p:outputLabel for="username" value="Username:" />
+					<p:inputMask id="username" value="#{altaUsuario.username}"
+						required="true" />
+					<h:outputText value="" />
+					
+					<p:commandButton value="Resetiar" type="reset" />
+					<p:commandButton value="Agregar" update="panel"
+						action="#{altaUsuario.altaUsuario}" />
+				</h:panelGrid>
+				
+				<p:commandButton value="Volver atras" update="panel"
+					action="welcome" immediate="true"/>
+			</p:panel>
+		</h:form>
+		<p:dialog widgetVar="usuarioCreadoDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="usuarioCreadoDialog">
+				<h:outputText
+					value="Usuario Creado con permisos por defecto. 
+				Para modificarlos dirigirse a la pantalla de Configuración de 
+				Acciones ante una Consulta" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Error" widgetVar="usuarioCreadoDialogError"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="usuarioCreadoDialogError">
+				<h:outputText
+					value="Upps!! Hubo un error al crear un Usuario.
+				Porfavor reintente con otro username" />
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

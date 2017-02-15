@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:panel id="panel" header="Baja POI">
+				<p:messages id="msgs" />
+				<p:outputLabel value="Por favor revise los campos del POI y asegurese de que es el correcto antes de eliminarlo" />
+				<h:panelGrid columns="2" cellpadding="5">
+					
+					<p:outputLabel for="TIPO" value="Tipo:" />
+					<p:inputMask id="TIPO" value="#{bajaPOI.tipoPOI.name()}" readonly="true" />
+					
+					<p:outputLabel for="Nombre" value="Nombre: " />
+					<p:inputMask id="Nombre" value="#{bajaPOI.nombre}" readonly="true" />
+					
+					<p:outputLabel for="CallePrincipal" value="Calle Principal:" />
+					<p:inputMask id="CallePrincipal" value="#{bajaPOI.callePrincipal}" readonly="true"/>
+					
+					<p:outputLabel for="CalleLateral" value="Calle Lateral:" />
+					<p:inputMask id="CalleLateral" value="#{bajaPOI.calleLateral}" readonly="true"/>
+					
+					<p:outputLabel for="numeracion" value="Numeracion:"/>
+					<p:inputMask id="numeracion" value="#{bajaPOI.numeracion}" mask="9?99999" maxlength="6" readonly="true"/>
+
+					<p:outputLabel for="piso" value="Piso:" />
+					<p:inputMask id="piso" value="#{bajaPOI.piso}" mask="9?99" maxlength="3" readonly="true"/>
+					
+					<p:outputLabel for="departamento" value="Departamento:" />
+					<p:inputMask id="departamento" value="#{bajaPOI.departamento}" readonly="true"/>
+					
+					<p:outputLabel for="unidad" value="Unidad:" />
+					<p:inputMask id="unidad" value="#{bajaPOI.unidad}" readonly="true"/>
+					
+					<p:outputLabel for="codigoPostal" value="Codigo Postal:" />
+					<p:inputMask id="codigoPostal" value="#{bajaPOI.codigoPostal}" mask="9?999" maxlength="4" readonly="true"/>
+
+					<p:outputLabel for="localidad" value="Localidad:" />
+					<p:inputMask id="localidad" value="#{bajaPOI.localidad}" readonly="true"/>
+					
+					<p:outputLabel for="barrio" value="Barrio:" />
+					<p:inputMask id="barrio" value="#{bajaPOI.barrio}" readonly="true"/>
+					
+					<p:outputLabel for="provincia" value="Provincia:" />
+					<p:inputMask id="provincia" value="#{bajaPOI.provincia}" readonly="true"/>
+					
+					<p:outputLabel for="pais" value="Pais:" />
+					<p:inputMask id="pais" value="#{bajaPOI.pais}" readonly="true"/>
+					
+					<p:outputLabel for="LATITUD" value="Latitud" />
+					<p:inputMask id="LATITUD" value="#{bajaPOI.latitud}"  
+						readonly="true"/>
+
+					<p:outputLabel for="LONGITUD" value="Longitud" />
+					<p:inputMask id="LONGITUD" value="#{bajaPOI.longitud}" 
+						readonly="true"/>
+					
+					<p:outputLabel for="comuna" value="Comuna:" />
+					<p:inputMask id="comuna" value="#{bajaPOI.comuna}" mask="9?99" maxlength="3" readonly="true"/>
+					
+					<p:outputLabel for="etiquetas" value="Etiquetas:" />
+					<p:inputMask id="etiquetas" value="#{bajaPOI.etiquetas}" readonly="true"/>
+
+					<p:outputLabel for="sucursal" value="Sucursal"
+						rendered="#{bajaPOI.tipoPOI.isBanco()}" />
+					<p:inputMask id="sucursal" value="#{bajaPOI.sucursal}"
+						rendered="#{bajaPOI.tipoPOI.isBanco()}" readonly="true"/>
+					
+					<p:outputLabel for="gerente" value="Gerente"
+						rendered="#{bajaPOI.tipoPOI.isBanco()}" />
+					<p:inputMask id="gerente" value="#{bajaPOI.gerente}"
+						rendered="#{bajaPOI.tipoPOI.isBanco()}" readonly="true"/>
+					
+					<p:outputLabel for="linea" value="Linea"
+						rendered="#{bajaPOI.tipoPOI.isParada()}" />
+					<p:inputMask id="linea" value="#{bajaPOI.linea}" mask="9?99999" maxlength="6"
+						rendered="#{bajaPOI.tipoPOI.isParada()}" readonly="true"/>
+
+					<p:outputLabel for="director" value="Director"
+						rendered="#{bajaPOI.tipoPOI.isCGP()}" />
+					<p:inputMask id="director" value="#{bajaPOI.director}"
+						rendered="#{bajaPOI.tipoPOI.isCGP()}" readonly="true"/>
+					
+					<p:outputLabel for="telefono" value="Telefono"
+						rendered="#{bajaPOI.tipoPOI.isCGP()}" />
+					<p:inputMask id="telefono" value="#{bajaPOI.telefono}"
+						rendered="#{bajaPOI.tipoPOI.isCGP()}" readonly="true"/>
+					
+					<p:outputLabel for="rubro" value="Rubro"
+						rendered="#{bajaPOI.tipoPOI.isLocal()}" />
+					<p:inputMask id="rubro" value="#{bajaPOI.rubro}"
+						rendered="#{bajaPOI.tipoPOI.isLocal()}" readonly="true" />
+					
+					<p:outputLabel for="cercania" value="Cercania"
+						rendered="#{bajaPOI.tipoPOI.isNotParada()}" />
+					<p:inputMask id="cercania" value="#{bajaPOI.cercania}" mask="9?99999" maxlength="6"
+						rendered="#{bajaPOI.tipoPOI.isNotParada()}" readonly="true"/>				
+
+					<p:outputLabel for="diasLocal" value="Dias Disponible"
+						rendered="#{bajaPOI.tipoPOI.isLocal()}" />
+					<p:selectCheckboxMenu id="diasLocal"
+						value="#{bajaPOI.diasLocalSeleccionados}" label="Dias"
+						panelStyle="width:250px" rendered="#{bajaPOI.tipoPOI.isLocal()}" readonly="true">
+						<f:selectItems value="#{bajaPOI.dias}" />
+					</p:selectCheckboxMenu>
+
+					<p:outputLabel for="horasLocal" value="Horario Disponible"
+						rendered="#{bajaPOI.tipoPOI.isLocal()}" />
+					<p:selectCheckboxMenu id="horasLocal"
+						value="#{bajaPOI.horasLocalSeleccionados}" label="Horas"
+						panelStyle="width:250px" rendered="#{bajaPOI.tipoPOI.isLocal()}" readonly="true">
+						<f:selectItems value="#{bajaPOI.horas}" />
+					</p:selectCheckboxMenu>
+				</h:panelGrid>
+
+				<p:dataTable id="Servicios" var="nodoServicio"
+					value="#{bajaPOI.servicios}"
+					rendered="#{bajaPOI.tipoPOI.isCGP()||bajaPOI.tipoPOI.isBanco()}">
+					<p:column headerText="Servicios">
+						<h:outputText value="#{nodoServicio.nombre}" />
+					</p:column>
+					<p:column headerText="Dias">
+						<p:commandButton id="botonDias" value="Dias" type="button" />
+						<p:overlayPanel id="listaDias" for="botonDias" hideEffect="fade">
+							<h:outputText value="Domingo&lt;br /&gt;"
+								rendered="#{nodoServicio.isDomingo()}" escape="false" />
+							<h:outputText value="Lunes&lt;br /&gt;"
+								rendered="#{nodoServicio.isLunes()}" escape="false" />
+							<h:outputText value="Martes&lt;br /&gt;"
+								rendered="#{nodoServicio.isMartes()}" escape="false" />
+							<h:outputText value="Miercoles&lt;br /&gt;"
+								rendered="#{nodoServicio.isMiercoles()}" escape="false" />
+							<h:outputText value="Jueves&lt;br /&gt;"
+								rendered="#{nodoServicio.isJueves()}" escape="false" />
+							<h:outputText value="Viernes&lt;br /&gt;"
+								rendered="#{nodoServicio.isViernes()}" escape="false" />
+							<h:outputText value="Sabado&lt;br /&gt;"
+								rendered="#{nodoServicio.isSabado()}" escape="false" />
+						</p:overlayPanel>
+					</p:column>
+					<p:column headerText="Desde">
+						<h:outputText value="#{nodoServicio.horaInicio}" />
+					</p:column>
+					<p:column headerText="Hasta">
+						<h:outputText value="#{nodoServicio.horaFin}" />
+					</p:column>
+				</p:dataTable>
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:commandButton value="Borrar POI" update="panel"
+						action="#{bajaPOI.bajaPOI}" />
+					<p:commandButton value="Volver atras" update="panel"
+						action="#{bajaPOI.home}" immediate="true"/>
+				</h:panelGrid>
+
+			</p:panel>
+		</h:form>
+				<p:dialog widgetVar="poiBajaDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="f">
+			<p:ajax event="close" action="#{bajaPOI.home}"></p:ajax>
+			<h:form id="poiBajaDialog">
+				<h:outputText value="POI dado de baja" />
+			</h:form>
+		</p:dialog>
+				<p:dialog header="Error" widgetVar="poiBajaDialogError" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="f">
+			<h:form id="poiBajaDialogError">
+				<h:outputText value="Upps!! Hubo un error al borrar un POI. Por favor reintente
+				mas tarde." />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

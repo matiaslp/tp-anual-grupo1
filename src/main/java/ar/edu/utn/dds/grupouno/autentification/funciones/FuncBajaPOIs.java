@@ -20,8 +20,9 @@ import ar.edu.utn.dds.grupouno.autentification.Rol;
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
 import ar.edu.utn.dds.grupouno.procesos.ActualizacionLocalesComerciales;
 import ar.edu.utn.dds.grupouno.procesos.BajaPOIs;
+import ar.edu.utn.dds.grupouno.procesos.ProcesoHandler;
+import ar.edu.utn.dds.grupouno.procesos.ProcesoListener;
 import ar.edu.utn.dds.grupouno.procesos.ResultadoProceso;
-import ar.edu.utn.dds.grupouno.quartz.ProcesoListener;
 @SuppressWarnings("serial")
 @Entity
 public class FuncBajaPOIs extends Accion {
@@ -39,39 +40,17 @@ public class FuncBajaPOIs extends Accion {
 	}
 	
 	public void darDeBajaPOI(Usuario user, String Token, int cantidadReintentos, boolean enviarEmail, 
-			String filePath) throws SchedulerException, ClassNotFoundException, InstantiationException, IllegalAccessException, InterruptedException {
+			String filePath) {
 		if (validarsesion(user, Token)) {
-			ResultadoProceso resultadoProceso = new ResultadoProceso();
-			Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-			scheduler.getContext().put("ResultadoProceso", resultadoProceso);
-			scheduler.getContext().put("Usuario", user);
+			BajaPOIs proceso = new BajaPOIs();
+			try {
+				Scheduler scheduler = ProcesoHandler.ejecutarProceso(user, proceso, filePath, enviarEmail, cantidadReintentos,null);
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SchedulerException
+					| InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			scheduler.start();
-			
-			JobKey key = new JobKey(ActualizacionLocalesComerciales.class.getSimpleName());
-			
-			// Crea una instancia del proceso y con la opcion requestRecovery(true) se fuerzan reintentos en caso de fallas
-			JobDetail job = JobBuilder.newJob(BajaPOIs.class).withIdentity(key).requestRecovery(true).build();
-			
-			// Cargo en el jobDataMap el path del archivo que uso de referencia.
-			job.getJobDataMap().put("filePath", filePath);
-			job.getJobDataMap().put("enviarMail", enviarEmail);
-			job.getJobDataMap().put("reintentosMax", cantidadReintentos);
-			job.getJobDataMap().put("reintentosCont", 0);
-			
-			Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger").startNow().build();
-					
-			// Creo instancia del jobListener y se lo agrego al scheduler
-			BajaPOIs procesoInicial = new BajaPOIs();
-			ProcesoListener procesoInicialListener = procesoInicial.getProcesoListener();
-			scheduler.getListenerManager().addJobListener((JobListener)procesoInicialListener, KeyMatcher.keyEquals(key));
-			
-			StdSchedulerFactory.getDefaultScheduler().scheduleJob(job, trigger);
-			
-			// Para darle tiempo al planificador que se puedea inicializar y ejecutar los procesos
-			Thread.sleep(1000);
-			
-			scheduler.shutdown();
 		}
 	}
 

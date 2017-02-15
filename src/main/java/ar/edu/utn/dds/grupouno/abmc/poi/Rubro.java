@@ -1,6 +1,9 @@
 package ar.edu.utn.dds.grupouno.abmc.poi;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ar.edu.utn.dds.grupouno.repositorio.PersistibleConNombre;
@@ -21,6 +24,9 @@ public class Rubro extends PersistibleConNombre {
 	public void setCercania(int distancia) {
 		this.cercania = distancia;
 	}
+	
+	@OneToMany(mappedBy="rubro")
+	private Set<LocalComercial> locales;
 
 	public Rubro() {
 

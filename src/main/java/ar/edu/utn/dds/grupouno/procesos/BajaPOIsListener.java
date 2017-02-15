@@ -3,7 +3,6 @@ package ar.edu.utn.dds.grupouno.procesos;
 import org.quartz.JobListener;
 
 import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.quartz.ProcesoListener;
 
 public class BajaPOIsListener extends ProcesoListener implements JobListener{
 

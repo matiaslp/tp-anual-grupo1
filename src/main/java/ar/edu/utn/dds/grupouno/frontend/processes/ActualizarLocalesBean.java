@@ -14,23 +14,23 @@ import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 @RequestScoped
 public class ActualizarLocalesBean {
 
-	private int cantidadReintentos;
-	private boolean enviarEmail;
+	private String cantidadReintentos;
+	private String enviarEmail;
 	private String filePath;
 
-	public int getCantidadReintentos() {
+	public String getCantidadReintentos() {
 		return cantidadReintentos;
 	}
 
-	public void setCantidadReintentos(int cantidadReintentos) {
+	public void setCantidadReintentos(String cantidadReintentos) {
 		this.cantidadReintentos = cantidadReintentos;
 	}
 
-	public boolean isEnviarEmail() {
+	public String getEnviarEmail() {
 		return enviarEmail;
 	}
 
-	public void setEnviarEmail(boolean enviarEmail) {
+	public void setEnviarEmail(String enviarEmail) {
 		this.enviarEmail = enviarEmail;
 	}
 
@@ -50,7 +50,7 @@ public class ActualizarLocalesBean {
 
 		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance()
 				.getAccion("actualizacionLocalesComerciales");
-		funcion.actualizarLocales(usuario, token, cantidadReintentos, enviarEmail, filePath);
+		funcion.actualizarLocales(usuario, token, Integer.parseInt(cantidadReintentos), Boolean.parseBoolean(enviarEmail), filePath);
 		return "index";
 	}
 //	public String preparar(){

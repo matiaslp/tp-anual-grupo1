@@ -27,7 +27,7 @@ public class DB_Etiqueta extends Repositorio {
 	public List<Etiqueta> getEtiquetabyNombre(String nombre) {
 
 		List<Etiqueta> etiquetas = null;
-		etiquetas = em.createNamedQuery("getEtiquetabyNombre").setParameter("enombre", "%" + nombre + "%")
+		etiquetas = em.createNamedQuery("Etiqueta.getEtiquetabyNombre").setParameter("enombre", "%" + nombre + "%")
 				.getResultList();
 		return etiquetas;
 	}

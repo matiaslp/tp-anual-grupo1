@@ -7,10 +7,12 @@ import org.junit.Test;
 
 import ar.edu.utn.dds.grupouno.abmc.consultaExterna.dtos.POI_DTO;
 import ar.edu.utn.dds.grupouno.abmc.poi.POI;
+import ar.edu.utn.dds.grupouno.abmc.poi.ParadaColectivo;
 import ar.edu.utn.dds.grupouno.abmc.poi.Rubro;
 import ar.edu.utn.dds.grupouno.abmc.poi.TiposPOI;
 import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
 import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
+
 
 public class TestABMC_Alta {
 	private Repositorio repositorio;
@@ -39,7 +41,6 @@ public class TestABMC_Alta {
 		poiDTOCGP.setNombre("unCGP");
 		poiDTOCGP.setLatitud(-34.5664823);
 		poiDTOCGP.setLongitud(-34.5664823);
-		poiDTOCGP.setRubro(rubro = new Rubro("unRubro"));
 		cgp = poiDTOCGP.converttoPOI();
 
 		poiDTOComercial = new POI_DTO();
@@ -47,6 +48,10 @@ public class TestABMC_Alta {
 		poiDTOComercial.setNombre("unLocalComercial");
 		poiDTOComercial.setLatitud(-34.5664823);
 		poiDTOComercial.setLongitud(-34.5664823);
+		Rubro rub = new Rubro();
+		rub.setNombre("Perfumeria");
+		rub.setCercania(1000);
+		poiDTOComercial.setRubro(rub);
 		local = poiDTOComercial.converttoPOI();
 
 		poiDTOColectivo = new POI_DTO();
@@ -55,6 +60,7 @@ public class TestABMC_Alta {
 		poiDTOColectivo.setLatitud(-34.5664823);
 		poiDTOColectivo.setLongitud(-34.5664823);
 		parada = poiDTOColectivo.converttoPOI();
+		((ParadaColectivo)parada).setLinea(114);
 	}
 
 	@Test

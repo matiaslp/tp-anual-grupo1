@@ -13,11 +13,11 @@
 			<p:panel id="panel" header="Reportes">
 				<p:messages id="msgs" />
 				<h:panelGrid columns="1" cellpadding="5" style="width:50%" layout="grid">
-					<p:commandButton value="Reporte Cantidad De Resultados Por Terminal" style="width:100%" update="panel"
+					<p:commandButton value="Reporte Cantidad De Resultados Por Terminal" rendered="#{menuBean.usuario.isFuncionalidad('reportecantidadResultadosPorTerminal')}" style="width:100%" update="panel"
 						action="reporteCantidadResultadosPorTerminal" />
-					<p:commandButton value="Reporte Busqueda Por Fecha" style="width:100%" update="panel"
+					<p:commandButton value="Reporte Busqueda Por Fecha" rendered="#{menuBean.usuario.isFuncionalidad('reporteBusquedasPorFecha')}" style="width:100%" update="panel"
 						action="reporteBusquedaPorFecha" />
-					<p:commandButton value="Reporte Cantidad Resultados Por Usuario"  style="width:100% " update="panel"
+					<p:commandButton value="Reporte Cantidad Resultados Por Usuario" rendered="#{menuBean.usuario.isFuncionalidad('reporteBusquedaPorUsuario')}" style="width:100% " update="panel"
 						action="ReporteCantidadResultadosPorUsuario"/>
 					
 

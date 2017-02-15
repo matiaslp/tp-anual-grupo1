@@ -14,7 +14,7 @@ public class RegistroHistoricoMorphia {
 	private String busqueda;
 	private long cantResultados;
 	private double tiempoDeConsulta;
-	private List<POI> pois = new ArrayList<POI>();
+	private List<DatoHistoricoPOIMorphia> pois = new ArrayList<DatoHistoricoPOIMorphia>();
 	private long id;
 	
 	public Date getTime() {
@@ -48,10 +48,10 @@ public class RegistroHistoricoMorphia {
 	public void setTiempoDeConsulta(double tiempoDeConsulta) {
 		this.tiempoDeConsulta = tiempoDeConsulta;
 	}
-	public List<POI> getPois() {
+	public List<DatoHistoricoPOIMorphia> getPois() {
 		return pois;
 	}
-	public void setPois(List<POI> pois) {
+	public void setPois(List<DatoHistoricoPOIMorphia> pois) {
 		this.pois = pois;
 	}
 	public long getId() {

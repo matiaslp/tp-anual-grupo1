@@ -1,76 +1,37 @@
 package ar.edu.utn.dds.grupouno.procesos;
 
-import java.util.ArrayList;
+import org.quartz.Job;
 
-import ar.edu.utn.dds.grupouno.autentification.Usuario;
-import ar.edu.utn.dds.grupouno.email.EnviarEmail;
+import ar.edu.utn.dds.grupouno.repositorio.DB_POI;
+import ar.edu.utn.dds.grupouno.repositorio.Repositorio;
 
-public abstract class Proceso {
+@SuppressWarnings("rawtypes")
+public abstract class Proceso implements Job {
 
-	protected int cantidadReintentos = 1;
-	protected boolean enviarEmail;
-	protected Usuario user;
+	private static Class SIGUIENTE_PROCESO;
 
-	// debe ser implementado en las clases hijo
-	public ResultadoProceso procesado() {
-		return null;
+	private DB_POI dbPOI = Repositorio.getInstance().pois();
 
+	public static Class getSiguienteProceso() {
+		return SIGUIENTE_PROCESO;
 	}
 
-	public void execute() {
-		// ejecutamos el proceso
-		ResultadoProceso resultado = procesado();
-		ArrayList<ResultadoProceso> listaResultados = new ArrayList<ResultadoProceso>();
-		// Si el resultado es erroneo
-		if (resultado.getResultado().equals(Resultado.ERROR)) {
-			listaResultados.add(resultado);
-			// Se reintenta cantidadReintentos veces
-			for (int i = 1; (this.cantidadReintentos > 0 && this.cantidadReintentos < i
-					&& resultado.getResultado().equals(Resultado.ERROR)); i++) {
-				resultado = procesado();
-				// acumulamos los resultado en una lista para armar el email
-				if (resultado.getResultado().equals(Resultado.ERROR))
-					listaResultados.add(resultado);
-			}
-			if (this.enviarEmail && user.getCorreo() != null) {
-				EnviarEmail.mandarCorreoProcesoError(user, listaResultados);
-			}
-		}
+	public static void setSiguienteProceso(Class siguienteProceso) {
+		SIGUIENTE_PROCESO = siguienteProceso;
 	}
 
-	public Proceso(int cantidadReintentos, boolean enviarEmail, Usuario unUser) {
-		super();
-		this.cantidadReintentos = cantidadReintentos;
-		this.enviarEmail = enviarEmail;
-		this.user = unUser;
+
+	public ProcesoListener getProcesoListener()
+			throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		return (ProcesoListener) getClass().getClassLoader().loadClass(getClass().getName() + "Listener").newInstance();
 	}
 
-	public int getCantidadReintentos() {
-		return cantidadReintentos;
+	public DB_POI getDbPOI() {
+		return dbPOI;
 	}
 
-	public void setCantidadReintentos(int cantidadReintentos) {
-		this.cantidadReintentos = cantidadReintentos;
-	}
-
-	public boolean isEnviarEmail() {
-		return enviarEmail;
-	}
-
-	public void setEnviarEmail(boolean enviarEmail) {
-		this.enviarEmail = enviarEmail;
-	}
-
-	public Usuario getUser() {
-		return user;
-	}
-
-	public void setUser(Usuario user) {
-		this.user = user;
-	}
-
-	public Proceso() {
-
+	public void setDbPOI(DB_POI dbPOI) {
+		this.dbPOI = dbPOI;
 	}
 
 }
