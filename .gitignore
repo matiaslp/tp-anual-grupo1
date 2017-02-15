@@ -9,9 +9,7 @@ build/
 target/*
 build/*
 .tern-project
-<<<<<<< HEAD
-.metadata
-
-=======
 .metadata/*
->>>>>>> master
+RemoteSystemsTempFiles/
+sh.exe.stackdump
+
