@@ -13,15 +13,11 @@
 		<h:form id="form">
 			<p:panel id="panel" header="Baja POI">
 				<p:messages id="msgs" />
+				<p:outputLabel value="Por favor revise los campos del POI y asegurese de que es el correcto antes de eliminarlo" />
 				<h:panelGrid columns="2" cellpadding="5">
-
+					
 					<p:outputLabel for="TIPO" value="Tipo:" />
-					<p:selectOneMenu id="TIPO" value="#{bajaPOI.tipo}"
-						style="width:150px" readonly="true">
-						<f:selectItems value="#{bajaPOI.tipos}" />
-						<p:ajax update="panel" event="change"
-							listener="#{bajaPOI.listener}" />
-					</p:selectOneMenu>
+					<p:inputMask id="TIPO" value="#{bajaPOI.tipoPOI.name()}" readonly="true" />
 					
 					<p:outputLabel for="Nombre" value="Nombre: " />
 					<p:inputMask id="Nombre" value="#{bajaPOI.nombre}" readonly="true" />
@@ -162,21 +158,23 @@
 					<p:commandButton value="Borrar POI" update="panel"
 						action="#{bajaPOI.bajaPOI}" />
 					<p:commandButton value="Volver atras" update="panel"
-						action="welcome" immediate="true"/>
+						action="#{bajaPOI.home}" immediate="true"/>
 				</h:panelGrid>
 
 			</p:panel>
 		</h:form>
-				<p:dialog widgetVar="poiCreadoDialog" modal="true"
+				<p:dialog widgetVar="poiBajaDialog" modal="true"
 			showEffect="fade" hideEffect="fade" resizable="f">
-			<h:form id="poiCreadoDialog">
-				<h:outputText value="POI Creado" />
+			<p:ajax event="close" action="#{bajaPOI.home}"></p:ajax>
+			<h:form id="poiBajaDialog">
+				<h:outputText value="POI dado de baja" />
 			</h:form>
 		</p:dialog>
-				<p:dialog header="Error" widgetVar="poiCreadoDialogError" modal="true"
+				<p:dialog header="Error" widgetVar="poiBajaDialogError" modal="true"
 			showEffect="fade" hideEffect="fade" resizable="f">
-			<h:form id="poiCreadoDialogError">
-				<h:outputText value="Upps!! Hubo un error al crear un POI" />
+			<h:form id="poiBajaDialogError">
+				<h:outputText value="Upps!! Hubo un error al borrar un POI. Por favor reintente
+				mas tarde." />
 			</h:form>
 		</p:dialog>
 	</ui:define>

@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.grupouno.frontend.abmPOIs;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,40 +111,47 @@ public class BajaPOI {
 			this.setCodigoPostal(Long.toString(this.poiSeleccionado.getCodigoPostal()));
 			this.setLocalidad(this.poiSeleccionado.getLocalidad());
 			this.setBarrio(this.poiSeleccionado.getBarrio());
-			this.setProvincia(this.getProvincia());
+			this.setProvincia(this.poiSeleccionado.getProvincia());
 			this.setPais(this.poiSeleccionado.getPais());
 			this.setLatitud(Double.toString(this.poiSeleccionado.getLatitud()));
 			this.setLongitud(Double.toString(this.poiSeleccionado.getLongitud()));
 			this.setComuna(Long.toString(this.poiSeleccionado.getComuna()));
 			this.setTipo(this.poiSeleccionado.getTipo().nombre());
+			tipoPOI = TiposPOI.getEnumByString(tipo);
 			String etique = "";
 			for (String et : this.poiSeleccionado.getEtiquetas()) {
 				etique = etique + " " + et;
 			}
 			this.setEtiquetas(etique);
-			this.setTipo(tipo);
 
-			if (this.getTipo().equals(TiposPOI.CGP)) {
+			if (this.getTipoPOI().equals(TiposPOI.CGP)) {
 				this.setDirector(((CGP) this.poiSeleccionado).getDirector());
 				this.setTelefono(((CGP) this.poiSeleccionado).getTelefono());
 				this.setCercania(Long.toString(((CGP) this.poiSeleccionado).getCercania()));
-
-				// servicios
-				// this.setServicios(((CGP)this.poiSeleccionado).);
-			} else if (this.getTipo().equals(TiposPOI.LOCAL_COMERCIAL)) {
-				// this.setRubro(((LocalComercial)this.poiSeleccionado).getRubro().getNombre());
-				// this.setCercania(Long.toString(((LocalComercial)this.poiSeleccionado).getCercania()));
-				// this.setDias(((LocalComercial)this.poiSeleccionado).getDias());
-				// this.setHoras(((LocalComercial)this.poiSeleccionado).getHoras());
-			} else if (this.getTipo().equals(TiposPOI.BANCO)) {
+				List<NodoServicio> servPOI = ((Banco)this.poiSeleccionado).getServicios();
+				if (servPOI != null && servPOI.size() > 0)
+					for (int i = 0; i < servPOI.size(); i++)
+						this.getServicios().add(servPOI.get(i));
+			} else if (this.getTipoPOI().equals(TiposPOI.LOCAL_COMERCIAL)) {
+				this.setRubro(((LocalComercial)this.poiSeleccionado).getRubro().getNombre());
+				this.setCercania(Long.toString(((LocalComercial)this.poiSeleccionado).getCercania()));
+				for (Long number: ((LocalComercial)this.poiSeleccionado).getDias())
+					this.getDias().add(number.toString());
+				 for (Long number: ((LocalComercial)this.poiSeleccionado).getHoras())
+						this.getHoras().add(number.toString());
+			} else if (this.getTipoPOI().equals(TiposPOI.BANCO)) {
 				this.setSucursal(((Banco) this.poiSeleccionado).getSucursal());
 				this.setGerente(((Banco) this.poiSeleccionado).getGerente());
 				this.setCercania(Long.toString(((Banco) this.poiSeleccionado).getCercania()));
-				// ((Banco)nuevoPOI).setServicios(((Banco)this.poiSeleccionado)..getServicios()());
-			} else if (this.getTipo().equals(TiposPOI.PARADA_COLECTIVO)) {
+				List<NodoServicio> servPOI = ((Banco)this.poiSeleccionado).getServicios();
+					if (servPOI != null && servPOI.size() > 0)
+						for (int i = 0; i < servPOI.size(); i++)
+							this.getServicios().add(servPOI.get(i));
+			} else if (this.getTipoPOI().equals(TiposPOI.PARADA_COLECTIVO)) {
 				this.setLinea(Long.toString(((ParadaColectivo) this.poiSeleccionado).getLinea()));
 			}
 		}
+		RequestContext.getCurrentInstance().update(":Servicios");
 
 	}
 
@@ -168,11 +176,10 @@ public class BajaPOI {
 		this.latitud = "";
 		this.longitud = "";
 		this.comuna = "";
-		this.servicios.clear();
-		this.diasLocal.clear();
-		this.horasLocal.clear();
+		this.setServicios(new ArrayList<NodoServicio>());
+		this.setHorasLocal(new ArrayList<Long>());
+		this.setDiasLocal(new ArrayList<Long>());
 		this.etiquetas = "";
-		this.horas.clear();
 		this.cercania = "";
 		this.diasSeleccionados = new String[0];
 		this.diasLocalSeleccionados = new String[0];
@@ -185,15 +192,39 @@ public class BajaPOI {
 		this.rubro = "";
 		this.nodoServicioCreando = new NodoServicio();
 		this.poiDTO = null;
+	}
+	
+	public String home(){
 		RequestContext.getCurrentInstance().reset("form:panel");
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/tp-anual/faces/welcome.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "welcome";
 	}
 
 	public POI getPoiSeleccionado() {
 		return poiSeleccionado;
 	}
 
-	public void bajaPOI() {
-		POI_ABMC.getInstance().delete(poiSeleccionado.getId());
+	public String bajaPOI() {
+		
+		// Dando de baja el POI
+		if (POI_ABMC.getInstance().delete(poiSeleccionado.getId())) {
+			// Mensaje de POI dado de baja
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('poiBajaDialog').show();");
+			reset();
+			return "welcome";
+		} else {
+			// Mensaje de Error
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('poiBajaDialogError').show();");
+			reset();
+			return "welcome";
+		}
 	}
 
 	public String getNombre() {
