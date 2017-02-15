@@ -124,6 +124,16 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmPOIs.ModificacionPOI</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>modificacionUsuario</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.ModificacionUsuario</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>modificacionUsuarioBusqueda</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.ModificacionUsuarioBusqueda</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
@@ -428,6 +438,42 @@
 	<navigation-rule>
 		<display-name>poisModificacionB.xhtml</display-name>
 		<from-view-id>/poisModificacionB.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmusuarios.xhtml</display-name>
+		<from-view-id>/abmusuarios.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>usuarioModificacion</from-outcome>
+			<to-view-id>/usuarioModificacionA.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioModificacionA.xhtml</display-name>
+		<from-view-id>/usuarioModificacionA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>usuarioModificacionB</from-outcome>
+			<to-view-id>/usuarioModificacionB.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioModificacionA.xhtml</display-name>
+		<from-view-id>/usuarioModificacionA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>usuarioModificacionB.xhtml</display-name>
+		<from-view-id>/usuarioModificacionB.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>welcome</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>

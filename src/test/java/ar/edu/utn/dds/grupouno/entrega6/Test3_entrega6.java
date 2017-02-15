@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.utn.dds.grupouno.abmc.DatoHistoricoPOIMorphia;
 import ar.edu.utn.dds.grupouno.abmc.POI_ABMC;
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistorico;
 import ar.edu.utn.dds.grupouno.abmc.RegistroHistoricoMorphia;
@@ -98,8 +99,8 @@ public class Test3_entrega6 {
 		Assert.assertTrue(reg.getUserID() == usuario.getId());
 
 		// Comprobamos referencias a los POIs
-		for (POI poi : reg.getPois()) {
-			Assert.assertTrue(lista.contains(poi));
+		for (DatoHistoricoPOIMorphia poi : reg.getPois()) {
+			Assert.assertTrue(lista.contains(Repositorio.getInstance().pois().getPOIbyId(poi.getId())));
 
 		}
 	}
