@@ -12,7 +12,7 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<p:growl id="msgs" showDetail="true" />
-			<p:panel id="panel" header="Busqueda de pois a modificar">
+			<p:panel id="panel" header="Busqueda de Pois a dar de baja">
 				<h:form>
 					<p:outputPanel deferred="true">
 
@@ -57,9 +57,9 @@
 						<h:outputText value="#{POI.direccion}" />
 					</p:column>
 
-					<p:column style="width:150px;text-align: center">
-						<p:commandButton update="form:panel" action="#{busquedaBean.modificarPoi}"
-						value="Modificar">
+					<p:column style="width:100px;text-align: center">
+						<p:commandButton update="form:panel" action="#{busquedaBean.borrarPoi}"
+						value="Borrar">
 							<f:setPropertyActionListener value="#{POI}"
 								target="#{busquedaBean.selectedPoi}" />						
 						</p:commandButton>

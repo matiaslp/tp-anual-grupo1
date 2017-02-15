@@ -49,12 +49,7 @@
 						style="width:60px" rendered="#{altaUsuario.isAdmin()}" />
 					<h:outputText value="¿Se desea recibir emails de notificaciones por busquedas demoradas?" rendered="#{altaUsuario.isAdmin()}" 
 						style="font-size:12px; color:red;" />
-
-					<h:outputText value="La contraseña debe tener al menos 8 caracteres" 
-						style="font-size:12px; color:red;" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-
+					
 					<p:outputLabel for="password" value="Password:" />
 					<p:password id="password" value="#{altaUsuario.password}"
 						label="Contrasena" required="true">
