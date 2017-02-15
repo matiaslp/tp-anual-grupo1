@@ -128,7 +128,7 @@ public class BajaPOI {
 				this.setDirector(((CGP) this.poiSeleccionado).getDirector());
 				this.setTelefono(((CGP) this.poiSeleccionado).getTelefono());
 				this.setCercania(Long.toString(((CGP) this.poiSeleccionado).getCercania()));
-				List<NodoServicio> servPOI = ((Banco)this.poiSeleccionado).getServicios();
+				List<NodoServicio> servPOI = ((CGP)this.poiSeleccionado).getServicios();
 				if (servPOI != null && servPOI.size() > 0)
 					for (int i = 0; i < servPOI.size(); i++)
 						this.getServicios().add(servPOI.get(i));
