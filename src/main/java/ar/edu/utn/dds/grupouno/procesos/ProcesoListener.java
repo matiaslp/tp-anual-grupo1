@@ -101,6 +101,12 @@ public abstract class ProcesoListener implements JobListener {
 			}
 		} else {
 			try {
+				Usuario usuario = (Usuario) context.getScheduler().getContext().get("Usuario");
+				List<ResultadoProceso> resultados = new ArrayList<ResultadoProceso>();
+				resultados.add(resultado);
+				EnviarEmail.mandarCorreoProcesoError(usuario,resultados);
+
+				
 				ejecutarProcesoAnidado(context);
 			} catch (SchedulerException e) {
 				e.printStackTrace();
@@ -196,6 +202,8 @@ public abstract class ProcesoListener implements JobListener {
 				scheduler.scheduleJob(nextJob, trigger);
 			} else {
 				scheduler.getContext().replace("ejecutado", true);
+				
+
 			}
 
 		} catch (ClassNotFoundException cnf) {
