@@ -10,34 +10,72 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:form>
-			<p:panel id="panel" header="Modificacion POI">
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" />
+			<p:panel id="panel" header="Busqueda de pois a modificar">
 				<h:form>
 					<p:outputPanel deferred="true">
-						
-						<p>Nombre</p>
+
+						<h3>Criterio de busqueda</h3>
 					</p:outputPanel>
 				</h:form>
-				<h:panelGrid columns="2" cellpadding="5">
-				<p>Nombre</p>
-				<p:inputText id="textoLibre" value="#{busquedaBean.textoLibre}"
-					required="true">
-					<f:validateLength minimum="3" />
-				</p:inputText>
+				<h:panelGrid columns="1" cellpadding="5">
+
+
+					<h:dataTable id="tabText" value="#{busquedaBean.items}" var="item">
+						<h:column>
+							<h:inputText value="#{item.value}" />
+						</h:column>
+						<p:column style="width:32px;text-align: center">
+						<p:commandButton icon="ui-icon-trash" title="Remover"
+							actionListener="#{busquedaBean.remove(item)}"
+							update="form:panel" immediate="true" />
+					</p:column>
+					</h:dataTable>
+					<h:panelGrid columns="2" cellpadding="5">
+						<p:commandButton value="Agregar" update="tabText"
+							icon="ui-icon-check" action="#{busquedaBean.add}" />
+						<p:commandButton value="Buscar" update="panel"
+							icon="ui-icon-search" action="#{busquedaBean.buscar}" />
+					</h:panelGrid>
 				</h:panelGrid>
 
-				
-				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Modificar" update="panel" icon="ui-icon-check" action="poisModificacionB" />
-	
-				</h:panelGrid>
-				
-				
-				
-			<p:commandButton value="Volver atras" update="panel"
-					action="welcome" immediate="true"/>
+
+				<h:form>
+					<p:outputPanel deferred="true">
+						<h3>Resultado</h3>
+					</p:outputPanel>
+				</h:form>
+				<p:dataTable id="poiTable" var="POI" value="#{busquedaBean.pois}"
+					rows="10" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column headerText="Nombre">
+						<h:outputText value="#{POI.nombre}" />
+					</p:column>
+					<p:column headerText="Direccion">
+						<h:outputText value="#{POI.direccion}" />
+					</p:column>
+
+					<p:column style="width:150px;text-align: center">
+						<p:commandButton update="form:panel" action="#{busquedaBean.modificarPoi}"
+						value="Modificar">
+							<f:setPropertyActionListener value="#{POI}"
+								target="#{busquedaBean.selectedPoi}" />						
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="Volver atras" update="panel"
+					action="#{busquedaBean.home}" immediate="true" />
 			</p:panel>
 		</h:form>
+							<p:dialog header="No hay caracteres" widgetVar="unCaracter"
+						modal="true" showEffect="fade" hideEffect="fade" resizable="f">
+						<h:form id="unCaracter">
+							<h:outputText
+								value="Uno o mas valores son vacios, necesitas ingresar al menos 1 caracter" />
+						</h:form>
+					</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

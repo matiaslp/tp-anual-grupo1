@@ -205,6 +205,19 @@ public class BusquedaBean {
 		return "poisBajaB";
 
 	}
+	
+	public String modificarPoi(){
+		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("username"));
+		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
+		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().put("poiSeleccionado"+token+usuario,Long.toString(this.selectedPoi.getId()));
+		reset();
+		return "poisModificacionB";
+
+	}
 
 	
 	

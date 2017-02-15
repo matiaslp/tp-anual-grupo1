@@ -119,6 +119,11 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.procesos.BajaPOIs</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>modificacionPOI</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmPOIs.ModificacionPOI</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
@@ -387,6 +392,42 @@
 	<navigation-rule>
 		<display-name>poisBajaB.xhtml</display-name>
 		<from-view-id>/poisBajaB.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>abmpois.xhtml</display-name>
+		<from-view-id>/abmpois.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>poisModificacion</from-outcome>
+			<to-view-id>/poisModificacionA.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisModificacionA.xhtml</display-name>
+		<from-view-id>/poisModificacionA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>poisModificacionB</from-outcome>
+			<to-view-id>/poisModificacionB.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisModificacionA.xhtml</display-name>
+		<from-view-id>/poisModificacionA.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>poisModificacionB.xhtml</display-name>
+		<from-view-id>/poisModificacionB.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>welcome</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>

@@ -9,9 +9,5 @@ build/
 target/*
 build/*
 .tern-project
-<<<<<<< HEAD
 .metadata
-
-=======
 .metadata/*
->>>>>>> master
