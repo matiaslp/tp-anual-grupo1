@@ -120,7 +120,7 @@ public class BajaPOI {
 			tipoPOI = TiposPOI.getEnumByString(tipo);
 			String etique = "";
 			for (String et : this.poiSeleccionado.getEtiquetas()) {
-				etique = etique + " " + et;
+				etique = etique  + et + " ";
 			}
 			this.setEtiquetas(etique);
 
