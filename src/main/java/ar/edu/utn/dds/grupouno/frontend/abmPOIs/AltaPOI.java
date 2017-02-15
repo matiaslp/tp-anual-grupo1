@@ -225,11 +225,10 @@ public class AltaPOI {
 		this.latitud = "";
 		this.longitud = "";
 		this.comuna = "";
-		this.servicios.clear();
-		this.diasLocal.clear();
-		this.horasLocal.clear();
+		this.setServicios(new ArrayList<NodoServicio>());
+		this.setHorasLocal(new ArrayList<Long>());
+		this.setDiasLocal(new ArrayList<Long>());
 		this.etiquetas = "";
-		this.horas.clear();
 		this.cercania = "";
 		this.diasSeleccionados = new String[0];
 		this.diasLocalSeleccionados = new String[0];

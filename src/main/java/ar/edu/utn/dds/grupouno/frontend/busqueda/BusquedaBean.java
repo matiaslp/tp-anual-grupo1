@@ -178,6 +178,11 @@ public class BusquedaBean {
 		selectedPoi = null;
 		items = new ArrayList<Item>();
 		items.add(new Item());
+
+	}
+	
+	public void home(){
+		reset();
 		RequestContext.getCurrentInstance().reset("form:panel");
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("/tp-anual/faces/welcome.xhtml");
@@ -185,8 +190,8 @@ public class BusquedaBean {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
+	
 	
 	public String borrarPoi(){
 		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
@@ -195,7 +200,8 @@ public class BusquedaBean {
 		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
 		
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.getExternalContext().getFlash().put("poiSeleccionado"+token+usuario,Long.toString(this.selectedPoi.getId()));			
+		context.getExternalContext().getFlash().put("poiSeleccionado"+token+usuario,Long.toString(this.selectedPoi.getId()));
+		reset();
 		return "poisBajaB";
 
 	}
