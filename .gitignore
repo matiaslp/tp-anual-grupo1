@@ -11,3 +11,5 @@ build/*
 .tern-project
 .metadata
 .metadata/*
+RemoteSystemsTempFiles/
+sh.exe.stackdump
