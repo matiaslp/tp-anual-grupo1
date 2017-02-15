@@ -14,13 +14,13 @@
 				<p:messages id="msgs" />
 				<h:panelGrid columns="1" cellpadding="5" style="width:50%" layout="grid">
 					<p:commandButton value="Actualizacion de Locales Comerciales" rendered="#{menuBean.usuario.isFuncionalidad('actualizacionLocalesComerciales')}" style="width:100%" update="panel"
-						action="actualizarlocales" />
+						action="actualizarLocales" />
 					<p:commandButton value="Baja de POIs" rendered="#{menuBean.usuario.isFuncionalidad('bajaPOIs')}" style="width:100% " update="panel"
-						action="bajapois"/>
+						action="bajaPois"/>
 					<p:commandButton value="Agregar Acciones a Usuarios" rendered="#{menuBean.usuario.isFuncionalidad('agregarAcciones')}" style="width:100%" update="panel"
-						action="agregaracciones" />
+						action="agregarAcciones" />
 					<p:commandButton value="Proceso Multiple" rendered="#{menuBean.usuario.isFuncionalidad('procesoMultiple')}" style="width:100%" update="panel"
-						action="procesomultiple" />
+						action="procesoMultiple" />
 					</h:panelGrid>
 					<p:commandButton value="Volver atras" update="panel"
 					action="welcome"/>

@@ -51,16 +51,7 @@ public class ActualizarLocalesBean {
 		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance()
 				.getAccion("actualizacionLocalesComerciales");
 		funcion.actualizarLocales(usuario, token, Integer.parseInt(cantidadReintentos), Boolean.parseBoolean(enviarEmail), filePath);
-		return "index";
+		return "welcome";
 	}
-//	public String preparar(){
-//		String username = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username"));
-//		String token = ((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("token"));
-//		Usuario usuario = Repositorio.getInstance().usuarios().getUsuarioByName(username);
-//		
-//		FuncActualizacionLocalesComerciales funcion = (FuncActualizacionLocalesComerciales) AuthAPI.getInstance().getAccion("actualizacionLocalesComerciales");
-//		funcion.prepAgregarAcciones(usuario, token, cantidadReintentos, enviarEmail, filePath);
-//		return "index";
-//	}
 
 }

@@ -134,6 +134,16 @@
 		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.abmUsuarios.ModificacionUsuarioBusqueda</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>nodoProceso</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.NodoProcesoBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>procesoMultipleBean</managed-bean-name>
+		<managed-bean-class>ar.edu.utn.dds.grupouno.frontend.processes.ProcesoMultipleBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login.xhtml</display-name>
@@ -151,7 +161,7 @@
 		<display-name>processes.xhtml</display-name>
 		<from-view-id>/processes.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>actualizarlocales</from-outcome>
+			<from-outcome>actualizarLocales</from-outcome>
 			<to-view-id>/actualizarlocales.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -160,7 +170,7 @@
 		<display-name>processes.xhtml</display-name>
 		<from-view-id>/processes.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>procesomultiple</from-outcome>
+			<from-outcome>procesoMultiple</from-outcome>
 			<to-view-id>/procesomultiple.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -169,7 +179,7 @@
 		<display-name>processes.xhtml</display-name>
 		<from-view-id>/processes.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>bajapois</from-outcome>
+			<from-outcome>bajaPois</from-outcome>
 			<to-view-id>/bajapois.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -178,7 +188,7 @@
 		<display-name>processes.xhtml</display-name>
 		<from-view-id>/processes.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>agregaracciones</from-outcome>
+			<from-outcome>agregarAcciones</from-outcome>
 			<to-view-id>/agregaracciones.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -205,7 +215,7 @@
 		<display-name>actualizarlocales.xhtml</display-name>
 		<from-view-id>/actualizarlocales.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>index</from-outcome>
+			<from-outcome>welcome</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -214,7 +224,7 @@
 		<display-name>procesomultiple.xhtml</display-name>
 		<from-view-id>/procesomultiple.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>index</from-outcome>
+			<from-outcome>welcome</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -223,7 +233,7 @@
 		<display-name>agregaracciones.xhtml</display-name>
 		<from-view-id>/agregaracciones.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>index</from-outcome>
+			<from-outcome>welcome</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -232,7 +242,7 @@
 		<display-name>bajapois.xhtml</display-name>
 		<from-view-id>/bajapois.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>index</from-outcome>
+			<from-outcome>welcome</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>

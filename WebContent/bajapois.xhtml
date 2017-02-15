@@ -13,23 +13,23 @@
 	<ui:define name="content">
 	    <h:form>
 			<p:panel id="panel" header="Baja de POIs">
+			<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel for="cantReintentos" value="Cantidad de Reintentos:" />
+			<p:inputMask id="cantReintentos" value="#{bajaPoisBean.cantidadReintentos}" required="true" > 
+       		</p:inputMask>
 			
-			<p/>
-			<p:inputText id="cantReintentos" value="#{bajaPoisBean.cantidadReintentos}" >Cantidad de Reintentos: 
-       		</p:inputText>
-			
-			<p/>
-			<p:selectBooleanButton id="enviarEmail" value="#{bajaPoisBean.enviarEmail}" onLabel="Yes" offLabel="No" style="width:60px">Enviar eMail: 
+			<p:outputLabel for="enviarEmail" value="Enviar eMail:" />
+			<p:selectBooleanButton id="enviarEmail" value="#{bajaPoisBean.enviarEmail}" onLabel="Yes" offLabel="No" style="width:60px"> 
 			</p:selectBooleanButton>
 
-			<p/>
-			<p:inputText id="filePath" value="#{bajaPoisBean.filePath}" >FilePath: 
-        	</p:inputText>
-        	<p/>
+			<p:outputLabel for="filePath" value="FilePath:" />
+			<p:inputMask id="filePath" value="#{bajaPoisBean.filePath}" required="true" >
+        	</p:inputMask>
+        	</h:panelGrid>
 			<p:commandButton value="Ejecutar" update="panel"
 					action="#{bajaPoisBean.ejecutar}"/>
 			<p:commandButton value="Volver atras" update="panel"
-					action="index"/>
+					action="welcome"/>
 			</p:panel>
 		</h:form>
 	</ui:define>

@@ -53,7 +53,7 @@ public class BajaPOIsBean {
 
 		FuncBajaPOIs funcion = (FuncBajaPOIs) AuthAPI.getInstance().getAccion("bajaPOIs");
 		funcion.darDeBajaPOI(usuario, token, Integer.parseInt(cantidadReintentos), Boolean.parseBoolean(enviarEmail), filePath);
-		return "index";
+		return "welcome";
 		
 	}
 	}

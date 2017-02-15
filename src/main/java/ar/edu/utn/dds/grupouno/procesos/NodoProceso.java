@@ -39,6 +39,7 @@ public class NodoProceso {
 	public void setSiguienteProcesoEnviarEmail(boolean sIGUIENTE_PROCESO_ENVIAREMAIL) {
 		SIGUIENTE_PROCESO_ENVIAREMAIL = sIGUIENTE_PROCESO_ENVIAREMAIL;
 	}
+	
 
 	public NodoProceso(Proceso siguienteProceso, String SiguienteProcesoFilepath, int SiguienteProcesoReintentos,
 			boolean SiguienteProcesoEnviarEmail) {

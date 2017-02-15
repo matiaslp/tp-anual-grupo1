@@ -12,24 +12,24 @@
 
 	<ui:define name="content">
 	    <h:form>
-			<p:panel id="panel" header="Agregar Acciones Para Todos Los Usuarios">
+			<p:panel id="panel" header="Agregar Acciones a Usuarios">
+			<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel for="cantReintentos" value="Cantidad de Reintentos:" />
+			<p:inputMask id="cantReintentos" value="#{agregarAccionesBean.cantidadReintentos}" required="true" > 
+       		</p:inputMask>
 			
-			<p/>
-			<p:inputText id="cantReintentos" value="#{agregarAccionesBean.cantidadReintentos}" >Cantidad de Reintentos: 
-       		</p:inputText>
-			
-			<p/>
-			<p:selectBooleanButton id="enviarEmail" value="#{agregarAccionesBean.enviarEmail}" onLabel="Yes" offLabel="No" style="width:60px">Enviar eMail: 
+			<p:outputLabel for="enviarEmail" value="Enviar eMail:" />
+			<p:selectBooleanButton id="enviarEmail" value="#{agregarAccionesBean.enviarEmail}" onLabel="Yes" offLabel="No" style="width:60px"> 
 			</p:selectBooleanButton>
 
-			<p/>
-			<p:inputText id="filePath" value="#{agregarAccionesBean.filePath}" >FilePath: 
-        	</p:inputText>
-        	<p/>
+			<p:outputLabel for="filePath" value="FilePath:" />
+			<p:inputMask id="filePath" value="#{agregarAccionesBean.filePath}" required="true" >
+        	</p:inputMask>
+        	</h:panelGrid>
 			<p:commandButton value="Ejecutar" update="panel"
 					action="#{agregarAccionesBean.ejecutar}"/>
-			<p:commandButton value="Volver atràs" update="panel"
-					action="processes"/>
+			<p:commandButton value="Volver atras" update="panel"
+					action="welcome"/>
 			</p:panel>
 		</h:form>
 	</ui:define>
